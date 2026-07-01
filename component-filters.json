@@ -14,9 +14,33 @@
       "title",
       "hero",
       "cards",
+      "cards-product",
+      "cards-story",
+      "cards-quicklink",
+      "carousel-icons",
       "columns",
+      "columns-feature",
+      "rates-charges",
       "fragment",
       "carousel-hero"
+    ]
+  },
+  {
+    "id": "cards-product",
+    "components": [
+      "cards-product-card"
+    ]
+  },
+  {
+    "id": "cards-quicklink",
+    "components": [
+      "cards-quicklink-card"
+    ]
+  },
+  {
+    "id": "cards-story",
+    "components": [
+      "cards-story-card"
     ]
   },
   {
@@ -32,6 +56,12 @@
     ]
   },
   {
+    "id": "carousel-icons",
+    "components": [
+      "carousel-icons-item"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -44,6 +74,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "rates-charges",
+    "components": [
+      "rates-charges-row"
     ]
   }
 ]
