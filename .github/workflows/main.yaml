@@ -9,6 +9,13 @@ jobs:
     - name: Use Node.js 20
       uses: actions/setup-node@v6
       with:
-        node-version: 24
+        node-version: 20
     - run: npm ci
     - run: npm run lint
+    - name: Verify component JSON is up to date
+      run: |
+        npm run build:json
+        if ! git diff --exit-code component-models.json component-definition.json component-filters.json; then
+          echo "::error::Generated component JSON is out of date. Run 'npm run build:json' and commit the result."
+          exit 1
+        fi
