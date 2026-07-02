@@ -568,14 +568,14 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "icon",
+        "name": "image",
         "label": "Icon",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "iconAlt",
+        "name": "imageAlt",
         "label": "Icon Alt Text"
       },
       {

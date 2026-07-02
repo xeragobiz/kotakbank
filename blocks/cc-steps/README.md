@@ -1,8 +1,7 @@
 # CC Steps
 
-"Apply online in 3 simple steps" — a heading, sub-heading, a row of numbered
-step cards (icon + title + description), and a CTA button. Container + repeatable
-step items.
+"Apply online in 3 simple steps" — a heading, sub-heading, a row of step cards
+(icon + title + description), and a CTA button. Container + repeatable step items.
 
 ## Authoring fields (Universal Editor)
 
