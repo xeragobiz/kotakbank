@@ -4,18 +4,22 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 /**
  * CC Steps — "Apply online in 3 simple steps".
  * Heading + sub-heading + a row of step cards (icon + title + description)
- * and a CTA button. Step items carry an icon image; the container's own
- * heading/subtitle/CTA are icon-free rows.
+ * and a CTA button.
+ *
+ * Row classification is by CELL COUNT, not by the presence of an icon image:
+ * container fields (heading/subtitle/CTA) render as single-cell rows, while
+ * each Step item renders as a multi-cell row (icon, title, description). This
+ * keeps a Step visible in Universal Editor even before its icon is authored —
+ * detecting by <picture> would drop icon-less steps and make them "disappear".
  *
  * Child rows keep their data-aue-* instrumentation via moveInstrumentation so
- * they remain editable in Universal Editor (rebuilding from textContent would
- * drop the instrumentation and the child would disappear from the editor).
+ * they remain editable in Universal Editor.
  * @param {Element} block the block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
-  const itemRows = rows.filter((r) => r.querySelector('picture'));
-  const chromeRows = rows.filter((r) => !r.querySelector('picture'));
+  const itemRows = rows.filter((r) => r.children.length > 1);
+  const chromeRows = rows.filter((r) => r.children.length <= 1);
 
   // chrome: heading, sub-heading, then the CTA (a link) + its label
   let heading = '';
@@ -69,6 +73,9 @@ export default function decorate(block) {
         cell.className = 'cc-steps-item-desc';
       } else if (cell.textContent.trim()) {
         cell.className = 'cc-steps-item-title';
+      } else {
+        // empty cell (e.g. icon not yet authored) — keep as the icon slot
+        cell.className = 'cc-steps-icon';
       }
     });
 

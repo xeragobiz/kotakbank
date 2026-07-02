@@ -1,17 +1,20 @@
 /* CC Steps — "Apply online in 3 simple steps".
-   Mobile-first: stacked cards; desktop: 3-column row. */
+   Mobile-first: stacked cards; desktop: 3-column row with connector line. */
 
 .cc-steps {
   --cc-red: #fa1432;
   --cc-ink: #131313;
   --cc-muted: #666;
-  --cc-card-border: #e6e6e6;
+  --cc-card-bg: #fff;
+  --cc-band-bg: #f5f5f5;
+
+  background: var(--cc-band-bg);
+  padding: 40px 24px;
 }
 
 .cc-steps .cc-steps-inner {
   max-width: 1170px;
   margin: 0 auto;
-  padding: 8px 0;
   text-align: center;
 }
 
@@ -45,14 +48,14 @@
   flex-direction: column;
   align-items: center;
   padding: 28px 24px;
-  border: 1px solid var(--cc-card-border);
-  border-radius: 12px;
-  background: #fff;
+  border-radius: 14px;
+  background: var(--cc-card-bg);
+  box-shadow: 0 8px 24px rgb(19 19 19 / 6%);
   text-align: center;
 }
 
 .cc-steps .cc-steps-icon {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   line-height: 0;
 }
 
@@ -113,8 +116,8 @@
 }
 
 @media (width >= 900px) {
-  .cc-steps .cc-steps-inner {
-    padding: 16px 0;
+  .cc-steps {
+    padding: 56px 24px;
   }
 
   .cc-steps .cc-steps-title {
@@ -123,30 +126,33 @@
 
   .cc-steps .cc-steps-subtitle {
     font-size: var(--body-font-size-s);
-    margin-bottom: 36px;
+    margin-bottom: 40px;
   }
 
-  /* 3-column row with a connector line behind the cards */
+  /* 3-column row with a connector line aligned to the icon row */
   .cc-steps .cc-steps-list {
     position: relative;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 28px;
+    align-items: start;
   }
 
+  /* connector sits at the icon height; cards (opaque) mask it,
+     leaving dark→red segments visible in the gaps */
   .cc-steps .cc-steps-list::before {
     content: "";
     position: absolute;
-    top: 50%;
-    left: 16%;
-    right: 16%;
-    height: 1px;
+    top: 60px; /* ~ icon vertical center inside card padding */
+    left: 12%;
+    right: 12%;
+    height: 2px;
     background: linear-gradient(90deg, #00005a, var(--cc-red));
     z-index: 0;
   }
 
   .cc-steps .cc-steps-item {
     position: relative;
-    z-index: 1;
+    z-index: 1; /* card paints over the connector */
     align-items: flex-start;
     text-align: left;
     padding: 32px 28px;
