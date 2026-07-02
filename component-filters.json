@@ -22,7 +22,28 @@
       "columns-feature",
       "rates-charges",
       "fragment",
-      "carousel-hero"
+      "carousel-hero",
+      "cc-hero",
+      "cc-steps",
+      "cards-featured",
+      "cards-lifestyle",
+      "eligibility-checker",
+      "savings-calculator",
+      "testimonials",
+      "cta-banner",
+      "faq-accordion"
+    ]
+  },
+  {
+    "id": "cards-featured",
+    "components": [
+      "cards-featured-item"
+    ]
+  },
+  {
+    "id": "cards-lifestyle",
+    "components": [
+      "cards-lifestyle-item"
     ]
   },
   {
@@ -62,6 +83,12 @@
     ]
   },
   {
+    "id": "cc-steps",
+    "components": [
+      "cc-steps-item"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -77,9 +104,34 @@
     ]
   },
   {
+    "id": "eligibility-checker",
+    "components": [
+      "eligibility-checker-item"
+    ]
+  },
+  {
+    "id": "faq-accordion",
+    "components": [
+      "faq-accordion-item"
+    ]
+  },
+  {
     "id": "rates-charges",
     "components": [
       "rates-charges-row"
+    ]
+  },
+  {
+    "id": "savings-calculator",
+    "components": [
+      "savings-calculator-category",
+      "savings-calculator-card"
+    ]
+  },
+  {
+    "id": "testimonials",
+    "components": [
+      "testimonials-item"
     ]
   }
 ]

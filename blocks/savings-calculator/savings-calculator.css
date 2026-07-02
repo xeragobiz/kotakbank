@@ -1,0 +1,275 @@
+/* Savings Calculator — spend sliders + best-match result card.
+   Mobile-first: stacked; desktop: 2-column (spend | result). */
+
+.savings-calculator {
+  --cc-red: #fa1432;
+  --cc-navy: #00005a;
+  --cc-ink: #131313;
+  --cc-muted: #666;
+  --cc-green: #1a8a4b;
+  --cc-panel-bg: #fff;
+  --cc-card-border: #e6e6e6;
+  --cc-track: #e2e2e6;
+}
+
+.savings-calculator .savings-calculator-inner {
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.savings-calculator .savings-calculator-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.savings-calculator .savings-calculator-eyebrow {
+  margin: 0 0 6px;
+  color: var(--cc-red);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.savings-calculator .savings-calculator-title {
+  margin: 0 0 8px;
+  color: var(--cc-ink);
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-m);
+  font-weight: 800;
+}
+
+.savings-calculator .savings-calculator-subtitle {
+  margin: 0;
+  color: var(--cc-muted);
+  font-size: var(--body-font-size-xs);
+}
+
+/* grid */
+.savings-calculator .savings-calculator-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* spend panel */
+.savings-calculator .savings-calculator-spend {
+  padding: 20px;
+  background: var(--cc-panel-bg);
+  border: 1px solid var(--cc-card-border);
+  border-radius: 12px;
+}
+
+.savings-calculator .savings-calculator-spend-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: var(--cc-ink);
+}
+
+.savings-calculator .savings-calculator-total {
+  margin-left: auto;
+  color: var(--cc-navy);
+}
+
+.savings-calculator .savings-calculator-reset {
+  padding: 4px 12px;
+  border: 1px solid var(--cc-card-border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cc-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.savings-calculator .savings-calculator-field {
+  margin-bottom: 20px;
+}
+
+.savings-calculator .savings-calculator-field-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.savings-calculator .savings-calculator-field-label {
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  color: var(--cc-ink);
+}
+
+.savings-calculator .savings-calculator-field-value {
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  color: var(--cc-red);
+}
+
+.savings-calculator .savings-calculator-saved {
+  margin-left: 8px;
+  color: var(--cc-green);
+  font-weight: 700;
+}
+
+/* slider */
+.savings-calculator .savings-calculator-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  appearance: none;
+  background: var(--cc-track);
+  cursor: pointer;
+}
+
+.savings-calculator .savings-calculator-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--cc-red);
+  cursor: pointer;
+}
+
+.savings-calculator .savings-calculator-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cc-red);
+  cursor: pointer;
+}
+
+/* result panel */
+.savings-calculator .savings-calculator-best {
+  padding: 24px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--cc-red), #ff5a5f);
+  color: #fff;
+}
+
+.savings-calculator .savings-calculator-best-flag {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.savings-calculator .savings-calculator-best-name {
+  margin: 0 0 8px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 800;
+}
+
+.savings-calculator .savings-calculator-best-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 20%);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.savings-calculator .savings-calculator-best-amount {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.savings-calculator .savings-calculator-best-note {
+  margin: 4px 0 16px;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.savings-calculator .savings-calculator-apply:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 24px;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cc-red);
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.savings-calculator .savings-calculator-apply:any-link:hover {
+  background: #fff0f1;
+  color: var(--cc-red);
+}
+
+.savings-calculator .savings-calculator-others-title {
+  margin: 20px 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cc-muted);
+}
+
+.savings-calculator .savings-calculator-others {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.savings-calculator .savings-calculator-other {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--cc-navy);
+  color: #fff;
+}
+
+.savings-calculator .savings-calculator-other-name {
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+}
+
+.savings-calculator .savings-calculator-other-amount {
+  font-size: var(--body-font-size-s);
+  font-weight: 800;
+}
+
+.savings-calculator .savings-calculator-other-note {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+@media (width >= 600px) {
+  .savings-calculator .savings-calculator-others {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .savings-calculator .savings-calculator-title {
+    font-size: var(--heading-font-size-l);
+  }
+
+  .savings-calculator .savings-calculator-subtitle {
+    font-size: var(--body-font-size-s);
+  }
+
+  .savings-calculator .savings-calculator-grid {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .savings-calculator .savings-calculator-spend {
+    padding: 28px;
+  }
+}

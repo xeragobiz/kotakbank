@@ -1,0 +1,186 @@
+/* Eligibility Checker — multi-step quiz with progress bar.
+   Mobile-first: 1-col options; desktop: 2-col options. */
+
+.eligibility-checker {
+  --cc-red: #fa1432;
+  --cc-navy: #00005a;
+  --cc-ink: #131313;
+  --cc-muted: #666;
+  --cc-panel-bg: #f4f4f6;
+  --cc-card-border: #e6e6e6;
+}
+
+.eligibility-checker .eligibility-checker-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.eligibility-checker .eligibility-checker-head {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.eligibility-checker .eligibility-checker-eyebrow {
+  margin: 0 0 6px;
+  color: var(--cc-red);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.eligibility-checker .eligibility-checker-title {
+  margin: 0 0 8px;
+  color: var(--cc-ink);
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-m);
+  font-weight: 800;
+}
+
+.eligibility-checker .eligibility-checker-subtitle {
+  margin: 0;
+  color: var(--cc-muted);
+  font-size: var(--body-font-size-xs);
+}
+
+/* panel */
+.eligibility-checker .eligibility-checker-panel {
+  padding: 24px;
+  background: var(--cc-panel-bg);
+  border-radius: 12px;
+}
+
+.eligibility-checker .eligibility-checker-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.eligibility-checker .eligibility-checker-step {
+  color: var(--cc-ink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.eligibility-checker .eligibility-checker-pct {
+  color: var(--cc-navy);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.eligibility-checker .eligibility-checker-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: #dcdcdc;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.eligibility-checker .eligibility-checker-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cc-navy), var(--cc-red));
+  transition: width 0.3s ease;
+}
+
+.eligibility-checker .eligibility-checker-question {
+  margin: 0 0 16px;
+  color: var(--cc-ink);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+}
+
+.eligibility-checker .eligibility-checker-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.eligibility-checker .eligibility-checker-option {
+  padding: 16px 20px;
+  border: 1px solid var(--cc-card-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--cc-ink);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.eligibility-checker .eligibility-checker-option:hover,
+.eligibility-checker .eligibility-checker-option:focus-visible {
+  border-color: var(--cc-red);
+  box-shadow: 0 0 0 1px var(--cc-red);
+  outline: none;
+}
+
+/* result */
+.eligibility-checker .eligibility-checker-result {
+  text-align: center;
+}
+
+.eligibility-checker .eligibility-checker-result h3 {
+  margin: 0 0 8px;
+  color: var(--cc-ink);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 800;
+}
+
+.eligibility-checker .eligibility-checker-result-body {
+  color: var(--cc-muted);
+  font-size: var(--body-font-size-xs);
+}
+
+.eligibility-checker .eligibility-checker-cta:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin: 16px 8px 0;
+  padding: 10px 28px;
+  border-radius: 6px;
+  background: var(--cc-red);
+  color: #fff;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.eligibility-checker .eligibility-checker-cta:any-link:hover {
+  background: #d4102a;
+  color: #fff;
+}
+
+.eligibility-checker .eligibility-checker-restart {
+  margin-top: 16px;
+  padding: 10px 20px;
+  border: 1px solid var(--cc-card-border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cc-ink);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (width >= 900px) {
+  .eligibility-checker .eligibility-checker-title {
+    font-size: var(--heading-font-size-l);
+  }
+
+  .eligibility-checker .eligibility-checker-subtitle {
+    font-size: var(--body-font-size-s);
+  }
+
+  .eligibility-checker .eligibility-checker-panel {
+    padding: 32px 40px;
+  }
+
+  .eligibility-checker .eligibility-checker-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

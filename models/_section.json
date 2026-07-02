@@ -57,7 +57,16 @@
         "columns-feature",
         "rates-charges",
         "fragment",
-        "carousel-hero"
+        "carousel-hero",
+        "cc-hero",
+        "cc-steps",
+        "cards-featured",
+        "cards-lifestyle",
+        "eligibility-checker",
+        "savings-calculator",
+        "testimonials",
+        "cta-banner",
+        "faq-accordion"
       ]
     }
   ]

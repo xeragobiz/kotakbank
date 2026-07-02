@@ -1,0 +1,128 @@
+{
+  "definitions": [
+    {
+      "title": "Cards Lifestyle",
+      "id": "cards-lifestyle",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Cards Lifestyle",
+              "model": "cards-lifestyle",
+              "filter": "cards-lifestyle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Lifestyle Card",
+      "id": "cards-lifestyle-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Lifestyle Card",
+              "model": "cards-lifestyle-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "cards-lifestyle",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Heading"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "subtitle",
+          "label": "Sub-heading"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "filters",
+          "label": "Filter Tabs (comma-separated, first is default)"
+        }
+      ]
+    },
+    {
+      "id": "cards-lifestyle-item",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Card Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Card Image Alt Text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "content_title",
+          "label": "Card Name"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "content_badge",
+          "label": "Badge (e.g. Best for Cashback)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "content_fees",
+          "label": "Fees (e.g. Joining: ₹500 | Annual: ₹500)"
+        },
+        {
+          "component": "richtext",
+          "name": "content_features",
+          "value": "",
+          "label": "Features",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "content_tags",
+          "label": "Filter Tags (comma-separated, must match tabs)"
+        },
+        {
+          "component": "aem-content",
+          "name": "applyLink",
+          "label": "Apply Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "applyLinkText",
+          "label": "Apply Button Text"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "cards-lifestyle",
+      "components": [
+        "cards-lifestyle-item"
+      ]
+    }
+  ]
+}

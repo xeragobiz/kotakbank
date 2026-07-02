@@ -1,0 +1,109 @@
+/* FAQ Accordion — "Frequently Asked Questions".
+   Semantic <details>/<summary>. Single column on all breakpoints. */
+
+.faq-accordion {
+  --cc-red: #fa1432;
+  --cc-ink: #131313;
+  --cc-muted: #555;
+  --cc-divider: #e6e6e6;
+}
+
+.faq-accordion .faq-accordion-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.faq-accordion .faq-accordion-title {
+  margin: 0 0 24px;
+  text-align: center;
+  color: var(--cc-ink);
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-m);
+  font-weight: 800;
+}
+
+.faq-accordion .faq-accordion-item {
+  border-bottom: 1px solid var(--cc-divider);
+}
+
+.faq-accordion .faq-accordion-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 4px;
+  color: var(--cc-ink);
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+/* hide the native marker */
+.faq-accordion .faq-accordion-question::-webkit-details-marker {
+  display: none;
+}
+
+/* circular red chevron */
+.faq-accordion .faq-accordion-icon {
+  position: relative;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--cc-red);
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.faq-accordion .faq-accordion-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--cc-red);
+  border-top: 0;
+  border-right: 0;
+  transform: translate(-50%, -65%) rotate(-45deg);
+}
+
+.faq-accordion .faq-accordion-item[open] .faq-accordion-icon {
+  transform: rotate(180deg);
+}
+
+.faq-accordion .faq-accordion-answer {
+  padding: 0 4px 18px;
+  color: var(--cc-muted);
+  font-size: var(--body-font-size-xs);
+  line-height: 1.6;
+}
+
+.faq-accordion .faq-accordion-answer p {
+  margin: 0 0 10px;
+}
+
+.faq-accordion .faq-accordion-answer p:last-child {
+  margin-bottom: 0;
+}
+
+.faq-accordion .faq-accordion-answer a:any-link {
+  color: var(--cc-red);
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .faq-accordion .faq-accordion-title {
+    font-size: var(--heading-font-size-l);
+  }
+
+  .faq-accordion .faq-accordion-question {
+    padding: 20px 8px;
+    font-size: var(--body-font-size-s);
+  }
+
+  .faq-accordion .faq-accordion-answer {
+    padding: 0 8px 20px;
+    font-size: var(--body-font-size-xs);
+  }
+}

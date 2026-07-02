@@ -83,6 +83,68 @@
       "id": "blocks",
       "components": [
         {
+          "title": "Cards Featured",
+          "id": "cards-featured",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Cards Featured",
+                  "model": "cards-featured",
+                  "filter": "cards-featured"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Featured Card",
+          "id": "cards-featured-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Featured Card",
+                  "model": "cards-featured-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Cards Lifestyle",
+          "id": "cards-lifestyle",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Cards Lifestyle",
+                  "model": "cards-lifestyle",
+                  "filter": "cards-lifestyle"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Lifestyle Card",
+          "id": "cards-lifestyle-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Lifestyle Card",
+                  "model": "cards-lifestyle-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Cards Product",
           "id": "cards-product",
           "plugins": {
@@ -264,6 +326,52 @@
           }
         },
         {
+          "title": "CC Hero",
+          "id": "cc-hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "CC Hero",
+                  "model": "cc-hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "CC Steps",
+          "id": "cc-steps",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "CC Steps",
+                  "model": "cc-steps",
+                  "filter": "cc-steps"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Step",
+          "id": "cc-steps-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Step",
+                  "model": "cc-steps-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Columns Feature",
           "id": "columns-feature",
           "plugins": {
@@ -288,6 +396,83 @@
                 "template": {
                   "columns": "2",
                   "rows": "1"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "CTA Banner",
+          "id": "cta-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "CTA Banner",
+                  "model": "cta-banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Eligibility Checker",
+          "id": "eligibility-checker",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Eligibility Checker",
+                  "model": "eligibility-checker",
+                  "filter": "eligibility-checker"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Question",
+          "id": "eligibility-checker-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Question",
+                  "model": "eligibility-checker-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FAQ Accordion",
+          "id": "faq-accordion",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "FAQ Accordion",
+                  "model": "faq-accordion",
+                  "filter": "faq-accordion"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FAQ Item",
+          "id": "faq-accordion-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "FAQ Item",
+                  "model": "faq-accordion-item"
                 }
               }
             }
@@ -349,6 +534,83 @@
                 "template": {
                   "name": "Rate Row",
                   "model": "rates-charges-row"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Savings Calculator",
+          "id": "savings-calculator",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Savings Calculator",
+                  "model": "savings-calculator",
+                  "filter": "savings-calculator"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Spend Category",
+          "id": "savings-calculator-category",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Spend Category",
+                  "model": "savings-calculator-category"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Calculator Card",
+          "id": "savings-calculator-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Calculator Card",
+                  "model": "savings-calculator-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Testimonials",
+          "id": "testimonials",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Testimonials",
+                  "model": "testimonials",
+                  "filter": "testimonials"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Review",
+          "id": "testimonials-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Review",
+                  "model": "testimonials-item"
                 }
               }
             }

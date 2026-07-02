@@ -1,0 +1,82 @@
+/* CTA Banner — "Ready to take the next step?".
+   Full-bleed orange→red gradient band with a faint infinity motif and a
+   white Apply button. Centered on all breakpoints. */
+
+.cta-banner {
+  --cc-orange: #f26722;
+  --cc-red: #fa1432;
+
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--cc-orange), var(--cc-red));
+}
+
+/* full-bleed: cancel section padding for this block */
+.cta-banner-wrapper {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* faint infinity/brand motif in the corner */
+.cta-banner::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 260px;
+  height: 160px;
+  background: center / contain no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' fill='none' stroke='%23ffffff' stroke-opacity='0.15' stroke-width='9'%3E%3Cpath d='M30 30a15 15 0 1 1 0 0.1zM70 30a15 15 0 1 0 0 0.1z'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.cta-banner .cta-banner-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.cta-banner .cta-banner-title {
+  margin: 0;
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-s);
+  font-weight: 700;
+}
+
+.cta-banner .cta-banner-btn:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 40px;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cc-red);
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.cta-banner .cta-banner-btn:any-link:hover {
+  background: #fff0f1;
+  color: var(--cc-red);
+}
+
+@media (width >= 900px) {
+  .cta-banner .cta-banner-inner {
+    padding: 32px 40px;
+  }
+
+  .cta-banner .cta-banner-title {
+    font-size: var(--heading-font-size-m);
+  }
+}

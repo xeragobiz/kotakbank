@@ -142,6 +142,188 @@
     ]
   },
   {
+    "id": "cards-featured",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "description",
+        "label": "Description"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaLink",
+        "label": "Bottom CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLinkText",
+        "label": "Bottom CTA Text"
+      }
+    ]
+  },
+  {
+    "id": "cards-featured-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Card Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Card Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_highlight",
+        "label": "Highlight (e.g. 5% cashback)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_highlightSub",
+        "label": "Highlight Sub-text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_title",
+        "label": "Card Name"
+      },
+      {
+        "component": "richtext",
+        "name": "content_features",
+        "value": "",
+        "label": "Features & Fees",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "compareLink",
+        "label": "Compare Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "compareLinkText",
+        "label": "Compare Link Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "applyLink",
+        "label": "Apply Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "applyLinkText",
+        "label": "Apply Button Text"
+      }
+    ]
+  },
+  {
+    "id": "cards-lifestyle",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Sub-heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "filters",
+        "label": "Filter Tabs (comma-separated, first is default)"
+      }
+    ]
+  },
+  {
+    "id": "cards-lifestyle-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Card Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Card Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_title",
+        "label": "Card Name"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_badge",
+        "label": "Badge (e.g. Best for Cashback)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_fees",
+        "label": "Fees (e.g. Joining: ₹500 | Annual: ₹500)"
+      },
+      {
+        "component": "richtext",
+        "name": "content_features",
+        "value": "",
+        "label": "Features",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_tags",
+        "label": "Filter Tags (comma-separated, must match tabs)"
+      },
+      {
+        "component": "aem-content",
+        "name": "applyLink",
+        "label": "Apply Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "applyLinkText",
+        "label": "Apply Button Text"
+      }
+    ]
+  },
+  {
     "id": "cards-product-card",
     "fields": [
       {
@@ -293,6 +475,112 @@
     ]
   },
   {
+    "id": "cc-hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Background Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Heading & Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "primaryCta",
+        "label": "Primary CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "primaryCtaText",
+        "label": "Primary CTA Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "secondaryCta",
+        "label": "Secondary CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondaryCtaText",
+        "label": "Secondary CTA Text"
+      }
+    ]
+  },
+  {
+    "id": "cc-steps",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Sub-heading"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaText",
+        "label": "CTA Text"
+      }
+    ]
+  },
+  {
+    "id": "cc-steps-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "iconAlt",
+        "label": "Icon Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Step Title"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "value": "",
+        "label": "Step Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "columns-feature",
     "fields": [
       {
@@ -333,6 +621,121 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "cta-banner",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Heading"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaLink",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLinkText",
+        "label": "CTA Text"
+      }
+    ]
+  },
+  {
+    "id": "eligibility-checker",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro_eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro_title",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "intro_subtitle",
+        "label": "Sub-heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "result_title",
+        "label": "Result Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "result_body",
+        "value": "",
+        "label": "Result Message",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "resultCtaLink",
+        "label": "Result CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "resultCtaLinkText",
+        "label": "Result CTA Text"
+      }
+    ]
+  },
+  {
+    "id": "eligibility-checker-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "label": "Question"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "options",
+        "label": "Answer Options (comma-separated)"
+      }
+    ]
+  },
+  {
+    "id": "faq-accordion",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Heading"
+      }
+    ]
+  },
+  {
+    "id": "faq-accordion-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "label": "Question"
+      },
+      {
+        "component": "richtext",
+        "name": "answer",
+        "value": "",
+        "label": "Answer",
+        "valueType": "string"
       }
     ]
   },
@@ -418,6 +821,133 @@
         "value": "",
         "label": "Expanded Content",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "savings-calculator",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Sub-heading"
+      }
+    ]
+  },
+  {
+    "id": "savings-calculator-category",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cat_label",
+        "label": "Category Label (e.g. Online Shopping)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cat_icon",
+        "label": "Emoji / Icon"
+      },
+      {
+        "component": "number",
+        "valueType": "number",
+        "name": "cat_default",
+        "label": "Default Spend"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cat_range",
+        "label": "Min,Max,Step (comma-separated)"
+      }
+    ]
+  },
+  {
+    "id": "savings-calculator-card",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card_name",
+        "label": "Card Name"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card_meta",
+        "label": "Badge | Annual Fee (pipe-separated)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card_rates",
+        "label": "Cashback Rates % per category (comma-separated, matches category order)"
+      },
+      {
+        "component": "aem-content",
+        "name": "applyLink",
+        "label": "Apply Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "applyLinkText",
+        "label": "Apply Button Text"
+      }
+    ]
+  },
+  {
+    "id": "testimonials",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Heading"
+      }
+    ]
+  },
+  {
+    "id": "testimonials-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "author",
+        "label": "Reviewer Name"
+      },
+      {
+        "component": "number",
+        "valueType": "number",
+        "name": "rating",
+        "label": "Rating (1-5)"
+      },
+      {
+        "component": "richtext",
+        "name": "review",
+        "value": "",
+        "label": "Review Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "date",
+        "label": "Reviewed On"
       }
     ]
   }

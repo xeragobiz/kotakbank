@@ -1,0 +1,124 @@
+/* CC Hero — full-bleed banner, overlaid heading + subtext + CTAs.
+   Mobile-first: content stacked over the image; desktop: content
+   constrained left over a wide banner image. */
+
+.cc-hero {
+  --cc-red: #fa1432;
+  --cc-navy: #00005a;
+
+  position: relative;
+  display: grid;
+}
+
+/* full-bleed: cancel section padding/max-width for this block */
+.cc-hero-wrapper {
+  max-width: 100%;
+  padding: 0;
+}
+
+.cc-hero .cc-hero-image {
+  grid-area: 1 / 1;
+  line-height: 0;
+}
+
+.cc-hero .cc-hero-image picture,
+.cc-hero .cc-hero-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cc-hero .cc-hero-image img {
+  aspect-ratio: 390 / 300;
+}
+
+/* content overlay */
+.cc-hero .cc-hero-content {
+  grid-area: 1 / 1;
+  z-index: 1;
+  align-self: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.cc-hero .cc-hero-content h1 {
+  margin: 0 0 8px;
+  color: var(--cc-red);
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.cc-hero .cc-hero-content p {
+  margin: 0 0 16px;
+  color: var(--cc-navy);
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+}
+
+/* CTAs */
+.cc-hero .cc-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cc-hero .cc-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cc-hero .cc-hero-btn-primary {
+  background-color: var(--cc-red);
+  border: 1px solid var(--cc-red);
+  color: #fff;
+}
+
+.cc-hero .cc-hero-btn-primary:hover {
+  background-color: #d4102a;
+  border-color: #d4102a;
+  color: #fff;
+}
+
+.cc-hero .cc-hero-btn-secondary {
+  background-color: #fff;
+  border: 1px solid var(--cc-red);
+  color: var(--cc-red);
+}
+
+.cc-hero .cc-hero-btn-secondary:hover {
+  background-color: #fff5f6;
+  color: var(--cc-red);
+}
+
+@media (width >= 900px) {
+  .cc-hero .cc-hero-image img {
+    aspect-ratio: 1440 / 444;
+  }
+
+  .cc-hero .cc-hero-content {
+    padding: 40px 32px;
+  }
+
+  .cc-hero .cc-hero-content h1 {
+    max-width: 620px;
+    font-size: var(--heading-font-size-xl);
+  }
+
+  .cc-hero .cc-hero-content p {
+    font-size: var(--body-font-size-s);
+  }
+}

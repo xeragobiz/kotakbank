@@ -1,0 +1,144 @@
+{
+  "definitions": [
+    {
+      "title": "Cards Featured",
+      "id": "cards-featured",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Cards Featured",
+              "model": "cards-featured",
+              "filter": "cards-featured"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Featured Card",
+      "id": "cards-featured-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Featured Card",
+              "model": "cards-featured-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "cards-featured",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Heading"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "description",
+          "label": "Description"
+        },
+        {
+          "component": "aem-content",
+          "name": "ctaLink",
+          "label": "Bottom CTA Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "ctaLinkText",
+          "label": "Bottom CTA Text"
+        }
+      ]
+    },
+    {
+      "id": "cards-featured-item",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Card Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Card Image Alt Text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "content_highlight",
+          "label": "Highlight (e.g. 5% cashback)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "content_highlightSub",
+          "label": "Highlight Sub-text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "content_title",
+          "label": "Card Name"
+        },
+        {
+          "component": "richtext",
+          "name": "content_features",
+          "value": "",
+          "label": "Features & Fees",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "compareLink",
+          "label": "Compare Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "compareLinkText",
+          "label": "Compare Link Text"
+        },
+        {
+          "component": "aem-content",
+          "name": "applyLink",
+          "label": "Apply Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "applyLinkText",
+          "label": "Apply Button Text"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "cards-featured",
+      "components": [
+        "cards-featured-item"
+      ]
+    }
+  ]
+}

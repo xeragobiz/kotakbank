@@ -1,0 +1,109 @@
+{
+  "definitions": [
+    {
+      "title": "Eligibility Checker",
+      "id": "eligibility-checker",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Eligibility Checker",
+              "model": "eligibility-checker",
+              "filter": "eligibility-checker"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Question",
+      "id": "eligibility-checker-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Question",
+              "model": "eligibility-checker-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "eligibility-checker",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intro_eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intro_title",
+          "label": "Heading"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intro_subtitle",
+          "label": "Sub-heading"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "result_title",
+          "label": "Result Heading"
+        },
+        {
+          "component": "richtext",
+          "name": "result_body",
+          "value": "",
+          "label": "Result Message",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "resultCtaLink",
+          "label": "Result CTA Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "resultCtaLinkText",
+          "label": "Result CTA Text"
+        }
+      ]
+    },
+    {
+      "id": "eligibility-checker-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "question",
+          "label": "Question"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "options",
+          "label": "Answer Options (comma-separated)"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "eligibility-checker",
+      "components": [
+        "eligibility-checker-item"
+      ]
+    }
+  ]
+}

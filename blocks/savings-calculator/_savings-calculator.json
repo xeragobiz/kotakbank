@@ -1,0 +1,147 @@
+{
+  "definitions": [
+    {
+      "title": "Savings Calculator",
+      "id": "savings-calculator",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Savings Calculator",
+              "model": "savings-calculator",
+              "filter": "savings-calculator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Spend Category",
+      "id": "savings-calculator-category",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Spend Category",
+              "model": "savings-calculator-category"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Calculator Card",
+      "id": "savings-calculator-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Calculator Card",
+              "model": "savings-calculator-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "savings-calculator",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Heading"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "subtitle",
+          "label": "Sub-heading"
+        }
+      ]
+    },
+    {
+      "id": "savings-calculator-category",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "cat_label",
+          "label": "Category Label (e.g. Online Shopping)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "cat_icon",
+          "label": "Emoji / Icon"
+        },
+        {
+          "component": "number",
+          "valueType": "number",
+          "name": "cat_default",
+          "label": "Default Spend"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "cat_range",
+          "label": "Min,Max,Step (comma-separated)"
+        }
+      ]
+    },
+    {
+      "id": "savings-calculator-card",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card_name",
+          "label": "Card Name"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card_meta",
+          "label": "Badge | Annual Fee (pipe-separated)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card_rates",
+          "label": "Cashback Rates % per category (comma-separated, matches category order)"
+        },
+        {
+          "component": "aem-content",
+          "name": "applyLink",
+          "label": "Apply Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "applyLinkText",
+          "label": "Apply Button Text"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "savings-calculator",
+      "components": [
+        "savings-calculator-category",
+        "savings-calculator-card"
+      ]
+    }
+  ]
+}
