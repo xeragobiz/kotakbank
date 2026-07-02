@@ -3,25 +3,33 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 /**
  * CC Hero — full-width banner with a background image and overlaid
  * heading, subtext, and up to two CTAs (primary + secondary).
- * Authoring rows (in model order): image, imageAlt, text (richtext),
- * primaryCta, primaryCtaText, secondaryCta, secondaryCtaText.
+ * Cells are identified by content (not fixed positions) because field
+ * collapsing merges link+text pairs, so the rendered cell count varies:
+ *   - a cell with a <picture> is the background image
+ *   - a cell with heading/paragraph rich text is the copy
+ *   - each remaining cell with an <a> is a CTA (1st = primary, 2nd = secondary)
  * @param {Element} block the block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
-  const cellOf = (r) => (r ? r.querySelector(':scope > div') || r : null);
+  const cells = rows.map((r) => r.querySelector(':scope > div') || r);
 
-  const imageCell = cellOf(rows[0]);
-  const altCell = cellOf(rows[1]);
-  const textCell = cellOf(rows[2]);
-  const primaryLinkCell = cellOf(rows[3]);
-  const primaryTextCell = cellOf(rows[4]);
-  const secondaryLinkCell = cellOf(rows[5]);
-  const secondaryTextCell = cellOf(rows[6]);
+  const imageCell = cells.find((c) => c.querySelector('picture'));
+  const linkCells = cells.filter((c) => c !== imageCell && c.querySelector('a'));
+  // alt text = a short text-only cell (no links, no headings) right after image
+  const altCell = cells.find((c) => c !== imageCell
+    && !c.querySelector('a, h1, h2, h3, h4, h5, h6, ul, ol')
+    && c.textContent.trim()
+    && c.textContent.trim().length < 120
+    && !c.querySelector('p:nth-of-type(2)'));
+  // copy = the cell holding the heading/paragraphs
+  const copyCell = cells.find((c) => c !== imageCell && c !== altCell
+    && !c.querySelector('a')
+    && c.querySelector('h1, h2, h3, h4, h5, h6, p'));
 
   const altText = altCell ? altCell.textContent.trim() : '';
 
-  // background image
+  // background image (LCP candidate)
   const media = document.createElement('div');
   media.className = 'cc-hero-image';
   const picture = imageCell ? imageCell.querySelector('picture') : null;
@@ -29,7 +37,6 @@ export default function decorate(block) {
     const img = picture.querySelector('img');
     if (img) {
       if (altText) img.setAttribute('alt', altText);
-      // hero image is the LCP candidate: load eagerly, high priority
       const optimized = createOptimizedPicture(
         img.src,
         img.getAttribute('alt') || '',
@@ -46,33 +53,21 @@ export default function decorate(block) {
   // content overlay
   const content = document.createElement('div');
   content.className = 'cc-hero-content';
-  if (textCell) {
-    while (textCell.firstChild) content.append(textCell.firstChild);
+  if (copyCell) {
+    while (copyCell.firstChild) content.append(copyCell.firstChild);
   }
 
-  // CTAs
-  const buildCta = (linkCell, textCell2, cls) => {
-    const link = linkCell ? linkCell.querySelector('a') : null;
-    let href = '';
-    if (link) href = link.getAttribute('href');
-    else if (linkCell) href = linkCell.textContent.trim();
-    let label = '';
-    if (textCell2 && textCell2.textContent.trim()) label = textCell2.textContent.trim();
-    else if (link) label = link.textContent.trim();
-    if (!href || !label) return null;
-    const a = document.createElement('a');
-    a.href = href;
-    a.className = cls;
-    a.textContent = label;
-    return a;
-  };
-
+  // CTAs — first link cell = primary, second = secondary
   const actions = document.createElement('div');
   actions.className = 'cc-hero-actions';
-  const primary = buildCta(primaryLinkCell, primaryTextCell, 'cc-hero-btn cc-hero-btn-primary');
-  const secondary = buildCta(secondaryLinkCell, secondaryTextCell, 'cc-hero-btn cc-hero-btn-secondary');
-  if (primary) actions.append(primary);
-  if (secondary) actions.append(secondary);
+  linkCells.forEach((c, i) => {
+    const link = c.querySelector('a');
+    if (!link) return;
+    link.className = i === 0
+      ? 'cc-hero-btn cc-hero-btn-primary'
+      : 'cc-hero-btn cc-hero-btn-secondary';
+    actions.append(link);
+  });
   if (actions.children.length) content.append(actions);
 
   block.textContent = '';
