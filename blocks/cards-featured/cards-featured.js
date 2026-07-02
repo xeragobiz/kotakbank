@@ -6,6 +6,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  * featured card tiles. Item cells (grouped/collapsed to 4):
  *   1) image, 2) content group (highlight, sub, name, features),
  *   3) compare link, 4) apply link.
+ * Featured Card items are authored as child components inside the block.
  * @param {Element} block the block element
  */
 export default function decorate(block) {
