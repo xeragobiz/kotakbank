@@ -1,9 +1,16 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 /**
  * FAQ Accordion — "Frequently Asked Questions".
  * Heading + a list of expandable question/answer rows built on semantic
  * <details>/<summary> so it works without JS. The first item is open by
  * default; opening one closes the others (single-open behaviour).
  * Container + repeatable FAQ items.
+ *
+ * Rows are classified by CELL COUNT: the container heading is a single-cell
+ * row, each FAQ Item is a multi-cell row. Each <details> keeps the source
+ * row's data-aue-* via moveInstrumentation so items stay visible/editable in
+ * Universal Editor even before question/answer are filled.
  * @param {Element} block the block element
  */
 export default function decorate(block) {
@@ -20,7 +27,7 @@ export default function decorate(block) {
     }
     const question = cells[0].textContent.trim();
     const answerCell = cells[1];
-    if (question) items.push({ question, answerCell });
+    items.push({ row: r, question, answerCell });
   });
 
   const wrapper = document.createElement('div');
@@ -41,6 +48,8 @@ export default function decorate(block) {
     details.className = 'faq-accordion-item';
     details.name = 'faq-accordion';
     if (i === 0) details.open = true;
+    // preserve the child component's instrumentation so it stays editable
+    moveInstrumentation(it.row, details);
 
     const summary = document.createElement('summary');
     summary.className = 'faq-accordion-question';

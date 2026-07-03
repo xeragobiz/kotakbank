@@ -1,7 +1,14 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 /**
  * Testimonials — "Credit Cards that everyone is talking about".
  * Heading + a row of review cards (name, star rating, review, date) in a
  * scroll-snap carousel with prev/next controls. Container + review items.
+ *
+ * Rows are classified by CELL COUNT: the container heading is a single-cell
+ * row, each Review is a multi-cell row. Each review <li> keeps the source
+ * row's data-aue-* via moveInstrumentation so items stay visible/editable in
+ * Universal Editor even before all fields are filled.
  * @param {Element} block the block element
  */
 const STAR = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f5a623'%3E%3Cpath d='M12 2l3 6.9 7.5.6-5.7 4.9 1.8 7.3L12 17.8 5.4 21.7l1.8-7.3L1.5 9.5 9 8.9z'/%3E%3C/svg%3E\")";
@@ -9,17 +16,17 @@ const STAR = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 export default function decorate(block) {
   const rows = [...block.children];
 
-  // heading = the row with no numeric rating; items have author/rating/review/date
+  // heading = single-cell row; review items are multi-cell rows
   let heading = '';
   const items = [];
   rows.forEach((r) => {
     const cells = [...r.children].map((c) => c.querySelector(':scope > div') || c);
-    const numCell = cells.find((c) => /^\s*[1-5]\s*$/.test(c.textContent));
-    if (!numCell && cells.length <= 1) {
+    if (cells.length <= 1) {
       const t = (cells[0] || r).textContent.trim();
       if (t) heading = t;
       return;
     }
+    const numCell = cells.find((c) => /^\s*[1-5]\s*$/.test(c.textContent));
     const rating = numCell ? parseInt(numCell.textContent.trim(), 10) : 5;
     const rich = cells.find((c) => c !== numCell && c.querySelector('p, ul, ol'));
     const plain = cells.filter((c) => c !== numCell && c !== rich && c.textContent.trim());
@@ -27,7 +34,7 @@ export default function decorate(block) {
     const author = plain[0] ? plain[0].textContent.trim() : '';
     const date = plain.length > 1 ? plain[plain.length - 1].textContent.trim() : '';
     items.push({
-      author, rating, rich, date,
+      row: r, author, rating, rich, date,
     });
   });
 
@@ -49,6 +56,8 @@ export default function decorate(block) {
   items.forEach((it) => {
     const li = document.createElement('li');
     li.className = 'testimonials-card';
+    // preserve the child component's instrumentation so it stays editable
+    moveInstrumentation(it.row, li);
 
     if (it.author) {
       const name = document.createElement('p');
