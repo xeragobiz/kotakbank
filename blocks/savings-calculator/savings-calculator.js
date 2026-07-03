@@ -75,11 +75,17 @@ export default async function decorate(block) {
     const step = Number.isFinite(parts[2]) ? parts[2] : 500;
     const defText = texts.find((t) => /^\s*\d+\s*$/.test(t));
     const nonNums = texts.filter((t) => !/^\s*[\d,]+\s*$/.test(t));
-    // tag = the non-numeric text matching a known card tag; label = the last of
-    // the remaining non-numeric texts (field order is iconAlt, label, [tag]).
-    const tag = nonNums.find((t) => knownTags.has(t.toLowerCase())) || '';
+    // tag = the non-numeric text exactly matching a known card tag; label = the
+    // last remaining non-numeric text (field order is iconAlt, label, [tag]).
+    let tag = nonNums.find((t) => knownTags.has(t.toLowerCase())) || '';
     const rest = nonNums.filter((t) => t !== tag);
     const label = rest.length ? rest[rest.length - 1] : '';
+    // fallback: infer the tag from the label when Match Tag is not authored
+    // (e.g. "Travel & Flights" contains the "travel" card tag).
+    if (!tag && label) {
+      const lower = label.toLowerCase();
+      tag = [...knownTags].find((kt) => lower.includes(kt)) || '';
+    }
     return {
       row,
       label,

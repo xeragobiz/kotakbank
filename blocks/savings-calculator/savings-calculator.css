@@ -247,17 +247,39 @@
   gap: 12px;
 }
 
-/* other cards: dark tile, content left + image right */
+/* other cards: card image as full background with a dark gradient overlay */
 .savings-calculator .savings-calculator-other {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 40%;
-  align-items: stretch;
+  display: flex;
+  align-items: flex-start;
   min-height: 96px;
   border-radius: 10px;
   overflow: hidden;
   background: var(--cc-navy);
   color: #fff;
+  isolation: isolate;
+}
+
+.savings-calculator .savings-calculator-other-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  line-height: 0;
+}
+
+.savings-calculator .savings-calculator-other-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* dark overlay so the text stays legible over the image */
+.savings-calculator .savings-calculator-other::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgb(0 0 40 / 88%) 40%, rgb(0 0 40 / 35%) 100%);
 }
 
 .savings-calculator .savings-calculator-other-body {
@@ -284,16 +306,6 @@
 .savings-calculator .savings-calculator-other-badge {
   font-size: 11px;
   opacity: 0.85;
-}
-
-.savings-calculator .savings-calculator-other-media {
-  line-height: 0;
-}
-
-.savings-calculator .savings-calculator-other-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 @media (width >= 600px) {
