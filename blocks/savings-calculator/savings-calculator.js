@@ -1,102 +1,97 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { loadCreditCard, cardReferencePath, isCardReference } from '../../scripts/credit-card.js';
 
 /**
- * Savings Calculator — spend sliders that estimate monthly savings and
- * surface the best-match Kotak card. Calculation is hardcoded; categories,
- * cards, and cashback rates are authorable. Client-side only.
+ * Savings Calculator — spend sliders that surface the best-match Kotak card.
+ * Recommended cards come from Credit Card content fragments (referenced items);
+ * the "best match" is the card whose filter tag matches the highest-spend
+ * category. Client-side only.
  *
  * Model children:
- *  - Spend Category: cat_label, cat_icon, cat_default, cat_range(min,max,step)
- *  - Calculator Card: card_name, card_meta("badge|fee"),
- *      card_rates(csv % per category), applyLink(+text)
+ *  - Spend Category: cat_icon(image), cat_iconAlt, cat_label, cat_default,
+ *      cat_range(min,max,step), cat_tag(card filter tag this spend maps to)
+ *  - Calculator Card (Reference): cardRef (aem-content → Credit Card fragment)
  *
- * Item rows are classified by their data-aue-model first (so empty/new items
- * added in Universal Editor are still recognized), falling back to content
- * heuristics for the published context. Each category's instrumentation is
- * moved onto its slider field, and each card gets one always-present
- * instrumented node (reused across slider updates) so no child item
- * disappears from the editor.
+ * Item rows are classified by data-aue-model (so empty/new items stay
+ * recognized in Universal Editor); each keeps its instrumentation via
+ * moveInstrumentation and card nodes are reused across slider updates.
  * @param {Element} block the block element
  */
 const inr = (n) => `₹${Math.round(n || 0).toLocaleString('en-IN')}`;
 
-export default function decorate(block) {
+// prefixed fields collapse into one cell as sibling <p>/<picture>; read the
+// item's flattened image + ordered non-empty text values.
+function flatten(r) {
+  const img = r.querySelector('img');
+  let texts = [...r.querySelectorAll('p')].map((p) => p.textContent.trim()).filter(Boolean);
+  if (!texts.length) {
+    texts = [...r.children]
+      .map((c) => (c.querySelector(':scope > div') || c).textContent.trim())
+      .filter(Boolean);
+  }
+  return { img, texts };
+}
+
+export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Prefixed model fields (cat_*, card_*) collapse into one shared cell and
-  // render as sibling <p>/<picture> nodes, so parse each item POSITIONALLY from
-  // its flattened content rather than assuming one field per cell.
-  //   Category text order: iconAlt, label, default, range (icon is the image)
-  //   Card text order:     name, meta, rates (apply link is the anchor)
-  const flatten = (r) => {
-    const img = r.querySelector('img');
-    const link = r.querySelector('a');
-    // ordered text values: prefer inner paragraphs; fall back to cell text
-    let texts = [...r.querySelectorAll('p')]
-      .map((p) => p.textContent.trim())
-      .filter(Boolean);
-    if (!texts.length) {
-      texts = [...r.children]
-        .map((c) => (c.querySelector(':scope > div') || c).textContent.trim())
-        .filter(Boolean);
-    }
-    return { img, link, texts };
-  };
-
-  const categories = [];
-  const cards = [];
+  const rawCategories = [];
+  const refRows = [];
   const chrome = [];
   rows.forEach((r) => {
     const model = r.getAttribute('data-aue-model') || '';
-    const { img, link, texts } = flatten(r);
+    if (model === 'savings-calculator-ref' || isCardReference(r)) {
+      refRows.push(r);
+      return;
+    }
+    const { img, texts } = flatten(r);
     const hasRange = texts.some((t) => /^\s*\d+\s*,\s*\d+/.test(t));
-    const isCard = model === 'savings-calculator-card' || (!model && !!link);
-    const isCategory = model === 'savings-calculator-category' || (!model && (hasRange || !!img));
-
-    if (isCard) {
-      // text values, ignoring any that is a bare URL: name, meta, rates
-      const vals = texts.filter((t) => !/^https?:/.test(t));
-      const [name = '', meta = '', rates = ''] = vals;
-      const [badge, fee] = meta.split('|').map((s) => s.trim());
-      cards.push({
-        row: r,
-        name,
-        badge: badge || '',
-        fee: fee || '',
-        rates: rates.split(',').map((n) => parseFloat(n) || 0),
-        href: link ? link.getAttribute('href') : '#',
-        applyText: link && link.textContent.trim() ? link.textContent.trim() : 'Apply Now',
-      });
-    } else if (isCategory) {
-      // find the range value + default among the text values; the label is the
-      // first non-numeric, non-range text (skips iconAlt which is also text —
-      // iconAlt commonly duplicates the label; the label field follows it).
-      const rangeText = texts.find((t) => /^\s*\d+\s*,\s*\d+/.test(t)) || '';
-      const parts = rangeText.split(',').map((n) => parseInt(n.trim(), 10));
-      const min = Number.isFinite(parts[0]) ? parts[0] : 0;
-      const max = Number.isFinite(parts[1]) ? parts[1] : 30000;
-      const step = Number.isFinite(parts[2]) ? parts[2] : 500;
-      const defText = texts.find((t) => /^\s*\d+\s*$/.test(t));
-      // non-numeric texts are [iconAlt, label] in order; label is the last one
-      const words = texts.filter((t) => !/^\s*[\d,]+\s*$/.test(t));
-      const label = words.length ? words[words.length - 1] : '';
-      categories.push({
-        row: r,
-        label,
-        iconSrc: img ? img.getAttribute('src') : '',
-        iconAlt: img ? (img.getAttribute('alt') || '') : '',
-        def: defText ? parseInt(defText, 10) : min,
-        min,
-        max,
-        step: step || 500,
-      });
+    const isCategory = model === 'savings-calculator-category' || (hasRange || !!img);
+    if (isCategory) {
+      rawCategories.push({ row: r, img, texts });
     } else if (texts.length) {
       chrome.push(texts[0]);
     }
   });
 
   const [eyebrow, heading, subtitle] = chrome;
+
+  // load referenced Credit Card fragments (name, badge, image, apply, tags)
+  const cards = (await Promise.all(refRows.map(async (row) => {
+    const data = isCardReference(row) ? await loadCreditCard(cardReferencePath(row)) : null;
+    return { row, data: data || {} };
+  })));
+  const knownTags = new Set(
+    cards.flatMap((c) => (c.data.tags || '').split(',').map((t) => t.trim().toLowerCase())).filter(Boolean),
+  );
+
+  // finalize categories now that we know the card tag vocabulary
+  const categories = rawCategories.map(({ row, img, texts }) => {
+    const rangeText = texts.find((t) => /^\s*\d+\s*,\s*\d+/.test(t)) || '';
+    const parts = rangeText.split(',').map((n) => parseInt(n.trim(), 10));
+    const min = Number.isFinite(parts[0]) ? parts[0] : 0;
+    const max = Number.isFinite(parts[1]) ? parts[1] : 30000;
+    const step = Number.isFinite(parts[2]) ? parts[2] : 500;
+    const defText = texts.find((t) => /^\s*\d+\s*$/.test(t));
+    const nonNums = texts.filter((t) => !/^\s*[\d,]+\s*$/.test(t));
+    // tag = the non-numeric text matching a known card tag; label = the last of
+    // the remaining non-numeric texts (field order is iconAlt, label, [tag]).
+    const tag = nonNums.find((t) => knownTags.has(t.toLowerCase())) || '';
+    const rest = nonNums.filter((t) => t !== tag);
+    const label = rest.length ? rest[rest.length - 1] : '';
+    return {
+      row,
+      label,
+      tag: tag.toLowerCase(),
+      iconSrc: img ? img.getAttribute('src') : '',
+      iconAlt: img ? (img.getAttribute('alt') || '') : '',
+      def: defText ? parseInt(defText, 10) : min,
+      min,
+      max,
+      step: step || 500,
+    };
+  });
 
   const wrapper = document.createElement('div');
   wrapper.className = 'savings-calculator-inner';
@@ -143,7 +138,6 @@ export default function decorate(block) {
   categories.forEach((cat, i) => {
     const field = document.createElement('div');
     field.className = 'savings-calculator-field';
-    // keep the category child editable in Universal Editor
     moveInstrumentation(cat.row, field);
 
     const label = document.createElement('div');
@@ -211,57 +205,62 @@ export default function decorate(block) {
 
   wrapper.append(grid);
 
-  // one persistent, instrumented node per authored card. These are reused
-  // (re-appended + re-filled) on every slider update so a card never loses
-  // its data-aue-* and never disappears from the editor.
+  // one persistent, instrumented node per referenced card (reused on update)
   cards.forEach((card) => {
     const el = document.createElement('div');
     moveInstrumentation(card.row, el);
     card.el = el;
   });
 
-  // compute monthly savings for a card given current spend state
-  const cardSavings = (card) => state.reduce((sum, spendVal, i) => {
-    const rate = (card.rates[i] || 0) / 100;
-    return sum + spendVal * rate;
-  }, 0);
+  const cardHasTag = (card, tag) => (card.data.tags || '')
+    .split(',').map((t) => t.trim().toLowerCase()).includes(tag);
 
   function update() {
     const total = state.reduce((a, b) => a + b, 0);
     spendTotal.textContent = `${inr(total)}/mo`;
 
-    const ranked = [...cards].sort((a, b) => cardSavings(b) - cardSavings(a));
-    const best = ranked[0];
-
-    // per-field value + best card's per-category savings
+    // per-field spend value (no per-category savings without rate data)
     spend.querySelectorAll('.savings-calculator-field').forEach((field) => {
       const i = parseInt(field.dataset.index, 10);
-      const rate = best ? (best.rates[i] || 0) / 100 : 0;
-      const saved = state[i] * rate;
-      field.valueEl.innerHTML = `${inr(state[i])} <span class="savings-calculator-saved">Save ${inr(saved)}</span>`;
+      field.valueEl.textContent = inr(state[i]);
     });
 
-    // rebuild result layout while REUSING the persistent card nodes
+    // best match = card tagged for the highest-spend category
+    let bestTag = '';
+    let maxSpend = -1;
+    categories.forEach((cat, i) => {
+      if (state[i] > maxSpend) { maxSpend = state[i]; bestTag = cat.tag; }
+    });
+    const best = cards.find((c) => bestTag && cardHasTag(c, bestTag)) || cards[0];
+
     result.replaceChildren();
     if (!best) return;
 
-    const monthly = cardSavings(best);
+    const d = best.data;
     best.el.className = 'savings-calculator-best';
     best.el.innerHTML = `
-      <p class="savings-calculator-best-flag">Best match for you</p>
-      <h3 class="savings-calculator-best-name">${best.name}</h3>
-      ${best.badge ? `<span class="savings-calculator-best-badge">${best.badge}</span>` : ''}
-      <p class="savings-calculator-best-amount">${inr(monthly)}</p>
-      <p class="savings-calculator-best-note">estimated savings/month · ${inr(monthly * 12)} per year</p>
+      <div class="savings-calculator-best-body">
+        <p class="savings-calculator-best-flag">Best match for you</p>
+        <h3 class="savings-calculator-best-name">${d.name || ''}</h3>
+        ${d.badge ? `<span class="savings-calculator-best-badge">${d.badge}</span>` : ''}
+      </div>
     `;
-    const applyA = document.createElement('a');
-    applyA.href = best.href;
-    applyA.className = 'savings-calculator-apply';
-    applyA.textContent = best.applyText || `Apply for ${best.name}`;
-    best.el.append(applyA);
+    if (d.imageSrc) {
+      const media = document.createElement('div');
+      media.className = 'savings-calculator-best-media';
+      media.append(createOptimizedPicture(d.imageSrc, d.imageAlt || d.name || '', false, [{ width: '500' }]));
+      best.el.append(media);
+    }
+    if (d.applyText) {
+      const applyA = document.createElement('a');
+      applyA.href = d.applyHref || '#';
+      applyA.className = 'savings-calculator-apply';
+      applyA.textContent = d.applyText;
+      best.el.querySelector('.savings-calculator-best-body').append(applyA);
+    }
     result.append(best.el);
 
-    const others = ranked.slice(1);
+    const others = cards.filter((c) => c !== best);
     if (others.length) {
       const oh = document.createElement('p');
       oh.className = 'savings-calculator-others-title';
@@ -270,13 +269,21 @@ export default function decorate(block) {
       const list = document.createElement('div');
       list.className = 'savings-calculator-others';
       others.forEach((c) => {
-        const m = cardSavings(c);
+        const od = c.data;
         c.el.className = 'savings-calculator-other';
         c.el.innerHTML = `
-          <span class="savings-calculator-other-name">${c.name}</span>
-          <span class="savings-calculator-other-amount">${inr(m)}</span>
-          <span class="savings-calculator-other-note">estimated savings/month</span>
+          <div class="savings-calculator-other-body">
+            <p class="savings-calculator-other-flag">Best match for you</p>
+            <span class="savings-calculator-other-name">${od.name || ''}</span>
+            ${od.badge ? `<span class="savings-calculator-other-badge">${od.badge}</span>` : ''}
+          </div>
         `;
+        if (od.imageSrc) {
+          const media = document.createElement('div');
+          media.className = 'savings-calculator-other-media';
+          media.append(createOptimizedPicture(od.imageSrc, od.imageAlt || od.name || '', false, [{ width: '300' }]));
+          c.el.append(media);
+        }
         list.append(c.el);
       });
       result.append(list);

@@ -134,7 +134,7 @@
     "id": "savings-calculator",
     "components": [
       "savings-calculator-category",
-      "savings-calculator-card"
+      "savings-calculator-ref"
     ]
   },
   {

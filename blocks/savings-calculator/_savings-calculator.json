@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Calculator Card",
-      "id": "savings-calculator-card",
+      "title": "Calculator Card (Reference)",
+      "id": "savings-calculator-ref",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Calculator Card",
-              "model": "savings-calculator-card"
+              "name": "Calculator Card (Reference)",
+              "model": "savings-calculator-ref"
             }
           }
         }
@@ -104,40 +104,22 @@
           "valueType": "string",
           "name": "cat_range",
           "label": "Min,Max,Step (three numbers, e.g. 500,30000,500)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "cat_tag",
+          "label": "Match Tag (card filter tag this spend maps to, e.g. Cashback)"
         }
       ]
     },
     {
-      "id": "savings-calculator-card",
+      "id": "savings-calculator-ref",
       "fields": [
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "card_name",
-          "label": "Card Name"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "card_meta",
-          "label": "Badge | Annual Fee (pipe-separated)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "card_rates",
-          "label": "Cashback Rates % per category (comma-separated, matches category order)"
-        },
-        {
           "component": "aem-content",
-          "name": "applyLink",
-          "label": "Apply Link"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "applyLinkText",
-          "label": "Apply Button Text"
+          "name": "cardRef",
+          "label": "Credit Card Fragment"
         }
       ]
     }
@@ -147,7 +129,7 @@
       "id": "savings-calculator",
       "components": [
         "savings-calculator-category",
-        "savings-calculator-card"
+        "savings-calculator-ref"
       ]
     }
   ]
