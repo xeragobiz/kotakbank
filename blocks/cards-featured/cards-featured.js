@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { loadCreditCard, cardReferencePath } from '../../scripts/credit-card.js';
+import { loadCreditCard, cardReferencePath, isCardReference } from '../../scripts/credit-card.js';
 
 /**
  * Cards Featured — "Popular Kotak Credit Cards".
@@ -122,12 +122,13 @@ function inlineCardData(row) {
 }
 
 export default async function decorate(block) {
-  // Classify rows by CELL COUNT, not picture presence: header fields render as
-  // single-cell rows, while each card is either a multi-cell inline row or a
-  // single-anchor reference row.
+  // Classify rows: header fields are single-cell rows; a card is either a
+  // multi-cell inline row or a reference item (which may be empty before its
+  // fragment field is set, so it is detected by its *-ref model, not by cells).
   const rows = [...block.children];
-  const itemRows = rows.filter((r) => r.children.length > 1 || cardReferencePath(r));
-  const chromeRows = rows.filter((r) => !(r.children.length > 1 || cardReferencePath(r)));
+  const isItem = (r) => r.children.length > 1 || isCardReference(r);
+  const itemRows = rows.filter(isItem);
+  const chromeRows = rows.filter((r) => !isItem(r));
 
   // header chrome: eyebrow, heading, description (text) + bottom CTA link
   const texts = [];
@@ -179,8 +180,13 @@ export default async function decorate(block) {
   // resolved yet, e.g. in the editor) so the item keeps its data-aue-*
   // instrumentation and stays visible/editable in Universal Editor.
   const pending = itemRows.map(async (row) => {
-    const refPath = cardReferencePath(row);
-    const data = refPath ? await loadCreditCard(refPath) : inlineCardData(row);
+    let data;
+    if (isCardReference(row)) {
+      const refPath = cardReferencePath(row);
+      data = refPath ? await loadCreditCard(refPath) : null;
+    } else {
+      data = inlineCardData(row);
+    }
     const li = renderCard(data || {});
     moveInstrumentation(row, li);
     return li;

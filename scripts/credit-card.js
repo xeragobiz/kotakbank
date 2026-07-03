@@ -88,15 +88,31 @@ export async function loadCreditCard(path) {
 }
 
 /**
- * A CF-reference item row holds a single anchor pointing at a fragment path and
- * carries no image/content cells of its own.
+ * Whether a row is a Credit Card reference item. A reference item is tagged
+ * with a *-ref model in Universal Editor (present even before its fragment
+ * field is filled), or — outside the editor — is a single-anchor row pointing
+ * at a fragment path with no image/content cells of its own.
  * @param {Element} row the item row
- * @returns {string|null} the referenced path, or null if this is an inline item
+ * @returns {boolean}
+ */
+export function isCardReference(row) {
+  const model = row.getAttribute('data-aue-model') || '';
+  if (model.endsWith('-ref')) return true;
+  if (row.querySelector('picture')) return false;
+  const anchors = row.querySelectorAll('a');
+  if (anchors.length !== 1) return false;
+  const href = anchors[0].getAttribute('href') || '';
+  return href.startsWith('/') && !href.startsWith('//');
+}
+
+/**
+ * The fragment path referenced by a reference item, or '' if not yet set.
+ * @param {Element} row the item row
+ * @returns {string}
  */
 export function cardReferencePath(row) {
-  if (row.querySelector('picture')) return null;
   const anchors = row.querySelectorAll('a');
-  if (anchors.length !== 1) return null;
+  if (anchors.length !== 1) return '';
   const href = anchors[0].getAttribute('href') || '';
-  return href.startsWith('/') && !href.startsWith('//') ? href : null;
+  return href.startsWith('/') && !href.startsWith('//') ? href : '';
 }

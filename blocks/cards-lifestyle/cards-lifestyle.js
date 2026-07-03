@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { loadCreditCard, cardReferencePath } from '../../scripts/credit-card.js';
+import { loadCreditCard, cardReferencePath, isCardReference } from '../../scripts/credit-card.js';
 
 /**
  * Cards Lifestyle — "A Credit Card for every need".
@@ -105,9 +105,12 @@ function inlineCardData(row) {
 }
 
 export default async function decorate(block) {
+  // items: inline rows (multi-cell) or reference items (detected by *-ref
+  // model, so an empty reference row is still recognized before its field set)
   const rows = [...block.children];
-  const itemRows = rows.filter((r) => r.querySelector('picture') || cardReferencePath(r));
-  const chromeRows = rows.filter((r) => !(r.querySelector('picture') || cardReferencePath(r)));
+  const isItem = (r) => r.children.length > 1 || isCardReference(r);
+  const itemRows = rows.filter(isItem);
+  const chromeRows = rows.filter((r) => !isItem(r));
 
   // chrome: heading, sub-heading, filter list (plain text rows, in order)
   const texts = chromeRows
@@ -157,8 +160,13 @@ export default async function decorate(block) {
   // resolved yet, e.g. in the editor) so the item keeps its data-aue-*
   // instrumentation and stays visible/editable in Universal Editor.
   const pending = itemRows.map(async (row) => {
-    const refPath = cardReferencePath(row);
-    const data = refPath ? await loadCreditCard(refPath) : inlineCardData(row);
+    let data;
+    if (isCardReference(row)) {
+      const refPath = cardReferencePath(row);
+      data = refPath ? await loadCreditCard(refPath) : null;
+    } else {
+      data = inlineCardData(row);
+    }
     const li = renderCard(data || {});
     moveInstrumentation(row, li);
     return li;
