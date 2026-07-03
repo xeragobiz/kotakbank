@@ -112,21 +112,27 @@ export default async function decorate(block) {
   const itemRows = rows.filter(isItem);
   const chromeRows = rows.filter((r) => !isItem(r));
 
-  // chrome fields in authored order (grouped filter fields share a cell and
-  // render as separate paragraphs, so flatten every chrome paragraph in
-  // document order): heading, subtitle, filter1_question, filter1_tabs,
-  // filter2_question, filter2_chips.
-  const chromeText = [];
-  chromeRows.forEach((r) => {
-    const cell = r.querySelector(':scope > div') || r;
-    const paras = [...cell.querySelectorAll(':scope > p')];
-    if (paras.length) paras.forEach((p) => chromeText.push(p.textContent.trim()));
-    else chromeText.push(cell.textContent.trim());
-  });
-  const [heading, subtitle, filtersLabel, filtersRaw, categoriesLabel, categoriesRaw] = chromeText;
-  const splitList = (s) => (s || '').split(',').map((t) => t.trim()).filter(Boolean);
-  const filters = splitList(filtersRaw).length ? splitList(filtersRaw) : ['All'];
-  const categories = splitList(categoriesRaw);
+  // chrome rows in authored field order (empty rows preserved for positional
+  // mapping): heading, sub-heading, filters, categories.
+  // Each filter field may be "Label | a, b, c" — the part before the optional
+  // pipe is the row label, the rest is a comma-separated chip list.
+  const chromeText = chromeRows
+    .map((r) => (r.querySelector(':scope > div') || r).textContent.trim());
+  const [heading, subtitle, filtersRaw, categoriesRaw] = chromeText;
+  const parseRow = (s) => {
+    const raw = s || '';
+    const [labelPart, listPart] = raw.includes('|') ? raw.split('|') : ['', raw];
+    return {
+      label: labelPart.trim(),
+      values: (listPart || '').split(',').map((t) => t.trim()).filter(Boolean),
+    };
+  };
+  const row1 = parseRow(filtersRaw);
+  const row2 = parseRow(categoriesRaw);
+  const filtersLabel = row1.label;
+  const filters = row1.values.length ? row1.values : ['All'];
+  const categoriesLabel = row2.label;
+  const categories = row2.values;
 
   const wrapper = document.createElement('div');
   wrapper.className = 'cards-lifestyle-inner';
