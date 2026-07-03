@@ -1,3 +1,5 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 /**
  * Savings Calculator — spend sliders that estimate monthly savings and
  * surface the best-match Kotak card. Calculation is hardcoded; categories,
@@ -7,29 +9,38 @@
  *  - Spend Category: cat_label, cat_icon, cat_default, cat_range(min,max,step)
  *  - Calculator Card: card_name, card_meta("badge|fee"),
  *      card_rates(csv % per category), applyLink(+text)
+ *
+ * Item rows are classified by their data-aue-model first (so empty/new items
+ * added in Universal Editor are still recognized), falling back to content
+ * heuristics for the published context. Each category's instrumentation is
+ * moved onto its slider field, and each card gets one always-present
+ * instrumented node (reused across slider updates) so no child item
+ * disappears from the editor.
  * @param {Element} block the block element
  */
-const inr = (n) => `₹${Math.round(n).toLocaleString('en-IN')}`;
+const inr = (n) => `₹${Math.round(n || 0).toLocaleString('en-IN')}`;
 
 export default function decorate(block) {
   const rows = [...block.children];
 
-  // classify item rows: a card row has an <a>; a category row has a numeric
-  // range triple; chrome rows are the heading texts.
   const categories = [];
   const cards = [];
   const chrome = [];
   rows.forEach((r) => {
+    const model = r.getAttribute('data-aue-model') || '';
     const cells = [...r.children].map((c) => c.querySelector(':scope > div') || c);
-    const hasLink = cells.some((c) => c.querySelector('a'));
     const joined = cells.map((c) => c.textContent.trim());
-    const isCategory = cells.some((c) => /^\s*\d+\s*,\s*\d+\s*,\s*\d+/.test(c.textContent));
-    if (hasLink) {
-      // card: name, "badge|fee", rates csv, apply link
+    const hasLink = cells.some((c) => c.querySelector('a'));
+    const hasRange = cells.some((c) => /^\s*\d+\s*,\s*\d+\s*,\s*\d+/.test(c.textContent));
+    const isCard = model === 'savings-calculator-card' || (!model && hasLink);
+    const isCategory = model === 'savings-calculator-category' || (!model && hasRange);
+
+    if (isCard) {
       const link = cells.find((c) => c.querySelector('a'))?.querySelector('a');
       const [name, meta, rates] = joined.filter((t) => t && !/^https?:/.test(t));
       const [badge, fee] = (meta || '').split('|').map((s) => s.trim());
       cards.push({
+        row: r,
         name: name || '',
         badge: badge || '',
         fee: fee || '',
@@ -39,11 +50,20 @@ export default function decorate(block) {
       });
     } else if (isCategory) {
       const rangeCell = cells.find((c) => /\d+\s*,\s*\d+\s*,\s*\d+/.test(c.textContent));
-      const [min, max, step] = rangeCell.textContent.split(',').map((n) => parseInt(n.trim(), 10));
+      let min = 0;
+      let max = 30000;
+      let step = 500;
+      if (rangeCell) {
+        const parts = rangeCell.textContent.split(',').map((n) => parseInt(n.trim(), 10));
+        [min, max, step] = [
+          Number.isFinite(parts[0]) ? parts[0] : 0,
+          Number.isFinite(parts[1]) ? parts[1] : 30000,
+          Number.isFinite(parts[2]) ? parts[2] : 500,
+        ];
+      }
       const numCell = cells.find((c) => c !== rangeCell && /^\s*\d+\s*$/.test(c.textContent));
       const textCells = cells.filter((c) => c !== rangeCell && c !== numCell
         && c.textContent.trim());
-      // label + emoji among textCells (emoji is the short one)
       let label = '';
       let icon = '';
       textCells.forEach((c) => {
@@ -51,6 +71,7 @@ export default function decorate(block) {
         if ([...t].length <= 3) icon = t; else label = t;
       });
       categories.push({
+        row: r,
         label,
         icon,
         def: numCell ? parseInt(numCell.textContent.trim(), 10) : min,
@@ -110,6 +131,8 @@ export default function decorate(block) {
   categories.forEach((cat, i) => {
     const field = document.createElement('div');
     field.className = 'savings-calculator-field';
+    // keep the category child editable in Universal Editor
+    moveInstrumentation(cat.row, field);
 
     const label = document.createElement('div');
     label.className = 'savings-calculator-field-label';
@@ -168,20 +191,29 @@ export default function decorate(block) {
 
   wrapper.append(grid);
 
-  // compute annual/monthly savings for a card given current spend state
+  // one persistent, instrumented node per authored card. These are reused
+  // (re-appended + re-filled) on every slider update so a card never loses
+  // its data-aue-* and never disappears from the editor.
+  cards.forEach((card) => {
+    const el = document.createElement('div');
+    moveInstrumentation(card.row, el);
+    card.el = el;
+  });
+
+  // compute monthly savings for a card given current spend state
   const cardSavings = (card) => state.reduce((sum, spendVal, i) => {
     const rate = (card.rates[i] || 0) / 100;
     return sum + spendVal * rate;
   }, 0);
 
   function update() {
-    // total spend
     const total = state.reduce((a, b) => a + b, 0);
     spendTotal.textContent = `${inr(total)}/mo`;
 
-    // per-field value + best card's per-category savings
     const ranked = [...cards].sort((a, b) => cardSavings(b) - cardSavings(a));
     const best = ranked[0];
+
+    // per-field value + best card's per-category savings
     spend.querySelectorAll('.savings-calculator-field').forEach((field) => {
       const i = parseInt(field.dataset.index, 10);
       const rate = best ? (best.rates[i] || 0) / 100 : 0;
@@ -189,13 +221,13 @@ export default function decorate(block) {
       field.valueEl.innerHTML = `${inr(state[i])} <span class="savings-calculator-saved">Save ${inr(saved)}</span>`;
     });
 
-    // result panel
-    result.innerHTML = '';
+    // rebuild result layout while REUSING the persistent card nodes
+    result.replaceChildren();
     if (!best) return;
+
     const monthly = cardSavings(best);
-    const bestCard = document.createElement('div');
-    bestCard.className = 'savings-calculator-best';
-    bestCard.innerHTML = `
+    best.el.className = 'savings-calculator-best';
+    best.el.innerHTML = `
       <p class="savings-calculator-best-flag">Best match for you</p>
       <h3 class="savings-calculator-best-name">${best.name}</h3>
       ${best.badge ? `<span class="savings-calculator-best-badge">${best.badge}</span>` : ''}
@@ -206,8 +238,8 @@ export default function decorate(block) {
     applyA.href = best.href;
     applyA.className = 'savings-calculator-apply';
     applyA.textContent = best.applyText || `Apply for ${best.name}`;
-    bestCard.append(applyA);
-    result.append(bestCard);
+    best.el.append(applyA);
+    result.append(best.el);
 
     const others = ranked.slice(1);
     if (others.length) {
@@ -219,14 +251,13 @@ export default function decorate(block) {
       list.className = 'savings-calculator-others';
       others.forEach((c) => {
         const m = cardSavings(c);
-        const item = document.createElement('div');
-        item.className = 'savings-calculator-other';
-        item.innerHTML = `
+        c.el.className = 'savings-calculator-other';
+        c.el.innerHTML = `
           <span class="savings-calculator-other-name">${c.name}</span>
           <span class="savings-calculator-other-amount">${inr(m)}</span>
           <span class="savings-calculator-other-note">estimated savings/month</span>
         `;
-        list.append(item);
+        list.append(c.el);
       });
       result.append(list);
     }
