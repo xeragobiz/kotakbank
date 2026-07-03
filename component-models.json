@@ -269,7 +269,13 @@
         "component": "text",
         "valueType": "string",
         "name": "filters",
-        "label": "Filter Tabs (comma-separated, first is default)"
+        "label": "Filter Row 1 — optional 'Label | ' then comma-separated tabs (first is default)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "categories",
+        "label": "Filter Row 2 — optional 'Label | ' then comma-separated chips (optional row)"
       }
     ]
   },

@@ -112,13 +112,27 @@ export default async function decorate(block) {
   const itemRows = rows.filter(isItem);
   const chromeRows = rows.filter((r) => !isItem(r));
 
-  // chrome: heading, sub-heading, filter list (plain text rows, in order)
-  const texts = chromeRows
-    .map((r) => (r.querySelector(':scope > div') || r).textContent.trim())
-    .filter(Boolean);
-  const [heading, subtitle, filtersRaw] = texts;
-  const filters = (filtersRaw || 'All')
-    .split(',').map((t) => t.trim()).filter(Boolean);
+  // chrome rows in authored field order (empty rows preserved for positional
+  // mapping): heading, sub-heading, filters, categories.
+  // Each filter field may be "Label | a, b, c" — the part before the optional
+  // pipe is the row label, the rest is a comma-separated chip list.
+  const chromeText = chromeRows
+    .map((r) => (r.querySelector(':scope > div') || r).textContent.trim());
+  const [heading, subtitle, filtersRaw, categoriesRaw] = chromeText;
+  const parseRow = (s) => {
+    const raw = s || '';
+    const [labelPart, listPart] = raw.includes('|') ? raw.split('|') : ['', raw];
+    return {
+      label: labelPart.trim(),
+      values: (listPart || '').split(',').map((t) => t.trim()).filter(Boolean),
+    };
+  };
+  const row1 = parseRow(filtersRaw);
+  const row2 = parseRow(categoriesRaw);
+  const filtersLabel = row1.label;
+  const filters = row1.values.length ? row1.values : ['All'];
+  const categoriesLabel = row2.label;
+  const categories = row2.values;
 
   const wrapper = document.createElement('div');
   wrapper.className = 'cards-lifestyle-inner';
@@ -136,21 +150,46 @@ export default async function decorate(block) {
     wrapper.append(p);
   }
 
-  // filter tabs
-  const tabs = document.createElement('div');
-  tabs.className = 'cards-lifestyle-tabs';
-  tabs.setAttribute('role', 'tablist');
-  filters.forEach((label, i) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'cards-lifestyle-tab';
-    btn.textContent = label;
-    btn.dataset.filter = label.toLowerCase();
-    btn.setAttribute('role', 'tab');
-    btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-    tabs.append(btn);
-  });
-  wrapper.append(tabs);
+  // filter panel: one or two rows, each a label + a set of chips
+  const panel = document.createElement('div');
+  panel.className = 'cards-lifestyle-filters';
+
+  const buildRow = (labelText, values, rowClass, withDefaultAll) => {
+    const row = document.createElement('div');
+    row.className = `cards-lifestyle-filter-row ${rowClass}`;
+    if (labelText) {
+      const lbl = document.createElement('span');
+      lbl.className = 'cards-lifestyle-filter-label';
+      lbl.textContent = labelText;
+      row.append(lbl);
+    }
+    const group = document.createElement('div');
+    group.className = 'cards-lifestyle-tabs';
+    group.setAttribute('role', 'tablist');
+    values.forEach((label, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cards-lifestyle-tab';
+      btn.textContent = label;
+      btn.dataset.filter = label.toLowerCase();
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', withDefaultAll && i === 0 ? 'true' : 'false');
+      group.append(btn);
+    });
+    row.append(group);
+    return { row, group };
+  };
+
+  const { row: tabsRow, group: tabs } = buildRow(filtersLabel, filters, 'cards-lifestyle-filter-primary', true);
+  panel.append(tabsRow);
+
+  let categoryGroup = null;
+  if (categories.length) {
+    const { row: catRow, group } = buildRow(categoriesLabel, categories, 'cards-lifestyle-filter-secondary', false);
+    categoryGroup = group;
+    panel.append(catRow);
+  }
+  wrapper.append(panel);
 
   // card grid — reference cards load async then fill in authored order
   const list = document.createElement('ul');
@@ -176,21 +215,41 @@ export default async function decorate(block) {
   cards.forEach((li) => list.append(li));
   wrapper.append(list);
 
-  // filtering behaviour
-  const applyFilter = (filter) => {
+  // filtering: a card must match BOTH the active primary tab and (if set) the
+  // active secondary category. "all" (primary default) matches everything.
+  let activeFilter = (filters[0] || 'All').toLowerCase();
+  let activeCategory = '';
+  const cardTags = (li) => (li.dataset.tags || '').split(',').map((t) => t.trim()).filter(Boolean);
+  const applyFilters = () => {
     list.querySelectorAll(':scope > li').forEach((li) => {
-      const tags = li.dataset.tags || '';
-      const show = filter === 'all' || tags.split(',').map((t) => t.trim()).includes(filter);
-      li.hidden = !show;
+      const tags = cardTags(li);
+      const okPrimary = activeFilter === 'all' || tags.includes(activeFilter);
+      const okCategory = !activeCategory || tags.includes(activeCategory);
+      li.hidden = !(okPrimary && okCategory);
     });
   };
+
   tabs.addEventListener('click', (e) => {
     const btn = e.target.closest('.cards-lifestyle-tab');
     if (!btn) return;
     tabs.querySelectorAll('.cards-lifestyle-tab').forEach((b) => b.setAttribute('aria-selected', 'false'));
     btn.setAttribute('aria-selected', 'true');
-    applyFilter(btn.dataset.filter);
+    activeFilter = btn.dataset.filter;
+    applyFilters();
   });
+
+  if (categoryGroup) {
+    categoryGroup.addEventListener('click', (e) => {
+      const btn = e.target.closest('.cards-lifestyle-tab');
+      if (!btn) return;
+      const already = btn.getAttribute('aria-selected') === 'true';
+      categoryGroup.querySelectorAll('.cards-lifestyle-tab').forEach((b) => b.setAttribute('aria-selected', 'false'));
+      // toggle: clicking the active chip clears the category filter
+      btn.setAttribute('aria-selected', already ? 'false' : 'true');
+      activeCategory = already ? '' : btn.dataset.filter;
+      applyFilters();
+    });
+  }
 
   block.textContent = '';
   block.append(wrapper);

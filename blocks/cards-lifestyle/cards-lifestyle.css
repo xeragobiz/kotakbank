@@ -29,11 +29,38 @@
   font-size: var(--body-font-size-xs);
 }
 
+/* filter panel: bordered white card wrapping one or two filter rows */
+.cards-lifestyle .cards-lifestyle-filters {
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  border: 1px solid var(--cc-card-border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.cards-lifestyle .cards-lifestyle-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cards-lifestyle .cards-lifestyle-filter-row + .cards-lifestyle-filter-row {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--cc-card-border);
+}
+
+.cards-lifestyle .cards-lifestyle-filter-label {
+  flex: 0 0 auto;
+  color: var(--cc-ink);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+}
+
 /* filter tabs */
 .cards-lifestyle .cards-lifestyle-tabs {
   display: flex;
   gap: 8px;
-  margin-bottom: 24px;
   overflow-x: auto;
   padding-bottom: 4px;
   scrollbar-width: none;
