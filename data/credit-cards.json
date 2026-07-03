@@ -24,7 +24,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/CardItem.png"
           }
         },
         {
@@ -49,7 +49,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/Rectangle 1 (2).png"
           }
         },
         {
@@ -74,7 +74,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/Rectangle 1.png"
           }
         },
         {
@@ -99,7 +99,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/Container.png"
           }
         },
         {
@@ -124,7 +124,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/Rectangle 1 (1).png"
           }
         }
       ]
