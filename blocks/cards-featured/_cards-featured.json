@@ -64,10 +64,11 @@
           "label": "Heading"
         },
         {
-          "component": "text",
-          "valueType": "string",
+          "component": "richtext",
           "name": "description",
-          "label": "Description"
+          "value": "",
+          "label": "Description (supports a View all link)",
+          "valueType": "string"
         },
         {
           "component": "aem-content",

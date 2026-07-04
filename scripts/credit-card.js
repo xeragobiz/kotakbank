@@ -102,7 +102,10 @@ export function isCardReference(row) {
   const anchors = row.querySelectorAll('a');
   if (anchors.length !== 1) return false;
   const href = anchors[0].getAttribute('href') || '';
-  return href.startsWith('/') && !href.startsWith('//');
+  // outside the editor, only treat a bare link to a Credit Card fragment path
+  // as a reference (avoids capturing a "View all" or bottom-CTA link)
+  return /\/cards-content-fragments\//.test(href)
+    && anchors[0].textContent.trim() === row.textContent.trim();
 }
 
 /**

@@ -130,22 +130,31 @@ export default async function decorate(block) {
   const itemRows = rows.filter(isItem);
   const chromeRows = rows.filter((r) => !isItem(r));
 
-  // header chrome: eyebrow, heading, description (text) + bottom CTA link
+  // header chrome (in order): eyebrow, heading, description (richtext, may hold
+  // a "View all" link), and a standalone bottom CTA link cell. The description
+  // is a rich cell containing block content (p/ul); the bottom CTA is a cell
+  // whose only content is a single link.
   const texts = [];
+  let descCell = null;
   let ctaHref = '';
   let ctaText = '';
   chromeRows.forEach((r) => {
     const cell = r.querySelector(':scope > div') || r;
     const link = cell.querySelector('a');
+    const hasBlock = cell.querySelector('p, ul, ol, h1, h2, h3, h4, h5, h6');
     const txt = cell.textContent.trim();
-    if (link) {
+    if (hasBlock) {
+      // richtext description (keep its markup, including any View all link)
+      if (!descCell) descCell = cell;
+    } else if (link) {
+      // standalone bottom CTA link
       ctaHref = link.getAttribute('href');
       if (link.textContent.trim()) ctaText = link.textContent.trim();
     } else if (txt) {
       texts.push(txt);
     }
   });
-  const [eyebrow, heading, description] = texts;
+  const [eyebrow, heading] = texts;
 
   const wrapper = document.createElement('div');
   wrapper.className = 'cards-featured-inner';
@@ -164,11 +173,11 @@ export default async function decorate(block) {
     h.textContent = heading;
     header.append(h);
   }
-  if (description) {
-    const p = document.createElement('p');
-    p.className = 'cards-featured-desc';
-    p.textContent = description;
-    header.append(p);
+  if (descCell) {
+    const desc = document.createElement('div');
+    desc.className = 'cards-featured-desc';
+    [...descCell.childNodes].forEach((n) => desc.append(n.cloneNode(true)));
+    header.append(desc);
   }
   wrapper.append(header);
 
