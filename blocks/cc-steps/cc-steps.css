@@ -35,6 +35,7 @@
 
 /* step cards */
 .cc-steps .cc-steps-list {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
@@ -43,7 +44,21 @@
   list-style: none;
 }
 
+/* mobile: vertical connector running down between the stacked cards */
+.cc-steps .cc-steps-list::before {
+  content: "";
+  position: absolute;
+  top: 40px;
+  bottom: 40px;
+  left: 39px; /* ~ icon center inside card padding (24px pad + 20px half-icon) */
+  width: 2px;
+  background: linear-gradient(180deg, #00005a, var(--cc-red));
+  z-index: 0;
+}
+
 .cc-steps .cc-steps-item {
+  position: relative;
+  z-index: 1; /* card paints over the connector */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,14 +155,10 @@
   /* connector sits at the icon height; cards (opaque) mask it,
      leaving dark→red segments visible in the gaps */
   .cc-steps .cc-steps-list::before {
-    content: "";
-    position: absolute;
-    top: 60px; /* ~ icon vertical center inside card padding */
-    left: 12%;
-    right: 12%;
+    inset: 60px 12% auto; /* icon-row height; horizontal band, no bottom */
+    width: auto;
     height: 2px;
     background: linear-gradient(90deg, #00005a, var(--cc-red));
-    z-index: 0;
   }
 
   .cc-steps .cc-steps-item {
