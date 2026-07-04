@@ -62,10 +62,11 @@ main > .section > .cc-hero-wrapper {
   font-weight: 400;
 }
 
-/* CTAs */
+/* CTAs — stacked on mobile (secondary drops to the next line), row on desktop */
 .cc-hero .cc-hero-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
 }
 
@@ -121,5 +122,11 @@ main > .section > .cc-hero-wrapper {
 
   .cc-hero .cc-hero-content p {
     font-size: var(--body-font-size-s);
+  }
+
+  /* side-by-side CTAs on desktop */
+  .cc-hero .cc-hero-actions {
+    flex-flow: row wrap;
+    align-items: center;
   }
 }
