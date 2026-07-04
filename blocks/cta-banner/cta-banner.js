@@ -1,29 +1,39 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+
 /**
  * CTA Banner — "Ready to take the next step?".
- * Full-width gradient band with a heading and a single Apply button.
- * Rows (in model order): heading, cta link, cta text (link+text collapse).
+ * Full-width band (gradient by default, or an optional background image) with a
+ * heading and a single Apply button.
+ * Rows (in model order): background image, heading, cta link, cta text.
  * @param {Element} block the block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
   const cellOf = (r) => (r ? r.querySelector(':scope > div') || r : null);
 
-  let heading = '';
-  let ctaHref = '';
-  let ctaText = '';
-  rows.forEach((r) => {
-    const cell = cellOf(r);
-    if (!cell) return;
-    const link = cell.querySelector('a');
-    const txt = cell.textContent.trim();
-    if (link) {
-      ctaHref = link.getAttribute('href');
-      if (link.textContent.trim()) ctaText = link.textContent.trim();
-    } else if (txt) {
-      if (!heading) heading = txt;
-      else if (!ctaText) ctaText = txt;
-    }
-  });
+  const cells = rows.map(cellOf).filter(Boolean);
+  const imageCell = cells.find((c) => c.querySelector('picture, img'));
+  const linkCell = cells.find((c) => c.querySelector('a'));
+  // text cells in order (excluding image/link): [imageAlt?, heading, ctaText?]
+  const textCells = cells.filter((c) => c !== imageCell && c !== linkCell
+    && c.textContent.trim());
+  const bgImg = imageCell ? imageCell.querySelector('img') : null;
+  // when an image is present the first text cell is its alt; the heading is the
+  // next text cell (falls back to the first when no image/alt is authored)
+  const texts = textCells.map((c) => c.textContent.trim());
+  const bgAlt = bgImg && texts.length > 1 ? texts.shift() : '';
+  const heading = texts.shift() || '';
+  const link = linkCell ? linkCell.querySelector('a') : null;
+  const ctaHref = link ? link.getAttribute('href') : '';
+  const ctaText = (link && link.textContent.trim()) || texts.shift() || '';
+
+  // optional background image layer (gradient shows as fallback if none)
+  let media = null;
+  if (bgImg) {
+    media = document.createElement('div');
+    media.className = 'cta-banner-media';
+    media.append(createOptimizedPicture(bgImg.src, bgAlt || bgImg.getAttribute('alt') || '', false, [{ width: '1600' }]));
+  }
 
   const inner = document.createElement('div');
   inner.className = 'cta-banner-inner';
@@ -43,5 +53,9 @@ export default function decorate(block) {
   }
 
   block.textContent = '';
+  if (media) {
+    block.classList.add('cta-banner-has-image');
+    block.append(media);
+  }
   block.append(inner);
 }

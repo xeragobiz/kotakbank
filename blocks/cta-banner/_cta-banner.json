@@ -21,6 +21,19 @@
       "id": "cta-banner",
       "fields": [
         {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Background Image (upload from assets)",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Background Image Alt Text"
+        },
+        {
           "component": "text",
           "valueType": "string",
           "name": "title",
