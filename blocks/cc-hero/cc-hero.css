@@ -10,6 +10,13 @@
   display: grid;
 }
 
+/* full-bleed: span the full page width, ignoring section max-width/padding.
+   Scoped under main > .section to outweigh the global section-div width rule. */
+main > .section > .cc-hero-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
 .cc-hero .cc-hero-image {
   grid-area: 1 / 1;
   line-height: 0;

@@ -11,6 +11,13 @@
   background: linear-gradient(90deg, var(--cc-orange), var(--cc-red));
 }
 
+/* full-bleed: span the full page width, ignoring section max-width/padding.
+   Scoped under main > .section to outweigh the global section-div width rule. */
+main > .section > .cta-banner-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
 /* faint infinity/brand motif in the corner */
 .cta-banner::after {
   content: "";
