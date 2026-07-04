@@ -29,11 +29,11 @@ footer .footer-columns {
 }
 
 @media (width >= 600px) {
-  footer .footer-columns { grid-template-columns: repeat(2, 1fr); }
+  footer .footer-columns { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (width >= 900px) {
-  footer .footer-columns { grid-template-columns: repeat(4, 1fr); }
+  footer .footer-columns { grid-template-columns: repeat(6, 1fr); }
 }
 
 footer .footer-col-title {
