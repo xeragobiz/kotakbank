@@ -87,7 +87,7 @@ main > .section > .cta-banner-wrapper {
   justify-content: center;
   align-self: stretch; /* wider button on mobile */
   width: 100%;
-  max-width: 320px;
+  max-width: 420px;
   box-sizing: border-box;
   min-height: 44px;
   padding: 12px 40px;

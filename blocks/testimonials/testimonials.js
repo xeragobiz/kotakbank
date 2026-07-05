@@ -105,6 +105,8 @@ export default function decorate(block) {
     track.append(li);
   });
 
+  viewport.append(track);
+
   // carousel wraps the viewport so side arrows can be centered against the
   // card row (on mobile they sit on the left/right edges of the card)
   const carousel = document.createElement('div');

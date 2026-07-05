@@ -97,9 +97,11 @@
   font-size: 12px;
 }
 
-/* carousel wrapper — anchors the side arrows on mobile */
+/* carousel wrapper — anchors the side arrows on mobile.
+   Side padding creates gutters so the arrows sit beside (not over) the card. */
 .testimonials .testimonials-carousel {
   position: relative;
+  padding: 0 34px;
 }
 
 /* mobile: bare chevrons on the left/right, vertically centered on the card row */
@@ -164,6 +166,11 @@
 
   .testimonials .testimonials-card {
     flex-basis: calc(33.333% - 14px);
+  }
+
+  /* desktop: no side gutters (arrows move below the row) */
+  .testimonials .testimonials-carousel {
+    padding: 0;
   }
 
   /* desktop: circular buttons below the row (not side-anchored) */
