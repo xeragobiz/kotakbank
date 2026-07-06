@@ -74,7 +74,9 @@ function renderCard(data) {
     const c = document.createElement('a');
     c.href = data.compareHref || '#';
     c.className = 'cards-featured-compare';
-    c.textContent = data.compareText;
+    // featured cards show the fuller label; the shared fragment field is
+    // just "Compare" (used verbatim by the lifestyle block)
+    c.textContent = /^compare$/i.test(data.compareText) ? 'Compare this Card' : data.compareText;
     actions.append(c);
   }
   if (data.applyText) {
