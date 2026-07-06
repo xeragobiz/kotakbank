@@ -45,7 +45,7 @@ main > .section > .cards-featured-wrapper {
   margin: 0 0 8px;
   color: var(--cc-ink);
   font-family: var(--body-font-family);
-  font-size: var(--heading-font-size-m);
+  font-size: 30px;
   font-weight: 800;
 }
 
@@ -66,6 +66,7 @@ main > .section > .cards-featured-wrapper {
   align-items: center;
   gap: 6px;
   color: var(--cc-navy, #00005a);
+  font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
   text-decoration: none;
@@ -268,7 +269,7 @@ main > .section > .cards-featured-wrapper {
   border-radius: 6px;
   background: #fff;
   color: var(--cc-red);
-  font-size: var(--body-font-size-xs);
+  font-size: 14px;
   font-weight: 700;
   text-decoration: none;
 }
@@ -307,10 +308,6 @@ main > .section > .cards-featured-wrapper {
     grid-column: 3;
     grid-row: 1 / span 2;
     align-self: center;
-  }
-
-  .cards-featured .cards-featured-title {
-    font-size: var(--heading-font-size-l);
   }
 
   .cards-featured .cards-featured-list {
