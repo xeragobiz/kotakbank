@@ -119,6 +119,16 @@ h4 { font-size: var(--heading-font-size-m); }
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xs); }
 
+/* Roboto for page content: bold headings, regular body text.
+   Scoped to main so the header and footer keep their own typography. */
+main {
+  --heading-font-family: roboto, roboto-fallback, sans-serif;
+}
+
+main :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 700;
+}
+
 p,
 dl,
 ol,
