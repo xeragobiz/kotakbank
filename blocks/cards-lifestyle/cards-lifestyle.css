@@ -44,13 +44,20 @@
   gap: 16px;
 }
 
-/* mobile: stack the label above the tabs so the scrollable chip row keeps its
-   full width (a long label otherwise squeezes the tabs group to zero width) */
+/* mobile: stack the label above the tabs so the chip row keeps its full width
+   (a long label otherwise squeezes the tabs group to zero width) and let the
+   chips wrap onto multiple lines so every filter is visible (no swipe). */
 @media (width < 900px) {
   .cards-lifestyle .cards-lifestyle-filter-row {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
+  }
+
+  .cards-lifestyle .cards-lifestyle-tabs {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding-bottom: 0;
   }
 }
 
