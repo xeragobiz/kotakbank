@@ -44,6 +44,16 @@
   gap: 16px;
 }
 
+/* mobile: stack the label above the tabs so the scrollable chip row keeps its
+   full width (a long label otherwise squeezes the tabs group to zero width) */
+@media (width < 900px) {
+  .cards-lifestyle .cards-lifestyle-filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+}
+
 .cards-lifestyle .cards-lifestyle-filter-row + .cards-lifestyle-filter-row {
   margin-top: 12px;
   padding-top: 12px;
