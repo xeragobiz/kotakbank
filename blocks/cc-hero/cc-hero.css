@@ -50,7 +50,7 @@ main > .section > .cc-hero-wrapper {
   margin: 0 0 8px;
   color: var(--cc-red);
   font-family: var(--body-font-family);
-  font-size: var(--heading-font-size-l);
+  font-size: 44px;
   font-weight: 700;
   line-height: 1.15;
 }
@@ -58,7 +58,7 @@ main > .section > .cc-hero-wrapper {
 .cc-hero .cc-hero-content p {
   margin: 0 0 16px;
   color: var(--cc-navy);
-  font-size: var(--body-font-size-xs);
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -78,7 +78,7 @@ main > .section > .cc-hero-wrapper {
   min-height: 0;
   padding: 0 19px;
   border-radius: 6px;
-  font-size: var(--body-font-size-xs);
+  font-size: 18px;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -118,11 +118,6 @@ main > .section > .cc-hero-wrapper {
 
   .cc-hero .cc-hero-content h1 {
     max-width: 620px;
-    font-size: var(--heading-font-size-xl);
-  }
-
-  .cc-hero .cc-hero-content p {
-    font-size: var(--body-font-size-s);
   }
 
   /* side-by-side CTAs on desktop */
