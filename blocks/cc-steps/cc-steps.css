@@ -40,7 +40,7 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
   margin: 0 0 6px;
   color: var(--cc-ink);
   font-family: var(--body-font-family);
-  font-size: var(--heading-font-size-s);
+  font-size: 24px;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -106,7 +106,7 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
   margin: 0 0 6px;
   color: #000;
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size-s);
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -119,7 +119,7 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
 .cc-steps .cc-steps-item-desc {
   margin: 0;
   color: var(--cc-muted);
-  font-size: var(--body-font-size-xs);
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -144,7 +144,7 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
   border-radius: 6px;
   background: #fff;
   color: var(--cc-red);
-  font-size: var(--body-font-size-xs);
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
 }
@@ -157,10 +157,6 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
 @media (width >= 900px) {
   .cc-steps {
     padding: 48px 24px;
-  }
-
-  .cc-steps .cc-steps-title {
-    font-size: 36px;
   }
 
   .cc-steps .cc-steps-subtitle {
