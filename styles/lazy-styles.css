@@ -37,3 +37,18 @@
     opacity: 1;
   }
 }
+
+/* docked variant — right-aligned inside the Help Links section (not floating) */
+.back-to-top.back-to-top-docked {
+  display: inline-flex;
+  position: static;
+  float: right;
+  clear: both;
+  margin-top: 16px;
+  padding: 8px 4px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  color: #131313;
+  opacity: 1;
+}

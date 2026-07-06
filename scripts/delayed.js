@@ -17,13 +17,21 @@ function initBackToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  const toggle = () => {
-    btn.classList.toggle('back-to-top-visible', window.scrollY > 400);
-  };
-  window.addEventListener('scroll', toggle, { passive: true });
-  toggle();
-
-  document.body.append(btn);
+  // Dock the control next to the Help Links section when present (right-aligned
+  // within it); otherwise fall back to a floating button that reveals on scroll.
+  const helpLinks = document.querySelector('.help-links .help-links-inner')
+    || document.querySelector('.help-links');
+  if (helpLinks) {
+    btn.classList.add('back-to-top-docked');
+    helpLinks.append(btn);
+  } else {
+    const toggle = () => {
+      btn.classList.toggle('back-to-top-visible', window.scrollY > 400);
+    };
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+    document.body.append(btn);
+  }
 }
 
 initBackToTop();
