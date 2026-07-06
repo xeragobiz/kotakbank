@@ -8,8 +8,8 @@
   --cc-card-bg: #fff;
   --cc-band-bg: #f5f5f5;
 
-  background: var(--cc-band-bg);
-  padding: 40px 24px;
+  background: #f5f5f5;
+  padding: 0 24px;
 }
 
 .cc-steps .cc-steps-inner {
@@ -138,7 +138,7 @@
 
 @media (width >= 900px) {
   .cc-steps {
-    padding: 40px 24px;
+    padding: 0 24px;
   }
 
   .cc-steps .cc-steps-title {
