@@ -168,27 +168,26 @@
     flex-basis: calc(33.333% - 14px);
   }
 
-  /* desktop: no side gutters (arrows move below the row) */
+  /* desktop: wider side gutters so the circular arrows sit beside the row */
   .testimonials .testimonials-carousel {
-    padding: 0;
+    padding: 0 56px;
   }
 
-  /* desktop: circular buttons below the row (not side-anchored) */
-  .testimonials .testimonials-nav {
-    position: static;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 20px;
-    pointer-events: auto;
-  }
-
+  /* desktop: circular buttons vertically centered on the left/right edges */
   .testimonials .testimonials-nav button {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border: 1px solid var(--cc-card-border);
     border-radius: 50%;
     background: #fff;
-    margin: 0;
+  }
+
+  .testimonials .testimonials-prev {
+    margin-left: 0;
+  }
+
+  .testimonials .testimonials-next {
+    margin-right: 0;
   }
 
   .testimonials .testimonials-nav button:hover {
