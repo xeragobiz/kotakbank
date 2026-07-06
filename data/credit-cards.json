@@ -17,13 +17,14 @@
           "filtertags": {
             "html": "<p>Fuel</p>"
           },
-          "comparetext": null,
+          "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
+            "__typename": "ImageRef",
             "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/CardItem.png"
           }
         },
@@ -42,13 +43,14 @@
           "filtertags": {
             "html": "<p>Travel</p>"
           },
-          "comparetext": "Compare this Card",
+          "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
+            "__typename": "ImageRef",
             "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/Rectangle 1 (2).png"
           }
         },
@@ -67,13 +69,14 @@
           "filtertags": {
             "html": "<p>Cashback</p>\n"
           },
-          "comparetext": "Compare this Card",
+          "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
+            "__typename": "ImageRef",
             "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/Rectangle 1.png"
           }
         },
@@ -92,13 +95,14 @@
           "filtertags": {
             "html": "<p>Entertainment</p>"
           },
-          "comparetext": null,
+          "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
+            "__typename": "ImageRef",
             "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/Container.png"
           }
         },
@@ -117,13 +121,14 @@
           "filtertags": {
             "html": "<p>Shopping</p>"
           },
-          "comparetext": "Compare this Card",
+          "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
+            "__typename": "ImageRef",
             "_path": "/content/dam/kbank-eds/cards/credit-cards/desktop-content/Rectangle 1 (1).png"
           }
         }
