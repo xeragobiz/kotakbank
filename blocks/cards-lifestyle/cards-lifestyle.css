@@ -161,10 +161,31 @@
   padding: 4px 10px;
   border-radius: 999px;
   background: #e7faf2;
-  color: #00bc7d;
+  color: #00bc7d; /* default: cashback green */
   font-size: 11px;
   font-weight: 700;
   white-space: nowrap;
+}
+
+/* per-category badge colors */
+.cards-lifestyle .cards-lifestyle-item-badge[data-badge="best for shopping"] {
+  background: #f2e7fd;
+  color: #7008e7;
+}
+
+.cards-lifestyle .cards-lifestyle-item-badge[data-badge="best for travel"] {
+  background: #e5f2f9;
+  color: #0069a8;
+}
+
+.cards-lifestyle .cards-lifestyle-item-badge[data-badge="best for fuel"] {
+  background: #fbe9e2;
+  color: #ca3500;
+}
+
+.cards-lifestyle .cards-lifestyle-item-badge[data-badge="entry level"] {
+  background: #eef0f2;
+  color: #6a7282;
 }
 
 .cards-lifestyle .cards-lifestyle-item-title {

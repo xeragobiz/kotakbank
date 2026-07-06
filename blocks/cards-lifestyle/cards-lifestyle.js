@@ -42,6 +42,8 @@ function renderCard(data) {
     if (data.badge) {
       const b = document.createElement('span');
       b.className = 'cards-lifestyle-item-badge';
+      // expose the badge text as a data attribute so CSS can color-code it
+      b.dataset.badge = data.badge.toLowerCase();
       b.textContent = data.badge;
       head.append(b);
     }
