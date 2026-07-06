@@ -172,30 +172,36 @@ export default async function decorate(block) {
     h.textContent = heading;
     header.append(h);
   }
+  // description (right-aligned block) and a separate "View all" link pushed to
+  // the far-right edge of the header.
   if (descCell || descText) {
     const desc = document.createElement('div');
     desc.className = 'cards-featured-desc';
+    let viewAll = null;
     if (descCell) {
-      // richtext with an inline link authored: keep markup, tag the anchor
+      // richtext with an inline link authored: keep markup, pull the anchor out
       [...descCell.childNodes].forEach((n) => desc.append(n.cloneNode(true)));
-      const link = desc.querySelector('a');
-      if (link) link.className = 'cards-featured-viewall';
+      viewAll = desc.querySelector('a');
+      if (viewAll) {
+        viewAll.className = 'cards-featured-viewall';
+        viewAll.remove();
+      }
     } else {
-      // plain text; peel a trailing "View all" into an inline link + icon
+      // plain text; peel a trailing "View all" into its own link + icon
       const m = descText.match(/^(.*?)\s*(view all)\s*$/i);
       const [, descBody, viewAllLabel] = m || [];
       const p = document.createElement('p');
-      p.textContent = m ? `${descBody.trim()} ` : descText;
-      if (m) {
-        const link = document.createElement('a');
-        link.className = 'cards-featured-viewall';
-        link.href = ctaHref || '#';
-        link.textContent = viewAllLabel;
-        p.append(link);
-      }
+      p.textContent = m ? descBody.trim() : descText;
       desc.append(p);
+      if (m) {
+        viewAll = document.createElement('a');
+        viewAll.className = 'cards-featured-viewall';
+        viewAll.href = ctaHref || '#';
+        viewAll.textContent = viewAllLabel;
+      }
     }
     header.append(desc);
+    if (viewAll) header.append(viewAll);
   }
   wrapper.append(header);
 

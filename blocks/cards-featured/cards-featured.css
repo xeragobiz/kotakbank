@@ -283,7 +283,7 @@ main > .section > .cards-featured-wrapper {
   /* eyebrow+title on the left, description+View all on the right */
   .cards-featured .cards-featured-header {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
     align-items: center;
     column-gap: 40px;
     margin-bottom: 28px;
@@ -301,6 +301,12 @@ main > .section > .cards-featured-wrapper {
     max-width: 340px;
     text-align: right;
     font-size: var(--body-font-size-xs);
+  }
+
+  .cards-featured .cards-featured-viewall:any-link {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
   }
 
   .cards-featured .cards-featured-title {
