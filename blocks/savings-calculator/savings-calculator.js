@@ -176,11 +176,20 @@ export default async function decorate(block) {
     input.setAttribute('aria-label', cat.label);
     field.append(input);
 
+    // paint the track blue from the start up to the thumb
+    const paint = () => {
+      const pct = ((input.value - input.min) / (input.max - input.min)) * 100;
+      input.style.setProperty('--fill', `${pct}%`);
+    };
+    paint();
+
     input.addEventListener('input', () => {
       state[i] = parseInt(input.value, 10);
+      paint();
       // eslint-disable-next-line no-use-before-define
       update();
     });
+    input.paint = paint;
 
     field.dataset.index = i;
     field.valueEl = value;
@@ -195,7 +204,7 @@ export default async function decorate(block) {
     categories.forEach((c, i) => {
       state[i] = c.def;
       const inp = spend.querySelectorAll('.savings-calculator-slider')[i];
-      if (inp) inp.value = c.def;
+      if (inp) { inp.value = c.def; if (inp.paint) inp.paint(); }
     });
     // eslint-disable-next-line no-use-before-define
     update();

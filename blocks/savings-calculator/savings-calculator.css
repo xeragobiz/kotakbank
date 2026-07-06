@@ -130,12 +130,33 @@
 
 /* slider */
 .savings-calculator .savings-calculator-slider {
+  --fill: 0%;
+
   width: 100%;
   height: 6px;
   border-radius: 3px;
   appearance: none;
-  background: var(--cc-track);
+
+  /* filled (blue) up to the thumb, grey track beyond it */
+  background: linear-gradient(
+    90deg,
+    var(--cc-navy) var(--fill),
+    var(--cc-track) var(--fill)
+  );
   cursor: pointer;
+}
+
+/* keep the fill gradient on the WebKit track element too */
+.savings-calculator .savings-calculator-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: transparent;
+}
+
+.savings-calculator .savings-calculator-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: transparent;
 }
 
 .savings-calculator .savings-calculator-slider::-webkit-slider-thumb {
