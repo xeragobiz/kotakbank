@@ -9,6 +9,17 @@
   --cc-navy: #00005a;
   --cc-highlight-bg: #fff1f2;
   --cc-card-border: #eaeaea;
+
+  background: #f5f5f5;
+  padding: 48px 24px;
+}
+
+/* full-bleed: let the grey band span the full section width, ignoring the
+   section max-width/padding. Scoped under main > .section to outweigh the
+   global section-div width rule. */
+main > .section > .cards-featured-wrapper {
+  max-width: none;
+  padding: 0;
 }
 
 .cards-featured .cards-featured-inner {
