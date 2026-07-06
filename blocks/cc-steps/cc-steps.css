@@ -83,12 +83,12 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
   z-index: 1; /* card paints over the connector */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   padding: 24px;
   border-radius: 16px;
   background: var(--cc-card-bg);
   box-shadow: 0 8px 20px rgb(0 0 0 / 6%);
-  text-align: center;
+  text-align: left;
 }
 
 .cc-steps .cc-steps-icon {
@@ -104,10 +104,10 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
 
 .cc-steps .cc-steps-item-title {
   margin: 0 0 6px;
-  color: var(--cc-ink);
+  color: #000;
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size-xs);
-  font-weight: 700;
+  font-size: var(--body-font-size-s);
+  font-weight: 800;
 }
 
 .cc-steps .cc-steps-item-title * {
