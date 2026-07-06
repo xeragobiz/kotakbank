@@ -262,8 +262,8 @@ main > .section > .cards-featured-wrapper {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 8px 28px;
+  height: 48px;
+  padding: 0 28px;
   border: 1px solid var(--cc-red);
   border-radius: 6px;
   background: #fff;
