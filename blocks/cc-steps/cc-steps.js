@@ -158,7 +158,9 @@ function openEligibilityModal(applyHref) {
     // header (Quick Check / title / subtitle) shows only on the first question
     head.hidden = step > 0;
     const { q, options } = ELIGIBILITY_QUESTIONS[step];
-    const pct = Math.round(((step + 1) / total) * 100);
+    // progress reflects answered questions: 0% on the first question, then
+    // 25% after answering it, and so on up to 100% at the result.
+    const pct = Math.round((step / total) * 100);
     bodyEl.innerHTML = `
       <div class="cc-steps-quiz-progress">
         <div class="cc-steps-quiz-progress-row">
