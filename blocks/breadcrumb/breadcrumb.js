@@ -16,13 +16,15 @@ export default function decorate(block) {
   const list = document.createElement('ol');
   list.className = 'breadcrumb-list';
 
+  // Always render an <li> per authored row (even empty ones) and preserve its
+  // data-aue-* instrumentation, so a newly-added crumb stays visible and
+  // editable in Universal Editor before its label/link is filled in.
   rows.forEach((row) => {
     const cells = [...row.children].map((c) => c.querySelector(':scope > div') || c);
     const link = row.querySelector('a');
     const label = cells
       .map((c) => (c.querySelector('a') ? '' : c.textContent.trim()))
       .find(Boolean) || (link ? link.textContent.trim() : '');
-    if (!label && !link) return;
 
     const li = document.createElement('li');
     li.className = 'breadcrumb-item';
