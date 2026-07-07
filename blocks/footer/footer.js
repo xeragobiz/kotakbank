@@ -181,7 +181,29 @@ function buildConnect(section) {
   if (looseImages.length) {
     const badges = document.createElement('div');
     badges.className = 'footer-badges';
-    looseImages.forEach((img) => badges.append(img));
+    // The authored badge images point at /content/dam paths that the EDS
+    // origin can't serve. Repoint each to a committed /icons/footer asset by
+    // matching its alt/src to the badge type.
+    const badgeFor = (img) => {
+      const key = `${img.getAttribute('alt') || ''} ${img.getAttribute('src') || ''}`.toLowerCase();
+      if (/google\s*play|play\s*store/.test(key)) return '/icons/footer/google-play.webp';
+      if (/app\s*store|apple/.test(key)) return '/icons/footer/apple-store.webp';
+      if (/verisign/.test(key)) return '/icons/footer/verisign.webp';
+      if (/entrust/.test(key)) return '/icons/footer/entrust.webp';
+      return '';
+    };
+    looseImages.forEach((img) => {
+      const rebased = badgeFor(img);
+      if (rebased) {
+        const clean = document.createElement('img');
+        clean.src = rebased;
+        clean.alt = img.getAttribute('alt') || '';
+        clean.loading = 'lazy';
+        badges.append(clean);
+      } else {
+        badges.append(img);
+      }
+    });
     app.append(badges);
   }
   wrap.append(app);

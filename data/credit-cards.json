@@ -25,7 +25,7 @@
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/content/dam/kbank-eds/cards/credit-cards/product-credit-card-indianoil-fuel-promo-v1.png"
+            "_path": "/icons/cards/indianoil.png"
           }
         },
         {
@@ -51,7 +51,7 @@
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-air-card.png"
+            "_path": "/icons/cards/kotak-air-card.png"
           }
         },
         {
@@ -77,7 +77,7 @@
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/content/dam/kbank-eds/cards/credit-cards/cashback-card.png"
+            "_path": "/icons/cards/cashback-card.png"
           }
         },
         {
@@ -103,7 +103,7 @@
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/content/dam/kbank-eds/cards/credit-cards/product-credit-card-solitaire-card-art-v1.png"
+            "_path": "/icons/cards/kotak-classic.png"
           }
         },
         {
@@ -129,7 +129,7 @@
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-league-card.png"
+            "_path": "/icons/cards/kotak-league-card.png"
           }
         }
       ]
