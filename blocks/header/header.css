@@ -20,8 +20,8 @@ header nav pre {
 
 header nav {
   display: grid;
-  grid-template-areas: 'hamburger brand tools';
-  grid-template-columns: auto 1fr auto;
+  grid-template-areas: 'brand tools hamburger';
+  grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 16px;
   max-width: 1170px;
@@ -155,6 +155,14 @@ header nav .nav-tools {
   gap: 20px;
 }
 
+/* mobile: show Login first, then Search (DOM order is search, login) */
+@media (width < 900px) {
+  header nav .nav-tools {
+    flex-direction: row-reverse;
+    gap: 14px;
+  }
+}
+
 /* Expanding search control: icon button + slide-out input */
 header nav .nav-tools .nav-search {
   display: flex;
@@ -201,7 +209,7 @@ header nav .nav-tools .nav-login {
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  background-color: #fa1432;
+  background-color: #002f69;
   color: #fff;
   font-size: 16px;
   font-weight: 500;
