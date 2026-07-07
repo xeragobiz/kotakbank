@@ -22,6 +22,16 @@ main > .section > .cards-featured-wrapper {
   padding: 0;
 }
 
+/* close the gap to the preceding section (e.g. cc-steps): drop this section's
+   top margin and the previous section's bottom margin */
+main > .section:has(> .cards-featured-wrapper) {
+  margin-top: 0;
+}
+
+main > .section:has(+ .section > .cards-featured-wrapper) {
+  margin-bottom: 0;
+}
+
 .cards-featured .cards-featured-inner {
   max-width: 1170px;
   margin: 0 auto;
