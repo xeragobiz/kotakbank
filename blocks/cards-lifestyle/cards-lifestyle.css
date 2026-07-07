@@ -154,7 +154,7 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
 .cards-lifestyle .cards-lifestyle-item-image img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 20 / 10;
   object-fit: cover;
 }
 
