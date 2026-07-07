@@ -125,7 +125,6 @@ main > .section:has(+ .section > .cards-featured-wrapper) {
 
 .cards-featured .cards-featured-item-image {
   line-height: 0;
-  overflow: hidden; /* clip the zoomed-in image */
 }
 
 .cards-featured .cards-featured-item-image img {
@@ -133,7 +132,6 @@ main > .section:has(+ .section > .cards-featured-wrapper) {
   width: 100%;
   aspect-ratio: 20 / 10;
   object-fit: cover;
-  transform: scale(1.35); /* zoom into the card so it fills more of the frame */
 }
 
 /* highlight banner */
