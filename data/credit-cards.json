@@ -25,7 +25,7 @@
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/icons/cards/indianoil.png"
+            "_path": "/icons/cards/indianoil.webp"
           }
         },
         {
