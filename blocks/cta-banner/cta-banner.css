@@ -104,6 +104,27 @@ main > .section > .cta-banner-wrapper {
   color: var(--cc-red);
 }
 
+/* mobile: match the Figma — clean gradient with the infinity motif at the
+   bottom-right and the content (title + button) overlaid on top. Drop the
+   photographic background image + its dark overlay so the motif shows. */
+@media (width < 900px) {
+  .cta-banner.cta-banner-has-image .cta-banner-media,
+  .cta-banner.cta-banner-has-image::before {
+    display: none;
+  }
+
+  .cta-banner::after,
+  .cta-banner.cta-banner-has-image::after {
+    display: block;
+    top: auto;
+    right: -30px;
+    bottom: -30px;
+    transform: none;
+    width: 200px;
+    height: 120px;
+  }
+}
+
 @media (width >= 900px) {
   .cta-banner .cta-banner-inner {
     padding: 32px 40px;
