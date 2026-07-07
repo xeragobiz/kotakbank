@@ -169,7 +169,7 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
     position: relative;
     grid-template-columns: repeat(3, 1fr);
     gap: 22px;
-    align-items: start;
+    align-items: stretch;
   }
 
   /* connector sits at the vertical center of the ~170px cards; cards (opaque)
