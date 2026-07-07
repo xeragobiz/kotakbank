@@ -113,6 +113,12 @@ footer .footer-col-links {
     border-bottom: 1px solid #d3d3d3;
   }
 
+  /* last column already sits above the Connect section's top border —
+     drop its own border so the two lines don't stack into a double rule */
+  footer .footer-col:last-child {
+    border-bottom: 0;
+  }
+
   footer .footer-col .footer-col-title {
     display: flex;
     align-items: center;
