@@ -26,12 +26,10 @@ main > .section > .cc-hero-wrapper {
 .cc-hero .cc-hero-image img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  height: auto;
 
-.cc-hero .cc-hero-image img {
-  aspect-ratio: 390 / 300;
+  /* show the full image (no crop) at its natural aspect ratio */
+  object-fit: contain;
 }
 
 /* content overlay */
@@ -108,10 +106,6 @@ main > .section > .cc-hero-wrapper {
 }
 
 @media (width >= 900px) {
-  .cc-hero .cc-hero-image img {
-    aspect-ratio: 1440 / 444;
-  }
-
   .cc-hero .cc-hero-content {
     padding: 40px 32px;
   }
