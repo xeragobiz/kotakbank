@@ -209,7 +209,6 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
   min-height: 260px;
   border-radius: 12px;
   overflow: hidden;
-  background: var(--cc-navy);
   color: #fff;
   isolation: isolate;
 }
@@ -217,7 +216,7 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
 .savings-calculator .savings-calculator-best-media {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: -2; /* behind the ::before overlay (-1) so the tint actually applies */
   line-height: 0;
 }
 
@@ -227,13 +226,19 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
   object-fit: cover;
 }
 
-/* dark overlay so the text stays legible over the image */
+/* dark overlay so the text stays legible over the image: keep the left half
+   solidly dark (image-free) and fade out only over the card artwork */
 .savings-calculator .savings-calculator-best::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, rgb(0 0 40 / 85%) 35%, rgb(0 0 40 / 25%) 100%);
+  background: linear-gradient(
+    90deg,
+    rgb(0 0 40 / 94%) 0%,
+    rgb(0 0 40 / 90%) 45%,
+    rgb(0 0 40 / 30%) 100%
+  );
 }
 
 .savings-calculator .savings-calculator-best-body {
@@ -241,7 +246,7 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
   flex-direction: column;
   align-items: flex-start;
   padding: 28px;
-  max-width: 60%;
+  max-width: 55%;
 }
 
 .savings-calculator .savings-calculator-best-flag {
@@ -327,7 +332,7 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
 .savings-calculator .savings-calculator-other-media {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: -2; /* behind the ::before overlay (-1) so the tint actually applies */
   line-height: 0;
 }
 
@@ -337,13 +342,19 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
   object-fit: cover;
 }
 
-/* dark overlay so the text stays legible over the image */
+/* dark overlay so the text stays legible over the image: solid on the left,
+   fading only over the card artwork on the right */
 .savings-calculator .savings-calculator-other::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, rgb(0 0 40 / 88%) 40%, rgb(0 0 40 / 35%) 100%);
+  background: linear-gradient(
+    90deg,
+    rgb(0 0 40 / 95%) 0%,
+    rgb(0 0 40 / 92%) 50%,
+    rgb(0 0 40 / 40%) 100%
+  );
 }
 
 .savings-calculator .savings-calculator-other-body {
@@ -351,6 +362,7 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
   flex-direction: column;
   gap: 4px;
   padding: 14px 16px;
+  max-width: 70%;
 }
 
 .savings-calculator .savings-calculator-other-flag {
@@ -365,6 +377,7 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
 .savings-calculator .savings-calculator-other-name {
   font-size: var(--body-font-size-xs);
   font-weight: 800;
+  overflow-wrap: anywhere;
 }
 
 .savings-calculator .savings-calculator-other-badge {
