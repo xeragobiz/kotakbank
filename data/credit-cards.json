@@ -24,7 +24,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/biz-credit-card.jpg"
           }
         },
         {
@@ -49,7 +50,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/corporate-gold-credit-card.webp"
           }
         },
         {
@@ -74,7 +76,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/corporate-platinum-credit-card.webp"
           }
         },
         {
@@ -99,7 +102,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/corporate-wealth-signature-credit-card.webp"
           }
         },
         {
@@ -176,7 +180,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/kotak-biz-credit-card.webp"
           }
         },
         {
@@ -253,7 +258,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/kotak-infinite-credit-card.webp"
           }
         },
         {
@@ -304,7 +310,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/solitaire-credit-card.webp"
           }
         },
         {
@@ -329,7 +336,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/royale-product-mobile.webp"
           }
         },
         {
@@ -354,7 +362,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/pvr-kotak-platinum-credit-card.webp"
           }
         },
         {
@@ -379,7 +388,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/solitaire-business-card.webp"
           }
         },
         {
@@ -404,7 +414,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/urbane-credit-card.webp"
           }
         },
         {
@@ -429,7 +440,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/white-credit-card.webp"
           }
         },
         {
@@ -454,7 +466,8 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "DocumentRef"
+            "__typename": "ImageRef",
+            "_path": "/icons/cards/zen-credit-card.webp"
           }
         }
       ]
