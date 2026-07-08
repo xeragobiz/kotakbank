@@ -31,12 +31,12 @@
         {
           "_path": "/content/dam/kbank-eds/cards-content-fragments/kotak-air-card",
           "_id": "29d02668-949e-4593-87cb-5f47c721f9fc",
-          "cardname": "Kotak Air Card",
+          "cardname": "Kotak Air+ Credit Card",
           "highlight": "Free lounge access",
           "highlightsub": "domestic & international airports, unlimited visits",
           "badge": "Best for Travel",
-          "joiningfee": "Joining fee: ₹1,500",
-          "annualfee": "Annual fee: ₹1,500",
+          "joiningfee": "Joining fee: ₹3,000",
+          "annualfee": "Annual fee: ₹3,000",
           "features": {
             "html": "<ul><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Complimentary domestic &amp; intl. lounge</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Air miles on every ₹150 spent</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Travel insurance up to ₹1 crore</span></li></ul>"
           },
@@ -83,14 +83,14 @@
         {
           "_path": "/content/dam/kbank-eds/cards-content-fragments/kotak-classic-credit-card",
           "_id": "cd1d0f96-b004-49f0-b019-3d3f144c9ae2",
-          "cardname": "Kotak Classic Credit Card",
+          "cardname": "Kotak 811 Credit Card",
           "highlight": null,
           "highlightsub": null,
           "badge": "Entry Level",
-          "joiningfee": "Joining: ₹199",
-          "annualfee": "Annual: ₹199",
+          "joiningfee": "Joining: ₹500",
+          "annualfee": "Annual: ₹500",
           "features": {
-            "html": "<ul><li><span style=\"font-size: 12px; white-space: pre-wrap;\">1X reward on all spends</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Welcome voucher on first transaction</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">EMI conversion available</span></li></ul>"
+            "html": "<ul><li>Earn 2 Reward Points per ₹100 spent online</li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Earn 2 Reward Points per ₹100 spent online</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Unlock 3 PVR Tickets worth ₹1,200 on ₹75,000 anniversary spends</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Annual Fee waived on spending ₹50,000 in previous anniversary year</span></li></ul>"
           },
           "filtertags": {
             "html": "<p>Entertainment</p>"
@@ -110,11 +110,11 @@
           "_path": "/content/dam/kbank-eds/cards-content-fragments/kotak-league-card",
           "_id": "507b2eff-301a-44f2-b1c2-946dd1501f16",
           "cardname": "Kotak League Card",
-          "highlight": "5% cashback",
-          "highlightsub": "on all online spends — uncapped",
+          "highlight": "4X reward points",
+          "highlightsub": "on dining, shopping & travel spends",
           "badge": "Best for Shopping",
-          "joiningfee": "Joining fee: ₹500",
-          "annualfee": "Annual fee: ₹500",
+          "joiningfee": "Joining fee: ₹999",
+          "annualfee": "Annual fee: ₹999",
           "features": {
             "html": "<ul><li><span style=\"font-size: 12px; white-space: pre-wrap;\">4X reward points on dining &amp; shopping</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Complimentary airport lounge access</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Anniversary bonus of 5,000 reward points</span></li></ul>"
           },
