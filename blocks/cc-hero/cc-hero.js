@@ -46,14 +46,24 @@ export default function decorate(block) {
       true,
       [{ media: '(min-width: 900px)', width: '1600' }, { width: '750' }],
     );
-    // art-directed mobile source: prepend so the browser picks it below 900px
+    // art-directed mobile source: prepend so the browser picks it below 900px.
+    // Serve optimized WebP (not the raw PNG) so the mobile LCP image is small.
     if (mobileImg) {
+      const src = new URL(mobileImg.src, window.location.href);
+      src.searchParams.set('width', '750');
+      src.searchParams.set('format', 'webply');
+      src.searchParams.set('optimize', 'medium');
       const source = document.createElement('source');
+      source.setAttribute('type', 'image/webp');
       source.setAttribute('media', '(max-width: 899px)');
-      source.setAttribute('srcset', mobileImg.src);
+      source.setAttribute('srcset', src.toString());
       optimized.prepend(source);
     }
-    optimized.querySelector('img').setAttribute('fetchpriority', 'high');
+    const img = optimized.querySelector('img');
+    img.setAttribute('fetchpriority', 'high');
+    // explicit dimensions reserve space and avoid layout shift (CLS)
+    img.setAttribute('width', '1440');
+    img.setAttribute('height', '400');
     media.append(optimized);
   } else if (pictures[0]) {
     media.append(pictures[0]);
