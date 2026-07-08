@@ -92,7 +92,7 @@ main > .section:has(+ .section > .cc-steps-wrapper) {
 }
 
 .cc-steps .cc-steps-icon {
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   line-height: 0;
 }
 
