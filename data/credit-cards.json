@@ -38,7 +38,7 @@
           "joiningfee": "Joining Fee: ₹ 0",
           "annualfee": "Annual Fee: ₹ 1000",
           "features": {
-            "html": "<ul>\n<li>Enjoy features like real-time transaction alerts, and free credit card replacement</li>\n<li>Feel safe and secure with free SMS alerts&nbsp;</li>\n</ul>"
+            "html": "<ul>\n<li>Enjoy features like real-time transaction alerts, and free credit card replacement</li>\n<li>Feel safe and secure with free SMS alerts&nbsp;</li>\n<li>Enjoy features like real-time transaction alerts, and free credit card replacement</li>\n</ul>"
           },
           "filtertags": {
             "html": "<p>Business</p>"
@@ -95,7 +95,7 @@
           "filtertags": {
             "html": "<p>Business</p>"
           },
-          "comparetext": null,
+          "comparetext": "Compare",
           "comparelink": null,
           "applytext": null,
           "applylink": null,
@@ -227,7 +227,7 @@
           },
           "comparetext": "Compare",
           "comparelink": null,
-          "applytext": "Apply Now",
+          "applytext": null,
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
@@ -251,7 +251,7 @@
           "filtertags": {
             "html": "<p>Travel</p>"
           },
-          "comparetext": null,
+          "comparetext": "Compare",
           "comparelink": null,
           "applytext": null,
           "applylink": null,
@@ -381,9 +381,9 @@
           "filtertags": {
             "html": "<p>Max Rewards</p>\n"
           },
-          "comparetext": "Compare this Card",
+          "comparetext": "Compare",
           "comparelink": null,
-          "applytext": "Apply Now",
+          "applytext": null,
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
@@ -459,7 +459,7 @@
           "filtertags": {
             "html": "<p>Premium</p>\n"
           },
-          "comparetext": "Compare this Card",
+          "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
           "applylink": null,
