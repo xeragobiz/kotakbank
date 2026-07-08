@@ -235,9 +235,10 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
   z-index: -1;
   background: linear-gradient(
     90deg,
-    rgb(0 0 40 / 94%) 0%,
-    rgb(0 0 40 / 90%) 45%,
-    rgb(0 0 40 / 30%) 100%
+    rgb(0 0 40 / 92%) 0%,
+    rgb(0 0 40 / 80%) 38%,
+    rgb(0 0 40 / 10%) 75%,
+    rgb(0 0 40 / 0%) 100%
   );
 }
 
@@ -351,9 +352,10 @@ main > .section:has(+ .section > .savings-calculator-wrapper) {
   z-index: -1;
   background: linear-gradient(
     90deg,
-    rgb(0 0 40 / 95%) 0%,
-    rgb(0 0 40 / 92%) 50%,
-    rgb(0 0 40 / 40%) 100%
+    rgb(0 0 40 / 94%) 0%,
+    rgb(0 0 40 / 85%) 45%,
+    rgb(0 0 40 / 15%) 80%,
+    rgb(0 0 40 / 0%) 100%
   );
 }
 
