@@ -5,12 +5,12 @@
         {
           "_path": "/content/dam/kbank-eds/cards-content-fragments/biz-credit-card",
           "_id": "faca78ed-d3ea-431f-89d0-5a073963fb90",
-          "cardname": "PVR Kotak Platinum Credit Card",
+          "cardname": "Biz Credit Card",
           "highlight": null,
           "highlightsub": null,
           "badge": null,
-          "joiningfee": "Joining: INR 299",
-          "annualfee": "Annual Fee: INR 499",
+          "joiningfee": "Joining: ₹ 299",
+          "annualfee": "Annual Fee: ₹ 499",
           "features": {
             "html": "<ul>\n<li>Earn up to 4 Reward points on every Rs.100 spent.</li>\n<li>Comprehensive Insurance programme worth 50K.</li>\n<li>This is an invite-only credit card.</li>\n</ul>\n"
           },
@@ -35,8 +35,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Cashback",
-          "joiningfee": "Joining Fee: INR 0",
-          "annualfee": "Annual Fee: INR 1000",
+          "joiningfee": "Joining Fee: ₹ 0",
+          "annualfee": "Annual Fee: ₹ 1000",
           "features": {
             "html": "<ul>\n<li>Enjoy features like real-time transaction alerts, and free credit card replacement</li>\n<li>Feel safe and secure with free SMS alerts&nbsp;</li>\n</ul>"
           },
@@ -61,8 +61,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Cashback",
-          "joiningfee": "Joining Fee: NIL",
-          "annualfee": "Annual Fee :NIL",
+          "joiningfee": "Joining Fee: Nil",
+          "annualfee": "Annual Fee :Nil",
           "features": {
             "html": "<ul>\n<li>Get 8 annual complimentary domestic Airport Lounge visits</li>\n<li>Earn monthly consolidated cashbacks for all transactions</li>\n<li>Waivers up to ₹3500 on Fuel and ₹500 on railways annually</li>\n</ul>"
           },
@@ -87,8 +87,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Cashback",
-          "joiningfee": "Joining Fee: NIL",
-          "annualfee": "Annual Fee :NIL",
+          "joiningfee": "Joining Fee: Nil",
+          "annualfee": "Annual Fee :Nil",
           "features": {
             "html": "<ul>\n<li>Get 8 annual complimentary domestic Airport Lounge visits and international Airport Lounge access via Priority Pass</li>\n<li>Earn monthly consolidated cashbacks for all transactions</li>\n<li>Waivers up to ₹3500 on Fuel and ₹500 on railways annually</li>\n</ul>"
           },
@@ -165,8 +165,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Cashback",
-          "joiningfee": "Joining: INR 999",
-          "annualfee": "Annual Fee: INR 999",
+          "joiningfee": "Joining fee: ₹ 999",
+          "annualfee": "Annual Fee: ₹ 999",
           "features": {
             "html": "<ul>\n<li>Enjoy 5X reward points on business essential spends- Utility, Tax, GST, &amp; more</li>\n<li>Earn 5X reward points on SAAS related business spends on Nuclei Platform</li>\n<li>Earn 5X reward points on flights &amp; hotel booking on Kotak Unbox</li>\n<li>Get up to 2 reward points per ₹150 on spends across categories</li>\n<li>Enjoy up to 55 days of interest-free credit to manage cash flow efficiently</li>\n</ul>"
           },
@@ -243,8 +243,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Travel",
-          "joiningfee": "Joining Fee: INR 0",
-          "annualfee": "Annual Fee: INR 0",
+          "joiningfee": "Joining Fee: ₹ 0",
+          "annualfee": "Annual Fee: ₹ 0",
           "features": {
             "html": "<ul>\n<li>Personalised card design</li>\n<li>Higher credit limit</li>\n</ul>\n"
           },
@@ -347,8 +347,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Entertainment",
-          "joiningfee": "Joining: INR 500",
-          "annualfee": "Annual Fee: INR 999",
+          "joiningfee": "Joining fee: ₹ 500",
+          "annualfee": "Annual Fee: ₹ 999",
           "features": {
             "html": "<ul><li>Get 2 free PVR tickets* every month on spends of ₹&amp;nbsp;10,000 (each ticket up to ₹&amp;nbsp;400)</li><li>Get 15% Cashback on Food and Beverages at PVR</li><li>Get 5% Cashback on Movie tickets at PVR Box Office</li></ul><p></p>"
           },
@@ -399,8 +399,8 @@
           "highlight": "Discontinued for new applications",
           "highlightsub": null,
           "badge": "Best for Shopping",
-          "joiningfee": "Joining Fee: INR 0",
-          "annualfee": "Annual Fee: INR 199 (waived at an annual spend of Rs 15,000/-)",
+          "joiningfee": "Joining Fee: ₹ 0",
+          "annualfee": "Annual Fee: ₹ 199 ",
           "features": {
             "html": "<ul>\n<li>Earn 3 Reward Points against retail spends of Rs.100</li>\n<li><br>\nGet 4 PVR tickets or 10,000 Reward Points on annual spends of Rs.1 Lac</li>\n<li><br>\nEnjoy Annual Fee waiver on annual spends of Rs.15,000</li>\n</ul>\n"
           },
@@ -451,8 +451,8 @@
           "highlight": "Get 10 Zen points for every ₹150 spent on shopping  with Kotak Zen Credit Card",
           "highlightsub": null,
           "badge": "Premium",
-          "joiningfee": "Joining Fee: INR 1500",
-          "annualfee": "Annual Fee: INR 1500",
+          "joiningfee": "Joining Fee: ₹ 1500",
+          "annualfee": "Annual Fee:  1500",
           "features": {
             "html": "<ul>\n<li>Earn 10 Zen Points for every 150 spent on shopping&nbsp;</li>\n<li>Earn 5 Zen points for every 150 on other spends</li>\n</ul>\n"
           },
