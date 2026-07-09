@@ -2,7 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import openEligibilityModal from '../../scripts/eligibility-modal.js';
 
 // application page the eligibility modal's "Apply Now" redirects to
-const APPLY_PAGE = '/content/kbank-eds/apply.html';
+const APPLY_PAGE = '/apply';
 
 /**
  * Emit media-scoped <link rel="preload" as="image"> tags into <head> for the

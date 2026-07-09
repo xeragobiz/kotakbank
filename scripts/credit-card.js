@@ -55,7 +55,7 @@ function normalize(item) {
     tags: htmlToText(item.filtertags && item.filtertags.html),
     // default Apply links to the application page, carrying the card name so
     // the form can show/record which card the applicant chose
-    applyHref: item.applylink || `/content/kbank-eds/apply.html?card=${encodeURIComponent(item.cardname || '')}`,
+    applyHref: item.applylink || `/apply?card=${encodeURIComponent(item.cardname || '')}`,
     applyText: item.applytext || '',
     compareHref: item.comparelink || '#',
     compareText: item.comparetext || '',
