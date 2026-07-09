@@ -127,6 +127,14 @@ export default function decorate(block) {
         e.preventDefault();
         openEligibilityModal(APPLY_PAGE);
       });
+    } else if (/find my card/i.test(link.textContent)) {
+      // "Find My Card" scrolls to the cards-lifestyle section on the page
+      link.addEventListener('click', (e) => {
+        const target = document.querySelector('.cards-lifestyle');
+        if (!target) return; // no such section on this page — let the link be
+        e.preventDefault();
+        (target.closest('.section') || target).scrollIntoView({ behavior: 'smooth' });
+      });
     }
     actions.append(link);
   });
