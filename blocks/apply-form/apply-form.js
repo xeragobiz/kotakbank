@@ -73,7 +73,7 @@ const FIELDS = [
   },
   {
     name: 'aadhaar',
-    label: 'Aadhaar Number (Optional for POC)',
+    label: 'Aadhaar Number ',
     type: 'text',
     required: false,
     inputmode: 'numeric',
