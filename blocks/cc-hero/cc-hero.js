@@ -1,6 +1,31 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 /**
+ * Emit media-scoped <link rel="preload" as="image"> tags into <head> for the
+ * WebP <source>s of a hero <picture>, so the preload scanner can discover the
+ * JS-built LCP image immediately (it isn't in the initial HTML). Only the
+ * art-directed WebP sources (mobile + desktop) are preloaded so exactly one
+ * fetch fires per viewport — no duplicate PNG/default fetches.
+ * @param {HTMLPictureElement} picture the decorated hero picture
+ */
+function preloadPicture(picture) {
+  const links = [];
+  picture.querySelectorAll('source[type="image/webp"][media]').forEach((source) => {
+    const srcset = source.getAttribute('srcset');
+    if (!srcset) return;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.setAttribute('imagesrcset', srcset);
+    link.setAttribute('media', source.getAttribute('media'));
+    link.setAttribute('type', 'image/webp');
+    link.setAttribute('fetchpriority', 'high');
+    links.push(link);
+  });
+  if (links.length) document.head.append(...links);
+}
+
+/**
  * CC Hero — full-width banner with a background image and overlaid
  * heading, subtext, and up to two CTAs (primary + secondary).
  * Cells are identified by content (not fixed positions) because field
@@ -65,6 +90,12 @@ export default function decorate(block) {
     img.setAttribute('width', '1440');
     img.setAttribute('height', '400');
     media.append(optimized);
+
+    // Make the LCP image discoverable to the preload scanner: this hero is
+    // built in JS (so it isn't in the initial HTML). Emit media-scoped
+    // <link rel=preload> per <source> so the browser fetches the correct
+    // (mobile vs desktop) image immediately with high priority.
+    preloadPicture(optimized);
   } else if (pictures[0]) {
     media.append(pictures[0]);
   }
