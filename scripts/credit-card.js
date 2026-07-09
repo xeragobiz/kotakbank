@@ -53,7 +53,9 @@ function normalize(item) {
     feesParts: [item.joiningfee, item.annualfee].filter(Boolean),
     featuresList: htmlToList(item.features && item.features.html),
     tags: htmlToText(item.filtertags && item.filtertags.html),
-    applyHref: item.applylink || '#',
+    // default Apply links to the application page, carrying the card name so
+    // the form can show/record which card the applicant chose
+    applyHref: item.applylink || `/apply?card=${encodeURIComponent(item.cardname || '')}`,
     applyText: item.applytext || '',
     compareHref: item.comparelink || '#',
     compareText: item.comparetext || '',

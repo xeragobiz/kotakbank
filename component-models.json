@@ -142,6 +142,41 @@
     ]
   },
   {
+    "id": "apply-form",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Sub-heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "submitText",
+        "label": "Submit Button Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "successMessage",
+        "label": "Success Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "endpoint",
+        "label": "Submit Endpoint URL (prefix value with 'endpoint:')"
+      }
+    ]
+  },
+  {
     "id": "breadcrumb-item",
     "fields": [
       {
