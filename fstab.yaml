@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p165370-e1760075.adobeaemcloud.com/bin/franklin.delivery/surendranr/kbank-eds/main"
+    url: "https://author-p165370-e1760075.adobeaemcloud.com/bin/franklin.delivery/xeragobiz/kotakbank/main"
     type: "markup"
     suffix: ".html"
