@@ -192,6 +192,12 @@
         "valueType": "string",
         "name": "successMessage",
         "label": "Success Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "successMessage_actionUrl",
+        "label": "Action URL (BFF submit endpoint)"
       }
     ]
   },

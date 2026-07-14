@@ -89,7 +89,10 @@ const FIELDS = [
   },
 ];
 
-/* pull authored chrome text from block cells, in order, ignoring empties */
+/* pull authored chrome text from block cells, in order, ignoring empties.
+   The submit endpoint is identified by content (a URL, or an "endpoint:"
+   prefix) rather than position, so it works as its own authored field and
+   is robust to any earlier field being left empty. */
 function readChrome(block) {
   const cells = [...block.children]
     .map((r) => (r.querySelector(':scope > div') || r).textContent.trim())
@@ -98,6 +101,7 @@ function readChrome(block) {
   const rest = [];
   cells.forEach((t) => {
     if (/^endpoint\s*:/i.test(t)) endpoint = t.replace(/^endpoint\s*:/i, '').trim();
+    else if (/^https?:\/\//i.test(t)) endpoint = t;
     else rest.push(t);
   });
   const [heading, subtitle, submitText, successMsg] = rest;
