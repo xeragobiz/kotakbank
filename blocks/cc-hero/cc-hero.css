@@ -5,6 +5,9 @@
 .cc-hero {
   --cc-red: #fa1432;
   --cc-navy: #00005a;
+  --cc-orange: #f26722;
+  --cc-blue: #00005a;
+  --cc-white: #fff;
 
   position: relative;
   display: grid;
@@ -70,6 +73,16 @@ main > .section > .cc-hero-wrapper {
   font-size: 16px;
   font-weight: 400;
 }
+
+/* author-selected heading colour — overrides the default red */
+.cc-hero .cc-hero-content.cc-hero-heading-orange h1 { color: var(--cc-orange); }
+.cc-hero .cc-hero-content.cc-hero-heading-blue h1 { color: var(--cc-blue); }
+.cc-hero .cc-hero-content.cc-hero-heading-white h1 { color: var(--cc-white); }
+
+/* author-selected text colour — overrides the default navy */
+.cc-hero .cc-hero-content.cc-hero-text-orange p { color: var(--cc-orange); }
+.cc-hero .cc-hero-content.cc-hero-text-blue p { color: var(--cc-blue); }
+.cc-hero .cc-hero-content.cc-hero-text-white p { color: var(--cc-white); }
 
 /* CTAs — stacked on mobile (secondary drops to the next line), row on desktop */
 .cc-hero .cc-hero-actions {

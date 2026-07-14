@@ -187,6 +187,25 @@
     ]
   },
   {
+    "id": "benefit-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "cards-featured",
     "fields": [
       {
@@ -581,6 +600,48 @@
         "value": "",
         "label": "Heading & Text",
         "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "text_headingColor",
+        "label": "Heading Colour",
+        "valueType": "string",
+        "value": "orange",
+        "options": [
+          {
+            "name": "Orange",
+            "value": "orange"
+          },
+          {
+            "name": "Blue",
+            "value": "blue"
+          },
+          {
+            "name": "White",
+            "value": "white"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "text_textColor",
+        "label": "Text Colour",
+        "valueType": "string",
+        "value": "blue",
+        "options": [
+          {
+            "name": "Orange",
+            "value": "orange"
+          },
+          {
+            "name": "Blue",
+            "value": "blue"
+          },
+          {
+            "name": "White",
+            "value": "white"
+          }
+        ]
       },
       {
         "component": "aem-content",

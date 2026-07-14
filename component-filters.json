@@ -44,6 +44,12 @@
     ]
   },
   {
+    "id": "cards-benefits",
+    "components": [
+      "benefit-card"
+    ]
+  },
+  {
     "id": "cards-featured",
     "components": [
       "cards-featured-item",

@@ -59,6 +59,24 @@ export default function decorate(block) {
     && !c.querySelector('a')
     && c.querySelector('h1, h2, h3, h4, h5, h6, p'));
 
+  // heading/text colour selects share the copy cell's field group, so they
+  // render as trailing plain <p>s whose text is a colour token. Pull them out
+  // (in model order: heading colour first, text colour second) and remove
+  // those paragraphs so they don't show as body copy.
+  const COLORS = ['orange', 'blue', 'white'];
+  const colorValues = [];
+  if (copyCell) {
+    [...copyCell.querySelectorAll('p')].forEach((p) => {
+      const token = p.textContent.trim().toLowerCase();
+      if (COLORS.includes(token) && !p.querySelector('a, strong, em, picture')) {
+        colorValues.push(token);
+        p.remove();
+      }
+    });
+  }
+  const headingColor = colorValues[0] || '';
+  const textColor = colorValues[1] || '';
+
   const altText = altCell ? altCell.textContent.trim() : '';
 
   // background image (LCP candidate). When a mobile image is authored, use a
@@ -107,6 +125,8 @@ export default function decorate(block) {
   // content overlay
   const content = document.createElement('div');
   content.className = 'cc-hero-content';
+  if (headingColor) content.classList.add(`cc-hero-heading-${headingColor}`);
+  if (textColor) content.classList.add(`cc-hero-text-${textColor}`);
   if (copyCell) {
     while (copyCell.firstChild) content.append(copyCell.firstChild);
   }
