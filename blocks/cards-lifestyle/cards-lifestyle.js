@@ -86,7 +86,8 @@ function renderCard(data) {
       km.textContent = data.knowMoreText;
       foot.append(km);
     }
-    if (data.compareText) {
+    // reference (fragment) cards omit the Compare button; inline cards keep it
+    if (data.compareText && !data.isReference) {
       const cmp = document.createElement('a');
       cmp.href = data.compareHref || '#';
       cmp.className = 'cards-lifestyle-compare';
@@ -278,6 +279,7 @@ export default async function decorate(block) {
     if (isCardReference(row)) {
       const refPath = cardReferencePath(row);
       data = refPath ? await loadCreditCard(refPath) : null;
+      if (data) data.isReference = true;
     } else {
       data = inlineCardData(row);
     }

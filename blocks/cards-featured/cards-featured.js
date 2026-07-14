@@ -77,7 +77,15 @@ function renderCard(data) {
 
   const actions = document.createElement('div');
   actions.className = 'cards-featured-item-actions';
-  if (data.compareText) {
+  // Reference (fragment) cards show "Know More" here instead of Compare.
+  // Inline-authored cards keep their authored Compare link.
+  if (data.isReference) {
+    const km = document.createElement('a');
+    km.href = data.knowMoreHref || '#';
+    km.className = 'cards-featured-knowmore';
+    km.textContent = data.knowMoreText || 'Know More';
+    actions.append(km);
+  } else if (data.compareText) {
     const c = document.createElement('a');
     c.href = data.compareHref || '#';
     c.className = 'cards-featured-compare';
@@ -231,6 +239,7 @@ export default async function decorate(block) {
     if (isCardReference(row)) {
       const refPath = cardReferencePath(row);
       data = refPath ? await loadCreditCard(refPath) : null;
+      if (data) data.isReference = true;
     } else {
       data = inlineCardData(row);
     }
