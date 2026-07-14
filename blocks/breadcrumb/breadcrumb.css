@@ -3,6 +3,15 @@
 .breadcrumb {
   --bc-muted: #666;
   --bc-red: #fa1432;
+
+  /* hidden on mobile; revealed from tablet up */
+  display: none;
+}
+
+@media (width >= 900px) {
+  .breadcrumb {
+    display: block;
+  }
 }
 
 .breadcrumb .breadcrumb-list {
