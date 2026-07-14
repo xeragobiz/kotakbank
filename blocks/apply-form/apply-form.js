@@ -8,10 +8,15 @@
  *
  * Authorable chrome (optional, in this order): heading, sub-heading,
  * submit-button text, success message. A block cell may also override the
- * endpoint by starting with "endpoint:" (e.g. endpoint: https://api…/apply).
+ * endpoint by starting with "endpoint:" (e.g. endpoint: https://…/bff/contact).
+ *
+ * Submits to a cloud BFF (Adobe App Builder) action, which injects the
+ * web3forms access_key server-side and forwards the fields. The browser never
+ * sees the secret. The action responds with web3forms' JSON: { success, message }.
  */
 
-// TODO: replace with the real submission endpoint once available.
+// Authored per-page via an "endpoint:" cell (the BFF contact action URL).
+// Fallback keeps the form testable if no endpoint is authored.
 const DEFAULT_ENDPOINT = 'https://httpbin.org/post';
 
 const FIELDS = [
@@ -243,10 +248,14 @@ export default function decorate(block) {
     try {
       const resp = await fetch(chrome.endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
+      // the BFF forwards web3forms' JSON: { success: boolean, message: string }
+      const result = await resp.json().catch(() => ({}));
+      if (!resp.ok || result.success === false) {
+        throw new Error(result.message || `Request failed (${resp.status})`);
+      }
       form.reset();
       root.replaceChildren(head, (() => {
         const done = document.createElement('div');
