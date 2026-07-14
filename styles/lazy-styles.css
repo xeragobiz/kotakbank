@@ -1,6 +1,6 @@
 /* add global styles that can be loaded post LCP here */
 
-/* Back to Top — floating control, mobile only, revealed after scrolling */
+/* Back to Top — floating control, revealed after scrolling */
 .back-to-top {
   display: none;
   position: fixed;
@@ -30,12 +30,10 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23131313' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M8 13l4-4 4 4'/%3E%3C/svg%3E");
 }
 
-/* shown on mobile only, and only once scrolled */
-@media (width < 900px) {
-  .back-to-top.back-to-top-visible {
-    display: inline-flex;
-    opacity: 1;
-  }
+/* shown on all screens, once scrolled */
+.back-to-top.back-to-top-visible {
+  display: inline-flex;
+  opacity: 1;
 }
 
 /* docked variant — right-aligned inside the Help Links section (not floating) */
