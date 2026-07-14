@@ -139,11 +139,14 @@ main > .section > .cc-hero-wrapper {
 
 @media (width >= 900px) {
   .cc-hero .cc-hero-content {
+    /* desktop: copy occupies the left half of the banner */
     padding: 40px 32px;
   }
 
-  .cc-hero .cc-hero-content h1 {
-    max-width: 620px;
+  .cc-hero .cc-hero-content h1,
+  .cc-hero .cc-hero-content p,
+  .cc-hero .cc-hero-actions {
+    max-width: 50%;
   }
 
   /* side-by-side CTAs on desktop */
