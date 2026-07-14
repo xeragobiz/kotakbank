@@ -94,12 +94,21 @@ const FIELDS = [
    prefix) rather than position, so it works as its own authored field and
    is robust to any earlier field being left empty. */
 function readChrome(block) {
-  const cells = [...block.children]
-    .map((r) => (r.querySelector(':scope > div') || r).textContent.trim())
-    .filter(Boolean);
+  // Read each <p> (or bare cell) separately: the Action URL shares a field
+  // group with the success message, so they render as two paragraphs inside
+  // one cell — reading whole-cell text would merge them.
+  const texts = [];
+  [...block.children].forEach((row) => {
+    const cell = row.querySelector(':scope > div') || row;
+    const paras = cell.querySelectorAll(':scope > p');
+    const parts = paras.length
+      ? [...paras].map((p) => p.textContent.trim())
+      : [cell.textContent.trim()];
+    parts.forEach((t) => { if (t) texts.push(t); });
+  });
   let endpoint = DEFAULT_ENDPOINT;
   const rest = [];
-  cells.forEach((t) => {
+  texts.forEach((t) => {
     if (/^endpoint\s*:/i.test(t)) endpoint = t.replace(/^endpoint\s*:/i, '').trim();
     else if (/^https?:\/\//i.test(t)) endpoint = t;
     else rest.push(t);
