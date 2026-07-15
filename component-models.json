@@ -1251,6 +1251,18 @@
     ]
   },
   {
+    "id": "search",
+    "fields": [
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "source",
+        "label": "Query Index",
+        "description": "Path to the query index to search (defaults to /query-index.json)"
+      }
+    ]
+  },
+  {
     "id": "sub-nav-item",
     "fields": [
       {
