@@ -282,7 +282,7 @@
           "applytext": "Apply Now",
           "applylink": "/apply",
           "knowmoretext": "Know More",
-          "knowmorelink": "/kotak-league-card",
+          "knowmorelink": "/kotak-league-credit-card",
           "cardimage": {
             "__typename": "ImageRef",
             "_path": "/icons/cards/kotak-league-card.png"
