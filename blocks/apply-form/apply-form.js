@@ -8,10 +8,15 @@
  *
  * Authorable chrome (optional, in this order): heading, sub-heading,
  * submit-button text, success message. A block cell may also override the
- * endpoint by starting with "endpoint:" (e.g. endpoint: https://api…/apply).
+ * endpoint by starting with "endpoint:" (e.g. endpoint: https://…/bff/contact).
+ *
+ * Submits to a cloud BFF (Adobe App Builder) action, which injects the
+ * web3forms access_key server-side and forwards the fields. The browser never
+ * sees the secret. The action responds with web3forms' JSON: { success, message }.
  */
 
-// TODO: replace with the real submission endpoint once available.
+// Authored per-page via an "endpoint:" cell (the BFF contact action URL).
+// Fallback keeps the form testable if no endpoint is authored.
 const DEFAULT_ENDPOINT = 'https://httpbin.org/post';
 
 const FIELDS = [
@@ -84,15 +89,28 @@ const FIELDS = [
   },
 ];
 
-/* pull authored chrome text from block cells, in order, ignoring empties */
+/* pull authored chrome text from block cells, in order, ignoring empties.
+   The submit endpoint is identified by content (a URL, or an "endpoint:"
+   prefix) rather than position, so it works as its own authored field and
+   is robust to any earlier field being left empty. */
 function readChrome(block) {
-  const cells = [...block.children]
-    .map((r) => (r.querySelector(':scope > div') || r).textContent.trim())
-    .filter(Boolean);
+  // Read each <p> (or bare cell) separately: the Action URL shares a field
+  // group with the success message, so they render as two paragraphs inside
+  // one cell — reading whole-cell text would merge them.
+  const texts = [];
+  [...block.children].forEach((row) => {
+    const cell = row.querySelector(':scope > div') || row;
+    const paras = cell.querySelectorAll(':scope > p');
+    const parts = paras.length
+      ? [...paras].map((p) => p.textContent.trim())
+      : [cell.textContent.trim()];
+    parts.forEach((t) => { if (t) texts.push(t); });
+  });
   let endpoint = DEFAULT_ENDPOINT;
   const rest = [];
-  cells.forEach((t) => {
+  texts.forEach((t) => {
     if (/^endpoint\s*:/i.test(t)) endpoint = t.replace(/^endpoint\s*:/i, '').trim();
+    else if (/^https?:\/\//i.test(t)) endpoint = t;
     else rest.push(t);
   });
   const [heading, subtitle, submitText, successMsg] = rest;
@@ -243,10 +261,14 @@ export default function decorate(block) {
     try {
       const resp = await fetch(chrome.endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
+      // the BFF forwards web3forms' JSON: { success: boolean, message: string }
+      const result = await resp.json().catch(() => ({}));
+      if (!resp.ok || result.success === false) {
+        throw new Error(result.message || `Request failed (${resp.status})`);
+      }
       form.reset();
       root.replaceChildren(head, (() => {
         const done = document.createElement('div');

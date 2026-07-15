@@ -1,6 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { loadCreditCard, cardReferencePath, isCardReference } from '../../scripts/credit-card.js';
+import openCompareModal from '../../scripts/compare-modal.js';
 
 /**
  * Cards Lifestyle — "A Credit Card for every need".
@@ -19,6 +20,10 @@ function renderCard(data) {
   const li = document.createElement('li');
   li.className = 'cards-lifestyle-item';
   if (data.tags) li.dataset.tags = data.tags.toLowerCase();
+  // identity used by the compare popup
+  li.dataset.cardName = data.name || '';
+  li.dataset.cardPath = data.path || '';
+  li.dataset.cardImage = data.imageSrc || '';
 
   const imgWrap = document.createElement('div');
   imgWrap.className = 'cards-lifestyle-item-image';
@@ -76,26 +81,22 @@ function renderCard(data) {
     body.append(actions);
   }
   // footer: Know More on the left, Compare button on the right
-  if (data.knowMoreText || data.compareText) {
-    const foot = document.createElement('div');
-    foot.className = 'cards-lifestyle-item-footer';
-    if (data.knowMoreText) {
-      const km = document.createElement('a');
-      km.href = data.knowMoreHref || '#';
-      km.className = 'cards-lifestyle-knowmore';
-      km.textContent = data.knowMoreText;
-      foot.append(km);
-    }
-    // reference (fragment) cards omit the Compare button; inline cards keep it
-    if (data.compareText && !data.isReference) {
-      const cmp = document.createElement('a');
-      cmp.href = data.compareHref || '#';
-      cmp.className = 'cards-lifestyle-compare';
-      cmp.textContent = data.compareText;
-      foot.append(cmp);
-    }
-    body.append(foot);
+  const foot = document.createElement('div');
+  foot.className = 'cards-lifestyle-item-footer';
+  if (data.knowMoreText) {
+    const km = document.createElement('a');
+    km.href = data.knowMoreHref || '#';
+    km.className = 'cards-lifestyle-knowmore';
+    km.textContent = data.knowMoreText;
+    foot.append(km);
   }
+  // Compare opens the comparison popup with this card pre-added (all cards)
+  const cmp = document.createElement('button');
+  cmp.type = 'button';
+  cmp.className = 'cards-lifestyle-compare';
+  cmp.textContent = data.compareText || 'Compare';
+  foot.append(cmp);
+  body.append(foot);
 
   li.append(body);
   return li;
@@ -291,6 +292,27 @@ export default async function decorate(block) {
   const cards = await Promise.all(pending);
   cards.forEach((li) => list.append(li));
   wrapper.append(list);
+
+  // wire Compare buttons: open the popup pre-adding the clicked card, with the
+  // full set of cards in this block as the pool to add more from.
+  const cardPool = cards
+    .filter((li) => li.dataset.cardPath)
+    .map((li) => ({
+      name: li.dataset.cardName,
+      path: li.dataset.cardPath,
+      image: li.dataset.cardImage,
+    }));
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cards-lifestyle-compare');
+    if (!btn) return;
+    const li = btn.closest('.cards-lifestyle-item');
+    const card = {
+      name: li.dataset.cardName,
+      path: li.dataset.cardPath,
+      image: li.dataset.cardImage,
+    };
+    openCompareModal(card, cardPool);
+  });
 
   // filtering: a card must match BOTH the active primary tab and (if set) the
   // active secondary category. "all" (primary default) matches everything.

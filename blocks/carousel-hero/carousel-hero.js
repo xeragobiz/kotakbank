@@ -156,11 +156,69 @@ function createSlide(row, slideIndex, carouselId) {
   return slide;
 }
 
+/* whether a row is an authored Quick Link item (bottom tab bar) rather than a
+   slide. Tagged with the -quicklink model in the editor; outside the editor,
+   fall back to "has a single link and no heading/richtext paragraph". */
+function isQuickLink(row) {
+  const model = row.getAttribute('data-aue-model') || '';
+  if (model.endsWith('-quicklink')) return true;
+  if (row.querySelector('h1, h2, h3, h4, h5, h6')) return false;
+  const links = row.querySelectorAll('a');
+  const paras = row.querySelectorAll('p');
+  return links.length === 1 && paras.length <= 1;
+}
+
+/* build the overlapping bottom tab bar from quick-link rows */
+function buildQuickLinks(quickRows) {
+  const nav = document.createElement('nav');
+  nav.className = 'carousel-hero-quicklinks';
+  nav.setAttribute('aria-label', 'Quick links');
+  const list = document.createElement('ul');
+  list.className = 'carousel-hero-quicklinks-list';
+
+  quickRows.forEach((row, idx) => {
+    const cells = [...row.querySelectorAll(':scope > div')];
+    const iconCell = cells.find((c) => c.querySelector('picture, img'));
+    const link = row.querySelector('a');
+    const label = link ? link.textContent.trim()
+      : (cells.find((c) => !c.querySelector('picture, img') && c.textContent.trim()) || {}).textContent || '';
+
+    const li = document.createElement('li');
+    li.className = 'carousel-hero-quicklink';
+    moveInstrumentation(row, li);
+    if (idx === 0) li.classList.add('carousel-hero-quicklink-active');
+
+    const a = document.createElement('a');
+    a.className = 'carousel-hero-quicklink-anchor';
+    a.href = link ? link.getAttribute('href') || '#' : '#';
+
+    if (iconCell) {
+      const iconWrap = document.createElement('span');
+      iconWrap.className = 'carousel-hero-quicklink-icon';
+      const pic = iconCell.querySelector('picture') || iconCell.querySelector('img');
+      iconWrap.append(pic);
+      a.append(iconWrap);
+    }
+    const text = document.createElement('span');
+    text.className = 'carousel-hero-quicklink-label';
+    text.textContent = (label || '').trim();
+    a.append(text);
+
+    li.append(a);
+    list.append(li);
+  });
+
+  nav.append(list);
+  return nav;
+}
+
 let carouselId = 0;
 export default async function decorate(block) {
   carouselId += 1;
   block.setAttribute('id', `carousel-hero-${carouselId}`);
-  const rows = block.querySelectorAll(':scope > div');
+  const allRows = [...block.querySelectorAll(':scope > div')];
+  const quickRows = allRows.filter(isQuickLink);
+  const rows = allRows.filter((r) => !quickRows.includes(r));
   const isSingleSlide = rows.length < 2;
 
   const placeholders = {};
@@ -211,6 +269,14 @@ export default async function decorate(block) {
 
   container.append(slidesWrapper);
   block.prepend(container);
+
+  // bottom quick-links tab bar (overlaps the base of the carousel)
+  if (quickRows.length) {
+    const nav = buildQuickLinks(quickRows);
+    quickRows.forEach((row) => row.remove());
+    block.append(nav);
+    block.classList.add('carousel-hero-has-quicklinks');
+  }
 
   // Prioritise the first slide's image as the LCP candidate and defer the rest.
   const slideImages = block.querySelectorAll('.carousel-hero-slide-image img');

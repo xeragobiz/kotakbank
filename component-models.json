@@ -192,6 +192,12 @@
         "valueType": "string",
         "name": "successMessage",
         "label": "Success Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "successMessage_actionUrl",
+        "label": "Action URL (BFF submit endpoint)"
       }
     ]
   },
@@ -568,6 +574,35 @@
             "value": "light"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "carousel-hero-quicklink",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "iconAlt",
+        "label": "Icon Alt Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Label"
       }
     ]
   },
@@ -1062,6 +1097,85 @@
     ]
   },
   {
+    "id": "resume-application",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "copy_bannerLabel",
+        "label": "Banner Title",
+        "value": "Pick where you left"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "copy_eyebrow",
+        "label": "Eyebrow",
+        "value": "Credit Card"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "copy_heading",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "copy_meta",
+        "label": "Status / Step Line"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "copy_progress",
+        "label": "Progress Percent (0-100)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "copy_badge",
+        "label": "Badge Text",
+        "value": "Get your card now"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "primaryCta",
+        "label": "Primary CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "primaryCtaText",
+        "label": "Primary CTA Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "secondaryCta",
+        "label": "Secondary CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondaryCtaText",
+        "label": "Secondary CTA Text"
+      }
+    ]
+  },
+  {
     "id": "savings-calculator",
     "fields": [
       {
@@ -1133,6 +1247,18 @@
         "component": "aem-content",
         "name": "cardRef",
         "label": "Credit Card Fragment"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "fields": [
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "source",
+        "label": "Query Index",
+        "description": "Path to the query index to search (defaults to /query-index.json)"
       }
     ]
   },

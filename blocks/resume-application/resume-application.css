@@ -1,0 +1,186 @@
+/*
+ * resume-application — dismissible "pick up where you left off" banner.
+ * Red outer band wrapping a white card: copy + CTAs on the left, image with a
+ * small badge on the right. Stacks on mobile, side-by-side from tablet up.
+ */
+
+.resume-application {
+  --ra-red: #e51a24;
+  --ra-dark: #1a1a1a;
+  --ra-muted: #6b6b6b;
+
+  padding: 32px 0;
+}
+
+.resume-application .resume-application-banner {
+  border-radius: 14px;
+  background: var(--ra-red);
+  padding: 8px 16px 16px;
+}
+
+.resume-application .resume-application-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 4px 12px;
+  color: #fff;
+}
+
+.resume-application .resume-application-bar-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.resume-application .resume-application-bar-icon,
+.resume-application .resume-application-meta-icon {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.resume-application .resume-application-close {
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.resume-application .resume-application-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 10px;
+  background: #fff;
+  padding: 24px;
+}
+
+.resume-application .resume-application-eyebrow {
+  margin: 0 0 4px;
+  color: var(--ra-muted);
+  font-size: 16px;
+}
+
+.resume-application .resume-application-heading {
+  margin: 0 0 12px;
+  color: var(--ra-dark);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.resume-application .resume-application-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  color: var(--ra-muted);
+  font-size: 14px;
+}
+
+.resume-application .resume-application-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: #e6e6e6;
+  overflow: hidden;
+  max-width: 420px;
+}
+
+.resume-application .resume-application-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ra-red);
+}
+
+.resume-application .resume-application-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+  margin-top: 20px;
+}
+
+.resume-application .resume-application-btn:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.resume-application .resume-application-btn-primary:any-link {
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: 6px;
+  background: var(--ra-red);
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.resume-application .resume-application-btn-secondary:any-link {
+  color: var(--ra-red);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.resume-application .resume-application-btn-secondary:hover {
+  text-decoration: underline;
+}
+
+.resume-application .resume-application-media {
+  position: relative;
+  line-height: 0;
+}
+
+.resume-application .resume-application-media picture,
+.resume-application .resume-application-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.resume-application .resume-application-badge {
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #d6f0dc;
+  color: #1a7a3c;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (width >= 900px) {
+  .resume-application .resume-application-banner {
+    padding: 8px 24px 24px;
+  }
+
+  .resume-application .resume-application-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px;
+  }
+
+  .resume-application .resume-application-body {
+    flex: 1 1 auto;
+    max-width: 60%;
+  }
+
+  .resume-application .resume-application-media {
+    flex: 0 0 auto;
+    width: 360px;
+  }
+}

@@ -244,3 +244,108 @@
     right: 10px;
   }
 }
+
+/* ---- bottom quick-links tab bar (overlaps the base of the carousel) ---- */
+.carousel-hero.carousel-hero-has-quicklinks {
+  /* reserve space BELOW the slide for the lower part of the bar; the bar's
+     upper part overlaps the slide because this padding is less than its
+     height. */
+  position: relative;
+  padding-bottom: 44px;
+}
+
+.carousel-hero .carousel-hero-quicklinks {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+
+  /* slightly wider than the content cap so it reaches a little further left/right */
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.carousel-hero .carousel-hero-quicklinks-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  margin: 0;
+  padding: 12px;
+  list-style: none;
+  border-radius: 14px;
+  background: #fdeeee;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 12%);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.carousel-hero .carousel-hero-quicklinks-list::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-hero .carousel-hero-quicklink {
+  flex: 1 0 auto;
+}
+
+.carousel-hero .carousel-hero-quicklink-anchor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  color: #333;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.carousel-hero .carousel-hero-quicklink-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #fbd9d9;
+  line-height: 0;
+}
+
+.carousel-hero .carousel-hero-quicklink .carousel-hero-quicklink-anchor .carousel-hero-quicklink-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.carousel-hero .carousel-hero-quicklink-label {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* active tab — solid red pill with white text/icon */
+.carousel-hero .carousel-hero-quicklink-active .carousel-hero-quicklink-anchor {
+  background: #e51a24;
+  color: #fff;
+}
+
+.carousel-hero .carousel-hero-quicklink-active .carousel-hero-quicklink-icon {
+  background: rgb(255 255 255 / 25%);
+}
+
+@media (width >= 900px) {
+  .carousel-hero.carousel-hero-has-quicklinks {
+    padding-bottom: 40px;
+  }
+
+  .carousel-hero .carousel-hero-quicklinks-list {
+    justify-content: flex-start;
+  }
+
+  .carousel-hero .carousel-hero-quicklink {
+    flex: 1 1 0;
+  }
+}

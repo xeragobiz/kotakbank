@@ -170,53 +170,18 @@ header nav .nav-tools {
   }
 }
 
-/* Expanding search control: icon button + slide-out input */
+/* Search control: icon link to the search page */
 header nav .nav-tools .nav-search {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
 header nav .nav-tools .nav-search-toggle {
+  display: block;
   width: 24px;
   height: 24px;
-  padding: 0;
-  border: none;
   cursor: pointer;
   background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300005a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E");
-}
-
-header nav .nav-tools .nav-search-form {
-  width: 0;
-  overflow: hidden;
-  transition: width 0.25s ease;
-}
-
-header nav .nav-tools .nav-search.nav-search-open .nav-search-form {
-  width: 220px;
-}
-
-header nav .nav-tools .nav-search-input {
-  width: 100%;
-  height: 34px;
-  padding: 0 12px;
-  border: 1px solid #d3d3d3;
-  border-radius: 17px;
-  font-size: 14px;
-  color: #333;
-}
-
-header nav .nav-tools .nav-search-input:focus {
-  outline: none;
-  border-color: #00005a;
-}
-
-/* submit (magnifier) + close (X) buttons and the backdrop are desktop-hidden;
-   they only surface in the mobile full-width search overlay below */
-header nav .nav-tools .nav-search-submit,
-header nav .nav-tools .nav-search-close,
-header nav .nav-tools .nav-search-backdrop {
-  display: none;
 }
 
 header nav .nav-tools .nav-login {
@@ -449,78 +414,4 @@ header nav .nav-tools .nav-login::before {
   }
 
   header nav .nav-tools { gap: 12px; }
-
-  /* ----- mobile search overlay: full-width bar pinned to the top ----- */
-  header nav .nav-tools .nav-search-backdrop {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    background: rgb(0 0 0 / 45%);
-  }
-
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-backdrop {
-    display: block;
-  }
-
-  /* the sliding-width form becomes a fixed full-width overlay bar */
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-form {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1001;
-    width: auto;
-    height: 72px;
-    padding: 0 16px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
-    overflow: visible;
-    transition: none;
-  }
-
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-input {
-    flex: 1;
-    height: 44px;
-    padding: 0 8px;
-    border: none;
-    border-radius: 0;
-    font-size: 18px;
-  }
-
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-input:focus {
-    border: none;
-  }
-
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-submit,
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-  }
-
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-submit {
-    background: center / 24px 24px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300005a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E");
-  }
-
-  /* thin divider between the magnifier and the X, as in the design */
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-close {
-    border-left: 1px solid #d3d3d3;
-    background: center / 22px 22px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E");
-  }
-
-  /* hide the small toggle icon while the overlay is open */
-  header nav .nav-tools .nav-search.nav-search-open .nav-search-toggle {
-    visibility: hidden;
-  }
 }

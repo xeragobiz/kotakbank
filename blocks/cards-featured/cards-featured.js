@@ -259,6 +259,13 @@ export default async function decorate(block) {
     a.href = ctaHref;
     a.className = 'cards-featured-explore';
     a.textContent = ctaText;
+    // "Explore All Cards" scrolls to the cards-lifestyle section on the page
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector('.cards-lifestyle');
+      if (!target) return; // no such section — let the link behave normally
+      e.preventDefault();
+      (target.closest('.section') || target).scrollIntoView({ behavior: 'smooth' });
+    });
     foot.append(a);
     wrapper.append(foot);
   }

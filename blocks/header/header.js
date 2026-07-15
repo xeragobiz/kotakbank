@@ -70,59 +70,19 @@ function buildBrand(section) {
  * @returns {Element} tools element
  */
 function buildSearchControl(searchHref) {
-  const searchPath = (searchHref || '/en/search').replace(/\.html$/, '');
+  // treat a placeholder anchor (#) or empty value as "no real target" so the
+  // control still points at the site search page
+  const hasRealHref = searchHref && searchHref !== '#';
+  const searchPath = (hasRealHref ? searchHref : '/search').replace(/\.html$/, '');
   const wrapper = document.createElement('div');
   wrapper.className = 'nav-search';
 
-  const toggle = document.createElement('button');
-  toggle.type = 'button';
-  toggle.className = 'nav-search-toggle';
-  toggle.setAttribute('aria-label', 'Search');
-  toggle.setAttribute('aria-expanded', 'false');
+  const link = document.createElement('a');
+  link.href = searchPath;
+  link.className = 'nav-search-toggle';
+  link.setAttribute('aria-label', 'Search');
 
-  const form = document.createElement('form');
-  form.className = 'nav-search-form';
-  form.action = searchPath;
-  form.setAttribute('role', 'search');
-  const input = document.createElement('input');
-  input.type = 'search';
-  input.name = 'q';
-  input.className = 'nav-search-input';
-  input.placeholder = 'I am looking for...';
-  input.setAttribute('aria-label', 'Search');
-
-  // submit (magnifier) + close (X) buttons — only visible in the mobile overlay
-  const submit = document.createElement('button');
-  submit.type = 'submit';
-  submit.className = 'nav-search-submit';
-  submit.setAttribute('aria-label', 'Submit search');
-  const close = document.createElement('button');
-  close.type = 'button';
-  close.className = 'nav-search-close';
-  close.setAttribute('aria-label', 'Close search');
-  form.append(input, submit, close);
-
-  // full-screen dimmer behind the mobile search bar
-  const backdrop = document.createElement('div');
-  backdrop.className = 'nav-search-backdrop';
-
-  const closeSearch = () => {
-    wrapper.classList.remove('nav-search-open');
-    toggle.setAttribute('aria-expanded', 'false');
-  };
-
-  toggle.addEventListener('click', () => {
-    const open = wrapper.classList.toggle('nav-search-open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (open) input.focus();
-  });
-  close.addEventListener('click', closeSearch);
-  backdrop.addEventListener('click', closeSearch);
-  form.addEventListener('submit', (e) => {
-    if (!input.value.trim()) e.preventDefault();
-  });
-
-  wrapper.append(toggle, form, backdrop);
+  wrapper.append(link);
   return wrapper;
 }
 

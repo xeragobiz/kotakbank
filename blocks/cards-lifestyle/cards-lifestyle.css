@@ -305,20 +305,22 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
   text-decoration: underline;
 }
 
-.cards-lifestyle .cards-lifestyle-compare:any-link {
+.cards-lifestyle button.cards-lifestyle-compare {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 7px 16px;
   border: 1px solid var(--cc-card-border);
   border-radius: 6px;
+  background: transparent;
   color: #6b7280;
   font-size: var(--body-font-size-xs);
   font-weight: 600;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.cards-lifestyle .cards-lifestyle-compare:any-link::before {
+.cards-lifestyle button.cards-lifestyle-compare::before {
   content: "";
   width: 14px;
   height: 14px;
