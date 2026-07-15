@@ -247,16 +247,18 @@
 
 /* ---- bottom quick-links tab bar (overlaps the base of the carousel) ---- */
 .carousel-hero.carousel-hero-has-quicklinks {
-  /* reserve space so the overlapping bar doesn't cover slide content */
+  /* reserve space BELOW the slide for the lower part of the bar; the bar's
+     upper part overlaps the slide because this padding is less than its
+     height. */
   position: relative;
-  padding-bottom: 96px;
+  padding-bottom: 44px;
 }
 
 .carousel-hero .carousel-hero-quicklinks {
   position: absolute;
   left: 16px;
   right: 16px;
-  bottom: 16px;
+  bottom: 0;
   z-index: 3;
 }
 
@@ -329,13 +331,13 @@
 
 @media (width >= 900px) {
   .carousel-hero.carousel-hero-has-quicklinks {
-    padding-bottom: 70px;
+    padding-bottom: 40px;
   }
 
   .carousel-hero .carousel-hero-quicklinks {
     left: 40px;
     right: 40px;
-    bottom: -36px;
+    bottom: 0;
   }
 
   .carousel-hero .carousel-hero-quicklinks-list {
