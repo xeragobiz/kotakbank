@@ -70,7 +70,10 @@ function buildBrand(section) {
  * @returns {Element} tools element
  */
 function buildSearchControl(searchHref) {
-  const searchPath = (searchHref || '/en/search').replace(/\.html$/, '');
+  // treat a placeholder anchor (#) or empty value as "no real target" so the
+  // control still points at the site search page
+  const hasRealHref = searchHref && searchHref !== '#';
+  const searchPath = (hasRealHref ? searchHref : '/search').replace(/\.html$/, '');
   const wrapper = document.createElement('div');
   wrapper.className = 'nav-search';
 
