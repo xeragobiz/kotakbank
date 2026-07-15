@@ -64,6 +64,15 @@ function highlightTextElements(terms, elements) {
   });
 }
 
+// only these pages are searchable
+const ALLOWED_PATHS = [
+  '/',
+  '/home',
+  '/kotak-cashback-plus-credit-card',
+  '/kotak-league-card',
+  '/kotak-air-plus-credit-card',
+];
+
 export async function fetchData(source) {
   const response = await fetch(source);
   if (!response.ok) {
@@ -79,7 +88,8 @@ export async function fetchData(source) {
     return null;
   }
 
-  return json.data;
+  // restrict results to the allowlisted pages (ignore any trailing slash)
+  return json.data.filter((row) => ALLOWED_PATHS.includes(row.path.replace(/(.)\/$/, '$1')));
 }
 
 function renderResult(result, searchTerms, titleTag) {
