@@ -152,7 +152,7 @@
           "applytext": "Apply Now",
           "applylink": "/apply",
           "knowmoretext": "Know More",
-          "knowmorelink": null,
+          "knowmorelink": "/kotak-air-plus-credit-card",
           "cardimage": {
             "__typename": "ImageRef",
             "_path": "/icons/cards/kotak-air-card.png"
@@ -282,7 +282,7 @@
           "applytext": "Apply Now",
           "applylink": "/apply",
           "knowmoretext": "Know More",
-          "knowmorelink": null,
+          "knowmorelink": "/kotak-league-card",
           "cardimage": {
             "__typename": "ImageRef",
             "_path": "/icons/cards/kotak-league-card.png"
