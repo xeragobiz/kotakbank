@@ -8,6 +8,8 @@
   --ra-red: #e51a24;
   --ra-dark: #1a1a1a;
   --ra-muted: #6b6b6b;
+
+  padding: 32px 0;
 }
 
 .resume-application .resume-application-banner {
