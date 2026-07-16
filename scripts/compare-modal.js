@@ -90,8 +90,13 @@ function renderBody() {
   compareBtn.disabled = selected.length < 2;
 }
 
+let lastFocused = null;
+
 function closeModal() {
-  if (modal) modal.hidden = true;
+  if (!modal) return;
+  modal.hidden = true;
+  // return focus to whatever opened the modal
+  if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
 }
 
 function buildModal() {
@@ -117,7 +122,26 @@ function buildModal() {
   modal.querySelector('.compare-modal-backdrop').addEventListener('click', closeModal);
   modal.querySelector('.compare-modal-submit').addEventListener('click', redirectToCompare);
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
+    if (modal.hidden) return;
+    if (e.key === 'Escape') {
+      closeModal();
+      return;
+    }
+    // trap Tab focus within the dialog
+    if (e.key === 'Tab') {
+      const focusable = [...modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+        .filter((el) => !el.disabled && el.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
   document.body.append(modal);
 }
@@ -133,5 +157,10 @@ export default function openCompareModal(card, pool) {
   // pre-add the clicked card (avoid duplicates), respecting the max
   if (card && card.path) addCard(card);
   renderBody();
+  // remember the trigger so focus can return to it on close
+  lastFocused = document.activeElement;
   modal.hidden = false;
+  // move focus into the dialog for keyboard/screen-reader users
+  const close = modal.querySelector('.compare-modal-close');
+  if (close) close.focus();
 }
