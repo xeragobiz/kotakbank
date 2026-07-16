@@ -38,7 +38,8 @@ main > .section > .cc-hero-wrapper {
 }
 
 .cc-hero.gradient-red .cc-hero-image::after {
-  background: linear-gradient(90deg, #7a0d16 0%, #b3121f 45%, rgb(179 18 31 / 15%) 100%);
+  /* top-left corner to bottom-right corner */
+  background: linear-gradient(135deg, #7a0d16 0%, #b3121f 45%, rgb(179 18 31 / 15%) 100%);
 }
 
 .cc-hero.gradient-dark .cc-hero-image::after {
