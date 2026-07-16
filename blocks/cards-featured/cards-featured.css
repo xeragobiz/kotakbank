@@ -22,10 +22,11 @@ main > .section > .cards-featured-wrapper {
   padding: 0;
 }
 
-/* close the gap to the preceding section (e.g. cc-steps): drop this section's
-   top margin and the previous section's bottom margin */
+/* close the gap to the adjacent sections: drop this section's top and bottom
+   margins and the previous section's bottom margin */
 main > .section:has(> .cards-featured-wrapper) {
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 main > .section:has(+ .section > .cards-featured-wrapper) {
