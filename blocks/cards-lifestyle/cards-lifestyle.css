@@ -108,10 +108,10 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
 .cards-lifestyle .cards-lifestyle-tab {
   flex: 0 0 auto;
   padding: 8px 18px;
-  border: 1px solid var(--cc-card-border);
+  border: 1px solid var(--cc-red, #e51a24);
   border-radius: 999px;
-  background: var(--cc-chip-bg);
-  color: var(--cc-ink);
+  background: #fff;
+  color: var(--cc-red, #e51a24);
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
@@ -119,8 +119,8 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
 }
 
 .cards-lifestyle .cards-lifestyle-tab[aria-selected="true"] {
-  background: var(--cc-navy);
-  border-color: var(--cc-navy);
+  background: var(--cc-red, #e51a24);
+  border-color: var(--cc-red, #e51a24);
   color: #fff;
 }
 
