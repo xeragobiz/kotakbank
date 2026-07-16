@@ -1,5 +1,6 @@
-import * as Sentry from '@sentry/browser';
-
+// Sentry is loaded from a CDN at runtime: EDS serves modules as-is (no bundler),
+// so a bare "@sentry/browser" specifier can't resolve in the browser.
+const SENTRY_MODULE_URL = 'https://esm.sh/@sentry/browser@10.65.0';
 const DEFAULT_DSN = '';
 
 function getConfiguredValue(key) {
@@ -12,7 +13,7 @@ function toNumber(value, fallback) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
-export function initSentry() {
+export default async function initSentry() {
   const dsn = getConfiguredValue('SENTRY_DSN') || DEFAULT_DSN;
   const environment = getConfiguredValue('SENTRY_ENVIRONMENT') || window.location.hostname || 'localhost';
   const release = getConfiguredValue('SENTRY_RELEASE') || window.hlx?.version || 'local';
@@ -21,6 +22,14 @@ export function initSentry() {
   const replaysOnErrorSampleRate = toNumber(getConfiguredValue('SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE'), 1.0);
 
   if (!dsn) {
+    return false;
+  }
+
+  let Sentry;
+  try {
+    Sentry = await import(SENTRY_MODULE_URL);
+  } catch (e) {
+    // never let monitoring break the page
     return false;
   }
 

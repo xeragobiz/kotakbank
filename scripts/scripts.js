@@ -10,7 +10,7 @@ import {
   loadSections,
   loadCSS,
 } from './aem.js';
-import { initSentry } from './sentry.js';
+import initSentry from './sentry.js';
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
