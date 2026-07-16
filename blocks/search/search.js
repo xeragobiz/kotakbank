@@ -64,14 +64,8 @@ function highlightTextElements(terms, elements) {
   });
 }
 
-// only these pages are searchable
-const ALLOWED_PATHS = [
-  '/',
-  '/home',
-  '/kotak-cashback-plus-credit-card',
-  '/kotak-league-card',
-  '/kotak-air-plus-credit-card',
-];
+// pages excluded from search results (nav/header and footer fragments)
+const EXCLUDED_PATHS = ['/nav', '/header', '/footer'];
 
 export async function fetchData(source) {
   const response = await fetch(source);
@@ -88,8 +82,8 @@ export async function fetchData(source) {
     return null;
   }
 
-  // restrict results to the allowlisted pages (ignore any trailing slash)
-  return json.data.filter((row) => ALLOWED_PATHS.includes(row.path.replace(/(.)\/$/, '$1')));
+  // search all pages except the header/footer fragments (ignore trailing slash)
+  return json.data.filter((row) => !EXCLUDED_PATHS.includes(row.path.replace(/(.)\/$/, '$1')));
 }
 
 function renderResult(result, searchTerms, titleTag) {
