@@ -1,4 +1,5 @@
 // add delayed functionality here
+import initSentry from './sentry.js';
 
 /**
  * Global "Back to Top" control. Rendered site-wide (no authoring), shown only
@@ -35,3 +36,6 @@ function initBackToTop() {
 }
 
 initBackToTop();
+
+// error/performance monitoring — delayed so it never affects LCP
+initSentry();
