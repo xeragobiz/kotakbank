@@ -79,11 +79,12 @@
   pointer-events: none;
 }
 
-/* mobile: keep the copy in the left half so the image subject shows on the right */
+/* mobile: copy starts at the left and spans up to half, image subject on the right */
 @media (width < 900px) {
   .carousel-hero .carousel-hero-slide .carousel-hero-slide-content {
     align-items: flex-start;
     width: 55%;
+    margin: 0;
     padding: 0 16px;
   }
 }
