@@ -8,9 +8,26 @@
   display: none;
 }
 
+/* also collapse the section/wrapper so no empty space is reserved on mobile */
+.breadcrumb-wrapper {
+  display: none;
+}
+
+main > .section:has(> .breadcrumb-wrapper) {
+  margin: 0;
+}
+
 @media (width >= 900px) {
   .breadcrumb {
     display: block;
+  }
+
+  .breadcrumb-wrapper {
+    display: block;
+  }
+
+  main > .section:has(> .breadcrumb-wrapper) {
+    margin: 40px 0;
   }
 }
 
