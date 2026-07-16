@@ -60,6 +60,13 @@
   object-position: center;
 }
 
+/* desktop: show the full image (no crop) */
+@media (width >= 900px) {
+  .carousel-hero .carousel-hero-slide .carousel-hero-slide-image picture > img {
+    object-fit: contain;
+  }
+}
+
 /* overlaid text block, vertically centered, constrained to a centered container */
 .carousel-hero .carousel-hero-slide .carousel-hero-slide-content {
   position: absolute;

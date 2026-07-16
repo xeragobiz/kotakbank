@@ -45,10 +45,12 @@ function bindEvents(block) {
   });
 
   block.querySelector('.slide-prev').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) - 1);
+    const current = parseInt(block.dataset.activeSlide, 10) || 0;
+    showSlide(block, current - 1);
   });
   block.querySelector('.slide-next').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) + 1);
+    const current = parseInt(block.dataset.activeSlide, 10) || 0;
+    showSlide(block, current + 1);
   });
 
   const slideObserver = new IntersectionObserver((entries) => {

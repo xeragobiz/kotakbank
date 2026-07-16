@@ -93,7 +93,10 @@
 
 @media (width >= 900px) {
   .cards-benefits.list > ul {
+    /* centered card on desktop */
     grid-template-columns: none;
+    max-width: 560px;
+    margin: 0 auto;
   }
 
   .cards-benefits.list > ul > li {
@@ -127,7 +130,7 @@
 .cards-benefits.list .cards-benefits-card-body h3,
 .cards-benefits.list .cards-benefits-card-body h4 {
   margin: 0 0 4px;
-  color: #16326c;
+  color: var(--cc-navy, #00005a);
   font-size: 16px;
 }
 
