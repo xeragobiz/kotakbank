@@ -12,7 +12,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 500;
+
+  /* sit above the mobile bottom-docked header (z-index 999) so the sticky CTA
+     overlaps it on pages that use this block */
+  z-index: 1000;
   display: flex;
   align-items: center;
   gap: 12px;
