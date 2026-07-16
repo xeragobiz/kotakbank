@@ -30,41 +30,37 @@
   border: 1px solid var(--text-color);
 }
 
-/* search results */
+/* search results — list layout, one result per row */
 .search ul.search-results {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(278px, 1fr));
-  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   padding-left: 0;
   list-style: none;
 }
 
 .search ul.search-results > li {
+  display: flex;
+  gap: 16px;
+  align-items: center;
   border: 1px solid #dadada;
-}
-
-.search ul.search-results > li > a {
-  display: block;
-  height: 100%;
-  background-color: transparent;
-  color: currentcolor;
-  cursor: pointer;
+  border-radius: 8px;
+  padding: 16px;
   scroll-margin-top: calc(var(--header-height, 64px) + 16px);
 }
 
-.search ul.search-results > li > a:hover,
-.search ul.search-results > li > a:focus {
-  text-decoration: none;
-}
-
-.search ul.search-results > li .search-result-title,
-.search ul.search-results > li p {
-  padding: 0 16px;
+.search ul.search-results > li .search-result-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
 
 .search ul.search-results > li .search-result-title {
+  margin: 0;
   font-size: var(--body-font-size-m);
-  font-weight: normal;
+  font-weight: 700;
 }
 
 .search ul.search-results > li .search-result-title a {
@@ -74,16 +70,43 @@
 }
 
 .search ul.search-results > li p {
+  margin: 0;
   font-size: var(--body-font-size-s);
+  color: #6b7280;
+}
+
+/* Know More button → the result's details page */
+.search ul.search-results > li .search-result-more:any-link {
+  align-self: flex-start;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 18px;
+  border-radius: 6px;
+  background: #e51a24;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.search ul.search-results > li .search-result-more:any-link:hover {
+  background: #c4141d;
 }
 
 .search ul.search-results > li .search-result-image {
+  flex: 0 0 auto;
+  width: 96px;
   aspect-ratio: 4 / 3;
+  line-height: 0;
 }
 
 .search ul.search-results > li picture img {
   display: block;
   width: 100%;
+  height: 100%;
+  border-radius: 6px;
   object-fit: cover;
 }
 

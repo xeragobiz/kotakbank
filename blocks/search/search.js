@@ -94,15 +94,20 @@ export async function fetchData(source) {
 
 function renderResult(result, searchTerms, titleTag) {
   const li = document.createElement('li');
-  const a = document.createElement('a');
-  a.href = result.path;
+
   if (result.image) {
     const wrapper = document.createElement('div');
     wrapper.className = 'search-result-image';
+    const imgLink = document.createElement('a');
+    imgLink.href = result.path;
     const pic = createOptimizedPicture(result.image, '', false, [{ width: '375' }]);
-    wrapper.append(pic);
-    a.append(wrapper);
+    imgLink.append(pic);
+    wrapper.append(imgLink);
+    li.append(wrapper);
   }
+
+  const body = document.createElement('div');
+  body.className = 'search-result-body';
   if (result.title) {
     const title = document.createElement(titleTag);
     title.className = 'search-result-title';
@@ -111,15 +116,22 @@ function renderResult(result, searchTerms, titleTag) {
     link.textContent = result.title;
     highlightTextElements(searchTerms, [link]);
     title.append(link);
-    a.append(title);
+    body.append(title);
   }
   if (result.description) {
     const description = document.createElement('p');
     description.textContent = result.description;
     highlightTextElements(searchTerms, [description]);
-    a.append(description);
+    body.append(description);
   }
-  li.append(a);
+  // "Know More" button → the result's details page
+  const more = document.createElement('a');
+  more.className = 'search-result-more';
+  more.href = result.path;
+  more.textContent = 'Know More';
+  body.append(more);
+
+  li.append(body);
   return li;
 }
 
