@@ -1,5 +1,8 @@
 // Sentry is loaded from a CDN at runtime: EDS serves modules as-is (no bundler),
 // so a bare "@sentry/browser" specifier can't resolve in the browser.
+// We deliberately avoid browser-tracing and session-replay integrations — they
+// are the heaviest, legacy-JS-laden parts of the SDK and hurt performance.
+// This keeps monitoring to lightweight error capture only.
 const SENTRY_MODULE_URL = 'https://esm.sh/@sentry/browser@10.65.0';
 const DEFAULT_DSN = '';
 
@@ -8,18 +11,10 @@ function getConfiguredValue(key) {
   return String(value).trim();
 }
 
-function toNumber(value, fallback) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
-}
-
 export default async function initSentry() {
   const dsn = getConfiguredValue('SENTRY_DSN') || DEFAULT_DSN;
   const environment = getConfiguredValue('SENTRY_ENVIRONMENT') || window.location.hostname || 'localhost';
   const release = getConfiguredValue('SENTRY_RELEASE') || window.hlx?.version || 'local';
-  const tracesSampleRate = toNumber(getConfiguredValue('SENTRY_TRACES_SAMPLE_RATE'), 1.0);
-  const replaysSessionSampleRate = toNumber(getConfiguredValue('SENTRY_REPLAYS_SESSION_SAMPLE_RATE'), 0.1);
-  const replaysOnErrorSampleRate = toNumber(getConfiguredValue('SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE'), 1.0);
 
   if (!dsn) {
     return false;
@@ -37,13 +32,8 @@ export default async function initSentry() {
     dsn,
     environment,
     release,
-    integrations: [
-      Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration(),
-    ],
-    tracesSampleRate,
-    replaysSessionSampleRate,
-    replaysOnErrorSampleRate,
+    // no integrations: errors-only, smallest footprint
+    integrations: [],
     enabled: true,
     beforeSend(event) {
       const exceptionMessage = event.exception?.values?.[0]?.value || '';
