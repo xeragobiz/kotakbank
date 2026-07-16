@@ -11,7 +11,7 @@
   --cc-card-border: #eaeaea;
 
   background: #ececed;
-  padding: 48px 24px 0;
+  padding: 48px 24px;
 }
 
 /* full-bleed: let the grey band span the full section width, ignoring the
