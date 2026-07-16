@@ -30,6 +30,14 @@ function renderCard(data) {
   if (data.imageSrc) {
     imgWrap.append(createOptimizedPicture(data.imageSrc, data.imageAlt, false, [{ width: '400' }]));
   }
+  // "Recommended" ribbon on the image for the curated (cashback/fuel) cards
+  const cardTagList = (data.tags || '').toLowerCase().split(',').map((t) => t.trim());
+  if (cardTagList.includes('cashback') || cardTagList.includes('fuel')) {
+    const badge = document.createElement('span');
+    badge.className = 'cards-lifestyle-item-recommended';
+    badge.textContent = 'Recommended';
+    imgWrap.append(badge);
+  }
   li.append(imgWrap);
 
   const body = document.createElement('div');
