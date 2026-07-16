@@ -79,6 +79,15 @@
   pointer-events: none;
 }
 
+/* mobile: keep the copy in the left half so the image subject shows on the right */
+@media (width < 900px) {
+  .carousel-hero .carousel-hero-slide .carousel-hero-slide-content {
+    align-items: flex-start;
+    width: 55%;
+    padding: 0 16px;
+  }
+}
+
 /* authored text-colour theme — overrides the default per slide, so it
    follows the slide even when authors reorder the carousel */
 .carousel-hero .carousel-hero-slide.carousel-hero-slide-theme-dark .carousel-hero-slide-content {
