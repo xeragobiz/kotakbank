@@ -40,16 +40,18 @@ function closeAllMenus(menu) {
  * @param {Element} section the first fragment section
  * @returns {Element} brand element
  */
-const HOME_URL = '/';
+const HOME_URL = '/home';
 
 function buildBrand(section) {
   const brand = document.createElement('div');
   brand.className = 'nav-brand';
   if (!section) return brand;
-  // prefer a logo link the author set (<a><img></a>); otherwise wrap the bare
-  // logo image in a link to the Kotak home page.
+  // the logo always links to the home page. Prefer an author-set logo link
+  // (<a><img></a>) but point it at HOME_URL; otherwise wrap the bare logo image.
   const logoLink = section.querySelector('a img')?.closest('a');
   if (logoLink) {
+    logoLink.href = HOME_URL;
+    logoLink.setAttribute('aria-label', 'Kotak Mahindra Bank home');
     brand.append(logoLink);
   } else {
     const pic = section.querySelector('picture, img');
