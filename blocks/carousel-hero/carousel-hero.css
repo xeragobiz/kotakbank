@@ -116,6 +116,20 @@
   line-height: 1.18;
 }
 
+/* no gap between consecutive headings (e.g. eyebrow label + main heading) */
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h1 + h1,
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h1 + h2,
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h2 + h1,
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h2 + h2,
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h2 + h3,
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h3 + h3 {
+  margin-top: 0;
+}
+
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content :is(h1, h2, h3, h4, h5, h6):has(+ :is(h1, h2, h3, h4, h5, h6)) {
+  margin-bottom: 0;
+}
+
 .carousel-hero .carousel-hero-slide .carousel-hero-slide-content p {
   margin: 0 0 10px;
   max-width: 620px;
@@ -242,6 +256,17 @@
   .carousel-hero .carousel-hero-slide-indicators {
     justify-content: flex-start;
     padding-left: 16px;
+  }
+
+  /* larger invisible tap target so the dots are easy to tap to change slides */
+  .carousel-hero .carousel-hero-slide-indicator button {
+    position: relative;
+  }
+
+  .carousel-hero .carousel-hero-slide-indicator button::after {
+    content: "";
+    position: absolute;
+    inset: -14px -4px;
   }
 
   /* active dot widens into a pill (matches the design) */
