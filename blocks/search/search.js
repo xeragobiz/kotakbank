@@ -254,7 +254,6 @@ async function handleSearch(e, block, config) {
 
   const data = await fetchData(config.source);
   const filteredData = filterData(searchTerms, data);
-  recordRecentSearch(searchValue);
   await renderResults(block, config, filteredData, searchTerms);
 }
 
@@ -284,7 +283,14 @@ function searchInput(block, config) {
     handleSearch(e, block, config);
   });
 
-  input.addEventListener('keyup', (e) => { if (e.code === 'Escape') { clearSearch(block); } });
+  // record a completed search (Enter or leaving the field) — not every
+  // keystroke — so "Recent search" shows whole terms, not partial ones.
+  const commit = () => recordRecentSearch(input.value);
+  input.addEventListener('change', commit);
+  input.addEventListener('keyup', (e) => {
+    if (e.code === 'Escape') clearSearch(block);
+    if (e.code === 'Enter') commit();
+  });
 
   return input;
 }
@@ -317,8 +323,10 @@ const LINK_ICONS = {
 /* parse the authored "Most searched" links from a multiline text field.
    One link per line: "Label | /path | icon" (icon optional). */
 function parseLinks(raw) {
+  // entries may be separated by new lines or commas; fields within an entry
+  // are pipe-separated: "Label | /path | icon".
   return (raw || '')
-    .split('\n')
+    .split(/[\n,]/)
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line) => {
