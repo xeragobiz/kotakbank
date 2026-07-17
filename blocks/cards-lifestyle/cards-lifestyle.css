@@ -118,7 +118,7 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
   cursor: pointer;
 }
 
-.cards-lifestyle .cards-lifestyle-tab[aria-selected="true"] {
+.cards-lifestyle .cards-lifestyle-tab[aria-selected="true"]:not(.cards-lifestyle-tab-more) {
   background: var(--cc-red, #e51a24);
   border-color: var(--cc-red, #e51a24);
   color: #fff;

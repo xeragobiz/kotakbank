@@ -405,8 +405,10 @@ export default async function decorate(block) {
 
   tabs.addEventListener('click', (e) => {
     const btn = e.target.closest('.cards-lifestyle-tab');
-    if (!btn) return;
-    tabs.querySelectorAll('.cards-lifestyle-tab').forEach((b) => b.setAttribute('aria-selected', 'false'));
+    // the "⋯" more toggle only expands the row — it isn't a filter, so don't
+    // select it or change the active filter here (its own handler expands).
+    if (!btn || btn.classList.contains('cards-lifestyle-tab-more')) return;
+    tabs.querySelectorAll('.cards-lifestyle-tab:not(.cards-lifestyle-tab-more)').forEach((b) => b.setAttribute('aria-selected', 'false'));
     btn.setAttribute('aria-selected', 'true');
     activeFilter = btn.dataset.filter;
     // row 1 change resets row 2 selection and rebuilds its chips
