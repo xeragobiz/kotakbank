@@ -248,6 +248,13 @@ main > .section > .cc-hero-wrapper {
     left: 0;
     z-index: 2;
   }
+
+  /* clear the overlaid content below the back button so they don't collide */
+  .cc-hero.gradient-red.cc-hero-has-back .cc-hero-content,
+  .cc-hero.gradient-dark.cc-hero-has-back .cc-hero-content {
+    align-self: start;
+    padding-top: 56px;
+  }
 }
 
 /* ---- "detail" variant: product-detail hero (card image + red info panel) ----
