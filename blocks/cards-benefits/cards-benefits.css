@@ -23,6 +23,10 @@
 }
 
 @media (width >= 900px) {
+  .cards-benefits .cards-benefits-title {
+    text-align: center;
+  }
+
   .cards-benefits > ul {
     grid-template-columns: repeat(3, 1fr);
   }
