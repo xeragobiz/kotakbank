@@ -59,11 +59,9 @@ main > .section > .cc-hero-wrapper {
   width: 100%;
 
   /* mobile: fill the hero so the overlaid content always sits on the image
-     (the tall stacked content would otherwise spill below a letterboxed image).
-     Crop from the right so the card (positioned on the right) stays in view. */
+     (the tall stacked content would otherwise spill below a letterboxed image) */
   height: 100%;
   object-fit: cover;
-  object-position: right center;
 }
 
 @media (width >= 900px) {
