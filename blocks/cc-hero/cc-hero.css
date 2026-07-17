@@ -211,14 +211,14 @@ main > .section > .cc-hero-wrapper {
      CTA switches to orange (desktop only) so it stands out against the red */
   .cc-hero.gradient-red .cc-hero-btn-primary,
   .cc-hero.detail .cc-hero-btn-primary {
-    background-color: var(--cc-orange);
-    border-color: var(--cc-orange);
+    background-color: #ed4223;
+    border-color: #ed4223;
   }
 
   .cc-hero.gradient-red .cc-hero-btn-primary:hover,
   .cc-hero.detail .cc-hero-btn-primary:hover {
-    background-color: #d9591a;
-    border-color: #d9591a;
+    background-color: #d4351a;
+    border-color: #d4351a;
   }
 }
 
