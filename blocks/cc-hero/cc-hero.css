@@ -100,6 +100,14 @@ main > .section > .cc-hero-wrapper {
   }
 }
 
+/* mobile: keep copy in the left portion so the image subject shows at right */
+@media (width < 900px) {
+  .cc-hero .cc-hero-content h1,
+  .cc-hero .cc-hero-content p {
+    max-width: 62%;
+  }
+}
+
 .cc-hero .cc-hero-content p {
   margin: 0 0 16px;
   color: var(--cc-navy);
@@ -117,24 +125,23 @@ main > .section > .cc-hero-wrapper {
 .cc-hero .cc-hero-content.cc-hero-text-blue p { color: var(--cc-blue); }
 .cc-hero .cc-hero-content.cc-hero-text-white p { color: var(--cc-white); }
 
-/* CTAs — stacked full-width on mobile, row on desktop */
+/* CTAs — compact left-aligned pills, stacked on mobile, row on desktop */
 .cc-hero .cc-hero-actions {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: flex-start;
   gap: 12px;
-  width: 100%;
 }
 
 .cc-hero .cc-hero-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: auto;
   height: 44px;
   min-height: 0;
-  padding: 0 16px;
-  border-radius: 6px;
+  padding: 0 28px;
+  border-radius: 999px;
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
@@ -144,9 +151,8 @@ main > .section > .cc-hero-wrapper {
 
 @media (width >= 900px) {
   .cc-hero .cc-hero-btn {
-    width: auto;
     height: 48px;
-    padding: 0 19px;
+    padding: 0 32px;
     font-size: 18px;
   }
 }
