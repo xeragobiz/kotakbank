@@ -381,8 +381,10 @@ export default async function decorate(block) {
   });
 
   // filtering: a card must match BOTH the active primary tab and (if set) the
-  // active secondary category. "all" (primary default) matches everything.
-  let activeFilter = (filters[0] || 'All').toLowerCase();
+  // active secondary category. Default the page to the curated "Recommended"
+  // tab when it exists; otherwise fall back to the first tab.
+  const hasRecommended = filters.some((f) => f.toLowerCase() === 'recommended');
+  let activeFilter = (hasRecommended ? 'recommended' : (filters[0] || 'All')).toLowerCase();
   let activeCategory = '';
   const cardTags = (li) => (li.dataset.tags || '').split(',').map((t) => t.trim()).filter(Boolean);
   // "Recommended" is a curated tab: show only Cashback and Fuel cards.
@@ -426,8 +428,14 @@ export default async function decorate(block) {
     });
   }
 
-  // initialize row 2 chips for the default row-1 tab
+  // reflect the default active filter on the matching tab (Recommended by
+  // default) and apply it so the page opens on the curated set.
+  tabs.querySelectorAll('.cards-lifestyle-tab').forEach((b) => {
+    b.setAttribute('aria-selected', b.dataset.filter === activeFilter ? 'true' : 'false');
+  });
+  // initialize row 2 chips for the default row-1 tab, then filter the grid
   renderCategoryChips(activeFilter);
+  applyFilters();
 
   block.textContent = '';
   block.append(wrapper);
