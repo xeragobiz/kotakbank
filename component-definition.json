@@ -113,6 +113,21 @@
           }
         },
         {
+          "title": "Back Link",
+          "id": "back-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Back Link",
+                  "model": "back-link"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Breadcrumb",
           "id": "breadcrumb",
           "plugins": {
