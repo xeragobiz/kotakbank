@@ -159,6 +159,12 @@
     ]
   },
   {
+    "id": "search",
+    "components": [
+      "search-link"
+    ]
+  },
+  {
     "id": "sub-nav",
     "components": [
       "sub-nav-item"

@@ -30,6 +30,81 @@
   border: 1px solid var(--text-color);
 }
 
+/* ---- Recent search + Most searched suggestions ---- */
+.search .search-suggestions {
+  margin-top: 20px;
+}
+
+.search .search-suggestions-section + .search-suggestions-section {
+  margin-top: 24px;
+}
+
+.search .search-suggestions-heading {
+  margin: 0 0 12px;
+  color: #1f2430;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Recent search — red outline pill chips */
+.search .search-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.search .search-chip {
+  padding: 9px 20px;
+  border: 1px solid #f4a9b0;
+  border-radius: 999px;
+  background: #fff4f5;
+  color: #e51a24;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.search .search-chip:hover {
+  background: #ffe9eb;
+}
+
+/* Most searched — bordered card of icon + label rows */
+.search .search-most-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #dadada;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.search .search-most-list > li + li {
+  border-top: 1px solid #ececec;
+}
+
+.search .search-most-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  color: #1f2430;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.search .search-most-link:hover {
+  background: #f7f8fb;
+}
+
+.search .search-most-icon {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  background: var(--icon) center / contain no-repeat;
+}
+
 /* search results — list layout, one result per row */
 .search ul.search-results {
   display: flex;
