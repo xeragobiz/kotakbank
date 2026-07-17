@@ -233,6 +233,24 @@
   border-color: #fff;
 }
 
+/* mobile: no side arrows — navigate via the bottom-left dot indicators only */
+@media (width < 900px) {
+  .carousel-hero .carousel-hero-navigation-buttons {
+    display: none;
+  }
+
+  .carousel-hero .carousel-hero-slide-indicators {
+    justify-content: flex-start;
+    padding-left: 16px;
+  }
+
+  /* active dot widens into a pill (matches the design) */
+  .carousel-hero .carousel-hero-slide-indicator button:disabled {
+    width: 22px;
+    border-radius: 999px;
+  }
+}
+
 @media (width >= 900px) {
   .carousel-hero .carousel-hero-slide .carousel-hero-slide-content {
     padding: 0 45px;

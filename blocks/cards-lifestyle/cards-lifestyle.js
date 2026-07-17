@@ -64,7 +64,7 @@ function renderCard(data) {
     if (cardTagList.includes('cashback') || cardTagList.includes('fuel')) {
       const proof = document.createElement('span');
       proof.className = 'cards-lifestyle-item-badge cards-lifestyle-item-badge-proof';
-      proof.textContent = '300 people purchased it';
+      proof.textContent = '300 people purchased last 30 days';
       head.append(proof);
     }
     body.append(head);
@@ -85,6 +85,29 @@ function renderCard(data) {
     data.featuresList.classList.add('cards-lifestyle-item-features');
     body.append(data.featuresList);
   }
+  // reference cards: Know More + Apply Now side by side, no Compare button.
+  if (data.isReference) {
+    const foot = document.createElement('div');
+    foot.className = 'cards-lifestyle-item-footer cards-lifestyle-item-footer-split';
+    if (data.knowMoreText) {
+      const km = document.createElement('a');
+      km.href = data.knowMoreHref || '#';
+      km.className = 'cards-lifestyle-knowmore cards-lifestyle-knowmore-btn';
+      km.textContent = data.knowMoreText;
+      foot.append(km);
+    }
+    if (data.applyText) {
+      const a = document.createElement('a');
+      a.href = data.applyHref || '#';
+      a.className = 'cards-lifestyle-apply';
+      a.textContent = data.applyText;
+      foot.append(a);
+    }
+    body.append(foot);
+    li.append(body);
+    return li;
+  }
+
   if (data.applyText) {
     const actions = document.createElement('div');
     actions.className = 'cards-lifestyle-item-actions';
