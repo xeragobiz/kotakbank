@@ -52,9 +52,9 @@
 }
 
 .apply-form .apply-form-label {
-  color: var(--cc-ink);
+  color: var(--cc-navy);
   font-size: var(--body-font-size-xs);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .apply-form .apply-form-required {
