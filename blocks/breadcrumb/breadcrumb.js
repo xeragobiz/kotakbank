@@ -51,4 +51,19 @@ export default function decorate(block) {
   nav.append(list);
   block.textContent = '';
   block.append(nav);
+
+  // On mobile the breadcrumb is hidden; instead surface a single "← <parent>"
+  // back button inside the detail hero (matching the design). The parent is the
+  // last linked crumb (the one just before the current, unlinked, page).
+  const links = [...list.querySelectorAll('a.breadcrumb-link')];
+  const parent = links[links.length - 1];
+  const hero = document.querySelector('.cc-hero.detail');
+  if (parent && hero && !hero.querySelector('.cc-hero-back')) {
+    const back = document.createElement('a');
+    back.className = 'cc-hero-back';
+    back.href = parent.getAttribute('href');
+    back.innerHTML = `<span class="cc-hero-back-icon" aria-hidden="true"></span><span>${parent.textContent.trim()}</span>`;
+    // sits at the very top of the hero, above the card image
+    hero.prepend(back);
+  }
 }
