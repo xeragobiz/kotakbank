@@ -184,4 +184,32 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(media, content);
+
+  // detail variant: on mobile the breadcrumb is hidden, so surface a
+  // "← <parent>" back button at the top of the hero. Prefer the page
+  // breadcrumb's last linked crumb for the label + destination; when that
+  // isn't a usable link, still render the button and fall back to browser
+  // history. Built here (not in the breadcrumb block) so it doesn't depend on
+  // section load order.
+  if (block.classList.contains('detail') && !block.querySelector('.cc-hero-back')) {
+    const crumbLinks = document.querySelectorAll(
+      '.breadcrumb a.breadcrumb-link, .breadcrumb-wrapper a[href], .breadcrumb a[href]',
+    );
+    const parent = crumbLinks[crumbLinks.length - 1];
+    const href = parent ? parent.getAttribute('href') : '';
+    const label = (parent ? parent.textContent.trim() : '');
+    const hasRealLink = !!href && href !== '#';
+    const back = document.createElement('a');
+    back.className = 'cc-hero-back';
+    back.href = hasRealLink ? href : '#';
+    const text = (label && label !== '#') ? label : 'Back';
+    back.innerHTML = `<span class="cc-hero-back-icon" aria-hidden="true"></span><span>${text}</span>`;
+    if (!hasRealLink) {
+      back.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.history.back();
+      });
+    }
+    block.prepend(back);
+  }
 }
