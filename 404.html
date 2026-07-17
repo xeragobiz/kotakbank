@@ -35,6 +35,12 @@
     import { sampleRUM } from '/scripts/aem.js';
     sampleRUM('404', { source: document.referrer });
   </script>
+  <script nonce="aem" type="text/javascript">
+    // auto-redirect a not-found page to the home page after 2 seconds
+    window.setTimeout(() => {
+      window.location.replace('/home');
+    }, 2000);
+  </script>
   <link rel="stylesheet" href="/styles/styles.css">
   <style>
     main.error {
@@ -62,8 +68,9 @@
         <text x="0" y="17">404</text>
       </svg>
       <h2 class="error-message">Page Not Found</h2>
+      <p class="error-redirect-note">Redirecting you to the home page in 2 seconds…</p>
       <p class="button-container">
-        <a href="/" class="button secondary error-button-home">Go home</a>
+        <a href="/home" class="button secondary error-button-home">Go home</a>
       </p>
     </div>
   </main>
