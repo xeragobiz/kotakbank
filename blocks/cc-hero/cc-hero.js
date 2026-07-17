@@ -193,7 +193,10 @@ export default function decorate(block) {
   //  - apply page (page has an apply-form): fixed "Credit Cards" + browser-back
   //  - index/cards listing page: fixed "Back to Home" linking to /home
   const isApplyPage = !!document.querySelector('.apply-form');
-  const isIndexPage = /\/index(\.html)?$/.test(window.location.pathname);
+  // the credit-cards index document is served at the site root ("/") as well
+  // as "/index"; match both (but not "/home", which is the separate homepage).
+  const { pathname } = window.location;
+  const isIndexPage = pathname === '/' || /\/index(\.html)?$/.test(pathname);
   const wantsBack = block.classList.contains('detail') || isApplyPage || isIndexPage;
   if (wantsBack && !block.querySelector('.cc-hero-back')) {
     let href = '#';
