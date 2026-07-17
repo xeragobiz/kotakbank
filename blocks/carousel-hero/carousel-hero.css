@@ -6,6 +6,11 @@
   padding: 0 !important;
 }
 
+/* anchor the absolutely-positioned dot indicators to the carousel itself */
+.carousel-hero {
+  position: relative;
+}
+
 .carousel-hero .carousel-hero-slides-container {
   position: relative;
 }
@@ -116,13 +121,9 @@
   line-height: 1.18;
 }
 
-/* no gap between consecutive headings (e.g. eyebrow label + main heading) */
-.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h1 + h1,
-.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h1 + h2,
-.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h2 + h1,
-.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h2 + h2,
-.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h2 + h3,
-.carousel-hero .carousel-hero-slide .carousel-hero-slide-content h3 + h3 {
+/* tighten the gap between the eyebrow label (a short <p> or heading) and the
+   main heading that follows. The eyebrow may render as <p> or as a heading. */
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content :is(p, h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
   margin-top: 0;
 }
 
@@ -137,6 +138,11 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
+}
+
+/* the eyebrow <p> immediately above the heading sits tight to it */
+.carousel-hero .carousel-hero-slide .carousel-hero-slide-content p:has(+ :is(h1, h2, h3, h4, h5, h6)) {
+  margin-bottom: 2px;
 }
 
 /* CTA button — Kotak red */
