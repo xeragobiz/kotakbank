@@ -275,7 +275,7 @@ function searchInput(block, config) {
   input.setAttribute('type', 'search');
   input.className = 'search-input';
 
-  const searchPlaceholder = config.placeholders.searchPlaceholder || 'Search...';
+  const searchPlaceholder = config.placeholders.searchPlaceholder || 'Search Kotak products';
   input.placeholder = searchPlaceholder;
   input.setAttribute('aria-label', searchPlaceholder);
 
@@ -298,17 +298,36 @@ function searchInput(block, config) {
 function searchIcon() {
   const icon = document.createElement('span');
   icon.classList.add('icon', 'icon-search');
+  // navy magnifier, drawn inline so its colour matches the design
+  icon.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='#00246b' stroke-width='2.2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M21 21l-4.3-4.3'/></svg>";
   return icon;
+}
+
+/* red circular close button that clears the search and its results */
+function searchClose(block) {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'search-close';
+  btn.setAttribute('aria-label', 'Clear search');
+  btn.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='#e51a24' stroke-width='2.4' stroke-linecap='round'><path d='M6 6l12 12M18 6L6 18'/></svg>";
+  btn.addEventListener('click', () => {
+    const input = block.querySelector('.search-input');
+    if (input) input.value = '';
+    clearSearch(block);
+    if (input) input.focus();
+  });
+  return btn;
 }
 
 function searchBox(block, config) {
   const box = document.createElement('div');
   box.classList.add('search-box');
-  box.append(
-    searchIcon(),
-    searchInput(block, config),
-  );
 
+  const field = document.createElement('div');
+  field.className = 'search-field';
+  field.append(searchIcon(), searchInput(block, config));
+
+  box.append(field, searchClose(block));
   return box;
 }
 

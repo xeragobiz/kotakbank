@@ -1,21 +1,45 @@
-/* clear the fixed header so the search box isn't hidden behind it */
+/* clear the fixed header so the search box isn't hidden behind it. The panel
+   has rounded top corners and a grey grabber bar centred at the top (matching
+   the sheet-style design). */
 .search {
-  padding-top: calc(var(--header-height, 64px) + 16px);
+  position: relative;
+  padding-top: calc(var(--header-height, 64px) + 28px);
+  border-radius: 18px 18px 0 0;
+  background: #fff;
 }
 
-/* search box — icon sits inside the rounded field, to the left of the text */
+/* grey grabber bar centred at the top of the panel */
+.search::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 96px;
+  height: 6px;
+  border-radius: 999px;
+  background: #c7ccd6;
+}
+
+/* search box: rounded field on the left, red circular close button on the right */
 .search .search-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search .search-box .search-field {
   position: relative;
-  display: block;
+  flex: 1 1 auto;
 }
 
 .search .search-box .icon-search {
   position: absolute;
   top: 50%;
-  left: 16px;
+  left: 18px;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   pointer-events: none;
 }
 
@@ -31,18 +55,48 @@
   display: block;
   width: 100%;
   margin: 0;
-  padding: 0.75em 0.75em 0.75em 44px;
-  border-radius: 8px;
-  border: 1px solid var(--dark-color);
-  background-color: var(--background-color);
+  padding: 14px 16px 14px 50px;
+  border-radius: 12px;
+  border: 1px solid #e2e5ea;
+  background-color: #f4f6f9;
   color: var(--text-color);
-  font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-m);
   transition: border-color 0.2s;
   scroll-margin-top: calc(var(--header-height, 64px) + 16px);
 }
 
-.search .search-box input:hover {
-  border: 1px solid var(--text-color);
+.search .search-box input::placeholder {
+  color: #9aa1ac;
+}
+
+.search .search-box input:hover,
+.search .search-box input:focus {
+  outline: none;
+  border-color: #c7ccd6;
+}
+
+/* red circular close button */
+.search .search-box .search-close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid #f0d0d3;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.search .search-box .search-close svg {
+  width: 22px;
+  height: 22px;
+}
+
+.search .search-box .search-close:hover {
+  background: #fff4f5;
 }
 
 /* ---- Recent search + Most searched suggestions ---- */
