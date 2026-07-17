@@ -198,6 +198,15 @@ main > .section > .cc-hero-wrapper {
     align-items: center;
   }
 
+  /* detail hero: the card art + infinity symbol occupy the right half of the
+     full-bleed banner, so keep the copy well within the solid-red left side
+     to avoid overlapping the symbol near the centre */
+  .cc-hero.detail .cc-hero-content h1,
+  .cc-hero.detail .cc-hero-content p,
+  .cc-hero.detail .cc-hero-actions {
+    max-width: 38%;
+  }
+
   /* on a red hero (red gradient, or the red-imaged detail card), the primary
      CTA switches to orange (desktop only) so it stands out against the red */
   .cc-hero.gradient-red .cc-hero-btn-primary,
