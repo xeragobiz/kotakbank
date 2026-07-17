@@ -66,11 +66,11 @@
 /* mobile spacing between fields and label/input */
 @media (width < 600px) {
   .apply-form .apply-form-form {
-    gap: 20px;
+    gap: 14px;
   }
 
   .apply-form .apply-form-field {
-    gap: 8px;
+    gap: 6px;
   }
 }
 
