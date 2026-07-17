@@ -53,33 +53,12 @@ const FIELDS = [
       ? '' : 'Enter a valid email address.'),
   },
   {
-    name: 'city',
-    label: 'City',
-    type: 'text',
+    name: 'message',
+    label: 'Message',
+    type: 'textarea',
     required: true,
-    placeholder: 'Enter city',
-    autocomplete: 'address-level2',
-    validate: (v) => (v.trim() ? '' : 'Please enter your city.'),
-  },
-  {
-    name: 'employment',
-    label: 'Employment Type',
-    type: 'select',
-    required: true,
-    placeholder: 'Select employment type',
-    options: ['Salaried', 'Self-employed', 'Business owner', 'Student', 'Retired'],
-    validate: (v) => (v.trim() ? '' : 'Please select your employment type.'),
-  },
-  {
-    name: 'income',
-    label: 'Monthly Income',
-    type: 'tel',
-    required: true,
-    inputmode: 'numeric',
-    maxlength: 9,
-    placeholder: 'Enter monthly income',
-    validate: (v) => (/^\d{3,}$/.test(v.trim())
-      ? '' : 'Please enter a valid monthly income.'),
+    placeholder: 'Tell us how we can help you',
+    validate: (v) => (v.trim() ? '' : 'Please enter a message.'),
   },
 ];
 
@@ -135,36 +114,16 @@ function buildField(field) {
     label.append(req);
   }
 
-  let tag = 'input';
-  if (field.type === 'textarea') tag = 'textarea';
-  else if (field.type === 'select') tag = 'select';
-  const input = document.createElement(tag);
+  const input = document.createElement(field.type === 'textarea' ? 'textarea' : 'input');
   input.id = id;
   input.name = field.name;
-  if (tag === 'input') input.type = field.type;
+  if (field.type !== 'textarea') input.type = field.type;
   input.className = 'apply-form-input';
   if (field.type === 'textarea') {
     input.classList.add('apply-form-textarea');
     input.rows = 4;
   }
-  if (field.type === 'select') {
-    input.classList.add('apply-form-select');
-    // leading placeholder option (empty value so validation treats it as unset)
-    const ph = document.createElement('option');
-    ph.value = '';
-    ph.textContent = field.placeholder || 'Select an option';
-    ph.disabled = true;
-    ph.selected = true;
-    input.append(ph);
-    (field.options || []).forEach((opt) => {
-      const o = document.createElement('option');
-      o.value = opt;
-      o.textContent = opt;
-      input.append(o);
-    });
-  } else if (field.placeholder) {
-    input.placeholder = field.placeholder;
-  }
+  if (field.placeholder) input.placeholder = field.placeholder;
   if (field.required) input.required = true;
   if (field.inputmode) input.inputMode = field.inputmode;
   if (field.maxlength) input.maxLength = field.maxlength;
@@ -227,13 +186,10 @@ export default function decorate(block) {
     const built = buildField(field);
     form.append(built.wrap);
     // clear the error as soon as the user edits a previously-invalid field
-    // (selects fire "change" rather than "input")
-    const clear = () => {
+    built.input.addEventListener('input', () => {
       built.error.textContent = '';
       built.input.classList.remove('apply-form-input-invalid');
-    };
-    built.input.addEventListener('input', clear);
-    built.input.addEventListener('change', clear);
+    });
     return { field, ...built };
   });
 
