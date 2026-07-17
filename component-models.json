@@ -1343,48 +1343,14 @@
         "name": "recent",
         "label": "Recent Search Suggestions",
         "description": "Comma-separated fallback terms shown under \"Recent search\" until the visitor has their own search history"
-      }
-    ]
-  },
-  {
-    "id": "search-link",
-    "fields": [
-      {
-        "component": "select",
-        "name": "icon",
-        "label": "Icon",
-        "valueType": "string",
-        "value": "card",
-        "options": [
-          {
-            "name": "Credit card",
-            "value": "card"
-          },
-          {
-            "name": "Cash / offers",
-            "value": "cash"
-          },
-          {
-            "name": "Bank",
-            "value": "bank"
-          },
-          {
-            "name": "Search",
-            "value": "search"
-          }
-        ]
       },
       {
         "component": "text",
-        "name": "label",
-        "label": "Label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link",
-        "valueType": "string"
+        "valueType": "string",
+        "name": "mostSearched",
+        "label": "Most Searched Links",
+        "description": "One link per line as: Label | /path | icon  (icon is one of card, cash, bank, search)",
+        "multiline": true
       }
     ]
   },

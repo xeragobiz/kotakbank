@@ -314,19 +314,17 @@ const LINK_ICONS = {
   search: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300005a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E",
 };
 
-/* read the authored "Most searched" link items from the block's item rows */
-function readLinks(block) {
-  return [...block.children]
-    .filter((row) => row.children.length > 1)
-    .map((row) => {
-      const cells = [...row.children];
-      const text = cells.map((c) => c.textContent.trim());
-      const iconKey = (text.find((t) => LINK_ICONS[t.toLowerCase()]) || 'search').toLowerCase();
-      const link = row.querySelector('a[href]');
-      const label = (link && link.textContent.trim())
-        || text.find((t) => t && !LINK_ICONS[t.toLowerCase()])
-        || '';
-      return { iconKey, label, href: link ? link.getAttribute('href') : '#' };
+/* parse the authored "Most searched" links from a multiline text field.
+   One link per line: "Label | /path | icon" (icon optional). */
+function parseLinks(raw) {
+  return (raw || '')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [label = '', href = '#', icon = ''] = line.split('|').map((p) => p.trim());
+      const iconKey = LINK_ICONS[icon.toLowerCase()] ? icon.toLowerCase() : 'search';
+      return { iconKey, label, href: href || '#' };
     })
     .filter((item) => item.label);
 }
@@ -394,20 +392,31 @@ function buildSuggestions(block, links, recentSeed) {
 }
 
 export default async function decorate(block) {
-  // separate the query-index source (a single-cell row with just a link) from
-  // the "Most searched" link items (multi-cell rows) before consuming the DOM.
-  const sourceRow = [...block.children]
-    .find((row) => row.children.length <= 1 && row.querySelector('a[href]'));
+  // fields render in model order as single-cell rows: source, recent, mostSearched.
+  const rows = [...block.children];
+  const sourceRow = rows.find((row) => row.querySelector('a[href]'));
   const source = sourceRow ? sourceRow.querySelector('a[href]').href : '/query-index.json';
 
-  // authored recent-search seed: a single-cell text row (no link, comma list)
-  const recentRow = [...block.children].find((row) => row.children.length <= 1
-    && !row.querySelector('a[href]') && row.textContent.trim());
-  const recentSeed = recentRow
-    ? recentRow.textContent.split(',').map((t) => t.trim()).filter(Boolean)
+  // remaining text rows in order: [recent seed, most-searched links]
+  const textRows = rows
+    .filter((row) => row !== sourceRow)
+    .map((row) => (row.querySelector(':scope > div') || row));
+  const recentRaw = textRows[0] ? textRows[0].textContent.trim() : '';
+  const recentSeed = recentRaw
+    ? recentRaw.split(',').map((t) => t.trim()).filter(Boolean)
     : [];
-
-  const links = readLinks(block);
+  // the multiline "Most Searched Links" field may render as separate <p>s or
+  // as one node with <br>s; collect each line so parseLinks sees newlines.
+  let linksRaw = '';
+  if (textRows[1]) {
+    const paras = textRows[1].querySelectorAll(':scope > p');
+    if (paras.length) {
+      linksRaw = [...paras].map((p) => p.textContent).join('\n');
+    } else {
+      linksRaw = textRows[1].innerText || textRows[1].textContent;
+    }
+  }
+  const links = parseLinks(linksRaw);
 
   block.innerHTML = '';
   block.append(
