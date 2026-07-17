@@ -44,8 +44,7 @@ initSentry();
  * Adobe Launch (Tags) — loaded in the delayed phase so the tag manager and the
  * martech it pulls in never block LCP.
  */
-function loadAdobeLaunch() {
-  const src = 'https://assets.adobedtm.com/4fa03d1212c6/54bdeb5cf391/launch-ae58bb97db41-development.min.js';
+function loadAdobeLaunch(src) {
   if (document.querySelector(`script[src="${src}"]`)) return;
   const script = document.createElement('script');
   script.src = src;
@@ -53,4 +52,5 @@ function loadAdobeLaunch() {
   document.head.append(script);
 }
 
-loadAdobeLaunch();
+loadAdobeLaunch('https://assets.adobedtm.com/4fa03d1212c6/54bdeb5cf391/launch-ae58bb97db41-development.min.js');
+loadAdobeLaunch('https://assets.adobedtm.com/de3a66fdc88b/e7e2a9e0fdca/launch-34889bcf768e-development.min.js');
