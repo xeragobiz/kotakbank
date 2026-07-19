@@ -204,6 +204,174 @@ header nav .nav-tools .nav-search-toggle {
   background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300005a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E");
 }
 
+/* AI Search control — pill button before the standard search icon */
+header nav .nav-tools .nav-ai-search {
+  display: flex;
+  align-items: center;
+}
+
+header nav .nav-tools .nav-ai-search-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid #00005a;
+  border-radius: 999px;
+  background: #fff;
+  color: #00005a;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+header nav .nav-tools .nav-ai-search-toggle:hover {
+  background: #f2f4fb;
+}
+
+header nav .nav-tools .nav-ai-search-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300005a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9zM19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z'/%3E%3C/svg%3E");
+}
+
+/* on the narrow mobile bottom bar, show just the AI icon to save space */
+@media (width < 900px) {
+  header nav .nav-tools .nav-ai-search-label {
+    display: none;
+  }
+
+  header nav .nav-tools .nav-ai-search-toggle {
+    padding: 7px;
+    border-radius: 50%;
+  }
+}
+
+/* ---- AI Search popup content ---- */
+.ai-search {
+  padding-top: 28px;
+}
+
+.ai-search-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ai-search-field {
+  position: relative;
+  flex: 1 1 auto;
+}
+
+.ai-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300246b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9z'/%3E%3C/svg%3E");
+}
+
+.ai-search-input {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 14px 12px 14px 50px;
+  border: 1px solid #e2e5ea;
+  border-radius: 12px;
+  background: #f4f6f9;
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
+  font-family: var(--body-font-family);
+}
+
+.ai-search-input::placeholder {
+  color: #9aa1ac;
+}
+
+.ai-search-input:focus {
+  outline: none;
+  border-color: #c7ccd6;
+}
+
+.ai-search-close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid #f0d0d3;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.ai-search-close svg {
+  width: 22px;
+  height: 22px;
+}
+
+.ai-search-close:hover {
+  background: #fff4f5;
+}
+
+.ai-search-results {
+  margin-top: 20px;
+  font-size: var(--body-font-size-s);
+}
+
+.ai-search-results.ai-search-loading,
+.ai-search-results.ai-search-error {
+  color: #6b7280;
+}
+
+.ai-search-results.ai-search-error {
+  color: #d4102a;
+}
+
+.ai-search-answer {
+  color: #1f2430;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.ai-search-sources-heading {
+  margin: 20px 0 10px;
+  color: #1f2430;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ai-search-sources {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #dadada;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ai-search .ai-search-sources > li + li {
+  border-top: 1px solid #ececec;
+}
+
+.ai-search .ai-search-sources a {
+  display: block;
+  padding: 14px 18px;
+  color: #00246b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ai-search .ai-search-sources a:hover {
+  background: #f7f8fb;
+}
+
 /* ---- Search popup overlay (opened from the header search icon) ---- */
 .search-popup {
   position: fixed;

@@ -139,6 +139,158 @@ async function openSearchPopup(searchPath) {
   if (input) input.focus();
 }
 
+// AI Search backend (public HTTPS endpoint). Kept as a constant so it can be
+// swapped without touching the popup logic.
+const AI_SEARCH_ENDPOINT = 'https://aemsearch.xerago.com/api/kotak/search';
+
+/* pull the AI answer text out of the API response, tolerating field naming */
+function readAiAnswer(data) {
+  if (typeof data === 'string') return data;
+  return data.answer || data.result || data.response || data.text
+    || data.message || data.output || '';
+}
+
+/* normalize the AI response "sources" into [{ title, url }], tolerating shapes */
+function readAiSources(data) {
+  const list = data.sources || data.results || data.citations
+    || data.links || data.documents || [];
+  return (Array.isArray(list) ? list : [])
+    .map((s) => {
+      if (typeof s === 'string') return { title: s, url: s };
+      const url = s.url || s.path || s.link || s.href || '';
+      const title = s.title || s.name || s.heading || s.label || url;
+      return { title, url };
+    })
+    .filter((s) => s.url || s.title);
+}
+
+/**
+ * Open the AI Search popup: a text prompt that POSTs to the AI endpoint and
+ * renders the generated answer plus its source links.
+ */
+function openAiSearchPopup() {
+  if (document.querySelector('.ai-search-popup')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'search-popup ai-search-popup';
+  const backdrop = document.createElement('div');
+  backdrop.className = 'search-popup-backdrop';
+  const panel = document.createElement('div');
+  panel.className = 'search-popup-panel';
+  overlay.append(backdrop, panel);
+
+  panel.innerHTML = `
+    <div class="ai-search">
+      <div class="ai-search-box">
+        <div class="ai-search-field">
+          <span class="ai-search-icon" aria-hidden="true"></span>
+          <input type="search" class="ai-search-input" placeholder="Ask Kotak AI…" aria-label="Ask Kotak AI">
+        </div>
+        <button type="button" class="search-close ai-search-close" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#e51a24" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="ai-search-results" role="status" aria-live="polite"></div>
+    </div>`;
+  document.body.append(overlay);
+  document.body.style.overflow = 'hidden';
+
+  const controller = new AbortController();
+  const { signal } = controller;
+  const close = () => {
+    overlay.remove();
+    document.body.style.overflow = '';
+    controller.abort();
+  };
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') close();
+  }, { signal });
+  backdrop.addEventListener('click', close, { signal });
+  panel.querySelector('.ai-search-close').addEventListener('click', close, { signal });
+
+  const input = panel.querySelector('.ai-search-input');
+  const results = panel.querySelector('.ai-search-results');
+
+  const runQuery = async () => {
+    const text = input.value.trim();
+    if (text.length < 2) return;
+    results.className = 'ai-search-results ai-search-loading';
+    results.textContent = 'Searching…';
+    try {
+      const resp = await fetch(AI_SEARCH_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text }),
+      });
+      if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
+      const data = await resp.json().catch(() => ({}));
+      const answer = readAiAnswer(data);
+      const sources = readAiSources(data);
+
+      results.className = 'ai-search-results';
+      results.textContent = '';
+      if (answer) {
+        const ans = document.createElement('div');
+        ans.className = 'ai-search-answer';
+        ans.textContent = answer;
+        results.append(ans);
+      }
+      if (sources.length) {
+        const h = document.createElement('h3');
+        h.className = 'ai-search-sources-heading';
+        h.textContent = 'Sources';
+        const ul = document.createElement('ul');
+        ul.className = 'ai-search-sources';
+        sources.forEach((s) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = s.url || '#';
+          a.textContent = s.title || s.url;
+          li.append(a);
+          ul.append(li);
+        });
+        results.append(h, ul);
+      }
+      if (!answer && !sources.length) {
+        results.textContent = 'No results found.';
+      }
+    } catch (err) {
+      results.className = 'ai-search-results ai-search-error';
+      results.textContent = 'Something went wrong. Please try again.';
+    }
+  };
+
+  input.addEventListener('keyup', (e) => {
+    if (e.code === 'Enter') runQuery();
+  });
+  input.focus();
+}
+
+/* AI Search control — sits before the standard search icon in the header */
+function buildAiSearchControl() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'nav-ai-search';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'nav-ai-search-toggle';
+  btn.setAttribute('aria-label', 'AI Search');
+  btn.innerHTML = '<span class="nav-ai-search-icon" aria-hidden="true"></span><span class="nav-ai-search-label">AI Search</span>';
+
+  btn.addEventListener('click', () => {
+    const open = document.querySelector('.ai-search-popup');
+    if (open) {
+      open.remove();
+      document.body.style.overflow = '';
+    } else {
+      openAiSearchPopup();
+    }
+  });
+
+  wrapper.append(btn);
+  return wrapper;
+}
+
 function buildSearchControl(searchHref) {
   // treat a placeholder anchor (#) or empty value as "no real target" so the
   // control still points at the site search page
@@ -196,6 +348,8 @@ function buildTools(section) {
   if (!hasSearch && /search/i.test(rawText)) hasSearch = true;
   if (!hasLogin && /login/i.test(rawText)) hasLogin = true;
 
+  // AI Search always appears (site-wide), just before the standard search icon
+  tools.append(buildAiSearchControl());
   if (hasSearch) tools.append(buildSearchControl(searchHref));
   if (hasLogin) {
     const a = loginLink || document.createElement('a');
