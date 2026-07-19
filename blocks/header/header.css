@@ -215,10 +215,10 @@ header nav .nav-tools .nav-ai-search-toggle {
   align-items: center;
   gap: 6px;
   padding: 7px 14px;
-  border: 1px solid #00005a;
+  border: 1px solid #fa1432;
   border-radius: 999px;
   background: #fff;
-  color: #00005a;
+  color: #fa1432;
   font-family: var(--body-font-family);
   font-size: 14px;
   font-weight: 700;
@@ -226,14 +226,14 @@ header nav .nav-tools .nav-ai-search-toggle {
 }
 
 header nav .nav-tools .nav-ai-search-toggle:hover {
-  background: #f2f4fb;
+  background: #fff1f2;
 }
 
 header nav .nav-tools .nav-ai-search-icon {
   width: 18px;
   height: 18px;
   flex: 0 0 auto;
-  background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300005a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9zM19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z'/%3E%3C/svg%3E");
+  background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fa1432' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9zM19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z'/%3E%3C/svg%3E");
 }
 
 /* on the narrow mobile bottom bar, show just the AI icon to save space */

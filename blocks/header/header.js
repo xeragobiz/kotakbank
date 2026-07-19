@@ -275,7 +275,7 @@ function buildAiSearchControl() {
   btn.type = 'button';
   btn.className = 'nav-ai-search-toggle';
   btn.setAttribute('aria-label', 'AI Search');
-  btn.innerHTML = '<span class="nav-ai-search-icon" aria-hidden="true"></span><span class="nav-ai-search-label">AI Search</span>';
+  btn.innerHTML = '<span class="nav-ai-search-icon" aria-hidden="true"></span><span class="nav-ai-search-label">AI</span>';
 
   btn.addEventListener('click', () => {
     const open = document.querySelector('.ai-search-popup');
