@@ -123,9 +123,16 @@ export default function decorate(block) {
     }
     const img = optimized.querySelector('img');
     img.setAttribute('fetchpriority', 'high');
-    // explicit dimensions reserve space and avoid layout shift (CLS)
-    img.setAttribute('width', '1440');
-    img.setAttribute('height', '400');
+    // Reserve space at the image's REAL aspect ratio to avoid layout shift
+    // (CLS). On desktop the hero shows the full image (object-fit: contain,
+    // height: auto), so a wrong ratio here would reserve the wrong height and
+    // reflow when the image loads. Carry over the authored dimensions.
+    const w = desktopImg.getAttribute('width') || desktopImg.naturalWidth;
+    const h = desktopImg.getAttribute('height') || desktopImg.naturalHeight;
+    if (w && h) {
+      img.setAttribute('width', w);
+      img.setAttribute('height', h);
+    }
     media.append(optimized);
 
     // Make the LCP image discoverable to the preload scanner: this hero is
