@@ -1,4 +1,5 @@
 // add delayed functionality here
+import initSentry from './sentry.js';
 
 /**
  * Global "Back to Top" control. Rendered site-wide (no authoring), shown only
@@ -36,21 +37,8 @@ function initBackToTop() {
 
 initBackToTop();
 
-// error monitoring — delayed so it never affects LCP. Uses the Sentry Loader
-// Script (CDN) which self-initializes; public Sentry.io cloud host so it's
-// reachable from the public site (a private/self-hosted host would be blocked
-// by the browser's Private Network Access).
-function loadSentry() {
-  const src = 'https://js.sentry-cdn.com/8f3c99cccbfab19dc79a2a7801501512.min.js';
-  if (document.querySelector(`script[src="${src}"]`)) return;
-  const script = document.createElement('script');
-  script.src = src;
-  script.crossOrigin = 'anonymous';
-  script.setAttribute('nonce', 'aem');
-  document.head.append(script);
-}
-
-loadSentry();
+// error + console-log monitoring — delayed so it never affects LCP
+initSentry();
 
 /**
  * Adobe Launch (Tags) — loaded in the delayed phase so the tag manager and the
