@@ -65,4 +65,3 @@ function loadAdobeLaunch(src) {
 }
 
 loadAdobeLaunch('https://assets.adobedtm.com/4fa03d1212c6/54bdeb5cf391/launch-ae58bb97db41-development.min.js');
-loadAdobeLaunch('https://assets.adobedtm.com/de3a66fdc88b/e7e2a9e0fdca/launch-34889bcf768e-development.min.js');
