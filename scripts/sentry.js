@@ -33,10 +33,7 @@ export default async function initSentry() {
     environment,
     release,
     // no integrations: errors-only, smallest footprint
-    integrations: [
-      Sentry.browserTracingIntegration(),
-    ],
-    tracesSampleRate: 1.0,
+    integrations: [],
     enabled: true,
     beforeSend(event) {
       const exceptionMessage = event.exception?.values?.[0]?.value || '';
