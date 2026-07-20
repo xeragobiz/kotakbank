@@ -27,5 +27,12 @@ export default async function initSentry() {
     enableLogs: true,
   });
 
+  // custom metrics (guarded — the metrics API may be absent in some SDK builds)
+  if (Sentry.metrics) {
+    Sentry.metrics.count('button_click', 1);
+    Sentry.metrics.gauge('page_load_time', 150);
+    Sentry.metrics.distribution('response_time', 200);
+  }
+
   return true;
 }
