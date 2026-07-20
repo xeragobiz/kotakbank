@@ -37,7 +37,13 @@ function initBackToTop() {
 
 initBackToTop();
 
-// error/performance monitoring — delayed so it never affects LCP
+// error monitoring — delayed so it never affects LCP. Config lives here (not
+// head.html) so it's only set up in the delayed phase. Public Sentry.io cloud
+// DSN so it's reachable from the public site (a private/self-hosted host is
+// blocked by the browser's Private Network Access).
+window.SENTRY_DSN = 'https://57548f6c2106f0ae1adb429a0a4d2579@o4511738502512640.ingest.us.sentry.io/4511739853275136';
+window.SENTRY_ENVIRONMENT = 'qa';
+window.SENTRY_RELEASE = 'eds-banking-1.0.0';
 initSentry();
 
 /**
