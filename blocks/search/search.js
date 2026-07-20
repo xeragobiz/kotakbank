@@ -351,13 +351,9 @@ function parseLinks(raw) {
     .map((line) => {
       const [label = '', rawHref = '#', icon = ''] = line.split('|').map((p) => p.trim());
       const iconKey = LINK_ICONS[icon.toLowerCase()] ? icon.toLowerCase() : 'search';
-      // normalize the authored path to the public URL:
-      //  - strip the AEM author prefix "/content/<repo>" (e.g. /content/kotakbank)
-      //  - drop a trailing ".html"
-      //  - the credit-cards index is served at the site root, so a bare/"index"
-      //    path (which 404s in the browser) becomes "/"
-      let href = (rawHref || '#').replace(/^\/content\/[^/]+/, '').replace(/\.html$/, '');
-      if (href === '' || /\/index$/.test(href)) href = '/';
+      // the credit-cards index is served at the site root ("/"), so a "/index"
+      // link (which 404s in the browser) is normalized to "/".
+      const href = /^\/index(\.html)?$/.test(rawHref) ? '/' : (rawHref || '#');
       return { iconKey, label, href };
     })
     .filter((item) => item.label);
