@@ -220,7 +220,7 @@ function openAiSearchPopup() {
       const resp = await fetch(AI_SEARCH_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ query: text }),
       });
       if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
       const data = await resp.json().catch(() => ({}));
