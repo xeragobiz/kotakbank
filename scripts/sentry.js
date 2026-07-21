@@ -29,6 +29,7 @@ export default async function initSentry() {
   }
 
   Sentry.init({
+    debug: true,
     dsn: DSN,
     environment: resolveEnvironment(),
     release: 'eds-banking-1.0.0',
