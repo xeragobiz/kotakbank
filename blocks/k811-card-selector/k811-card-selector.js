@@ -16,6 +16,19 @@ import { initK811, revealOnScroll } from '../../scripts/k811/k811-common.js';
  * displayed card image and the fees panel (custom, no library — mirrors the
  * source's React state toggle). First variant active by default.
  */
+// Metal swatch gradients, matched to the source site (linear-gradient 0deg).
+const SWATCH_GRADIENTS = {
+  gold: 'linear-gradient(0deg, #dda94a, #f6e085 46.63%, #dda94a)',
+  'rose gold': 'linear-gradient(0deg, #e77d5d, #fec5b5 46.63%, #e77d5d)',
+  'midnight black': 'linear-gradient(0deg, #282828, #676666 46.63%, #343434)',
+  'crimson red': 'linear-gradient(0deg, #ff1313, #ff7272 46.63%, #ff1313)',
+  silver: 'linear-gradient(0deg, #d0d0d2, #fff 46.63%, #d0d0d2)',
+};
+
+function swatchGradient(name) {
+  return SWATCH_GRADIENTS[name.trim().toLowerCase()] || '#999';
+}
+
 export default function decorate(block) {
   initK811(block);
   const rows = [...block.children];
@@ -62,19 +75,29 @@ export default function decorate(block) {
     block.replaceChildren(wrap);
   }
 
-  // Tabs (variant names)
+  // Left column: active variant name + swatch row + fees panel + actions.
+  const info = document.createElement('div');
+  info.className = 'k811-card-selector-info';
+
+  const activeName = document.createElement('p');
+  activeName.className = 'k811-card-selector-name';
+
   const tabs = document.createElement('div');
-  tabs.className = 'k811-card-selector-tabs';
+  tabs.className = 'k811-card-selector-swatches';
   tabs.setAttribute('role', 'tablist');
 
-  // Stage: card image + fees panel
-  const stage = document.createElement('div');
-  stage.className = 'k811-card-selector-stage';
-  const media = document.createElement('div');
-  media.className = 'k811-card-selector-media';
   const panel = document.createElement('div');
   panel.className = 'k811-card-selector-panel';
-  stage.append(media, panel);
+
+  info.append(activeName, tabs, panel);
+
+  // Right column: layered card deck (all cards stacked; active on top).
+  const media = document.createElement('div');
+  media.className = 'k811-card-selector-media';
+
+  const stage = document.createElement('div');
+  stage.className = 'k811-card-selector-stage';
+  stage.append(info, media);
 
   const panels = [];
   const mediaEls = [];
@@ -82,11 +105,12 @@ export default function decorate(block) {
   variants.forEach((v, i) => {
     const tab = document.createElement('button');
     tab.type = 'button';
-    tab.className = 'k811-card-selector-tab';
+    tab.className = 'k811-card-selector-swatch';
     tab.setAttribute('role', 'tab');
-    tab.textContent = v.name;
+    tab.setAttribute('aria-label', v.name);
+    tab.style.backgroundImage = swatchGradient(v.name);
 
-    // media for this variant
+    // media for this variant (stacked, one visible at a time)
     const mediaItem = document.createElement('div');
     mediaItem.className = 'k811-card-selector-card';
     if (v.picture) {
@@ -106,20 +130,20 @@ export default function decorate(block) {
     if (v.panel) while (v.panel.firstChild) panelItem.append(v.panel.firstChild);
     const actions = document.createElement('div');
     actions.className = 'k811-card-selector-actions';
+    if (v.tncLink) {
+      v.tncLink.classList.add('k811-card-selector-tnc');
+      panelItem.append(v.tncLink);
+    }
     if (v.applyLink) {
       v.applyLink.classList.add('k811-card-selector-apply');
       actions.append(v.applyLink);
-    }
-    if (v.tncLink) {
-      v.tncLink.classList.add('k811-card-selector-tnc');
-      actions.append(v.tncLink);
     }
     if (actions.children.length) panelItem.append(actions);
     panels.push(panelItem);
     panel.append(panelItem);
 
     const activate = () => {
-      tabs.querySelectorAll('.k811-card-selector-tab').forEach((t) => {
+      tabs.querySelectorAll('.k811-card-selector-swatch').forEach((t) => {
         t.classList.remove('is-active');
         t.setAttribute('aria-selected', 'false');
       });
@@ -129,6 +153,7 @@ export default function decorate(block) {
       tab.setAttribute('aria-selected', 'true');
       mediaItem.classList.add('is-active');
       panelItem.classList.add('is-active');
+      activeName.textContent = v.name;
     };
     tab.addEventListener('click', activate);
     if (i === 0) activate();
@@ -136,6 +161,6 @@ export default function decorate(block) {
     tabs.append(tab);
   });
 
-  wrap.append(tabs, stage);
+  wrap.append(stage);
   revealOnScroll(block);
 }

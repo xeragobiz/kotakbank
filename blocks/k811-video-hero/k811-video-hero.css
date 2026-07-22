@@ -44,28 +44,39 @@
   text-align: center;
 }
 
-.k811-video-hero-content h1 {
-  font-size: 14px;
+.kotak811 .k811-video-hero .k811-video-hero-content h1,
+.kotak811 .section.metal .k811-video-hero .k811-video-hero-content h1 {
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #cfcfcf;
-  margin: 0 0 12px;
-}
-
-.k811-video-hero-content h2 {
-  font-size: 34px;
-  line-height: 1.1;
-  font-weight: 700;
-  margin: 0 0 8px;
-  color: #fff;
-}
-
-.k811-video-hero-content h3 {
-  font-size: 22px;
-  font-weight: 400;
+  color: #9e9e9e;
   margin: 0 0 24px;
-  color: #fff;
+}
+
+/* h2 + subhead use the live metallic gradient text fill */
+.k811-video-hero .k811-video-hero-content h2,
+.k811-video-hero .k811-video-hero-content h3 {
+  background-image: linear-gradient(0deg, #737373, #fff, #fff);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari needs the prefix for text clip */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.k811-video-hero .k811-video-hero-content h2 {
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.k811-video-hero .k811-video-hero-content h3 {
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+  margin: 0 0 32px;
 }
 
 .k811-video-hero-content p {
@@ -77,18 +88,18 @@
 .k811-video-hero-actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   align-items: center;
 }
 
 .k811-video-hero-btn.k811-video-hero-btn-primary {
   display: inline-block;
   background: #fff;
-  color: #000;
-  font-weight: 700;
-  font-size: 16px;
-  padding: 14px 32px;
-  border-radius: 30px;
+  color: #222;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 25px 15px;
+  border-radius: 12px;
   text-decoration: none;
   transition: background 0.2s ease, color 0.2s ease;
 }
@@ -98,15 +109,17 @@
   color: #fff;
 }
 
+.k811-video-hero-content .k811-video-hero-actions + p,
 .k811-video-hero-btn-label {
-  font-size: 14px;
-  color: #cfcfcf;
+  font-size: 13px;
+  color: #9e9e9e;
 }
 
 .k811-video-hero-btn.k811-video-hero-btn-secondary {
-  color: #fff;
+  color: #9e9e9e;
   text-decoration: underline;
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 13px;
 }
 
 @media (width >= 900px) {
@@ -118,12 +131,18 @@
     padding: 80px 40px;
   }
 
-  .k811-video-hero-content h2 {
-    font-size: 56px;
+  .k811-video-hero .k811-video-hero-content h1 {
+    font-size: 17px;
+    margin: 0 0 30px;
   }
 
-  .k811-video-hero-content h3 {
-    font-size: 30px;
+  .k811-video-hero .k811-video-hero-content h2 {
+    font-size: 54px;
+  }
+
+  .k811-video-hero .k811-video-hero-content h3 {
+    font-size: 29px;
+    margin: 0 0 40px;
   }
 
   .k811-video-hero-actions {

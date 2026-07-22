@@ -1,4 +1,7 @@
-/* K811 Card Selector — "Choose Your Metal". Inherits Manrope from .kotak811. */
+/* K811 Card Selector — "Choose Your Metal". Inherits Manrope from .kotak811.
+ * Faithful to kotak811.bank.in: dark section, circular metal swatches, an
+ * active-variant name heading, a layered card deck on the right, a white
+ * Apply pill and bulleted fees. */
 
 .k811-card-selector {
   max-width: var(--k811-content-max, 1120px);
@@ -6,44 +9,14 @@
   padding: 24px;
 }
 
-.k811-card-selector-title {
+/* "CHOOSE YOUR METAL" — gray section eyebrow heading */
+.k811-card-selector .k811-card-selector-title,
+.kotak811 .section.dark .k811-card-selector .k811-card-selector-title {
   text-align: center;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-size: 30px;
+  font-weight: 500;
+  color: #959595;
   margin: 0 0 32px;
-}
-
-.k811-card-selector-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 32px;
-}
-
-.k811-card-selector-tab {
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  padding: 10px 22px;
-  border: 1px solid #d0d0d0;
-  border-radius: 30px;
-  background: #fff;
-  color: #444;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.k811-card-selector-tab:hover {
-  border-color: #999;
-}
-
-.k811-card-selector-tab.is-active {
-  background: #000;
-  border-color: #000;
-  color: #fff;
 }
 
 .k811-card-selector-stage {
@@ -52,40 +25,46 @@
   align-items: center;
 }
 
-.k811-card-selector-media {
-  position: relative;
-  min-height: 220px;
+/* left column ---------------------------------------------------------- */
+.k811-card-selector-info {
+  order: 2;
+}
+
+.k811-card-selector-name {
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.k811-card-selector-swatches {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
-.k811-card-selector-card {
-  display: none;
+.k811-card-selector-swatch {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 3px solid #000;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+  background-size: cover;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.k811-card-selector-card.is-active {
-  display: block;
-  animation: k811-card-fade 0.35s ease;
+.k811-card-selector-swatch:hover {
+  transform: scale(1.08);
 }
 
-.k811-card-selector-card img {
-  max-width: 100%;
-  height: auto;
+.k811-card-selector-swatch.is-active {
+  border-color: #fff;
 }
 
-@keyframes k811-card-fade {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
+/* fees panel ----------------------------------------------------------- */
 .k811-card-selector-panel-item {
   display: none;
 }
@@ -94,10 +73,18 @@
   display: block;
 }
 
+.k811-card-selector-panel-item h3 {
+  margin: 0 0 16px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+}
+
 .k811-card-selector-panel-item p {
-  margin: 0 0 10px;
-  font-size: 16px;
-  line-height: 1.5;
+  margin: 0 0 12px;
+  font-size: 19px;
+  line-height: 1.4;
+  color: #fff;
 }
 
 .k811-card-selector-actions {
@@ -105,33 +92,71 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 16px;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .k811-card-selector-apply {
   display: inline-block;
-  background: var(--k811-link, #d1101f);
-  color: #fff;
-  font-weight: 700;
-  padding: 13px 36px;
-  border-radius: 30px;
+  background: #fff;
+  color: #222;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 25px 15px;
+  border-radius: 12px;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .k811-card-selector-apply:hover {
-  background: #a50d18;
+  background: #d1101f;
+  color: #fff;
 }
 
 .k811-card-selector-tnc {
-  color: #666;
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #d1101f;
   font-size: 14px;
   text-decoration: underline;
 }
 
+/* right column: layered card deck -------------------------------------- */
+.k811-card-selector-media {
+  order: 1;
+  position: relative;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.k811-card-selector-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.k811-card-selector-card.is-active {
+  position: relative;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.k811-card-selector-card img {
+  max-width: 100%;
+  height: auto;
+}
+
 @media (width >= 900px) {
   .k811-card-selector {
-    padding: 56px 40px;
+    padding: 64px 40px;
   }
 
   .k811-card-selector-stage {
@@ -139,30 +164,12 @@
     gap: 56px;
   }
 
-  .k811-card-selector-media {
-    min-height: 320px;
+  .k811-card-selector-info {
+    order: 1;
   }
-}
 
-/* ---- Dark section (source "Choose Your Metal" is on black) -------- */
-.section.dark .k811-card-selector-tab {
-  background: transparent;
-  border-color: #555;
-  color: #ccc;
-}
-
-.section.dark .k811-card-selector-tab.is-active {
-  background: #fff;
-  border-color: #fff;
-  color: #000;
-}
-
-.section.dark .k811-card-selector-panel-item,
-.section.dark .k811-card-selector-panel-item p,
-.section.dark .k811-card-selector-panel-item h3 {
-  color: #fff;
-}
-
-.section.dark .k811-card-selector-tnc {
-  color: #bbb;
+  .k811-card-selector-media {
+    order: 2;
+    min-height: 340px;
+  }
 }

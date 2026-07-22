@@ -1,0 +1,105 @@
+/*
+ * k811-benefits-story — full-viewport benefit panels (Infinity Metal
+ * "exclusive offers" scroll story). Faithful to kotak811.bank.in:
+ *   - each panel is 100vh; large art-directed photo + overlaid text box
+ *   - heading 39px/700 #222, paragraph 20px #000 (desktop)
+ *   - AOS fade-in on scroll (via shared k811 runtime)
+ */
+
+.k811-benefits-story .k811-benefits-story-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* media layer */
+.k811-benefits-story .k811-benefits-story-media {
+  position: relative;
+  line-height: 0;
+}
+
+.k811-benefits-story .k811-benefits-story-media p {
+  margin: 0;
+  line-height: 0;
+}
+
+.k811-benefits-story .k811-benefits-story-media picture,
+.k811-benefits-story .k811-benefits-story-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* text box */
+.k811-benefits-story .k811-benefits-story-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 24px 48px;
+}
+
+.k811-benefits-story .k811-benefits-story-content :is(h1, h2, h3, h4) {
+  margin: 0;
+  color: #222;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.k811-benefits-story .k811-benefits-story-content p {
+  margin: 0;
+  color: #000;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+/* ---- mobile: photo on top, text below --------------------------------- */
+@media (width < 900px) {
+  .k811-benefits-story .k811-benefits-story-media {
+    height: 60vh;
+    min-height: 320px;
+  }
+}
+
+/* ---- desktop: full-viewport split panels ------------------------------ */
+@media (width >= 900px) {
+  .k811-benefits-story .k811-benefits-story-panel {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  /* photo fills the whole panel behind the text */
+  .k811-benefits-story .k811-benefits-story-media {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .k811-benefits-story .k811-benefits-story-content {
+    position: relative;
+    z-index: 1;
+    width: 50%;
+    max-width: 550px;
+    margin-left: max(24px, calc((100% - var(--k811-content-max, 1120px)) / 2));
+    gap: 20px;
+    padding: 0 24px;
+  }
+
+  .k811-benefits-story .k811-benefits-story-content :is(h1, h2, h3, h4) {
+    font-size: 39px;
+    line-height: 1.1;
+  }
+
+  .k811-benefits-story .k811-benefits-story-content p {
+    font-size: 20px;
+    line-height: 1.4;
+  }
+}
+
+/* full-bleed even inside a constrained section */
+.kotak811 .section > .k811-benefits-story-wrapper {
+  max-width: none;
+}

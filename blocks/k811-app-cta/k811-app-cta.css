@@ -1,0 +1,75 @@
+/* K811 App CTA — "Download the app" band.
+ * Faithful to kotak811.bank.in: full-bleed black section, a centered column
+ * with the QR/app image on top and large white heading lines below. */
+
+.k811-app-cta {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.k811-app-cta .k811-app-cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.k811-app-cta .k811-app-cta-media {
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.k811-app-cta .k811-app-cta-media img {
+  display: block;
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+}
+
+.k811-app-cta .k811-app-cta-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.k811-app-cta .k811-app-cta-title {
+  margin: 0;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.k811-app-cta .k811-app-cta-btn {
+  margin-top: 20px;
+  display: inline-block;
+  background: #fff;
+  color: #222;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 25px 15px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.k811-app-cta .k811-app-cta-btn:hover {
+  background: #d1101f;
+  color: #fff;
+}
+
+@media (width >= 900px) {
+  .k811-app-cta .k811-app-cta-inner {
+    padding: 72px 24px;
+  }
+
+  .k811-app-cta .k811-app-cta-title {
+    font-size: 44px;
+    line-height: 56px;
+  }
+}

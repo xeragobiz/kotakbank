@@ -30,15 +30,20 @@ const hero = `<div class="k811-video-hero">
   ${cell(field('secondaryCta', '<p>Existing customer? <a href="https://811.onelink.me/xfzM/DCSMDC">Apply here</a></p>'))}
 </div>`;
 
-// ---- Section 2: exclusive offers (photo cards) — reuse k811-offers --------
+// ---- Section 2: exclusive offers (full-viewport photo story) --------------
+// Art-directed: desktop + mobile lifestyle photos, big overlaid text box.
 const offers = [
-  ['Airport travel, elevated', 'Enjoy complimentary domestic airport lounge access every quarter.', 'Gold_desktop_v2_fd1ce2f1b2.jpg'],
-  ['Cinema nights, twice as good', 'Buy 1 get 1 free movie tickets on BookMyShow.', 'Red_2e0760661c.jpg'],
-  ['Fine dining, finer rewards', 'Savour delicious meals with 20% off up to ₹750/month on Zomato Dining.', 'Black_v1_f14c3daa69.jpg'],
-  ['Cashback on every swipe', 'Enjoy cashback up to ₹6,000/year on shopping, dining and travel.', 'Rose_Gold_desktop_409f549663.jpg'],
+  ['Airport travel, elevated', 'Enjoy complimentary domestic airport lounge access every quarter.', 'Gold_desktop_v2_fd1ce2f1b2.jpg', 'Gold_Mobile_v3_d4228c1ee6.jpg'],
+  ['Cinema nights, twice as good', 'Buy 1 get 1 free movie tickets on BookMyShow.', 'Red_2e0760661c.jpg', 'Red_Mobile_v3_d10249e6ac.jpg'],
+  ['Fine dining, finer rewards', 'Savour delicious meals with 20% off up to ₹750/month on Zomato Dining.', 'Black_v1_f14c3daa69.jpg', 'Black_Mobile_v3_26f2050de1.jpg'],
+  ['Cashback on every swipe', 'Enjoy cashback up to ₹6,000/year on shopping, dining and travel.', 'Rose_Gold_desktop_409f549663.jpg', 'Rose_Gold_Mobile_v3_312e48f806.jpg'],
 ];
-const offersBlock = `<div class="k811-offers">
-  ${offers.map(([h, t, im]) => `<div>${field('image', `<p>${img(`${CDN}/${im}`, h)}</p>`)}${field('text', `<h3>${h}</h3><p>${t}</p>`)}</div>`).join('\n  ')}
+const picture = (desktop, mobile, alt) => `<picture>`
+  + `<source media="(max-width: 899px)" srcset="${CDN}/${mobile}">`
+  + `<img src="${CDN}/${desktop}" alt="${alt}">`
+  + `</picture>`;
+const offersBlock = `<div class="k811-benefits-story">
+  ${offers.map(([h, t, dImg, mImg]) => `<div>${field('image', `<p>${picture(dImg, mImg, h)}</p>`)}${field('text', `<h3>${h}</h3><p>${t}</p>`)}</div>`).join('\n  ')}
 </div>`;
 
 // ---- Section 3: choose your metal (card selector) -------------------------
@@ -74,7 +79,7 @@ const features = [
   ['Higher limits', 'Enjoy daily spends up to ₹4 lakhs and ATM withdrawals up to ₹1.5 lakhs.', 'mdc_icon_spend_limit_32f55e849c.png'],
   ['₹1 Cr Air Insurance cover', 'Includes air accidental cover, lost card, lost baggage & more.', 'mdc_icon_insurance_0ca024a4df.png'],
 ];
-const featuresBlock = `<div class="k811-offers list">
+const featuresBlock = `<div class="k811-feature-grid">
   ${row1('<h2>ADDITIONAL FEATURES</h2>')}
   ${features.map(([h, t, ic]) => `<div>${field('image', `<p>${img(`${CDN}/${ic}`, h)}</p>`)}${field('text', `<h3>${h}</h3><p>${t}</p>`)}</div>`).join('\n  ')}
 </div>`;
@@ -112,14 +117,19 @@ const faqBlock = `<div class="k811-faq">
 </div>`;
 
 // ---- Section 7: detailed features (default content) -----------------------
-const detailed = `<h2>DETAILED FEATURES</h2>
-<h3>Choose Kotak811 Infinity Metal Debit Card for extra perks</h3>
-<p>The Kotak811 Infinity Metal Debit Card blends premium metal design with rewards across travel, dining, and shopping.</p>
-<h3>Premium offers that add more to every spend</h3>
-<p>From complimentary lounge access to cashback and movie offers, every swipe is rewarding.</p>`;
+const detailedPairs = [
+  ['Choose Kotak811 Infinity Metal Debit Card for extra perks', 'Enjoy premium taste and exclusive rewards with the Kotak811 Infinity Metal Debit Card. Designed to elevate your shopping, dining and travel experiences, it comes with thoughtful benefits that fit your lifestyle. Open your Kotak811 Savings Account and enjoy access to the best Metal Debit Card.'],
+  ['Premium offers that add more to every spend', 'The Kotak811 Infinity Metal Debit Card is built for customers who want more than standard debit card access. Along with a premium metal finish, it brings together airport lounge access, dining savings, movie ticket offers, cashback, and Visa Signature privileges in one card.'],
+  ['Travel benefits that stay relevant', 'Get 4 complimentary domestic airport lounge visits in a year, with 1 visit every quarter at selected lounges. This makes the card useful not just as a premium debit card, but as a debit card with airport lounge access for regular domestic travel. You also get Visa Signature benefits on hotel stays, airport transfers, car rentals, and concierge services.'],
+  ['Dining and movie offers', 'Enjoy 20% off on Zomato Dining, up to ₹750 on a minimum bill of ₹2,000, once a month. For entertainment, get a buy 1 get 1 free movie ticket offer on BookMyShow, with a discount of up to ₹300 on a minimum transaction value of ₹400, once a month. Together, these benefits add everyday value across dining and movie plans rather than limiting the card to travel alone.'],
+  ['Cashback, fuel savings and higher limits', 'The card also adds value to day-to-day spending with 5% cashback on debit card spends through the 811 Super Savings Account proposition. On the utility side, it includes a fuel surcharge waiver and supports higher usage with a daily ATM withdrawal limit of ₹1.5 lakhs and a daily spend limit of ₹4 lakhs.'],
+  ['Protection that supports premium usage', 'Beyond offers, the card includes insurance-linked benefits such as air accident cover up to ₹1 crore, lost card liability coverage of up to ₹4.75 lakhs, purchase protection up to ₹1.5 lakhs, and other applicable covers. This makes the proposition stronger for customers comparing premium debit card benefits, not just discounts.'],
+];
+const detailed = `<h2>DETAILED FEATURES</h2>\n`
+  + detailedPairs.map(([h, t]) => `<h3>${h}</h3>\n<p>${t}</p>`).join('\n');
 
 // ---- Section 8: download app (cta) — reuse k811-cta -----------------------
-const ctaBlock = `<div class="k811-cta">
+const ctaBlock = `<div class="k811-app-cta">
   ${cell(field('image', `<p>${img(`${CDN}/Website_App_QR_code_4_becfe0162e.png`, 'Download the app')}</p>`))}
   ${cell(field('title', '<h2>Download the app</h2><h2>Download your bank</h2><p><a href="https://811.onelink.me/xfzM/webtokotak811app">Download App</a></p>'))}
 </div>`;
@@ -131,8 +141,8 @@ const html = [
   `<div>${selectorBlock}${sectionMeta('dark')}</div>`,
   `<div>${featuresBlock}${sectionMeta('dark')}</div>`,
   `<div>${stepsBlock}${sectionMeta('light')}</div>`,
-  `<div>${faqBlock}${sectionMeta('light')}</div>`,
-  `<div>${detailed}${sectionMeta('light')}</div>`,
+  `<div>${faqBlock}${sectionMeta('dark')}</div>`,
+  `<div>${detailed}${sectionMeta('detailed')}</div>`,
   `<div>${ctaBlock}${sectionMeta('dark')}</div>`,
   `<div><div class="metadata"><div><div>Title</div><div>Infinity Metal Debit Card | Kotak811</div></div><div><div>Description</div><div>Premium metal debit card with airport lounge access, movie and dining offers, cashback and more.</div></div></div></div>`,
 ].join('\n');

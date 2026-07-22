@@ -1,0 +1,97 @@
+/*
+ * k811-feature-grid — "Additional Features" 2x2 dark card grid.
+ * Faithful to kotak811.bank.in: #1d1d1d section, gray title, rounded cards,
+ * 79px icon left of a white 26px/500 heading + gray 17px paragraph.
+ */
+
+.k811-feature-grid {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.k811-feature-grid .k811-feature-grid-title,
+.kotak811 .section.dark .k811-feature-grid .k811-feature-grid-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: #959595;
+  margin: 0 0 40px;
+}
+
+.k811-feature-grid > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.k811-feature-grid > ul > li {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.k811-feature-grid .k811-feature-grid-icon {
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.k811-feature-grid .k811-feature-grid-icon p {
+  margin: 0;
+  line-height: 0;
+}
+
+.k811-feature-grid .k811-feature-grid-icon img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.k811-feature-grid .k811-feature-grid-body {
+  flex: 1 1 auto;
+}
+
+.k811-feature-grid .k811-feature-grid-body :is(h2, h3, h4) {
+  margin: 0 0 8px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.k811-feature-grid .k811-feature-grid-body p,
+.kotak811 .section.dark .k811-feature-grid .k811-feature-grid-body p {
+  margin: 0;
+  color: #959595;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+@media (width >= 900px) {
+  .k811-feature-grid {
+    padding: 56px 40px;
+  }
+
+  .k811-feature-grid > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .k811-feature-grid .k811-feature-grid-icon img {
+    width: 79px;
+    height: 79px;
+  }
+
+  .k811-feature-grid .k811-feature-grid-body :is(h2, h3, h4) {
+    font-size: 26px;
+  }
+
+  .k811-feature-grid .k811-feature-grid-body p {
+    font-size: 17px;
+  }
+}
