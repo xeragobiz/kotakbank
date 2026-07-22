@@ -340,12 +340,13 @@ function infinity() {
     ['What should I do if I lose my Debit Card?', 'You can instantly block your card through the Kotak811 Mobile Banking App, or contact customer support at 1800 4100.'],
     ['How do I activate my Kotak811 Infinity Metal Debit Card?', 'You can set up your PIN and card controls directly from the Debit Card section on the Kotak811 Mobile Banking App.'],
   ];
-  parts.push(container('K811 FAQ',
-    'Ask Kotak811',
-    faqs.map(([q, a]) => [
+  // Title "Ask Kotak811" (H2) + "Frequently Asked Questions" subtitle (H3) as
+  // section default content above the FAQ block, matching the live page.
+  parts.push(['## Ask Kotak811', '', '### Frequently Asked Questions', '',
+    gridTable('K811 FAQ', faqs.map(([q, a]) => [
       ['<!-- field:question -->', '', q],
       ['<!-- field:answer -->', '', a],
-    ])) + '\n\n' + sectionMeta('dark'));
+    ]))].join('\n') + '\n\n' + sectionMeta('dark'));
 
   // default content: detailed features (full six-pair live SEO copy)
   const detailed = [

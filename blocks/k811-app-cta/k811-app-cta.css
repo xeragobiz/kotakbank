@@ -8,18 +8,25 @@
   padding: 24px;
 }
 
+/* Dark rounded card holding the QR + heading, matching the live page (the
+   card sits on the black section, slightly lighter with soft rounded corners). */
 .k811-app-cta .k811-app-cta-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;
-  padding: 48px 24px;
+  padding: 64px 24px;
   text-align: center;
+  background: #1c1c1c;
+  border-radius: 28px;
 }
 
+/* Mobile/tablet (<900px): show the Download App button, hide the QR — the QR
+   is only useful on desktop where it can be scanned from another device. */
 .k811-app-cta .k811-app-cta-media {
   flex: 0 0 auto;
   line-height: 0;
+  display: none;
 }
 
 .k811-app-cta .k811-app-cta-media img {
@@ -27,6 +34,7 @@
   width: 150px;
   height: 150px;
   border-radius: 12px;
+  background: #fff;
 }
 
 .k811-app-cta .k811-app-cta-text {
@@ -66,6 +74,15 @@
 @media (width >= 900px) {
   .k811-app-cta .k811-app-cta-inner {
     padding: 72px 24px;
+  }
+
+  /* Desktop: show the QR (scan from phone), hide the Download App button. */
+  .k811-app-cta .k811-app-cta-media {
+    display: block;
+  }
+
+  .k811-app-cta .k811-app-cta-btn {
+    display: none;
   }
 
   .k811-app-cta .k811-app-cta-title {
