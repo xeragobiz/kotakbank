@@ -78,14 +78,19 @@ export default function decorate(block) {
       && (c.textContent || '').trim());
     const name = (nameCell && nameCell.textContent.trim()) || nameFromImage(picture);
 
-    const links = row.querySelectorAll('a');
+    // Identify links by href, not document order: the T&C link lives inside the
+    // panel richtext (so it appears first in DOM), while Apply is its own cell.
+    const links = [...row.querySelectorAll('a')];
+    const tncLink = links.find((a) => /terms-and-conditions|t&c|tnc/i.test(a.getAttribute('href') || ''))
+      || links.find((a) => /t&c|terms/i.test(a.textContent || ''));
+    const applyLink = links.find((a) => a !== tncLink) || null;
     if (picture || panelCell || name) {
       variants.push({
         name: name || 'Card',
         picture,
         panel: panelCell,
-        applyLink: links[0] || null,
-        tncLink: links[1] || null,
+        applyLink,
+        tncLink: tncLink || null,
       });
     }
   });

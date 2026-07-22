@@ -87,35 +87,49 @@
   color: #fff;
 }
 
+/* fees bullets — match the source's dashed/dot list */
+.k811-card-selector-panel-item ul {
+  margin: 0 0 4px;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.k811-card-selector-panel-item li {
+  margin: 0 0 12px;
+  font-size: 19px;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.k811-card-selector-panel-item li del {
+  color: #8a8a8a;
+}
+
 .k811-card-selector-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
+/* Apply now — plain link (not a pill), matching the live page */
 .k811-card-selector-apply {
-  display: inline-block;
-  background: #fff;
-  color: #222;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 14px 25px 15px;
-  border-radius: 12px;
+  color: #3b63fb;
+  font-weight: 500;
+  font-size: 16px;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .k811-card-selector-apply:hover {
-  background: #d1101f;
-  color: #fff;
+  text-decoration: underline;
 }
 
+/* T&C — small underlined text shown above Apply (authored inside the panel) */
 .k811-card-selector-tnc {
   display: inline-block;
-  margin-bottom: 8px;
-  color: #d1101f;
+  margin: 0 0 8px;
+  color: #3b63fb;
   font-size: 14px;
   text-decoration: underline;
 }
