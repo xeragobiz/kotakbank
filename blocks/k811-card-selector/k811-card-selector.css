@@ -1,0 +1,168 @@
+/* K811 Card Selector — "Choose Your Metal". Inherits Manrope from .kotak811. */
+
+.k811-card-selector {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.k811-card-selector-title {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 32px;
+}
+
+.k811-card-selector-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.k811-card-selector-tab {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border: 1px solid #d0d0d0;
+  border-radius: 30px;
+  background: #fff;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.k811-card-selector-tab:hover {
+  border-color: #999;
+}
+
+.k811-card-selector-tab.is-active {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
+
+.k811-card-selector-stage {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+.k811-card-selector-media {
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.k811-card-selector-card {
+  display: none;
+}
+
+.k811-card-selector-card.is-active {
+  display: block;
+  animation: k811-card-fade 0.35s ease;
+}
+
+.k811-card-selector-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+@keyframes k811-card-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.k811-card-selector-panel-item {
+  display: none;
+}
+
+.k811-card-selector-panel-item.is-active {
+  display: block;
+}
+
+.k811-card-selector-panel-item p {
+  margin: 0 0 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.k811-card-selector-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.k811-card-selector-apply {
+  display: inline-block;
+  background: var(--k811-link, #d1101f);
+  color: #fff;
+  font-weight: 700;
+  padding: 13px 36px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.k811-card-selector-apply:hover {
+  background: #a50d18;
+}
+
+.k811-card-selector-tnc {
+  color: #666;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .k811-card-selector {
+    padding: 56px 40px;
+  }
+
+  .k811-card-selector-stage {
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+
+  .k811-card-selector-media {
+    min-height: 320px;
+  }
+}
+
+/* ---- Dark section (source "Choose Your Metal" is on black) -------- */
+.section.dark .k811-card-selector-tab {
+  background: transparent;
+  border-color: #555;
+  color: #ccc;
+}
+
+.section.dark .k811-card-selector-tab.is-active {
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+}
+
+.section.dark .k811-card-selector-panel-item,
+.section.dark .k811-card-selector-panel-item p,
+.section.dark .k811-card-selector-panel-item h3 {
+  color: #fff;
+}
+
+.section.dark .k811-card-selector-tnc {
+  color: #bbb;
+}

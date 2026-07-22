@@ -2,7 +2,7 @@
    A contained rounded black box: heading on the left, promo graphic on the
    right. Stacks and centers on mobile. Values matched from the source band. */
 
-.cta-banner {
+.k811-cta {
   overflow: hidden;
   max-width: 1120px;
   margin: 0 auto;
@@ -10,7 +10,7 @@
   background: #000;
 }
 
-.cta-banner .cta-banner-inner {
+.k811-cta .k811-cta-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,11 +19,11 @@
   text-align: center;
 }
 
-.cta-banner .cta-banner-text {
+.k811-cta .k811-cta-text {
   flex: 1 1 auto;
 }
 
-.cta-banner .cta-banner-title {
+.k811-cta .k811-cta-title {
   margin: 0;
   color: #fff;
   font-family: var(--heading-font-family);
@@ -32,12 +32,12 @@
   line-height: 1.18;
 }
 
-.cta-banner .cta-banner-media {
+.k811-cta .k811-cta-media {
   flex: 0 0 auto;
   line-height: 0;
 }
 
-.cta-banner .cta-banner-media img {
+.k811-cta .k811-cta-media img {
   display: block;
   width: auto;
   max-width: 100%;
@@ -45,7 +45,7 @@
 }
 
 @media (width >= 900px) {
-  .cta-banner .cta-banner-inner {
+  .k811-cta .k811-cta-inner {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -54,21 +54,21 @@
     text-align: left;
   }
 
-  .cta-banner .cta-banner-text {
+  .k811-cta .k811-cta-text {
     flex: 1 1 50%;
   }
 
-  .cta-banner .cta-banner-title {
+  .k811-cta .k811-cta-title {
     font-size: 44px;
     line-height: 52px;
   }
 
-  .cta-banner .cta-banner-media {
+  .k811-cta .k811-cta-media {
     flex: 0 0 auto;
     max-width: 42%;
   }
 
-  .cta-banner .cta-banner-media img {
+  .k811-cta .k811-cta-media img {
     max-height: 240px;
   }
 }

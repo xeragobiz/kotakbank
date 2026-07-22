@@ -1,0 +1,130 @@
+{
+  "definitions": [
+    {
+      "title": "K811 Hero",
+      "id": "k811-hero",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "K811 Hero",
+              "model": "k811-hero"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "k811-hero",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "bg_image",
+          "label": "Background Image (Desktop)",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "bg_imageAlt",
+          "label": "Background Image Alt Text"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "bg_imageMobile",
+          "label": "Background Image (Mobile) — optional",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "bg_imageMobileAlt",
+          "label": "Mobile Image Alt Text"
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "value": "",
+          "label": "Heading & Text",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "text_headingColor",
+          "label": "Heading Colour",
+          "valueType": "string",
+          "value": "orange",
+          "options": [
+            { "name": "Orange", "value": "orange" },
+            { "name": "Blue", "value": "blue" },
+            { "name": "White", "value": "white" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "text_textColor",
+          "label": "Text Colour",
+          "valueType": "string",
+          "value": "blue",
+          "options": [
+            { "name": "Orange", "value": "orange" },
+            { "name": "Blue", "value": "blue" },
+            { "name": "White", "value": "white" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "text_layout",
+          "label": "Layout",
+          "valueType": "string",
+          "value": "",
+          "options": [
+            { "name": "Default (overlay banner)", "value": "" },
+            { "name": "Detail (product-detail card)", "value": "detail" },
+            { "name": "Metal (light, card art on right)", "value": "metal" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "text_gradient",
+          "label": "Gradient",
+          "valueType": "string",
+          "value": "",
+          "options": [
+            { "name": "None", "value": "" },
+            { "name": "Red", "value": "gradient-red" },
+            { "name": "Dark", "value": "gradient-dark" }
+          ]
+        },
+        {
+          "component": "aem-content",
+          "name": "primaryCta",
+          "label": "Primary CTA Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "primaryCtaText",
+          "label": "Primary CTA Text"
+        },
+        {
+          "component": "aem-content",
+          "name": "secondaryCta",
+          "label": "Secondary CTA Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "secondaryCtaText",
+          "label": "Secondary CTA Text"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

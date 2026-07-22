@@ -1,0 +1,109 @@
+/* K811 Steps — "How To Apply" numbered steps. Inherits Manrope from .kotak811. */
+
+.k811-steps {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.k811-steps-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--k811-text, #222);
+  margin: 0 0 32px;
+}
+
+.k811-steps-list {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  display: grid;
+  gap: 24px;
+  counter-reset: k811-step;
+}
+
+.k811-steps-item {
+  counter-increment: k811-step;
+  position: relative;
+  padding-top: 64px;
+}
+
+.k811-steps-item::before {
+  content: counter(k811-step);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--k811-link, #d1101f);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.k811-steps-body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--k811-text, #222);
+}
+
+.k811-steps-body p {
+  margin: 0;
+}
+
+.k811-steps-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.k811-steps-btn.k811-steps-btn-primary {
+  display: inline-block;
+  background: var(--k811-link, #d1101f);
+  color: #fff;
+  font-weight: 700;
+  padding: 14px 40px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.k811-steps-btn.k811-steps-btn-primary:hover {
+  background: #a50d18;
+}
+
+.k811-steps-actions-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.k811-steps-btn.k811-steps-btn-secondary {
+  color: var(--k811-link, #d1101f);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .k811-steps {
+    padding: 56px 40px;
+  }
+
+  .k811-steps-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .k811-steps-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}

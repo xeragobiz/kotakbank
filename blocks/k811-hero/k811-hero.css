@@ -2,7 +2,7 @@
    Mobile-first: content stacked over the image; desktop: content
    constrained left over a wide banner image. */
 
-.cc-hero {
+.k811-hero {
   --cc-red: #fa1432;
   --cc-navy: #00005a;
   --cc-orange: #f26722;
@@ -15,19 +15,19 @@
 
 /* full-bleed: span the full page width, ignoring section max-width/padding.
    Scoped under main > .section to outweigh the global section-div width rule. */
-main > .section > .cc-hero-wrapper {
+main > .section > .k811-hero-wrapper {
   max-width: none;
   padding: 0;
 }
 
 /* mobile: remove the section margin so there's no top gap above the hero */
 @media (width < 900px) {
-  main > .section:has(> .cc-hero-wrapper) {
+  main > .section:has(> .k811-hero-wrapper) {
     margin: 0;
   }
 }
 
-.cc-hero .cc-hero-image {
+.k811-hero .k811-hero-image {
   grid-area: 1 / 1;
   position: relative;
   height: 100%;
@@ -35,8 +35,8 @@ main > .section > .cc-hero-wrapper {
 }
 
 /* authored gradient overlays on the image (keep overlaid text legible) */
-.cc-hero.gradient-red .cc-hero-image::after,
-.cc-hero.gradient-dark .cc-hero-image::after {
+.k811-hero.gradient-red .k811-hero-image::after,
+.k811-hero.gradient-dark .k811-hero-image::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -44,17 +44,17 @@ main > .section > .cc-hero-wrapper {
   pointer-events: none;
 }
 
-.cc-hero.gradient-red .cc-hero-image::after {
+.k811-hero.gradient-red .k811-hero-image::after {
   /* top-left corner to bottom-right corner */
   background: linear-gradient(135deg, #7a0d16 0%, #b3121f 45%, rgb(179 18 31 / 15%) 100%);
 }
 
-.cc-hero.gradient-dark .cc-hero-image::after {
+.k811-hero.gradient-dark .k811-hero-image::after {
   background: linear-gradient(90deg, #0a0a0a 0%, rgb(10 10 10 / 75%) 45%, rgb(10 10 10 / 10%) 100%);
 }
 
-.cc-hero .cc-hero-image picture,
-.cc-hero .cc-hero-image img {
+.k811-hero .k811-hero-image picture,
+.k811-hero .k811-hero-image img {
   display: block;
   width: 100%;
 
@@ -65,8 +65,8 @@ main > .section > .cc-hero-wrapper {
 }
 
 @media (width >= 900px) {
-  .cc-hero .cc-hero-image picture,
-  .cc-hero .cc-hero-image img {
+  .k811-hero .k811-hero-image picture,
+  .k811-hero .k811-hero-image img {
     /* desktop: show the full image (no crop) at its natural aspect ratio */
     height: auto;
     object-fit: contain;
@@ -74,7 +74,7 @@ main > .section > .cc-hero-wrapper {
 }
 
 /* content overlay */
-.cc-hero .cc-hero-content {
+.k811-hero .k811-hero-content {
   grid-area: 1 / 1;
   z-index: 1;
   align-self: center;
@@ -85,7 +85,7 @@ main > .section > .cc-hero-wrapper {
   padding: 24px;
 }
 
-.cc-hero .cc-hero-content h1 {
+.k811-hero .k811-hero-content h1 {
   margin: 0 0 8px;
   color: var(--cc-white);
   font-family: var(--body-font-family);
@@ -95,20 +95,20 @@ main > .section > .cc-hero-wrapper {
 }
 
 @media (width >= 900px) {
-  .cc-hero .cc-hero-content h1 {
+  .k811-hero .k811-hero-content h1 {
     font-size: 44px;
   }
 }
 
 /* mobile: keep copy in the left portion so the image subject shows at right */
 @media (width < 900px) {
-  .cc-hero .cc-hero-content h1,
-  .cc-hero .cc-hero-content p {
+  .k811-hero .k811-hero-content h1,
+  .k811-hero .k811-hero-content p {
     max-width: 62%;
   }
 }
 
-.cc-hero .cc-hero-content p {
+.k811-hero .k811-hero-content p {
   margin: 0 0 16px;
   color: var(--cc-navy);
   font-size: 16px;
@@ -116,24 +116,24 @@ main > .section > .cc-hero-wrapper {
 }
 
 /* author-selected heading colour — overrides the default red */
-.cc-hero .cc-hero-content.cc-hero-heading-orange h1 { color: var(--cc-orange); }
-.cc-hero .cc-hero-content.cc-hero-heading-blue h1 { color: var(--cc-blue); }
-.cc-hero .cc-hero-content.cc-hero-heading-white h1 { color: var(--cc-white); }
+.k811-hero .k811-hero-content.k811-hero-heading-orange h1 { color: var(--cc-orange); }
+.k811-hero .k811-hero-content.k811-hero-heading-blue h1 { color: var(--cc-blue); }
+.k811-hero .k811-hero-content.k811-hero-heading-white h1 { color: var(--cc-white); }
 
 /* author-selected text colour — overrides the default navy */
-.cc-hero .cc-hero-content.cc-hero-text-orange p { color: var(--cc-orange); }
-.cc-hero .cc-hero-content.cc-hero-text-blue p { color: var(--cc-blue); }
-.cc-hero .cc-hero-content.cc-hero-text-white p { color: var(--cc-white); }
+.k811-hero .k811-hero-content.k811-hero-text-orange p { color: var(--cc-orange); }
+.k811-hero .k811-hero-content.k811-hero-text-blue p { color: var(--cc-blue); }
+.k811-hero .k811-hero-content.k811-hero-text-white p { color: var(--cc-white); }
 
 /* CTAs — compact left-aligned pills, stacked on mobile, row on desktop */
-.cc-hero .cc-hero-actions {
+.k811-hero .k811-hero-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
 }
 
-.cc-hero .cc-hero-btn {
+.k811-hero .k811-hero-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -150,50 +150,50 @@ main > .section > .cc-hero-wrapper {
 }
 
 @media (width >= 900px) {
-  .cc-hero .cc-hero-btn {
+  .k811-hero .k811-hero-btn {
     height: 48px;
     padding: 0 32px;
     font-size: 18px;
   }
 }
 
-.cc-hero .cc-hero-btn-primary {
+.k811-hero .k811-hero-btn-primary {
   background-color: var(--cc-red);
   border: 1px solid var(--cc-red);
   color: #fff;
 }
 
-.cc-hero .cc-hero-btn-primary:hover {
+.k811-hero .k811-hero-btn-primary:hover {
   background-color: #d4102a;
   border-color: #d4102a;
   color: #fff;
 }
 
-.cc-hero .cc-hero-btn-secondary {
+.k811-hero .k811-hero-btn-secondary {
   background-color: #fff;
   border: 1px solid var(--cc-red);
   color: var(--cc-red);
 }
 
-.cc-hero .cc-hero-btn-secondary:hover {
+.k811-hero .k811-hero-btn-secondary:hover {
   background-color: #fff5f6;
   color: var(--cc-red);
 }
 
 @media (width >= 900px) {
-  .cc-hero .cc-hero-content {
+  .k811-hero .k811-hero-content {
     /* desktop: copy occupies the left half of the banner */
     padding: 40px 32px;
   }
 
-  .cc-hero .cc-hero-content h1,
-  .cc-hero .cc-hero-content p,
-  .cc-hero .cc-hero-actions {
+  .k811-hero .k811-hero-content h1,
+  .k811-hero .k811-hero-content p,
+  .k811-hero .k811-hero-actions {
     max-width: 50%;
   }
 
   /* side-by-side CTAs on desktop */
-  .cc-hero .cc-hero-actions {
+  .k811-hero .k811-hero-actions {
     flex-flow: row wrap;
     align-items: center;
   }
@@ -201,29 +201,29 @@ main > .section > .cc-hero-wrapper {
   /* detail hero: the card art + infinity symbol occupy the right half of the
      full-bleed banner, so keep the copy well within the solid-red left side
      to avoid overlapping the symbol near the centre */
-  .cc-hero.detail .cc-hero-content h1,
-  .cc-hero.detail .cc-hero-content p,
-  .cc-hero.detail .cc-hero-actions {
+  .k811-hero.detail .k811-hero-content h1,
+  .k811-hero.detail .k811-hero-content p,
+  .k811-hero.detail .k811-hero-actions {
     max-width: 38%;
   }
 
   /* on a red hero (red gradient, or the red-imaged detail card), the primary
      CTA switches to orange (desktop only) so it stands out against the red */
-  .cc-hero.gradient-red .cc-hero-btn-primary,
-  .cc-hero.detail .cc-hero-btn-primary {
+  .k811-hero.gradient-red .k811-hero-btn-primary,
+  .k811-hero.detail .k811-hero-btn-primary {
     background-color: #ed4223;
     border-color: #ed4223;
   }
 
-  .cc-hero.gradient-red .cc-hero-btn-primary:hover,
-  .cc-hero.detail .cc-hero-btn-primary:hover {
+  .k811-hero.gradient-red .k811-hero-btn-primary:hover,
+  .k811-hero.detail .k811-hero-btn-primary:hover {
     background-color: #d4351a;
     border-color: #d4351a;
   }
 }
 
 /* the mobile back button is a mobile-only element — hidden everywhere else */
-.cc-hero .cc-hero-back {
+.k811-hero .k811-hero-back {
   display: none;
 }
 
@@ -231,7 +231,7 @@ main > .section > .cc-hero-wrapper {
    (gradient hero) the hero has no red panel of its own, so give the button a
    dark colour that stays legible over the light top of the banner image. */
 @media (width < 900px) {
-  .cc-hero.cc-hero-has-back .cc-hero-back {
+  .k811-hero.k811-hero-has-back .k811-hero-back {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -242,7 +242,7 @@ main > .section > .cc-hero-wrapper {
     text-decoration: none;
   }
 
-  .cc-hero.cc-hero-has-back .cc-hero-back-icon {
+  .k811-hero.k811-hero-has-back .k811-hero-back-icon {
     width: 20px;
     height: 20px;
     flex: 0 0 auto;
@@ -253,7 +253,7 @@ main > .section > .cc-hero-wrapper {
   /* overlay heroes (apply gradient, index banner) place the back button
      absolutely at the top-left over the image; the detail red band instead
      pushes content down. Everything except .detail overlays. */
-  .cc-hero.cc-hero-has-back:not(.detail) .cc-hero-back {
+  .k811-hero.k811-hero-has-back:not(.detail) .k811-hero-back {
     position: absolute;
     top: 0;
     left: 0;
@@ -261,7 +261,7 @@ main > .section > .cc-hero-wrapper {
   }
 
   /* clear the overlaid content below the back button so they don't collide */
-  .cc-hero.cc-hero-has-back:not(.detail) .cc-hero-content {
+  .k811-hero.k811-hero-has-back:not(.detail) .k811-hero-content {
     align-self: start;
     padding-top: 56px;
   }
@@ -271,7 +271,7 @@ main > .section > .cc-hero-wrapper {
    Applies on mobile only; on desktop (>=900px) the hero falls back to the
    default overlay-banner layout. */
 @media (width < 900px) {
-  .cc-hero.detail {
+  .k811-hero.detail {
     --cc-red: #e51a24;
 
     display: block;
@@ -280,13 +280,13 @@ main > .section > .cc-hero-wrapper {
     background: var(--cc-red);
   }
 
-  .cc-hero.detail .cc-hero-image {
+  .k811-hero.detail .k811-hero-image {
     position: static;
     height: auto;
   }
 
-  .cc-hero.detail .cc-hero-image picture,
-  .cc-hero.detail .cc-hero-image img {
+  .k811-hero.detail .k811-hero-image picture,
+  .k811-hero.detail .k811-hero-image img {
     position: static;
     width: 100%;
     height: auto;
@@ -294,7 +294,7 @@ main > .section > .cc-hero-wrapper {
   }
 
   /* the copy panel sits below the image on the red background */
-  .cc-hero.detail .cc-hero-content {
+  .k811-hero.detail .k811-hero-content {
     position: static;
     inset: auto;
     display: block;
@@ -307,7 +307,7 @@ main > .section > .cc-hero-wrapper {
     pointer-events: auto;
   }
 
-  .cc-hero.detail .cc-hero-badge {
+  .k811-hero.detail .k811-hero-badge {
     display: inline-block;
     margin-bottom: 14px;
     padding: 6px 16px;
@@ -318,8 +318,8 @@ main > .section > .cc-hero-wrapper {
     font-weight: 700;
   }
 
-  .cc-hero.detail .cc-hero-content h1,
-  .cc-hero.detail .cc-hero-content h2 {
+  .k811-hero.detail .k811-hero-content h1,
+  .k811-hero.detail .k811-hero-content h2 {
     margin: 0 0 8px;
     max-width: none;
     color: #fff;
@@ -328,7 +328,7 @@ main > .section > .cc-hero-wrapper {
     line-height: 1.15;
   }
 
-  .cc-hero.detail .cc-hero-content p {
+  .k811-hero.detail .k811-hero-content p {
     margin: 0 0 20px;
     max-width: none;
     color: #fff;
@@ -337,13 +337,13 @@ main > .section > .cc-hero-wrapper {
     opacity: 0.95;
   }
 
-  .cc-hero.detail .cc-hero-actions {
+  .k811-hero.detail .k811-hero-actions {
     display: block;
     max-width: none;
   }
 
   /* full-width white Apply button on the red panel */
-  .cc-hero.detail .cc-hero-btn:any-link {
+  .k811-hero.detail .k811-hero-btn:any-link {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -357,7 +357,7 @@ main > .section > .cc-hero-wrapper {
     font-weight: 700;
   }
 
-  .cc-hero.detail .cc-hero-btn:any-link:hover {
+  .k811-hero.detail .k811-hero-btn:any-link:hover {
     background: #fff0f1;
     color: var(--cc-red);
   }
@@ -366,7 +366,7 @@ main > .section > .cc-hero-wrapper {
 /* the Recommended ribbon is a detail-only element. On desktop the detail
    layout is inactive, so hide the badge there to avoid a stray pill. */
 @media (width >= 900px) {
-  .cc-hero .cc-hero-badge {
+  .k811-hero .k811-hero-badge {
     display: none;
   }
 }
@@ -376,32 +376,32 @@ main > .section > .cc-hero-wrapper {
    right; the copy overlays the left half — small grey eyebrow, solid-white
    heading + subheading, and an "Apply Now" pill with an animated metallic
    ring. Mobile stacks the art-directed image with the copy below on black. */
-.cc-hero.metal {
+.k811-hero.metal {
   display: block;
   background: #000;
 }
 
 /* mobile: image on top (art-directed mobile source), copy below on black */
-.cc-hero.metal .cc-hero-image {
+.k811-hero.metal .k811-hero-image {
   grid-area: auto;
   position: static;
   height: auto;
   line-height: 0;
 }
 
-.cc-hero.metal .cc-hero-image::after {
+.k811-hero.metal .k811-hero-image::after {
   content: none;
 }
 
-.cc-hero.metal .cc-hero-image picture,
-.cc-hero.metal .cc-hero-image img {
+.k811-hero.metal .k811-hero-image picture,
+.k811-hero.metal .k811-hero-image img {
   position: static;
   width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-.cc-hero.metal .cc-hero-content {
+.k811-hero.metal .k811-hero-content {
   grid-area: auto;
   position: static;
   align-self: center;
@@ -413,7 +413,7 @@ main > .section > .cc-hero-wrapper {
 }
 
 /* eyebrow (h1): small, wide-spaced grey caps */
-.cc-hero.metal .cc-hero-content h1 {
+.k811-hero.metal .k811-hero-content h1 {
   margin: 0 0 6px;
   max-width: none;
   color: #9e9e9e;
@@ -427,7 +427,7 @@ main > .section > .cc-hero-wrapper {
 }
 
 /* main heading (h2): solid white */
-.cc-hero.metal .cc-hero-content h2 {
+.k811-hero.metal .k811-hero-content h2 {
   margin: 0 0 5px;
   max-width: none;
   color: #fff;
@@ -439,7 +439,7 @@ main > .section > .cc-hero-wrapper {
 }
 
 /* subheading (h3): lighter-weight white */
-.cc-hero.metal .cc-hero-content h3 {
+.k811-hero.metal .k811-hero-content h3 {
   margin: 0;
   padding-top: 5px;
   max-width: none;
@@ -453,18 +453,18 @@ main > .section > .cc-hero-wrapper {
 }
 
 /* headings authored with <em> — keep upright, don't italicise */
-.cc-hero.metal .cc-hero-content h2 em,
-.cc-hero.metal .cc-hero-content h3 em {
+.k811-hero.metal .k811-hero-content h2 em,
+.k811-hero.metal .k811-hero-content h3 em {
   font-style: normal;
 }
 
 /* CTA: black pill with a rotating white/grey metallic border */
-.cc-hero.metal .cc-hero-actions {
+.k811-hero.metal .k811-hero-actions {
   flex-flow: row wrap;
   margin-top: 20px;
 }
 
-.cc-hero.metal .cc-hero-btn-primary {
+.k811-hero.metal .k811-hero-btn-primary {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -479,17 +479,17 @@ main > .section > .cc-hero-wrapper {
 }
 
 /* rotating conic gradient sits behind everything (the visible "border") */
-.cc-hero.metal .cc-hero-btn-primary::before {
+.k811-hero.metal .k811-hero-btn-primary::before {
   content: "";
   position: absolute;
   inset: -150%;
   z-index: -2;
   background: conic-gradient(from 0deg, #4d4d4d, #fff, #4d4d4d, #fff, #4d4d4d);
-  animation: cc-hero-metal-spin 4s linear infinite;
+  animation: k811-hero-metal-spin 4s linear infinite;
 }
 
 /* inner black fill, inset 1.5px, leaves a thin animated ring around the edge */
-.cc-hero.metal .cc-hero-btn-primary::after {
+.k811-hero.metal .k811-hero-btn-primary::after {
   content: "";
   position: absolute;
   inset: 1.5px;
@@ -498,17 +498,17 @@ main > .section > .cc-hero-wrapper {
   background: #000;
 }
 
-.cc-hero.metal .cc-hero-btn-primary:hover {
+.k811-hero.metal .k811-hero-btn-primary:hover {
   background: #000;
   color: #fff;
 }
 
-@keyframes cc-hero-metal-spin {
+@keyframes k811-hero-metal-spin {
   to { transform: rotate(1turn); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cc-hero.metal .cc-hero-btn-primary::before {
+  .k811-hero.metal .k811-hero-btn-primary::before {
     animation: none;
   }
 }
@@ -516,24 +516,24 @@ main > .section > .cc-hero-wrapper {
 @media (width >= 900px) {
   /* desktop: full-bleed banner image with the copy overlaid on the left half,
      vertically centred (matching the source overlay layout). */
-  .cc-hero.metal {
+  .k811-hero.metal {
     display: grid;
     position: relative;
   }
 
-  .cc-hero.metal .cc-hero-image {
+  .k811-hero.metal .k811-hero-image {
     grid-area: 1 / 1;
     height: 100%;
   }
 
-  .cc-hero.metal .cc-hero-image picture,
-  .cc-hero.metal .cc-hero-image img {
+  .k811-hero.metal .k811-hero-image picture,
+  .k811-hero.metal .k811-hero-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .cc-hero.metal .cc-hero-content {
+  .k811-hero.metal .k811-hero-content {
     grid-area: 1 / 1;
     z-index: 1;
     box-sizing: border-box;
@@ -543,22 +543,22 @@ main > .section > .cc-hero-wrapper {
     padding: 0 32px 0 155px;
   }
 
-  .cc-hero.metal .cc-hero-content h1,
-  .cc-hero.metal .cc-hero-content h2,
-  .cc-hero.metal .cc-hero-content h3,
-  .cc-hero.metal .cc-hero-actions {
+  .k811-hero.metal .k811-hero-content h1,
+  .k811-hero.metal .k811-hero-content h2,
+  .k811-hero.metal .k811-hero-content h3,
+  .k811-hero.metal .k811-hero-actions {
     max-width: 45%;
   }
 
-  .cc-hero.metal .cc-hero-content h1 {
+  .k811-hero.metal .k811-hero-content h1 {
     font-size: 14.4px;
   }
 
-  .cc-hero.metal .cc-hero-content h2 {
+  .k811-hero.metal .k811-hero-content h2 {
     font-size: 48px;
   }
 
-  .cc-hero.metal .cc-hero-content h3 {
+  .k811-hero.metal .k811-hero-content h3 {
     font-size: 30.4px;
     line-height: 0.9;
   }

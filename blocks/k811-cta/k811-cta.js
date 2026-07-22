@@ -1,4 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import { initK811, revealOnScroll } from '../../scripts/k811/k811-common.js';
 
 /**
  * CTA Banner — rounded dark "call us" band.
@@ -8,6 +9,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  * @param {Element} block the block element
  */
 export default function decorate(block) {
+  initK811(block);
   const rows = [...block.children];
   const cellOf = (r) => (r ? r.querySelector(':scope > div') || r : null);
 
@@ -19,13 +21,13 @@ export default function decorate(block) {
   const title = titleCell ? titleCell.textContent.trim() : '';
 
   const inner = document.createElement('div');
-  inner.className = 'cta-banner-inner';
+  inner.className = 'k811-cta-inner';
 
   if (title) {
     const text = document.createElement('div');
-    text.className = 'cta-banner-text';
+    text.className = 'k811-cta-text';
     const h = document.createElement('h2');
-    h.className = 'cta-banner-title';
+    h.className = 'k811-cta-title';
     h.textContent = title;
     text.append(h);
     inner.append(text);
@@ -33,11 +35,14 @@ export default function decorate(block) {
 
   if (img) {
     const media = document.createElement('div');
-    media.className = 'cta-banner-media';
+    media.className = 'k811-cta-media';
     media.append(createOptimizedPicture(img.src, img.getAttribute('alt') || '', false, [{ width: '750' }]));
     inner.append(media);
   }
 
   block.textContent = '';
   block.append(inner);
+
+  // AOS-faithful reveal: pure opacity fade-in.
+  revealOnScroll(inner);
 }

@@ -1,0 +1,91 @@
+/* K811 Story — full-bleed image + text overlay. Inherits Manrope. */
+
+.k811-story {
+  position: relative;
+  min-height: 460px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: #fff;
+}
+
+.k811-story-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.k811-story-media picture,
+.k811-story-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.k811-story-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.k811-story-content h2,
+.k811-story-content h3 {
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #fff;
+  max-width: 520px;
+}
+
+.k811-story-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  color: #f0f0f0;
+  max-width: 480px;
+}
+
+.k811-story-right {
+  text-align: right;
+}
+
+.k811-story-right h2,
+.k811-story-right h3,
+.k811-story-right p {
+  margin-left: auto;
+}
+
+.k811-story-center {
+  text-align: center;
+}
+
+.k811-story-center h2,
+.k811-story-center h3,
+.k811-story-center p {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (width >= 900px) {
+  .k811-story {
+    min-height: 600px;
+  }
+
+  .k811-story-content {
+    padding: 64px 40px;
+  }
+
+  .k811-story-content h2,
+  .k811-story-content h3 {
+    font-size: 40px;
+  }
+
+  .k811-story-content p {
+    font-size: 18px;
+  }
+}

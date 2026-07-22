@@ -1,0 +1,98 @@
+/* K811 Pillars — tabbed value pillars + crossfading Lottie. Inherits Manrope. */
+
+.k811-pillars {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.k811-pillars-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 32px;
+}
+
+.k811-pillars-wrap {
+  display: grid;
+  gap: 24px;
+}
+
+.k811-pillars-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.k811-pillars-tab {
+  font-family: inherit;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.k811-pillars-tab.is-active {
+  opacity: 1;
+  border-left-color: var(--k811-link, #d1101f);
+}
+
+.k811-pillars-tab-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--k811-text, #222);
+}
+
+.k811-pillars-tab-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666;
+}
+
+.k811-pillars-stage {
+  position: relative;
+  min-height: 260px;
+}
+
+.k811-pillars-stage-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.k811-pillars-stage-item.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.k811-pillars-stage-item .k811-lottie {
+  max-width: 460px;
+}
+
+@media (width >= 900px) {
+  .k811-pillars {
+    padding: 56px 40px;
+  }
+
+  .k811-pillars-wrap {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .k811-pillars-stage {
+    min-height: 380px;
+  }
+}

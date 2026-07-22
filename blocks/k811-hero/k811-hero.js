@@ -1,5 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import openEligibilityModal from '../../scripts/eligibility-modal.js';
+import { initK811 } from '../../scripts/k811/k811-common.js';
 
 // application page the eligibility modal's "Apply Now" redirects to
 const APPLY_PAGE = '/apply';
@@ -40,6 +41,7 @@ function preloadPicture(picture) {
  * @param {Element} block the block element
  */
 export default function decorate(block) {
+  initK811(block);
   const rows = [...block.children];
   const cells = rows.map((r) => r.querySelector(':scope > div') || r);
 
@@ -103,7 +105,7 @@ export default function decorate(block) {
   // background image (LCP candidate). When a mobile image is authored, use a
   // <picture> with a mobile <source>; otherwise a single responsive image.
   const media = document.createElement('div');
-  media.className = 'cc-hero-image';
+  media.className = 'k811-hero-image';
   const desktopImg = pictures[0] ? pictures[0].querySelector('img') : null;
   const mobileImg = pictures[1] ? pictures[1].querySelector('img') : null;
   if (desktopImg) {
@@ -152,13 +154,13 @@ export default function decorate(block) {
 
   // content overlay
   const content = document.createElement('div');
-  content.className = 'cc-hero-content';
-  if (headingColor) content.classList.add(`cc-hero-heading-${headingColor}`);
-  if (textColor) content.classList.add(`cc-hero-text-${textColor}`);
+  content.className = 'k811-hero-content';
+  if (headingColor) content.classList.add(`k811-hero-heading-${headingColor}`);
+  if (textColor) content.classList.add(`k811-hero-text-${textColor}`);
   // "Recommended" ribbon (detail variant) sits above the copy
   if (badgeText) {
     const badge = document.createElement('span');
-    badge.className = 'cc-hero-badge';
+    badge.className = 'k811-hero-badge';
     badge.textContent = badgeText;
     content.append(badge);
   }
@@ -168,13 +170,13 @@ export default function decorate(block) {
 
   // CTAs — first link cell = primary, second = secondary
   const actions = document.createElement('div');
-  actions.className = 'cc-hero-actions';
+  actions.className = 'k811-hero-actions';
   linkCells.forEach((c, i) => {
     const link = c.querySelector('a');
     if (!link) return;
     link.className = i === 0
-      ? 'cc-hero-btn cc-hero-btn-primary'
-      : 'cc-hero-btn cc-hero-btn-secondary';
+      ? 'k811-hero-btn k811-hero-btn-primary'
+      : 'k811-hero-btn k811-hero-btn-secondary';
     // a "Check Eligibility" CTA opens the quick-check modal instead of
     // navigating; its result panel's Apply Now goes to the application page
     if (/eligibility/i.test(link.textContent)) {
@@ -211,7 +213,7 @@ export default function decorate(block) {
   const { pathname } = window.location;
   const isIndexPage = pathname === '/' || /\/index(\.html)?$/.test(pathname);
   const wantsBack = block.classList.contains('detail') || isApplyPage || isIndexPage;
-  if (wantsBack && !block.querySelector('.cc-hero-back')) {
+  if (wantsBack && !block.querySelector('.k811-hero-back')) {
     let href = '#';
     let text = 'Credit Cards';
     let useHistory = true;
@@ -233,16 +235,16 @@ export default function decorate(block) {
       useHistory = false;
     }
     const back = document.createElement('a');
-    back.className = 'cc-hero-back';
+    back.className = 'k811-hero-back';
     back.href = href;
-    back.innerHTML = `<span class="cc-hero-back-icon" aria-hidden="true"></span><span>${text}</span>`;
+    back.innerHTML = `<span class="k811-hero-back-icon" aria-hidden="true"></span><span>${text}</span>`;
     if (useHistory) {
       back.addEventListener('click', (e) => {
         e.preventDefault();
         window.history.back();
       });
     }
-    block.classList.add('cc-hero-has-back');
+    block.classList.add('k811-hero-has-back');
     block.prepend(back);
   }
 }

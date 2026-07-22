@@ -146,6 +146,42 @@
     ]
   },
   {
+    "id": "k811-card-selector",
+    "components": [
+      "k811-card-variant"
+    ]
+  },
+  {
+    "id": "k811-faq",
+    "components": [
+      "k811-faq-item"
+    ]
+  },
+  {
+    "id": "k811-offers",
+    "components": [
+      "benefit-card"
+    ]
+  },
+  {
+    "id": "k811-pillars",
+    "components": [
+      "k811-pillar"
+    ]
+  },
+  {
+    "id": "k811-steps",
+    "components": [
+      "k811-step"
+    ]
+  },
+  {
+    "id": "k811-team",
+    "components": [
+      "k811-team-member"
+    ]
+  },
+  {
     "id": "rates-charges",
     "components": [
       "rates-charges-row"
