@@ -181,8 +181,21 @@
     order: 0;
   }
 
-  /* QR / app-download promo: small centered image, not a 2/3 hero */
+  /* QR / app-download promo: centered column — QR on top, headings below,
+     on a light background (matches the source). Override the row layout. */
+  .k811-feature.k811-feature-qr > div {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
   .k811-feature.k811-feature-qr .k811-feature-img-col {
+    order: 0;
+    flex: 0 0 auto;
+  }
+
+  .k811-feature.k811-feature-qr .k811-feature-text-col {
+    order: 1;
     flex: 0 0 auto;
   }
 
@@ -191,40 +204,46 @@
     border-radius: 12px;
   }
 
+  /* app-download CTA is a brand-red inline link, per the source */
+  .k811-feature.k811-feature-qr .k811-feature-text-col a:any-link {
+    color: var(--k811-link, #d1101f);
+    font-weight: 600;
+  }
+
   /* Virtual-card feature (the LIGHT feature with a static image, no Lottie) is
      full-screen and flush, matching the adjacent full-screen promo bands. Dark
      feature sections (credit-cards, download-app) and the light Lottie security
      feature are unaffected. */
-  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie)) {
+  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie), :has(.k811-feature-qr)) {
     margin: 0;
     padding: 0;
   }
 
-  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie)) .k811-feature {
+  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie), :has(.k811-feature-qr)) .k811-feature {
     min-height: 100svh;
     min-height: 100dvh;
     max-width: var(--k811-content-max, 1120px);
     padding: 0 24px;
   }
 
-  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie)) .k811-feature > div {
+  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie), :has(.k811-feature-qr)) .k811-feature > div {
     min-height: inherit;
   }
 
   /* reference layout: text on the LEFT, phone/card image on the RIGHT
      (overrides the automatic alternation for this section only) */
-  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie)) .k811-feature .k811-feature-text-col {
+  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie), :has(.k811-feature-qr)) .k811-feature .k811-feature-text-col {
     order: 0;
   }
 
-  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie)) .k811-feature .k811-feature-img-col {
+  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie), :has(.k811-feature-qr)) .k811-feature .k811-feature-img-col {
     order: 1;
   }
 
   /* show the FULL phone/card mockup (source image is ~near-square). Override
      the wide 780/384 crop used by the generic feature photos so nothing is
      clipped top/bottom, per the reference. */
-  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie)) .k811-feature .k811-feature-img-col img {
+  .section.light.k811-feature-container:not(:has(.k811-feature-has-lottie), :has(.k811-feature-qr)) .k811-feature .k811-feature-img-col img {
     aspect-ratio: auto;
     max-height: 80vh;
     object-fit: contain;
@@ -244,7 +263,7 @@
 
 /* CTA on the light (virtual-card) feature is a solid blue pill button per the
    reference, unlike the plain inline links on the dark feature sections. */
-.section.light.k811-feature-container:not(:has(.k811-feature-has-lottie)) .k811-feature .k811-feature-text-col a:any-link {
+.section.light.k811-feature-container:not(:has(.k811-feature-has-lottie), :has(.k811-feature-qr)) .k811-feature .k811-feature-text-col a:any-link {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -257,7 +276,7 @@
   text-decoration: none;
 }
 
-.section.light.k811-feature-container:not(:has(.k811-feature-has-lottie)) .k811-feature .k811-feature-text-col a:any-link:hover {
+.section.light.k811-feature-container:not(:has(.k811-feature-has-lottie), :has(.k811-feature-qr)) .k811-feature .k811-feature-text-col a:any-link:hover {
   background: #2d4fe0;
   text-decoration: none;
 }

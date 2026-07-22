@@ -184,7 +184,7 @@ function home() {
 
   // K811 Feature (download app)
   parts.push(feature(im, 'Website_App_QR_code_4_becfe0162e.png', 'Download the app', 'Download the app',
-    ['## Download your bank'], ['Download App', 'https://811.onelink.me/xfzM/webtokotak811app'], true) + '\n\n' + sectionMeta('dark'));
+    ['## Download your bank'], ['Download App', 'https://811.onelink.me/xfzM/webtokotak811app'], true) + '\n\n' + sectionMeta('light'));
 
   // page metadata
   parts.push(metadata(im,

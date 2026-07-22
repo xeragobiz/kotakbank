@@ -65,7 +65,7 @@ const PAGE_TEMPLATE = {
     { id: 'section-6', name: 'Credit Cards Easy', selector: 'main section.Home_creditcard__4GMng', style: 'dark', blocks: ['k811-feature'], defaultContent: [] },
     { id: 'section-7', name: 'Security Trust', selector: 'main section.Home_cardsection_pad_20___Zu30', style: 'light', blocks: ['k811-feature'], defaultContent: [] },
     { id: 'section-8', name: 'Toll-free CTA', selector: 'main section.blackWrap', style: 'light', blocks: ['k811-cta'], defaultContent: [] },
-    { id: 'section-9', name: 'Download App', selector: 'main section.Home_app__Ll1Hm', style: 'dark', blocks: ['k811-feature'], defaultContent: [] },
+    { id: 'section-9', name: 'Download App', selector: 'main section.Home_app__Ll1Hm', style: 'light', blocks: ['k811-feature'], defaultContent: [] },
   ],
 };
 
