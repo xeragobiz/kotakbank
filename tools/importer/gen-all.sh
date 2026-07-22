@@ -15,5 +15,9 @@ node tools/importer/gen-blocks-md.js
 for p in "${PAGES[@]}"; do
   node "$MD2JCR" "migration-work/$p.md" --ue-files "$PWD"
   node tools/importer/fix-xml-entities.js "migration-work/$p.xml"
+  # rewrite CDN asset URLs -> DAM paths (only if the DAM map exists)
+  if [ -f migration-work/dam-assets/url-to-dam.json ]; then
+    node tools/importer/rewrite-dam-refs.js "migration-work/$p.xml"
+  fi
   python3 -c "import xml.dom.minidom; xml.dom.minidom.parse('migration-work/$p.xml'); print('OK well-formed: $p')"
 done
