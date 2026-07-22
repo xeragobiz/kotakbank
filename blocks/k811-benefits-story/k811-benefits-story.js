@@ -23,8 +23,11 @@ export default function decorate(block) {
   const rows = [...block.children];
   const panels = [];
 
-  rows.forEach((row) => {
+  rows.forEach((row, i) => {
     row.classList.add('k811-benefits-story-panel');
+    // Alternate the photo side each row (odd rows mirror: photo left, text
+    // right) to match the source's zig-zag layout.
+    if (i % 2 === 1) row.classList.add('k811-benefits-story-panel-reverse');
     const cells = [...row.children];
     const mediaCell = cells.find((c) => c.querySelector('picture, img')) || cells[0];
     const textCell = cells.find((c) => c !== mediaCell && c.querySelector('h1, h2, h3, h4, p'))

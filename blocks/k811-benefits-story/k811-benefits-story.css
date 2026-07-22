@@ -141,6 +141,22 @@
     z-index: 0;
     will-change: inset, border-radius;
   }
+
+  /* reverse rows: photo shrinks to the LEFT, text on the right */
+  .k811-benefits-story .k811-benefits-story-panel-reverse {
+    justify-content: flex-end;
+  }
+
+  .k811-benefits-story .k811-benefits-story-panel-reverse .k811-benefits-story-media {
+    inset: calc(var(--k811-bs-progress) * 8%) calc(var(--k811-bs-progress) * 50%)
+      calc(var(--k811-bs-progress) * 8%) calc(var(--k811-bs-progress) * 3%);
+  }
+
+  .k811-benefits-story .k811-benefits-story-panel-reverse .k811-benefits-story-content {
+    margin-left: 0;
+    margin-right: max(24px, calc((100% - var(--k811-content-max, 1120px)) / 2));
+    text-align: left;
+  }
 }
 
 /* full-bleed even inside a constrained section */
