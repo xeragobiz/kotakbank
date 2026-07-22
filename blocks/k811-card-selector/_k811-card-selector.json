@@ -9,7 +9,6 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "K811 Card Selector",
-              "model": "k811-card-selector",
               "filter": "k811-card-selector"
             }
           }
@@ -34,22 +33,41 @@
   ],
   "models": [
     {
-      "id": "k811-card-selector",
-      "fields": [
-        { "component": "text", "name": "title", "label": "Title", "valueType": "string" }
-      ]
-    },
-    {
       "id": "k811-card-variant",
       "fields": [
-        { "component": "text", "name": "name", "label": "Variant name", "valueType": "string" },
-        { "component": "reference", "name": "image", "label": "Card image", "multi": false },
-        { "component": "richtext", "name": "panel", "label": "Fees & eligibility (include T&C link)", "value": "", "valueType": "string" },
-        { "component": "aem-content", "name": "applyCta", "label": "Apply CTA" }
+        {
+          "component": "text",
+          "name": "name",
+          "label": "Variant name",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "image",
+          "label": "Card image",
+          "multi": false
+        },
+        {
+          "component": "richtext",
+          "name": "panel",
+          "label": "Fees & eligibility (include T&C link)",
+          "value": "",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "applyCta",
+          "label": "Apply CTA"
+        }
       ]
     }
   ],
   "filters": [
-    { "id": "k811-card-selector", "components": ["k811-card-variant"] }
+    {
+      "id": "k811-card-selector",
+      "components": [
+        "k811-card-variant"
+      ]
+    }
   ]
 }

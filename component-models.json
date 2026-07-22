@@ -1129,17 +1129,6 @@
     ]
   },
   {
-    "id": "k811-card-selector",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "k811-card-variant",
     "fields": [
       {
@@ -1204,17 +1193,6 @@
     ]
   },
   {
-    "id": "k811-faq",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "k811-faq-item",
     "fields": [
       {
@@ -1243,17 +1221,17 @@
         "multi": false
       },
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "video",
-        "label": "Video Link (URL)"
-      },
-      {
         "component": "richtext",
         "name": "text",
         "value": "",
         "label": "Text",
         "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Video Link (URL)"
       }
     ]
   },
@@ -1402,34 +1380,6 @@
     ]
   },
   {
-    "id": "k811-offers",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "classes",
-        "label": "Layout",
-        "valueType": "string",
-        "value": "",
-        "options": [
-          {
-            "name": "Grid (icon above text)",
-            "value": ""
-          },
-          {
-            "name": "List (icon beside text, red icons)",
-            "value": "list"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "benefit-card",
     "fields": [
       {
@@ -1444,17 +1394,6 @@
         "name": "text",
         "value": "",
         "label": "Text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "k811-pillars",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
         "valueType": "string"
       }
     ]
@@ -1484,17 +1423,6 @@
         "component": "text",
         "name": "lottieMobile",
         "label": "Lottie URL (mobile)",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "k811-steps",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
         "valueType": "string"
       }
     ]
@@ -1557,17 +1485,6 @@
     ]
   },
   {
-    "id": "k811-team",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "k811-team-member",
     "fields": [
       {
@@ -1593,9 +1510,9 @@
     "id": "k811-video-hero",
     "fields": [
       {
-        "component": "text",
+        "component": "richtext",
         "name": "video",
-        "label": "Video URL(s) (.mp4) — desktop, then optional mobile",
+        "label": "Video URL(s) (.mp4) — desktop, then optional mobile (one per line)",
         "value": ""
       },
       {

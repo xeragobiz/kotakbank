@@ -9,7 +9,6 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "K811 Steps",
-              "model": "k811-steps",
               "filter": "k811-steps"
             }
           }
@@ -34,19 +33,24 @@
   ],
   "models": [
     {
-      "id": "k811-steps",
-      "fields": [
-        { "component": "text", "name": "title", "label": "Title", "valueType": "string" }
-      ]
-    },
-    {
       "id": "k811-step",
       "fields": [
-        { "component": "richtext", "name": "text", "label": "Step text", "value": "", "valueType": "string" }
+        {
+          "component": "richtext",
+          "name": "text",
+          "label": "Step text",
+          "value": "",
+          "valueType": "string"
+        }
       ]
     }
   ],
   "filters": [
-    { "id": "k811-steps", "components": ["k811-step"] }
+    {
+      "id": "k811-steps",
+      "components": [
+        "k811-step"
+      ]
+    }
   ]
 }

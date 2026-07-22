@@ -699,7 +699,6 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "K811 Card Selector",
-                  "model": "k811-card-selector",
                   "filter": "k811-card-selector"
                 }
               }
@@ -745,7 +744,6 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "K811 FAQ",
-                  "model": "k811-faq",
                   "filter": "k811-faq"
                 }
               }
@@ -806,7 +804,6 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "K811 Offers",
-                  "model": "k811-offers",
                   "filter": "k811-offers"
                 }
               }
@@ -837,7 +834,6 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "K811 Pillars",
-                  "model": "k811-pillars",
                   "filter": "k811-pillars"
                 }
               }
@@ -868,7 +864,6 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "K811 Steps",
-                  "model": "k811-steps",
                   "filter": "k811-steps"
                 }
               }
@@ -914,7 +909,6 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "K811 Team",
-                  "model": "k811-team",
                   "filter": "k811-team"
                 }
               }
