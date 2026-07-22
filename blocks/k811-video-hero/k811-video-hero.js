@@ -12,8 +12,12 @@ import { initK811 } from '../../scripts/k811/k811-common.js';
  *   5+ CTA link cells — 1st = primary, subsequent = inline/secondary links
  *
  * Performance: the poster image renders immediately as the LCP candidate; the
- * <video> is attached lazily (muted/loop/playsinline, autoplay) only once the
- * hero nears the viewport, so it never blocks LCP or the PageSpeed budget.
+ * <video> is attached lazily (muted/playsinline) only once the hero nears the
+ * viewport, so it never blocks LCP or the PageSpeed budget.
+ *
+ * Playback: matches the source — the clip plays ONCE (no loop) each time the
+ * hero scrolls into view and pauses when it leaves, rather than looping forever.
+ * Re-entering the section restarts it from the first frame.
  */
 
 // Match absolute (https://…), root-relative (/content/dam/…) and ./-relative
@@ -28,11 +32,7 @@ function attachVideo(media, desktopSrc, mobileSrc, posterSrc) {
   const video = document.createElement('video');
   video.className = 'k811-video-hero-video';
   video.muted = true;
-  video.loop = true;
-  video.autoplay = true;
   video.setAttribute('muted', '');
-  video.setAttribute('loop', '');
-  video.setAttribute('autoplay', '');
   video.setAttribute('playsinline', '');
   video.setAttribute('preload', 'none');
   if (posterSrc) video.setAttribute('poster', posterSrc);
@@ -52,8 +52,32 @@ function attachVideo(media, desktopSrc, mobileSrc, posterSrc) {
     video.append(s);
   }
   media.append(video);
-  const play = video.play();
-  if (play && typeof play.catch === 'function') play.catch(() => {});
+
+  // Play once (no loop) each time the hero enters the viewport; pause on leave.
+  // Matches the source, where the clip rests on its last frame after playing
+  // and restarts from the top when scrolled back into view.
+  const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tryPlay = () => {
+    const p = video.play();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  };
+  if (!motionOK) return; // reduced-motion: leave paused on the poster/first frame
+
+  if (typeof IntersectionObserver !== 'undefined') {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          try { video.currentTime = 0; } catch (e) { /* not seekable yet */ }
+          tryPlay();
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+    io.observe(media);
+  } else {
+    tryPlay();
+  }
 }
 
 export default function decorate(block) {
