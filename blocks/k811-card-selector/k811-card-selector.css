@@ -113,23 +113,29 @@
   margin-top: 20px;
 }
 
-/* Apply now — plain link (not a pill), matching the live page */
-.k811-card-selector-apply {
-  color: #3b63fb;
+/* Apply now — white pill button with dark text (matches the live page).
+   :any-link raises specificity above the global `a:any-link` link color. */
+.k811-card-selector-apply:any-link {
+  display: inline-block;
+  background: #fff;
+  color: #1a1a1a;
   font-weight: 500;
   font-size: 16px;
+  padding: 14px 30px;
+  border-radius: 999px;
   text-decoration: none;
 }
 
-.k811-card-selector-apply:hover {
-  text-decoration: underline;
+.k811-card-selector-apply:any-link:hover {
+  background: #d1101f;
+  color: #fff;
 }
 
-/* T&C — small underlined text shown above Apply (authored inside the panel) */
-.k811-card-selector-tnc {
+/* T&C — small gray underlined text shown above Apply (authored in the panel) */
+.k811-card-selector-tnc:any-link {
   display: inline-block;
   margin: 0 0 8px;
-  color: #3b63fb;
+  color: #9a9a9a;
   font-size: 14px;
   text-decoration: underline;
 }
@@ -150,7 +156,7 @@
   bottom: 0;
   width: 100%;
   transform-origin: center bottom;
-  transform: translate(-50%, -40%);
+  transform: translate(-50%, -8%);
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
   will-change: transform, filter;
 }
