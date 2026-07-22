@@ -90,11 +90,23 @@
 
 /* ---- Dark section adaptation (.section.dark) ----------------------
    The project has no global .section.dark background, so the feature
-   block paints its own full-bleed dark band and flips text to light. */
+   block paints its own dark band and flips text to light. Per the
+   reference this is a CONTAINED, rounded box with side margins — not a
+   full-bleed band. */
 .section.dark:has(.k811-feature) {
   background-color: var(--text-color); /* near-black brand dark */
-  margin: 0;
+  margin: 24px auto;
   padding: 40px 0;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+@media (width >= 900px) {
+  .section.dark:has(.k811-feature) {
+    max-width: 1170px;
+    margin: 40px auto;
+    padding: 48px 0;
+  }
 }
 
 .section.dark .k811-feature h2,
