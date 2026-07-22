@@ -1,52 +1,146 @@
 /*
- * k811-offers-overlap — homepage offers strip that overlaps the metal hero.
+ * k811-offers-overlap — homepage offers panel that overlaps the metal hero.
  *
- * Card styling is inherited from the shared k811-offers block. EDS only loads
- * a block's own CSS by block name, so we @import the shared stylesheet here to
- * reuse the exact card treatment from a single source of truth (the block also
- * carries the .k811-offers class via JS). We then add ONLY the overlap: the
- * offers wrapper is pulled up over the preceding hero banner per the design.
- */
-@import url('../k811-offers/k811-offers.css');
-
-/*
- * Overlap notes:
- * Mobile-first — no overlap on small screens (hero is short, cards stack under
- * it cleanly). The pull-up is introduced from tablet up, growing on desktop
- * where the hero has tall empty space below the copy — exactly as referenced.
- * The negative margin is applied to the SECTION wrapper so the whole offers
- * band lifts over the hero; z-index keeps the cards above the hero background.
+ * Reference (kotak811.bank.in home): a single centered light panel holding four
+ * benefit columns separated by thin vertical dividers. The panel straddles the
+ * black hero above and the white band below — its top half sits over the black
+ * hero, its bottom half over white.
+ *
+ * This block is fully self-contained (it does NOT import the shared k811-offers
+ * card styling, whose separate #f9f9f9 rounded tiles are a different treatment).
+ * The decorate() step (shared k811-offers.js) produces:
+ *   .k811-offers-overlap > ul > li > .k811-offers-card-image + .k811-offers-card-body
+ * and we style that structure here as the reference panel.
  */
 
-/* the offers section wrapper (EDS wraps blocks in .<block>-wrapper inside .section) */
+/* ---- Section: transparent so the black hero shows through the overlap ----
+   The whole section is lifted over the hero; z-index keeps the panel above the
+   hero background. No background of its own — the hero (black) shows behind the
+   overlapping top of the panel, white/body shows behind the rest. */
 .kotak811 .section:has(> .k811-offers-overlap-wrapper) {
   position: relative;
-  z-index: 2; /* sit above the hero section */
+  z-index: 2;
+  background: transparent;
+  margin: 0;
+  padding: 0 16px 32px;
 }
 
 .k811-offers-overlap-wrapper {
   position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
 }
 
-/* keep the cards themselves above any hero imagery once lifted */
+/* ---- The panel (ul): one light rounded card holding all four columns ---- */
 .k811-offers-overlap {
   position: relative;
   z-index: 2;
+  background: transparent;
 }
 
-/* Tablet: begin the overlap */
+.k811-offers-overlap > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 12%);
+  overflow: hidden;
+}
+
+/* individual column: transparent, thin divider between columns */
+.k811-offers-overlap > ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: transparent;
+  padding: 28px 26px;
+  text-align: left;
+}
+
+.k811-offers-overlap .k811-offers-card-body {
+  margin: 0;
+}
+
+/* product image (not an icon): sits flush-left above the text */
+.k811-offers-overlap .k811-offers-card-image {
+  line-height: 0;
+  margin-bottom: 22px;
+}
+
+.k811-offers-overlap .k811-offers-card-image p {
+  margin: 0;
+  line-height: 0;
+}
+
+.k811-offers-overlap .k811-offers-card-image img {
+  width: auto;
+  height: 84px;
+  object-fit: contain;
+}
+
+.k811-offers-overlap .k811-offers-card-body h2,
+.k811-offers-overlap .k811-offers-card-body h3,
+.k811-offers-overlap .k811-offers-card-body h4 {
+  margin: 0 0 10px;
+  color: #1a1a1a;
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.k811-offers-overlap .k811-offers-card-body p {
+  margin: 0;
+  color: #4a4a4a;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ---- Tablet: two columns, begin the overlap ---- */
 @media (width >= 600px) {
+  .k811-offers-overlap > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* horizontal + vertical dividers on the 2x2 grid */
+  .k811-offers-overlap > ul > li:nth-child(even) {
+    border-left: 1px solid #ececec;
+  }
+
+  .k811-offers-overlap > ul > li:nth-child(n + 3) {
+    border-top: 1px solid #ececec;
+  }
+
   .kotak811 .section:has(> .k811-offers-overlap-wrapper) {
-    margin-top: -80px;
+    margin-top: -70px;
   }
 }
 
-/* Desktop: full overlap as in the reference (cards straddle hero / next band) */
+/* ---- Desktop: four columns in one row, straddling the hero ---- */
 @media (width >= 900px) {
+  .k811-offers-overlap > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* single row: only vertical dividers between adjacent columns */
+  /* stylelint-disable-next-line no-descending-specificity */
+  .k811-offers-overlap > ul > li:nth-child(even),
+  .k811-offers-overlap > ul > li:nth-child(n + 3) {
+    border-top: 0;
+    border-left: 1px solid #ececec;
+  }
+
+  .k811-offers-overlap > ul > li:first-child {
+    border-left: 0;
+  }
+
+  /* lift the panel so ~half of it overlaps the black hero above */
   .kotak811 .section:has(> .k811-offers-overlap-wrapper) {
-    margin-top: -140px;
+    margin-top: -120px;
   }
 }
-
-/* Reduce hero bottom padding contribution is not needed: the negative margin
-   on the offers section handles the pull-up without touching the hero block. */
