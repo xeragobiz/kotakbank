@@ -5,7 +5,7 @@
 .k811-cta {
   position: relative;
   z-index: 2; /* float above the app-download section its bottom overlaps into */
-  max-width: 1120px;
+  max-width: 1040px;
   margin: 0 auto;
   border-radius: 20px;
   background: #000;
@@ -71,12 +71,12 @@
     line-height: 52px;
   }
 
-  /* the phone illustration is a small, vertically-centered icon on the right
-     (per the source), bleeding slightly past the box's right edge. */
+  /* the phone illustration is a small, vertically-centered icon set in from the
+     right edge (per the source), with black space to its right. */
   .k811-cta .k811-cta-media {
     flex: 0 0 auto;
     align-self: center;
-    margin: 0 -20px 0 0;
+    margin: 0 40px 0 0;
   }
 
   .k811-cta .k811-cta-media img {
