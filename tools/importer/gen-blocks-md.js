@@ -140,10 +140,19 @@ function home() {
       ['<!-- field:text -->', '', `## ${h}`, '', t],
     ])) + '\n\n' + sectionMeta('light'));
 
-  // K811 Feature x5
+  // K811 Promo Band x2 — full-bleed lifestyle photos with overlaid copy
+  // ("nearest bank" left, "811 Current Account" right). Dedicated block so
+  // these render edge-to-edge, distinct from the two-column K811 Feature.
+  const promoBands = [
+    ['bank_wherever_you_are_fce949deca.webp', 'Manage your savings account online using Kotak811', 'The nearest bank, wherever you are', ['Visit branches no more. Open an account and manage your money online.'], null, 'left', 'light'],
+    ['zero_paper_work_f1980c9d27.webp', 'Open Kotak811 account digitally', '811 Current Account', ['Simplify your banking with a Kotak811 Current Account that supports your evolving business needs'], ['Open Current A/c', '/apply-for-bank-account/current-account?utm_source=kotak811_website_2ndcta&utm_medium=organic&utm_campaign=lead_gen'], 'right', 'light'],
+  ];
+  promoBands.forEach(([ic, alt, h, paras, cta, align, style]) => {
+    parts.push(promoBand(im, ic, alt, h, paras, cta, align) + '\n\n' + sectionMeta(style));
+  });
+
+  // K811 Feature x2 — two-column image + text promos
   const features = [
-    ['bank_wherever_you_are_fce949deca.webp', 'Manage your savings account online using Kotak811', 'The nearest bank, wherever you are', ['Visit branches no more. Open an account and manage your money online.'], null, 'light'],
-    ['zero_paper_work_f1980c9d27.webp', 'Open Kotak811 account digitally', '811 Current Account', ['Simplify your banking with a Kotak811 Current Account that supports your evolving business needs'], ['Open Current A/c', '/apply-for-bank-account/current-account?utm_source=kotak811_website_2ndcta&utm_medium=organic&utm_campaign=lead_gen'], 'light'],
     ['virtual_debit_card_d3d5a7bd1a.webp', 'Virtual debit card inside your phone', 'With 811, debit cards get virtual ...', ['Get a no-fee virtual debit card with your Kotak811 account that sits inside your phone, on the app. Use it to shop and pay online. Order a physical card if you like.'], ['Open Kotak811 A/c', '/open-zero-balance-savings-account?utm_source=kotak811_website_3rdcta&utm_medium=organic&utm_campaign=lead_gen'], 'light'],
     ['credit_card_eca9fcd47d.webp', 'Obtaining a credit card becomes effortless Kotak811', '... and credit cards get easy', ['Credit scores can’t limit you anymore. With a Kotak811 account, you’re always eligible for a credit card, because everyone deserves to be rewarded.'], ['View 811 Credit Card', '/credit-cards/811-credit-card'], 'dark'],
   ];
@@ -190,6 +199,24 @@ function feature(im, ic, alt, heading, paras, cta) {
     [['<!-- field:image -->', '', im.ref(`${CDN}/${ic}`, alt)]],
     [['<!-- field:text -->', '', ...textLines]],
   ]);
+}
+
+// K811 Promo Band helper — full-bleed background photo with overlaid copy.
+// Model field order (see blocks/k811-promo-band/_k811-promo-band.json):
+//   image (+imageAlt collapse into <img>), copy (richtext heading+paragraphs),
+//   ctaLink (+ctaLinkText collapse into <a>, optional), align (left|right).
+function promoBand(im, ic, alt, heading, paras, cta, align) {
+  const copyLines = [`## ${heading}`];
+  paras.forEach((p) => { copyLines.push('', p); });
+  const rows = [
+    [['<!-- field:image -->', '', im.ref(`${CDN}/${ic}`, alt)]],
+    [['<!-- field:copy -->', '', ...copyLines]],
+  ];
+  if (cta) {
+    rows.push([['<!-- field:ctaLink -->', '', `[${cta[0]}](${url(cta[1])})`]]);
+  }
+  rows.push([['<!-- field:align -->', '', align]]);
+  return gridTable('K811 Promo Band', rows);
 }
 
 // Generic container-block table. These blocks are filter-only (no parent
