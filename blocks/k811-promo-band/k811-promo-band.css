@@ -20,9 +20,12 @@ main > .section > .k811-promo-band-wrapper {
   padding: 0;
 }
 
-/* remove the section vertical margin so the band sits flush */
+/* remove the section vertical margin AND padding so the band sits flush and
+   consecutive promo bands touch with no gap (the section style, e.g. .light,
+   otherwise adds 40px top/bottom padding). */
 main > .section:has(> .k811-promo-band-wrapper) {
   margin: 0;
+  padding: 0;
 }
 
 .k811-promo-band .k811-promo-band-media {
