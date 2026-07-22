@@ -124,10 +124,12 @@
 
 .kotak811 .section.detailed .default-content-wrapper > h2:first-child {
   text-align: center;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 500;
   color: #959595;
-  margin: 0 0 24px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 40px;
 }
 
 .kotak811 .section.detailed .default-content-wrapper h3 {
