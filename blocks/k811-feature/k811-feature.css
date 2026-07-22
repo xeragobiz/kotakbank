@@ -18,12 +18,12 @@
   gap: 24px;
 }
 
-/* media column: image on top on mobile */
-.k811-feature .k811-feature-img-col {
+/* mobile: text first, image below (matches the reference) */
+.k811-feature .k811-feature-text-col {
   order: 0;
 }
 
-.k811-feature .k811-feature-text-col {
+.k811-feature .k811-feature-img-col {
   order: 1;
 }
 
