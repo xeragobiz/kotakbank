@@ -145,13 +145,6 @@
   margin: 0 auto;
 }
 
-/* Lottie is decorative; hide on small screens like the source (hidden md:block) */
-@media (width < 900px) {
-  .k811-feature-has-lottie .k811-lottie {
-    display: none;
-  }
-}
-
 /* ---- Desktop layout ----------------------------------------------- */
 @media (width >= 900px) {
   .k811-feature > div {
