@@ -23,6 +23,20 @@
   margin-bottom: 24px;
 }
 
+/* "Ask Kotak811" is authored as section default content (an h2), with the
+   "Frequently Asked Questions" subtitle as a following paragraph. Center them
+   over the FAQ list, matching the live page. */
+.kotak811 .section.k811-faq-container .default-content-wrapper {
+  text-align: center;
+}
+
+.kotak811 .section.k811-faq-container .default-content-wrapper :is(h1, h2, h3) {
+  font-size: 34px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
 .k811-faq-list {
   display: flex;
   flex-direction: column;
@@ -45,21 +59,21 @@
   display: none;
 }
 
+/* Toggle icon: a white "+" that becomes "−" when open, matching the live page. */
 .k811-faq-q::after {
-  content: "";
+  content: "+";
   position: absolute;
-  right: 8px;
+  right: 0;
   top: 50%;
-  width: 10px;
-  height: 10px;
-  border-right: 2px solid var(--k811-link, #d1101f);
-  border-bottom: 2px solid var(--k811-link, #d1101f);
-  transform: translateY(-70%) rotate(45deg);
-  transition: transform 0.2s ease;
+  transform: translateY(-50%);
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
 }
 
 .k811-faq-item[open] .k811-faq-q::after {
-  transform: translateY(-30%) rotate(-135deg);
+  content: "\2212"; /* minus sign */
 }
 
 .k811-faq-a {
@@ -74,6 +88,14 @@
 
 .k811-faq-a p:last-child {
   margin-bottom: 0;
+}
+
+/* subtitle paragraph under the "Ask Kotak811" title */
+.kotak811 .section.k811-faq-container .default-content-wrapper p {
+  font-size: 18px;
+  font-weight: 400;
+  color: #aeafae;
+  margin: 0 0 24px;
 }
 
 @media (width >= 900px) {
