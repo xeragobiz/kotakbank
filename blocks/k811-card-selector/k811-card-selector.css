@@ -165,7 +165,7 @@
   width: 100%;
   transform-origin: center bottom;
   transform: translate(-50%, -10%);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
+  transition: transform 0.4s linear, filter 0.4s linear;
   will-change: transform, filter;
 }
 

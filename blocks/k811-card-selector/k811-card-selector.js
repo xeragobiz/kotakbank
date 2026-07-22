@@ -147,9 +147,16 @@ export default function decorate(block) {
   const BASE_Y = 10; // active card's upward shift (% of its own height)
   const STEP_Y = 8; // extra upward shift per depth step (visible peek)
   const STEP_SCALE = 0.05; // shrink per depth step
+  // Depth model matches the live deck's "bring-to-front" behaviour: the active
+  // card takes the front slot (depth 0); every OTHER card keeps its original
+  // index order and fills the slots behind it (depths 1..n-1). This is NOT a
+  // circular rotation — cards don't wrap around, they just shuffle back one
+  // slot when a card ahead of them is promoted, so the selected card visually
+  // flies up to the front and the rest settle behind it.
   const applyFan = (activeIdx) => {
-    mediaEls.forEach((el, idx) => {
-      const depth = (idx - activeIdx + n) % n; // 0 = active, then wraps
+    const order = [activeIdx, ...mediaEls.map((_, i) => i).filter((i) => i !== activeIdx)];
+    order.forEach((idx, depth) => {
+      const el = mediaEls[idx];
       el.style.transform = `translate(-50%, -${BASE_Y + depth * STEP_Y}%) scale(${(1 - depth * STEP_SCALE).toFixed(3)})`;
       el.style.filter = depth === 0 ? 'brightness(1)' : 'brightness(0.2)';
       el.style.zIndex = String(n - depth);
