@@ -110,8 +110,12 @@
     padding: 0 0 32px;
   }
 
-  .k811-offers-overlap-wrapper {
+  /* drop the global section side padding (main > .section > div { padding: 0 24px })
+     so the scroll track spans the full viewport width; the ul's own 16px padding
+     provides the card gutter and lets the last card scroll flush to the edge */
+  main > .section > .k811-offers-overlap-wrapper {
     max-width: none;
+    padding: 0;
   }
 
   .k811-offers-overlap > ul {

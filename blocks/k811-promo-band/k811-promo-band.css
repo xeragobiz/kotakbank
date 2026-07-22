@@ -85,6 +85,18 @@ main > .section:has(> .k811-promo-band-wrapper) {
   filter: brightness(0.92);
 }
 
+/* right variant ("811 Current Account"): blue CTA at all breakpoints
+   (matches the reference site, where this band's button is blue not red).
+   Both block classes are chained to outweigh the base red button rule. */
+.k811-promo-band.k811-promo-band-right .k811-promo-band-btn:any-link {
+  background: #3b63fb;
+}
+
+.k811-promo-band.k811-promo-band-right .k811-promo-band-btn:any-link:hover {
+  background: #2d4fe0;
+  filter: none;
+}
+
 /* left variant: white copy over the darker left side of the photo */
 .k811-promo-band-left .k811-promo-band-content {
   color: #fff;
@@ -153,15 +165,6 @@ main > .section:has(> .k811-promo-band-wrapper) {
 
   .k811-promo-band-right .k811-promo-band-actions {
     text-align: center;
-  }
-
-  .k811-promo-band-right .k811-promo-band-btn:any-link {
-    background: #3b63fb;
-  }
-
-  .k811-promo-band-right .k811-promo-band-btn:any-link:hover {
-    background: #2d4fe0;
-    filter: none;
   }
 }
 
