@@ -119,60 +119,38 @@ main > .section:has(> .k811-promo-band-wrapper) {
 }
 
 /* ---- Mobile ------------------------------------------------------------
-   Two variants, two treatments (matching the reference):
-   - LEFT ("nearest bank"): copy overlaid INSIDE the image, in the empty
-     ceiling area at the top, with the subject below. White text, no CTA.
-   - RIGHT ("811 Current Account"): copy stacked ABOVE the full uncropped
-     photo on the light background, with a blue centered CTA. */
+   Both variants overlay the copy INSIDE the image, in the empty area at the
+   top with the subject below (matching the reference):
+   - LEFT ("nearest bank"): white text over the grey ceiling. No CTA.
+   - RIGHT ("811 Current Account"): dark text over the light top area, plus a
+     blue centered CTA. */
 @media (width < 900px) {
-  /* --- LEFT variant: overlaid copy inside a taller, top-anchored photo --- */
-  .k811-promo-band-left {
+  /* both variants: taller band, copy anchored to the top, image top-anchored so
+     the empty top of the photo shows behind the copy and the subject sits below */
+  .k811-promo-band {
     align-items: flex-start;
     min-height: 540px;
   }
 
-  .k811-promo-band-left .k811-promo-band-media img {
+  /* the "811 Current Account" photo has the subject lower in frame, so give it a
+     taller band to keep the copy + CTA clear of her head (per the reference) */
+  .k811-promo-band-right {
+    min-height: 640px;
+  }
+
+  .k811-promo-band .k811-promo-band-media img {
     object-position: 50% 0%;
   }
 
-  .k811-promo-band-left .k811-promo-band-content {
+  .k811-promo-band .k811-promo-band-content {
     padding-top: 40px;
   }
 
-  /* --- RIGHT variant: copy stacked above the full uncropped photo --- */
-  .k811-promo-band-right {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    min-height: 0;
-    overflow: visible;
-  }
-
-  /* copy first (on the light background, dark text), image second */
+  /* RIGHT variant: dark text (light photo top) + blue centered CTA */
   .k811-promo-band-right .k811-promo-band-content {
-    order: 0;
-    position: static;
-    box-sizing: border-box;
-    max-width: none;
-    margin: 0;
-    padding: 32px 24px;
     color: var(--k811-text, #222);
-    text-align: left;
   }
 
-  /* full, uncropped image below the copy */
-  .k811-promo-band-right .k811-promo-band-media {
-    order: 1;
-    position: static;
-    inset: auto;
-  }
-
-  .k811-promo-band-right .k811-promo-band-media img {
-    height: auto;
-    object-fit: contain;
-  }
-
-  /* solid blue, centered CTA pill (per the reference), not the red button */
   .k811-promo-band-right .k811-promo-band-actions {
     text-align: center;
   }
