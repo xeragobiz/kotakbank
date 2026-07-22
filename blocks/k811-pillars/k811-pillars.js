@@ -45,6 +45,23 @@ export default function decorate(block) {
 
   if (!pillars.length) return;
 
+  // Lottie JSONs can't be delivered from AEM /content/dam paths on this Edge
+  // Delivery site (only images are rewritten to ./media_ on publish), so those
+  // hrefs 404. Resolve any DAM-pathed .json to the same-origin copy committed
+  // alongside this block, keeping the animations self-hosted and CORS-free.
+  const resolveLottie = (url) => {
+    if (!url) return url;
+    const m = url.match(/\/([^/]+\.json)(?:\?.*)?$/i);
+    if (m && /\/content\/dam\//i.test(url)) {
+      return `/blocks/k811-pillars/lottie/${m[1]}`;
+    }
+    return url;
+  };
+  pillars.forEach((p) => {
+    p.lottieDesktop = resolveLottie(p.lottieDesktop);
+    p.lottieMobile = resolveLottie(p.lottieMobile);
+  });
+
   const nodes = [];
   if (titleText) {
     const h = document.createElement('h2');
