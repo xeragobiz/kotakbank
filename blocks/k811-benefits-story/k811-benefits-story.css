@@ -1,10 +1,16 @@
 /*
- * k811-benefits-story — full-viewport benefit panels (Infinity Metal
- * "exclusive offers" scroll story). Faithful to kotak811.bank.in:
- *   - each panel is 100vh; large art-directed photo + overlaid text box
- *   - heading 39px/700 #222, paragraph 20px #000 (desktop)
- *   - AOS fade-in on scroll (via shared k811 runtime)
+ * k811-benefits-story — scroll-driven "shrinking photo" benefit panels.
+ * Faithful to kotak811.bank.in: white section; each 100vh panel starts with a
+ * full-bleed photo that shrinks/rounds into a card on the right (revealing the
+ * left text) as it scrolls. The JS sets --k811-bs-progress (0 = full-bleed,
+ * 1 = rested card) per panel; CSS interpolates the media inset + radius.
  */
+
+.k811-benefits-story {
+  --k811-bs-progress: 1;
+
+  background: #fff;
+}
 
 .k811-benefits-story .k811-benefits-story-panel {
   position: relative;
@@ -48,7 +54,7 @@
 
 .k811-benefits-story .k811-benefits-story-content p {
   margin: 0;
-  color: #000;
+  color: #333;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.4;
@@ -59,59 +65,81 @@
   .k811-benefits-story .k811-benefits-story-media {
     height: 60vh;
     min-height: 320px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0 16px;
   }
 }
 
-/* ---- tablet + desktop (>=600px): full-viewport split panels ----------- */
-@media (width >= 600px) {
+/* ---- tablet (600-899px): stacked, contained rounded photo ------------- */
+@media (width >= 600px) and (width < 900px) {
+  .k811-benefits-story .k811-benefits-story-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 48px 24px;
+  }
+
+  .k811-benefits-story .k811-benefits-story-media {
+    width: 100%;
+    max-width: 640px;
+    height: 420px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .k811-benefits-story .k811-benefits-story-content {
+    text-align: center;
+    max-width: 640px;
+  }
+
+  .k811-benefits-story .k811-benefits-story-content :is(h1, h2, h3, h4) {
+    font-size: 34px;
+  }
+}
+
+/* ---- desktop (>=900px): scroll-driven full-bleed -> right card -------- */
+@media (width >= 900px) {
   .k811-benefits-story .k811-benefits-story-panel {
     min-height: 100vh;
     display: flex;
     align-items: center;
   }
 
-  /* photo fills the whole panel behind the text */
-  .k811-benefits-story .k811-benefits-story-media {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    z-index: 0;
-  }
-
+  /* text sits in a left column, revealed as the photo shrinks away */
   .k811-benefits-story .k811-benefits-story-content {
     position: relative;
     z-index: 1;
-    width: 55%;
-    max-width: 550px;
+    width: 45%;
+    max-width: 500px;
     margin-left: max(24px, calc((100% - var(--k811-content-max, 1120px)) / 2));
-    gap: 16px;
+    gap: 20px;
     padding: 0 24px;
   }
 
   .k811-benefits-story .k811-benefits-story-content :is(h1, h2, h3, h4) {
-    font-size: 30px;
+    font-size: 39px;
     line-height: 1.1;
   }
 
   .k811-benefits-story .k811-benefits-story-content p {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1.4;
   }
-}
 
-/* ---- desktop (>=900px): larger overlay type --------------------------- */
-@media (width >= 900px) {
-  .k811-benefits-story .k811-benefits-story-content {
-    width: 50%;
-    gap: 20px;
-  }
-
-  .k811-benefits-story .k811-benefits-story-content :is(h1, h2, h3, h4) {
-    font-size: 39px;
-  }
-
-  .k811-benefits-story .k811-benefits-story-content p {
-    font-size: 20px;
+  /* Photo: interpolate from full-bleed (progress 0) to a right-side card
+     (progress 1). Right/top/bottom insets stay near 0 at the card edge; the
+     left inset + radius grow with progress. */
+  .k811-benefits-story .k811-benefits-story-media {
+    position: absolute;
+    inset: calc(var(--k811-bs-progress) * 8%) calc(var(--k811-bs-progress) * 3%)
+      calc(var(--k811-bs-progress) * 8%) calc(var(--k811-bs-progress) * 50%);
+    height: auto;
+    border-radius: calc(var(--k811-bs-progress) * 20px);
+    overflow: hidden;
+    z-index: 0;
+    will-change: inset, border-radius;
   }
 }
 
