@@ -191,6 +191,16 @@
   .section.light.k811-feature-container .k811-feature .k811-feature-img-col {
     order: 1;
   }
+
+  /* show the FULL phone/card mockup (source image is ~near-square). Override
+     the wide 780/384 crop used by the generic feature photos so nothing is
+     clipped top/bottom, per the reference. */
+  .section.light.k811-feature-container .k811-feature .k811-feature-img-col img {
+    aspect-ratio: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 0;
+  }
 }
 
 /* CTA on the light (virtual-card) feature is a solid blue pill button per the
