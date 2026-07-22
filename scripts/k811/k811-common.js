@@ -53,6 +53,28 @@ function getObserver() {
   return observer;
 }
 
+// Failsafe: the IntersectionObserver can miss elements that are already in the
+// viewport when the observer starts (scroll restoration, back/forward cache,
+// fast client-side nav, momentum scroll). Those elements would stay stuck at
+// opacity:0 and render as blank sections. On scroll/resize/load, reveal any
+// registered-but-hidden element whose top has entered the viewport.
+let sweepBound = false;
+function sweepInViewport() {
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  document.querySelectorAll('.k811-aos-ready:not(.k811-aos-in)').forEach((el) => {
+    if (el.getBoundingClientRect().top < vh * 0.92) el.classList.add('k811-aos-in');
+  });
+}
+function bindSweep() {
+  if (sweepBound) return;
+  sweepBound = true;
+  const opts = { passive: true };
+  window.addEventListener('scroll', sweepInViewport, opts);
+  window.addEventListener('resize', sweepInViewport, opts);
+  window.addEventListener('load', sweepInViewport, opts);
+  window.addEventListener('pageshow', sweepInViewport, opts);
+}
+
 /**
  * Register an element (or elements) for the fade-in reveal. Each element fades
  * in once when it scrolls into view and then stays visible.
@@ -73,6 +95,7 @@ export function revealOnScroll(targets) {
       io.observe(el);
     }
   });
+  bindSweep();
 }
 
 /**
