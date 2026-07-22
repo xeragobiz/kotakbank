@@ -4,6 +4,7 @@
 // PARSER IMPORTS
 import k811HeroParser from './parsers/k811-hero.js';
 import k811OffersParser from './parsers/k811-offers.js';
+import k811OffersOverlapParser from './parsers/k811-offers-overlap.js';
 import k811PromoBandParser from './parsers/k811-promo-band.js';
 import k811FeatureParser from './parsers/k811-feature.js';
 import k811CtaParser from './parsers/k811-cta.js';
@@ -16,6 +17,7 @@ import sectionsTransformer from './transformers/kotak811-sections.js';
 const parsers = {
   'k811-hero': k811HeroParser,
   'k811-offers': k811OffersParser,
+  'k811-offers-overlap': k811OffersOverlapParser,
   'k811-promo-band': k811PromoBandParser,
   'k811-feature': k811FeatureParser,
   'k811-cta': k811CtaParser,
@@ -35,7 +37,7 @@ const PAGE_TEMPLATE = {
       section: 'metal',
     },
     {
-      name: 'k811-offers',
+      name: 'k811-offers-overlap',
       instances: ['main section.undefined'],
     },
     {
@@ -58,7 +60,7 @@ const PAGE_TEMPLATE = {
   ],
   sections: [
     { id: 'section-1', name: 'Metal Hero', selector: 'main section.homeBanner.metalTheme', style: 'metal', blocks: ['k811-hero'], defaultContent: [] },
-    { id: 'section-2', name: 'Offers Grid', selector: 'main section.undefined', style: 'light', blocks: ['k811-offers'], defaultContent: [] },
+    { id: 'section-2', name: 'Offers Grid', selector: 'main section.undefined', style: 'light', blocks: ['k811-offers-overlap'], defaultContent: [] },
     { id: 'section-3', name: 'Nearest Bank', selector: 'main section.position_container:nth-of-type(3)', style: 'light', blocks: ['k811-promo-band'], defaultContent: [] },
     { id: 'section-4', name: 'Current Account', selector: 'main section.position_container:nth-of-type(4)', style: 'light', blocks: ['k811-promo-band'], defaultContent: [] },
     { id: 'section-5', name: 'Virtual Card', selector: 'main section.Home_pad_ex_80__EepyR', style: 'light', blocks: ['k811-feature'], defaultContent: [] },

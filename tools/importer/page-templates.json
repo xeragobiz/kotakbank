@@ -18,7 +18,7 @@
           "section": "metal"
         },
         {
-          "name": "k811-offers",
+          "name": "k811-offers-overlap",
           "instances": ["main section.undefined"]
         },
         {
@@ -41,7 +41,7 @@
       ],
       "sections": [
         { "id": "section-1", "name": "Metal Hero", "selector": "main section.homeBanner.metalTheme", "style": "metal", "blocks": ["k811-hero"], "defaultContent": [] },
-        { "id": "section-2", "name": "Offers Grid", "selector": "main section.undefined", "style": "light", "blocks": ["k811-offers"], "defaultContent": [] },
+        { "id": "section-2", "name": "Offers Grid", "selector": "main section.undefined", "style": "light", "blocks": ["k811-offers-overlap"], "defaultContent": [] },
         { "id": "section-3", "name": "Nearest Bank", "selector": "main section.position_container:nth-of-type(3)", "style": "light", "blocks": ["k811-promo-band"], "defaultContent": [] },
         { "id": "section-4", "name": "Current Account", "selector": "main section.position_container:nth-of-type(4)", "style": "light", "blocks": ["k811-promo-band"], "defaultContent": [] },
         { "id": "section-5", "name": "Virtual Card", "selector": "main section.Home_pad_ex_80__EepyR", "style": "light", "blocks": ["k811-feature"], "defaultContent": [] },
