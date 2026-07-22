@@ -204,11 +204,6 @@
     border-radius: 12px;
   }
 
-  /* app-download CTA is a brand-red inline link, per the source */
-  .k811-feature.k811-feature-qr .k811-feature-text-col a:any-link {
-    color: var(--k811-link, #d1101f);
-    font-weight: 600;
-  }
 
   /* Virtual-card feature (the LIGHT feature with a static image, no Lottie) is
      full-screen and flush, matching the adjacent full-screen promo bands. Dark
@@ -289,6 +284,11 @@
   background-color: #253844;
   margin: 0;
   padding: 56px 0 72px;
+}
+
+/* app-download shows only QR + headings — hide the CTA link (per reference) */
+.k811-feature.k811-feature-qr .k811-feature-text-col a:any-link {
+  display: none;
 }
 
 /* overlap: the toll-free CTA band above extends ~half of its box down over
