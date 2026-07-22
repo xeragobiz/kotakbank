@@ -17,8 +17,26 @@ const zlib = require('zlib');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const MW = path.join(ROOT, 'migration-work');
-const OUT = path.join(ROOT, 'tools', 'importer', 'dist', 'k811-pages-package.zip');
-const PAGES = ['kotak811-home', 'kotak811-infinity-metal-debit-card', 'kotak811-about-us'];
+const ALL_PAGES = ['kotak811-home', 'kotak811-infinity-metal-debit-card', 'kotak811-about-us'];
+
+// Optional CLI page filter: `node build-pages-package.js kotak811-home` builds
+// a package containing (and replacing) only the named page(s). With no args it
+// builds all pages. The output filename reflects the selection so a single-page
+// package doesn't overwrite the full one.
+const requested = process.argv.slice(2);
+const PAGES = requested.length
+  ? requested.filter((p) => ALL_PAGES.includes(p))
+  : ALL_PAGES;
+if (requested.length && PAGES.length !== requested.length) {
+  const unknown = requested.filter((p) => !ALL_PAGES.includes(p));
+  throw new Error(`Unknown page(s): ${unknown.join(', ')}. Valid: ${ALL_PAGES.join(', ')}`);
+}
+const OUT = path.join(
+  ROOT, 'tools', 'importer', 'dist',
+  PAGES.length === ALL_PAGES.length
+    ? 'k811-pages-package.zip'
+    : `k811-pages-package-${PAGES.join('-')}.zip`,
+);
 
 // ---- CRC32 ----------------------------------------------------------------
 const CRC_TABLE = (() => {
