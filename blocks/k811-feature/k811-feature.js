@@ -80,27 +80,16 @@ export default function decorate(block) {
     block.classList.add('k811-feature-qr');
   }
 
-  // Decorative Lottie animation. The source site shows a looping Lottie in the
-  // "nearest bank" and "credit cards get easy" sections. Two sources, in order:
-  //  1. An authored trailing plain <p> whose text is a Lottie JSON url.
-  //  2. Fallback: match the section by heading text to the bundled Lottie files
-  //     (the scraper strips <lottie-player>, so the url isn't in the content).
-  // Lazy-mounted into the media column so it never blocks LCP.
-  const headingText = (text.querySelector('h1, h2, h3') || {}).textContent || '';
+  // Decorative Lottie animation: only when an author explicitly provides a
+  // trailing plain <p> whose text is a Lottie JSON url. Lazy-mounted into the
+  // media column so it never blocks LCP.
   const lottieP = [...text.querySelectorAll('p')].find((p) => {
     const t = (p.textContent || '').trim();
     return /^https?:\/\/\S+\.json$/i.test(t) && !p.querySelector('a');
   });
-  let lottieSrc = '';
   if (lottieP) {
-    lottieSrc = lottieP.textContent.trim();
+    const lottieSrc = lottieP.textContent.trim();
     lottieP.remove();
-  } else if (/nearest bank/i.test(headingText)) {
-    lottieSrc = '/blocks/k811-feature/lottie/nearest-bank.json';
-  } else if (/credit cards get easy/i.test(headingText)) {
-    lottieSrc = '/blocks/k811-feature/lottie/credit-cards.json';
-  }
-  if (lottieSrc) {
     block.classList.add('k811-feature-has-lottie');
     mountLottie(media, lottieSrc);
   }

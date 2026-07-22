@@ -103,8 +103,24 @@
 }
 
 .section.dark .k811-feature a:any-link {
-  color: var(--background-color);
+  color: var(--k811-link, #d1101f); /* brand red inline link, per reference */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.section.dark .k811-feature a:any-link:hover {
   text-decoration: underline;
+}
+
+/* Product-card image in a dark feature (e.g. "credit cards get easy") is a
+   near-square hero render, not a wide photo — show it uncropped so the whole
+   card is visible, matching the reference. The QR/app-download variant keeps
+   its own small square rule. */
+.section.dark .k811-feature:not(.k811-feature-qr) .k811-feature-img-col img {
+  aspect-ratio: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 0;
 }
 
 /* Scroll-reveal is handled by the shared kotak811 design guide
