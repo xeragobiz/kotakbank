@@ -142,13 +142,21 @@ export default function decorate(block) {
   const n = variants.length;
 
   // Fan geometry (percentages/scale per depth step), tuned to the live deck:
-  // depth 0 = active card in front; deeper cards sit further up and smaller.
-  const BASE_Y = 40; // active card's upward shift (% of its own height)
-  const STEP_Y = 12; // extra upward shift per depth step
-  const STEP_SCALE = 0.08; // shrink per depth step
+  // depth 0 = active card in front; deeper cards peek only slightly above it,
+  // barely shrinking — a tight stack, not a wide fan.
+  const BASE_Y = 10; // active card's upward shift (% of its own height)
+  const STEP_Y = 8; // extra upward shift per depth step (visible peek)
+  const STEP_SCALE = 0.05; // shrink per depth step
+  // Depth model matches the live deck's "bring-to-front" behaviour: the active
+  // card takes the front slot (depth 0); every OTHER card keeps its original
+  // index order and fills the slots behind it (depths 1..n-1). This is NOT a
+  // circular rotation — cards don't wrap around, they just shuffle back one
+  // slot when a card ahead of them is promoted, so the selected card visually
+  // flies up to the front and the rest settle behind it.
   const applyFan = (activeIdx) => {
-    mediaEls.forEach((el, idx) => {
-      const depth = (idx - activeIdx + n) % n; // 0 = active, then wraps
+    const order = [activeIdx, ...mediaEls.map((_, i) => i).filter((i) => i !== activeIdx)];
+    order.forEach((idx, depth) => {
+      const el = mediaEls[idx];
       el.style.transform = `translate(-50%, -${BASE_Y + depth * STEP_Y}%) scale(${(1 - depth * STEP_SCALE).toFixed(3)})`;
       el.style.filter = depth === 0 ? 'brightness(1)' : 'brightness(0.2)';
       el.style.zIndex = String(n - depth);
@@ -168,9 +176,15 @@ export default function decorate(block) {
     mediaItem.className = 'k811-card-selector-card';
     if (v.picture) {
       const img = v.picture.matches?.('img') ? v.picture : v.picture.querySelector('img');
-      if (img && img.src) {
-        mediaItem.append(createOptimizedPicture(img.src, v.name, i === 0, [{ width: '750' }]));
-      } else {
+      // Use the raw attribute and reject broken placeholders (e.g. about:error,
+      // nullerror) that the authoring pipeline emits for a missing asset.
+      const rawSrc = img && (img.getAttribute('src') || '');
+      const validSrc = rawSrc && /^(https?:\/\/|\/|\.\/)/.test(rawSrc) && !/^about:/.test(rawSrc);
+      if (validSrc) {
+        mediaItem.append(createOptimizedPicture(rawSrc, v.name, i === 0, [{ width: '750' }]));
+      } else if (img) {
+        // keep the original <img>/<picture> so the alt text still conveys the
+        // variant, without a doubly-broken optimized <picture>.
         mediaItem.append(v.picture);
       }
     }

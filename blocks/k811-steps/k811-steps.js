@@ -42,20 +42,29 @@ export default function decorate(block) {
   if (linkRows.length) {
     const actions = document.createElement('div');
     actions.className = 'k811-steps-actions';
+    // Secondary links (with their "Existing customer?" label) share one line in
+    // a note row BELOW the primary button, matching the live layout.
+    const note = document.createElement('div');
+    note.className = 'k811-steps-actions-note';
     linkRows.forEach((c, i) => {
       const link = c.querySelector('a');
       if (!link) return;
       link.classList.add('k811-steps-btn');
       link.classList.add(i === 0 ? 'k811-steps-btn-primary' : 'k811-steps-btn-secondary');
       const label = (c.textContent || '').replace(link.textContent.trim(), '').trim();
-      if (label && i > 0) {
-        const span = document.createElement('span');
-        span.className = 'k811-steps-actions-label';
-        span.textContent = label;
-        actions.append(span);
+      if (i === 0) {
+        actions.append(link);
+      } else {
+        if (label) {
+          const span = document.createElement('span');
+          span.className = 'k811-steps-actions-label';
+          span.textContent = label;
+          note.append(span);
+        }
+        note.append(link);
       }
-      actions.append(link);
     });
+    if (note.childElementCount) actions.append(note);
     nodes.push(actions);
   }
 

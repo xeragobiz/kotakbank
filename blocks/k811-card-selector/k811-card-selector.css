@@ -9,14 +9,19 @@
   padding: 24px;
 }
 
-/* "CHOOSE YOUR METAL" — gray section eyebrow heading */
+/* "CHOOSE YOUR METAL" — gray, centered eyebrow heading. The title is authored
+   as section default content (sibling h2), not inside the block, so target the
+   section's default-content-wrapper heading to match the live page. */
 .k811-card-selector .k811-card-selector-title,
-.kotak811 .section.dark .k811-card-selector .k811-card-selector-title {
+.kotak811 .section.dark .k811-card-selector .k811-card-selector-title,
+.kotak811 .section.k811-card-selector-container .default-content-wrapper :is(h1, h2, h3) {
   text-align: center;
   font-size: 30px;
   font-weight: 500;
   color: #959595;
-  margin: 0 0 32px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 auto 40px;
 }
 
 .k811-card-selector-stage {
@@ -113,23 +118,29 @@
   margin-top: 20px;
 }
 
-/* Apply now — plain link (not a pill), matching the live page */
-.k811-card-selector-apply {
-  color: #3b63fb;
+/* Apply now — white pill button with dark text (matches the live page).
+   :any-link raises specificity above the global `a:any-link` link color. */
+.k811-card-selector-apply:any-link {
+  display: inline-block;
+  background: #fff;
+  color: #1a1a1a;
   font-weight: 500;
   font-size: 16px;
+  padding: 14px 30px;
+  border-radius: 999px;
   text-decoration: none;
 }
 
-.k811-card-selector-apply:hover {
-  text-decoration: underline;
+.k811-card-selector-apply:any-link:hover {
+  background: #d1101f;
+  color: #fff;
 }
 
-/* T&C — small underlined text shown above Apply (authored inside the panel) */
-.k811-card-selector-tnc {
+/* T&C — small gray underlined text shown above Apply (authored in the panel) */
+.k811-card-selector-tnc:any-link {
   display: inline-block;
   margin: 0 0 8px;
-  color: #3b63fb;
+  color: #9a9a9a;
   font-size: 14px;
   text-decoration: underline;
 }
@@ -139,6 +150,9 @@
   order: 1;
   position: relative;
   min-height: 300px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
 }
 
 /* Every card is anchored to the same bottom-center point; JS sets its
@@ -150,8 +164,8 @@
   bottom: 0;
   width: 100%;
   transform-origin: center bottom;
-  transform: translate(-50%, -40%);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
+  transform: translate(-50%, -10%);
+  transition: transform 0.4s linear, filter 0.4s linear;
   will-change: transform, filter;
 }
 

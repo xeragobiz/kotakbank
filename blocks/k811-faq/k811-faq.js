@@ -38,9 +38,11 @@ export default function decorate(block) {
 
   const list = document.createElement('div');
   list.className = 'k811-faq-list';
-  items.forEach(({ q, a }) => {
+  items.forEach(({ q, a }, i) => {
     const details = document.createElement('details');
     details.className = 'k811-faq-item';
+    // First question expanded by default, matching the live page.
+    if (i === 0) details.open = true;
     const summary = document.createElement('summary');
     summary.className = 'k811-faq-q';
     // textContent (not innerHTML) so authored question text can't inject HTML
