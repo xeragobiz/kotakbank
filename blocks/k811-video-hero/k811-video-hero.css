@@ -19,19 +19,30 @@
   max-width: none;
 }
 
-/* video band, below the copy, in normal flow */
+/* video band, below the copy, in normal flow. The band owns one fixed height
+   (from the source clip's ~1920x598 ratio); the poster and the lazily-attached
+   video are OVERLAID inside it (both absolutely positioned, object-fit: cover)
+   so there is a single seamless band — no stacked double-height + empty gap.
+   A top mask-fade dissolves the image's hard rectangular top edge into the
+   black section above it, so the hero reads as ONE continuous section rather
+   than a text band with a separate photo band pasted below. */
 .k811-video-hero-media {
   position: relative;
   width: 100%;
+  aspect-ratio: 1920 / 598;
   line-height: 0;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 18%);
 }
 
 .k811-video-hero-media picture,
 .k811-video-hero-media img,
 .k811-video-hero-video {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
 .k811-video-hero-content {

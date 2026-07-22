@@ -30,6 +30,7 @@
           "instances": [
             "main section.Home_pad_ex_80__EepyR",
             "main section.Home_creditcard__4GMng",
+            "main section.Home_cardsection_pad_20___Zu30",
             "main section.Home_app__Ll1Hm"
           ]
         },
@@ -45,7 +46,7 @@
         { "id": "section-4", "name": "Current Account", "selector": "main section.position_container:nth-of-type(4)", "style": "light", "blocks": ["k811-promo-band"], "defaultContent": [] },
         { "id": "section-5", "name": "Virtual Card", "selector": "main section.Home_pad_ex_80__EepyR", "style": "light", "blocks": ["k811-feature"], "defaultContent": [] },
         { "id": "section-6", "name": "Credit Cards Easy", "selector": "main section.Home_creditcard__4GMng", "style": "dark", "blocks": ["k811-feature"], "defaultContent": [] },
-        { "id": "section-7", "name": "Security Trust", "selector": "main section.Home_cardsection_pad_20__Zu30", "style": "light", "blocks": [], "defaultContent": ["main section.Home_cardsection_pad_20__Zu30 h2", "main section.Home_cardsection_pad_20__Zu30 p"] },
+        { "id": "section-7", "name": "Security Trust", "selector": "main section.Home_cardsection_pad_20___Zu30", "style": "light", "blocks": ["k811-feature"], "defaultContent": [] },
         { "id": "section-8", "name": "Toll-free CTA", "selector": "main section.blackWrap", "style": "accent", "blocks": ["k811-cta"], "defaultContent": [] },
         { "id": "section-9", "name": "Download App", "selector": "main section.Home_app__Ll1Hm", "style": "dark", "blocks": ["k811-feature"], "defaultContent": [] }
       ]

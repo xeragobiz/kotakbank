@@ -160,14 +160,21 @@ function home() {
     parts.push(feature(im, ic, alt, h, paras, cta) + '\n\n' + sectionMeta(style));
   });
 
-  // default-content security section
-  parts.push([
-    '## Next-gen security meets age-old trust',
-    '',
-    'Governed by RBI regulations, Kotak811 guards your money with top-notch security, so you can save and spend worry-free, through your phone.',
-    '',
-    sectionMeta('light'),
-  ].join('\n'));
+  // Security section: media-first K811 Feature — Lottie animation on the left,
+  // text on the right (matches the source). The Lottie has no poster image, so
+  // the `video` field carries the local .json path; k811-feature.js detects the
+  // trailing .json (also placed in the text cell) and mounts it as a Lottie in
+  // the media column. The two field rows keep md2jcr recognising this as a
+  // block rather than flattening it to default content.
+  parts.push(gridTable('K811 Feature', [
+    [['<!-- field:video -->', '', '/blocks/k811-feature/lottie/security.json']],
+    [[
+      '<!-- field:text -->', '',
+      '## Next-gen security meets age-old trust', '',
+      'Governed by RBI regulations, Kotak811 guards your money with top-notch security, so you can save and spend worry-free, through your phone.', '',
+      '/blocks/k811-feature/lottie/security.json',
+    ]],
+  ]) + '\n\n' + sectionMeta('light'));
 
   // K811 Cta
   parts.push(gridTable('K811 CTA', [

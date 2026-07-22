@@ -38,6 +38,16 @@ export default function parse(element, { document }) {
   headings.forEach((h) => textFrag.appendChild(h));
   paras.forEach((p) => textFrag.appendChild(p));
   if (cta) textFrag.appendChild(cta);
+
+  // The security section shows a decorative Lottie the scraper/cleanup strips
+  // out. Re-attach the bundled Lottie as a trailing plain-text .json path so
+  // the block JS mounts it as a media-first animation.
+  const headingText = headings.map((h) => h.textContent).join(' ');
+  if (/next-gen security/i.test(headingText)) {
+    const p = document.createElement('p');
+    p.textContent = '/blocks/k811-feature/lottie/security.json';
+    textFrag.appendChild(p);
+  }
   cells.push([textFrag]);
 
   const block = WebImporter.Blocks.createBlock(document, { name: 'k811-feature', cells });

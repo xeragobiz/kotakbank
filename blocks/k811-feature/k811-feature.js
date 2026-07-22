@@ -39,7 +39,21 @@ export default function decorate(block) {
   // media column: thumbnail wrapped in the video link (play overlay via CSS)
   const media = document.createElement('div');
   media.className = 'k811-feature-img-col';
-  const picture = pictureCell ? pictureCell.querySelector('picture') : null;
+  let picture = pictureCell ? pictureCell.querySelector('picture') : null;
+  // A Lottie-only feature (e.g. the security section) has no poster image; the
+  // Lottie JSON path lands in the image field and renders as a broken
+  // <img src="....json">. Detect that, drop the broken picture, and use the
+  // path as the Lottie source instead.
+  let lottieFromImage = '';
+  if (picture) {
+    const pImg = picture.querySelector('img');
+    const pSrc = (pImg && (pImg.getAttribute('src') || '')).trim();
+    if (/\.json(\?|$)/i.test(pSrc)) {
+      lottieFromImage = pSrc;
+      picture.remove();
+      picture = null;
+    }
+  }
   if (picture) {
     // a stray URL must not remain as the img alt
     const img = picture.querySelector('img');
@@ -85,11 +99,11 @@ export default function decorate(block) {
   // media column so it never blocks LCP.
   const lottieP = [...text.querySelectorAll('p')].find((p) => {
     const t = (p.textContent || '').trim();
-    return /^https?:\/\/\S+\.json$/i.test(t) && !p.querySelector('a');
+    return /^(https?:\/\/\S+|\/\S+)\.json$/i.test(t) && !p.querySelector('a');
   });
-  if (lottieP) {
-    const lottieSrc = lottieP.textContent.trim();
-    lottieP.remove();
+  const lottieSrc = (lottieP && lottieP.textContent.trim()) || lottieFromImage;
+  if (lottieP) lottieP.remove();
+  if (lottieSrc) {
     block.classList.add('k811-feature-has-lottie');
     mountLottie(media, lottieSrc);
   }
