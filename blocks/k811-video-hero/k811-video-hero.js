@@ -16,7 +16,9 @@ import { initK811 } from '../../scripts/k811/k811-common.js';
  * hero nears the viewport, so it never blocks LCP or the PageSpeed budget.
  */
 
-const URL_RE = /^https?:\/\/\S+\.(mp4|webm|mov)(\?\S*)?$/i;
+// Match absolute (https://…), root-relative (/content/dam/…) and ./-relative
+// video URLs — AEM rewrites CDN links to DAM paths on the published site.
+const URL_RE = /^(https?:\/\/|\.?\/)\S+\.(mp4|webm|mov)(\?\S*)?$/i;
 
 function cellText(c) {
   return (c.textContent || '').trim();

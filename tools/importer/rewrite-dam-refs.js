@@ -12,8 +12,14 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const MAP = path.join(ROOT, 'migration-work', 'dam-assets', 'url-to-dam.json');
 
 const map = JSON.parse(fs.readFileSync(MAP, 'utf-8'));
+// Skip video assets: EDS delivers images via its optimized media pipeline, but
+// DAM video binaries are not served by the aem.page/live host, so leave video
+// URLs pointing at the original CDN so the background <video> actually plays.
+const VIDEO_RE = /\.(mp4|webm|mov)$/i;
 // longest URLs first so query-string/host variants don't partially match
-const urls = Object.keys(map).sort((a, b) => b.length - a.length);
+const urls = Object.keys(map)
+  .filter((u) => !VIDEO_RE.test(u))
+  .sort((a, b) => b.length - a.length);
 
 const files = process.argv.slice(2);
 if (!files.length) {

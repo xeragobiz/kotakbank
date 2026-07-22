@@ -231,18 +231,19 @@ function infinity() {
     [['<!-- field:primaryCta -->', '', `[Get your metal card](${url('/open-zero-balance-savings-account/mdc-2?utm_source=kotak811_website_mdc_pp&utm_medium=organic&utm_campaign=account_open')})`]],
   ]) + '\n\n' + sectionMeta('metal'));
 
-  // K811 Offers (grid, photo cards) with title
+  // K811 Benefits Story (full-viewport photo panels). One "Panel" item per
+  // benefit: an art-directed lifestyle photo + overlaid heading & short copy.
   const offers = [
     ['Airport travel, elevated', 'Enjoy complimentary domestic airport lounge access every quarter.', 'Gold_desktop_v2_fd1ce2f1b2.jpg'],
     ['Cinema nights, twice as good', 'Buy 1 get 1 free movie tickets on BookMyShow.', 'Red_2e0760661c.jpg'],
     ['Fine dining, finer rewards', 'Savour delicious meals with 20% off up to ₹750/month on Zomato Dining.', 'Black_v1_f14c3daa69.jpg'],
     ['Cashback on every swipe', 'Enjoy cashback up to ₹6,000/year on shopping, dining and travel.', 'Rose_Gold_desktop_409f549663.jpg'],
   ];
-  parts.push(container('K811 Offers',
-    'Exclusive Offers',
+  parts.push(container('K811 Benefits Story',
+    '',
     offers.map(([h, t, ic]) => [
       ['<!-- field:image -->', '', im.ref(`${CDN}/${ic}`, h)],
-      ['<!-- field:text -->', '', `## ${h}`, '', t],
+      ['<!-- field:text -->', '', `### ${h}`, '', t],
     ])) + '\n\n' + sectionMeta('light'));
 
   // K811 Card Selector: parent title, then variants (name,image,panel,applyCta)
@@ -271,14 +272,14 @@ function infinity() {
       ['<!-- field:applyCta -->', '', `[Apply now](${url('/open-zero-balance-savings-account/mdc-2?utm_source=kotak811_website_mdc_pp&utm_medium=organic&utm_campaign=account_open')})`],
     ])) + '\n\n' + sectionMeta('dark'));
 
-  // K811 Offers (list variant) — additional features. classes=list via header.
+  // K811 Feature Grid — "Additional Features" 2x2 dark icon cards.
   const features = [
     ['2.5% fuel surcharge waiver', 'Enjoy surcharge waiver on fuel spends of up to ₹50,000/month.', 'mdc_icon_fuel_waiver_f2749d906f.png'],
     ['2% forex markup', 'Save more on every international transaction with a low forex markup.', 'icon_Forex_f702858a3c.png'],
     ['Higher limits', 'Enjoy daily spends up to ₹4 lakhs and ATM withdrawals up to ₹1.5 lakhs.', 'mdc_icon_spend_limit_32f55e849c.png'],
     ['₹1 Cr Air Insurance cover', 'Includes air accidental cover, lost card, lost baggage & more.', 'mdc_icon_insurance_0ca024a4df.png'],
   ];
-  parts.push(container('K811 Offers (list)',
+  parts.push(container('K811 Feature Grid',
     'ADDITIONAL FEATURES',
     features.map(([h, t, ic]) => [
       ['<!-- field:image -->', '', im.ref(`${CDN}/${ic}`, h)],
@@ -313,27 +314,28 @@ function infinity() {
     faqs.map(([q, a]) => [
       ['<!-- field:question -->', '', q],
       ['<!-- field:answer -->', '', a],
-    ])) + '\n\n' + sectionMeta('light'));
+    ])) + '\n\n' + sectionMeta('dark'));
 
-  // default content: detailed features
+  // default content: detailed features (full six-pair live SEO copy)
+  const detailed = [
+    ['Choose Kotak811 Infinity Metal Debit Card for extra perks', 'Enjoy premium taste and exclusive rewards with the Kotak811 Infinity Metal Debit Card. Designed to elevate your shopping, dining and travel experiences, it comes with thoughtful benefits that fit your lifestyle. Open your Kotak811 Savings Account and enjoy access to the best Metal Debit Card.'],
+    ['Premium offers that add more to every spend', 'The Kotak811 Infinity Metal Debit Card is built for customers who want more than standard debit card access. Along with a premium metal finish, it brings together airport lounge access, dining savings, movie ticket offers, cashback, and Visa Signature privileges in one card.'],
+    ['Travel benefits that stay relevant', 'Get 4 complimentary domestic airport lounge visits in a year, with 1 visit every quarter at selected lounges. This makes the card useful not just as a premium debit card, but as a debit card with airport lounge access for regular domestic travel. You also get Visa Signature benefits on hotel stays, airport transfers, car rentals, and concierge services.'],
+    ['Dining and movie offers', 'Enjoy 20% off on Zomato Dining, up to ₹750 on a minimum bill of ₹2,000, once a month. For entertainment, get a buy 1 get 1 free movie ticket offer on BookMyShow, with a discount of up to ₹300 on a minimum transaction value of ₹400, once a month. Together, these benefits add everyday value across dining and movie plans rather than limiting the card to travel alone.'],
+    ['Cashback, fuel savings and higher limits', 'The card also adds value to day-to-day spending with 5% cashback on debit card spends through the 811 Super Savings Account proposition. On the utility side, it includes a fuel surcharge waiver and supports higher usage with a daily ATM withdrawal limit of ₹1.5 lakhs and a daily spend limit of ₹4 lakhs.'],
+    ['Protection that supports premium usage', 'Beyond offers, the card includes insurance-linked benefits such as air accident cover up to ₹1 crore, lost card liability coverage of up to ₹4.75 lakhs, purchase protection up to ₹1.5 lakhs, and other applicable covers. This makes the proposition stronger for customers comparing premium debit card benefits, not just discounts.'],
+  ];
   parts.push([
     '## DETAILED FEATURES',
     '',
-    '### Choose Kotak811 Infinity Metal Debit Card for extra perks',
-    '',
-    'The Kotak811 Infinity Metal Debit Card blends premium metal design with rewards across travel, dining, and shopping.',
-    '',
-    '### Premium offers that add more to every spend',
-    '',
-    'From complimentary lounge access to cashback and movie offers, every swipe is rewarding.',
-    '',
-    sectionMeta('light'),
+    ...detailed.flatMap(([h, t]) => [`### ${h}`, '', t, '']),
+    sectionMeta('detailed'),
   ].join('\n'));
 
-  // K811 Cta (download app)
-  parts.push(gridTable('K811 CTA', [
+  // K811 App CTA (download app): QR image + stacked headings + CTA link
+  parts.push(gridTable('K811 App CTA', [
     [['<!-- field:image -->', '', im.ref(`${CDN}/Website_App_QR_code_4_becfe0162e.png`, 'Download the app')]],
-    [['<!-- field:title -->', '', '## Download the app. Download your bank.']],
+    [['<!-- field:title -->', '', '## Download the app', '', '## Download your bank', '', `[Download App](${url('https://811.onelink.me/xfzM/webtokotak811app')})`]],
   ]) + '\n\n' + sectionMeta('dark'));
 
   parts.push(metadata(im,
