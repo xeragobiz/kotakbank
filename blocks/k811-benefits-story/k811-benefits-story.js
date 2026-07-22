@@ -40,29 +40,32 @@ export default function decorate(block) {
 
   const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Per-panel latched progress: while a panel is in/around the viewport it only
-  // ever increases, so the animation plays forward on scroll-down and holds its
-  // rested state on scroll-up (no reverse). The latch also resets once a panel is
-  // fully below the animation zone (raw = 0, i.e. off-screen below the fold).
-  let maxProgress = new WeakMap();
+  // Forward-only progress, driven by the deepest scroll position the user has
+  // reached (maxScrollY) rather than a per-panel latch. maxScrollY is a plain
+  // scalar tied to user scroll, so — unlike a cached progress value — it can't
+  // be poisoned by the transient wrong geometry that occurs while the sections
+  // above this block are still laying out during page load (which previously
+  // froze the reveal at progress 1 on mobile). Progress is recomputed fresh
+  // every frame, so a bad reading self-corrects on the next frame.
+  let maxScrollY = window.scrollY;
 
   // Progress model: as a panel travels from entering the viewport bottom to
-  // reaching the top, progress goes 0 -> 1. Recomputed from the panel's live
-  // bounding rect on every scroll. Drives both the media shrink/round (desktop)
-  // and the content + media slide/fade-in (all sizes).
+  // reaching the top, progress goes 0 -> 1. Evaluated at the panel's position
+  // when the page was scrolled to maxScrollY, so scrolling down advances it and
+  // scrolling back up holds it (no reverse). Drives the media shrink/round
+  // (desktop) and the content + media slide/fade-in (all sizes).
   // Reduced-motion users jump straight to the rested state (progress = 1).
   function update() {
     const vh = window.innerHeight;
+    if (window.scrollY > maxScrollY) maxScrollY = window.scrollY;
+    const held = maxScrollY - window.scrollY; // how far above the deepest point we are
     panels.forEach((panel) => {
       if (!motionOK) { panel.style.setProperty('--k811-bs-progress', '1'); return; }
       const r = panel.getBoundingClientRect();
       // Animate over the first ~60% of the panel's travel so it settles early.
-      const raw = clamp((vh - r.top) / (vh * 0.9), 0, 1);
-      // Reset the latch when the panel is fully below the animation zone so a
-      // premature/high initial reading can't freeze it; otherwise hold the max.
-      const latched = raw === 0 ? 0 : Math.max(raw, maxProgress.get(panel) || 0);
-      maxProgress.set(panel, latched);
-      panel.style.setProperty('--k811-bs-progress', latched.toFixed(4));
+      // Subtract `held` so the value reflects the deepest scroll reached.
+      const progress = clamp((vh - (r.top - held)) / (vh * 0.9), 0, 1);
+      panel.style.setProperty('--k811-bs-progress', progress.toFixed(4));
     });
   }
 
@@ -76,14 +79,9 @@ export default function decorate(block) {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
 
-  // Discard any latched values and recompute from live geometry. The first
-  // update() during decoration can read stale positions (the sections above
-  // this block may not have laid out yet), which on mobile — where the block
-  // starts partly in view and never scrolls fully below the fold — would latch
-  // a bogus progress of 1 and freeze the reveal. Re-seeding after layout (and
-  // again on window load, once fonts/images settle) fixes that.
-  function reseed() { maxProgress = new WeakMap(); update(); }
-  reseed();
-  requestAnimationFrame(reseed);
-  if (document.readyState !== 'complete') window.addEventListener('load', reseed, { once: true });
+  // Recompute after layout settles (next frame + window load) so the initial
+  // render uses correct geometry once the sections above have laid out.
+  update();
+  requestAnimationFrame(update);
+  if (document.readyState !== 'complete') window.addEventListener('load', update, { once: true });
 }
