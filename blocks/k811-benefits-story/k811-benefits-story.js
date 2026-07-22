@@ -39,14 +39,17 @@ export default function decorate(block) {
   });
 
   const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isDesktop = () => window.matchMedia('(min-width: 900px)').matches;
 
   // Progress model: as a panel travels from entering the viewport bottom to
-  // reaching the top, progress goes 0 -> 1. 0 = full-bleed photo, 1 = card.
+  // reaching the top, progress goes 0 -> 1. Recomputed from the panel's live
+  // bounding rect on every scroll, so it runs BOTH ways — the animation plays
+  // forward on scroll-down and reverses on scroll-up. Drives both the media
+  // shrink/round (desktop) and the content + media slide/fade-in (all sizes).
+  // Reduced-motion users jump straight to the rested state (progress = 1).
   function update() {
     const vh = window.innerHeight;
     panels.forEach((panel) => {
-      if (!motionOK || !isDesktop()) { panel.style.setProperty('--k811-bs-progress', '1'); return; }
+      if (!motionOK) { panel.style.setProperty('--k811-bs-progress', '1'); return; }
       const r = panel.getBoundingClientRect();
       // Animate over the first ~60% of the panel's travel so it settles early.
       const raw = (vh - r.top) / (vh * 0.9);

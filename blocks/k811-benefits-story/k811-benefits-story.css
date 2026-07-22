@@ -60,14 +60,36 @@
   line-height: 1.4;
 }
 
-/* ---- mobile (<600px): photo on top, text below ------------------------ */
+/* ---- mobile (<600px): TEXT on top, photo below ------------------------ */
 @media (width < 600px) {
+  .k811-benefits-story .k811-benefits-story-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px 0;
+  }
+
+  /* content BEFORE the photo, matching the live mobile layout */
+  .k811-benefits-story .k811-benefits-story-content {
+    order: 0;
+  }
+
   .k811-benefits-story .k811-benefits-story-media {
+    order: 1;
     height: 60vh;
     min-height: 320px;
     border-radius: 16px;
     overflow: hidden;
     margin: 0 16px;
+  }
+
+  /* mobile animation: content + photo rise up and fade in as the panel enters
+     (progress 0 -> 1); reverses on scroll-up since JS recomputes progress. */
+  .k811-benefits-story .k811-benefits-story-content,
+  .k811-benefits-story .k811-benefits-story-media {
+    opacity: var(--k811-bs-progress);
+    transform: translateY(calc((1 - var(--k811-bs-progress)) * 40px));
+    will-change: opacity, transform;
   }
 }
 
@@ -82,6 +104,7 @@
   }
 
   .k811-benefits-story .k811-benefits-story-media {
+    order: 1;
     width: 100%;
     max-width: 640px;
     height: 420px;
@@ -89,13 +112,23 @@
     overflow: hidden;
   }
 
+  /* content BEFORE the photo, matching the live mobile/tablet layout */
   .k811-benefits-story .k811-benefits-story-content {
+    order: 0;
     text-align: center;
     max-width: 640px;
   }
 
   .k811-benefits-story .k811-benefits-story-content :is(h1, h2, h3, h4) {
     font-size: 34px;
+  }
+
+  /* tablet animation: rise up + fade in with scroll progress (reversible) */
+  .k811-benefits-story .k811-benefits-story-content,
+  .k811-benefits-story .k811-benefits-story-media {
+    opacity: var(--k811-bs-progress);
+    transform: translateY(calc((1 - var(--k811-bs-progress)) * 40px));
+    will-change: opacity, transform;
   }
 }
 
@@ -107,7 +140,9 @@
     align-items: center;
   }
 
-  /* text sits in a left column, revealed as the photo shrinks away */
+  /* text sits in a left column, revealed as the photo shrinks away. It also
+     slides in from the left + fades as the panel scrolls in (progress 0 -> 1),
+     mirroring the media motion; reverses on scroll-up since JS recomputes. */
   .k811-benefits-story .k811-benefits-story-content {
     position: relative;
     z-index: 1;
@@ -116,6 +151,9 @@
     margin-left: max(24px, calc((100% - var(--k811-content-max, 1120px)) / 2));
     gap: 20px;
     padding: 0 24px;
+    opacity: var(--k811-bs-progress);
+    transform: translateX(calc((var(--k811-bs-progress) - 1) * -60px));
+    will-change: opacity, transform;
   }
 
   .k811-benefits-story .k811-benefits-story-content :is(h1, h2, h3, h4) {
@@ -152,10 +190,12 @@
       calc(var(--k811-bs-progress) * 8%) calc(var(--k811-bs-progress) * 3%);
   }
 
+  /* reverse rows: content is on the right, so it slides in from the right */
   .k811-benefits-story .k811-benefits-story-panel-reverse .k811-benefits-story-content {
     margin-left: 0;
     margin-right: max(24px, calc((100% - var(--k811-content-max, 1120px)) / 2));
     text-align: left;
+    transform: translateX(calc((var(--k811-bs-progress) - 1) * 60px));
   }
 }
 
