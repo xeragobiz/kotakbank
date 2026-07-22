@@ -118,12 +118,29 @@ main > .section:has(> .k811-promo-band-wrapper) {
   }
 }
 
-/* ---- Mobile: stack the copy ABOVE the full, uncropped photo (matches the
-   reference). The heading, paragraph and blue centered CTA sit on the light
-   section background at the top; the whole image shows below at its natural
-   aspect ratio so the subject is never clipped by the copy. ---- */
+/* ---- Mobile ------------------------------------------------------------
+   Two variants, two treatments (matching the reference):
+   - LEFT ("nearest bank"): copy overlaid INSIDE the image, in the empty
+     ceiling area at the top, with the subject below. White text, no CTA.
+   - RIGHT ("811 Current Account"): copy stacked ABOVE the full uncropped
+     photo on the light background, with a blue centered CTA. */
 @media (width < 900px) {
-  .k811-promo-band {
+  /* --- LEFT variant: overlaid copy inside a taller, top-anchored photo --- */
+  .k811-promo-band-left {
+    align-items: flex-start;
+    min-height: 540px;
+  }
+
+  .k811-promo-band-left .k811-promo-band-media img {
+    object-position: 50% 0%;
+  }
+
+  .k811-promo-band-left .k811-promo-band-content {
+    padding-top: 40px;
+  }
+
+  /* --- RIGHT variant: copy stacked above the full uncropped photo --- */
+  .k811-promo-band-right {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -131,47 +148,40 @@ main > .section:has(> .k811-promo-band-wrapper) {
     overflow: visible;
   }
 
-  /* copy first (on the light background), image second */
-  .k811-promo-band .k811-promo-band-content {
+  /* copy first (on the light background, dark text), image second */
+  .k811-promo-band-right .k811-promo-band-content {
     order: 0;
     position: static;
     box-sizing: border-box;
     max-width: none;
     margin: 0;
     padding: 32px 24px;
+    color: var(--k811-text, #222);
     text-align: left;
   }
 
   /* full, uncropped image below the copy */
-  .k811-promo-band .k811-promo-band-media {
+  .k811-promo-band-right .k811-promo-band-media {
     order: 1;
     position: static;
     inset: auto;
   }
 
-  .k811-promo-band .k811-promo-band-media img {
+  .k811-promo-band-right .k811-promo-band-media img {
     height: auto;
     object-fit: contain;
   }
 
-  /* copy now sits on the light section background (not over the photo), so both
-     variants use dark text for legibility */
-  .k811-promo-band .k811-promo-band-content,
-  .k811-promo-band-left .k811-promo-band-content,
-  .k811-promo-band-left .k811-promo-band-content :is(h1, h2, h3, h4, p) {
-    color: var(--k811-text, #222);
-  }
-
   /* solid blue, centered CTA pill (per the reference), not the red button */
-  .k811-promo-band .k811-promo-band-actions {
+  .k811-promo-band-right .k811-promo-band-actions {
     text-align: center;
   }
 
-  .k811-promo-band .k811-promo-band-btn:any-link {
+  .k811-promo-band-right .k811-promo-band-btn:any-link {
     background: #3b63fb;
   }
 
-  .k811-promo-band .k811-promo-band-btn:any-link:hover {
+  .k811-promo-band-right .k811-promo-band-btn:any-link:hover {
     background: #2d4fe0;
     filter: none;
   }
