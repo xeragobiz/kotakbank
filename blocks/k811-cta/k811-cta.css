@@ -3,7 +3,7 @@
    right. Stacks and centers on mobile. Values matched from the source band. */
 
 .k811-cta {
-  overflow: hidden;
+  position: relative;
   max-width: 1120px;
   margin: 0 auto;
   border-radius: 20px;
@@ -68,12 +68,15 @@
     line-height: 52px;
   }
 
+  /* the phone illustration breaks out of the black box (per the source):
+     it is enlarged and bleeds past the box's right and bottom edges. */
   .k811-cta .k811-cta-media {
     flex: 0 0 auto;
-    max-width: 42%;
+    align-self: flex-end;
+    margin: -40px -32px -72px 0;
   }
 
   .k811-cta .k811-cta-media img {
-    max-height: 240px;
+    max-height: 320px;
   }
 }
