@@ -118,6 +118,34 @@ main > .section:has(> .k811-promo-band-wrapper) {
   }
 }
 
+/* ---- Mobile: anchor the copy to the top of the band and use a blue,
+   centered CTA (matches the reference). The copy sits over the empty top of
+   the photo rather than over the subject's face. ---- */
+@media (width < 900px) {
+  .k811-promo-band {
+    align-items: flex-start;
+  }
+
+  .k811-promo-band .k811-promo-band-content {
+    padding-top: 40px;
+  }
+
+  /* the "811 Current Account" band's CTA is a solid blue, centered pill on
+     mobile (per the reference), not the red left-aligned button */
+  .k811-promo-band .k811-promo-band-actions {
+    text-align: center;
+  }
+
+  .k811-promo-band .k811-promo-band-btn:any-link {
+    background: #3b63fb;
+  }
+
+  .k811-promo-band .k811-promo-band-btn:any-link:hover {
+    background: #2d4fe0;
+    filter: none;
+  }
+}
+
 @media (width >= 900px) {
   /* full-screen band: the photo fills the viewport below the nav, matching the
      live site where each promo section occupies a full screen. dvh keeps it
