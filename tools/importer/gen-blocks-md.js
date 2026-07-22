@@ -180,7 +180,7 @@ function home() {
   parts.push(gridTable('K811 CTA', [
     [['<!-- field:image -->', '', im.ref(`${CDN}/kotak_toll_free_number_18004100_3b075ce61b.png`, '')]],
     [['<!-- field:title -->', '', '## Call our new toll-free number 1800 4100 for all banking needs']],
-  ]) + '\n\n' + sectionMeta('accent'));
+  ]) + '\n\n' + sectionMeta('light'));
 
   // K811 Feature (download app)
   parts.push(feature(im, 'Website_App_QR_code_4_becfe0162e.png', 'Download the app', 'Download the app',

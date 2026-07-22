@@ -28,7 +28,10 @@ export default function decorate(block) {
     text.className = 'k811-cta-text';
     const h = document.createElement('h2');
     h.className = 'k811-cta-title';
-    h.textContent = title;
+    // Highlight a toll-free number (e.g. "1800 4100") in brand red, per the
+    // source. Escape first, then wrap the matched digits in a red span.
+    const safe = title.replace(/[&<>]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[ch]));
+    h.innerHTML = safe.replace(/(\d{4}\s?\d{4})/, '<span class="k811-cta-highlight">$1</span>');
     text.append(h);
     inner.append(text);
   }

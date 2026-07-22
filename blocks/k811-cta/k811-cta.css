@@ -32,6 +32,11 @@
   line-height: 1.18;
 }
 
+/* toll-free number highlighted in brand red, per the source */
+.k811-cta .k811-cta-title .k811-cta-highlight {
+  color: var(--k811-link, #d1101f);
+}
+
 .k811-cta .k811-cta-media {
   flex: 0 0 auto;
   line-height: 0;
