@@ -40,11 +40,16 @@ export default function decorate(block) {
 
   const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Per-panel latched progress: once a panel animates in, it never runs
+  // backwards. We track the highest progress reached and only ever increase it.
+  const maxProgress = new WeakMap();
+
   // Progress model: as a panel travels from entering the viewport bottom to
   // reaching the top, progress goes 0 -> 1. Recomputed from the panel's live
-  // bounding rect on every scroll, so it runs BOTH ways — the animation plays
-  // forward on scroll-down and reverses on scroll-up. Drives both the media
-  // shrink/round (desktop) and the content + media slide/fade-in (all sizes).
+  // bounding rect on every scroll, but LATCHED — it only ever increases, so the
+  // animation plays forward on scroll-down and holds its rested state on
+  // scroll-up (no reverse). Drives both the media shrink/round (desktop) and the
+  // content + media slide/fade-in (all sizes).
   // Reduced-motion users jump straight to the rested state (progress = 1).
   function update() {
     const vh = window.innerHeight;
@@ -52,8 +57,10 @@ export default function decorate(block) {
       if (!motionOK) { panel.style.setProperty('--k811-bs-progress', '1'); return; }
       const r = panel.getBoundingClientRect();
       // Animate over the first ~60% of the panel's travel so it settles early.
-      const raw = (vh - r.top) / (vh * 0.9);
-      panel.style.setProperty('--k811-bs-progress', clamp(raw, 0, 1).toFixed(4));
+      const raw = clamp((vh - r.top) / (vh * 0.9), 0, 1);
+      const latched = Math.max(raw, maxProgress.get(panel) || 0);
+      maxProgress.set(panel, latched);
+      panel.style.setProperty('--k811-bs-progress', latched.toFixed(4));
     });
   }
 
