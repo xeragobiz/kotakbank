@@ -1,4 +1,6 @@
-/* K811 Pillars — tabbed value pillars + crossfading Lottie. Inherits Manrope. */
+/* K811 Pillars — "We always serve by the rules." Static grid of value pillar
+ * cards, each with its own always-on Lottie above a heading + description.
+ * Faithful to kotak811.bank.in/about-us. Inherits Manrope from .kotak811. */
 
 .k811-pillars {
   max-width: var(--k811-content-max, 1120px);
@@ -10,89 +12,81 @@
   text-align: center;
   font-size: 28px;
   font-weight: 700;
+  color: #222;
   margin: 0 0 32px;
 }
 
-.k811-pillars-wrap {
+/* mobile-first: single column, Lottie on top of each card */
+.k811-pillars-grid {
   display: grid;
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 40px;
 }
 
-.k811-pillars-tabs {
+.k811-pillars-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
 }
 
-.k811-pillars-tab {
-  font-family: inherit;
-  text-align: left;
-  background: transparent;
-  border: none;
-  border-left: 3px solid transparent;
-  padding: 12px 16px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  opacity: 0.55;
-  transition: opacity 0.2s ease, border-color 0.2s ease;
-}
-
-.k811-pillars-tab.is-active {
-  opacity: 1;
-  border-left-color: var(--k811-link, #d1101f);
-}
-
-.k811-pillars-tab-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--k811-text, #222);
-}
-
-.k811-pillars-tab-desc {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #666;
-}
-
-.k811-pillars-stage {
-  position: relative;
-  min-height: 260px;
-}
-
-.k811-pillars-stage-item {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+.k811-pillars-media {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
 }
 
-.k811-pillars-stage-item.is-active {
-  opacity: 1;
-  pointer-events: auto;
+.k811-pillars-media .k811-lottie {
+  width: 100%;
+  height: 100%;
 }
 
-.k811-pillars-stage-item .k811-lottie {
-  max-width: 460px;
+.k811-pillars-card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #222;
 }
 
+.k811-pillars-card-desc {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #222;
+}
+
+/* tablet (600-899px): 2-up grid */
+@media (width >= 600px) {
+  .k811-pillars-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 32px;
+  }
+}
+
+/* desktop (>=900px): 4-up row, larger title */
 @media (width >= 900px) {
   .k811-pillars {
     padding: 56px 40px;
   }
 
-  .k811-pillars-wrap {
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: center;
+  .k811-pillars-title {
+    font-size: 44px;
+    margin: 0 0 56px;
   }
 
-  .k811-pillars-stage {
-    min-height: 380px;
+  .k811-pillars-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  .k811-pillars-media {
+    max-width: 200px;
   }
 }

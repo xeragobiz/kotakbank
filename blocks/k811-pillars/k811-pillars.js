@@ -1,14 +1,14 @@
 import { initK811, revealOnScroll, mountLottie } from '../../scripts/k811/k811-common.js';
 
 /*
- * K811 Pillars — "We always serve by the rules." A tabbed set of value pillars
- * synced to a crossfading Lottie stage (the source uses linked Swipers; we use
- * lightweight vanilla tabs + lazy lottie-player, no Swiper dependency).
+ * K811 Pillars — "We always serve by the rules." A static grid of value pillar
+ * cards, each with its OWN always-on Lottie animation above a heading + short
+ * description. Faithful to kotak811.bank.in/about-us: 4-up row on desktop/tablet,
+ * stacked on mobile; every card's animation plays independently (no tabs).
  *
- * Content model: optional leading title row, then one row per pillar with
- * cells: title, description, lottie JSON url (desktop), optional lottie mobile url.
- * Desktop: title tab-list on one side, Lottie stage on the other. Selecting a
- * tab crossfades to that pillar's Lottie. Mobile: stacked.
+ * Content model: optional leading title row (single heading cell), then one row
+ * per pillar with cells: title, description, lottie JSON url (desktop),
+ * optional lottie JSON url (mobile). The mobile url is used below 900px.
  */
 export default function decorate(block) {
   initK811(block);
@@ -22,7 +22,7 @@ export default function decorate(block) {
     const urls = [...row.querySelectorAll('a')].map((a) => a.href)
       .filter((u) => /\.json(\?|$)/i.test(u));
     const textUrls = cells.map((c) => (c.textContent || '').trim())
-      .filter((t) => /^https?:\/\/\S+\.json$/i.test(t));
+      .filter((t) => /^https?:\/\/\S+\.json$/i.test(t) || /\.json$/i.test(t));
     const lottieUrls = urls.length ? urls : textUrls;
 
     if (cells.length === 1 && cells[0].querySelector('h1, h2, h3')
@@ -53,60 +53,41 @@ export default function decorate(block) {
     nodes.push(h);
   }
 
-  const wrap = document.createElement('div');
-  wrap.className = 'k811-pillars-wrap';
+  const grid = document.createElement('div');
+  grid.className = 'k811-pillars-grid';
 
-  const tabs = document.createElement('div');
-  tabs.className = 'k811-pillars-tabs';
-  tabs.setAttribute('role', 'tablist');
+  const isMobile = window.matchMedia('(max-width: 899px)').matches;
 
-  const stage = document.createElement('div');
-  stage.className = 'k811-pillars-stage';
+  pillars.forEach((p) => {
+    const card = document.createElement('div');
+    card.className = 'k811-pillars-card';
 
-  const stageItems = [];
-  const mounted = [];
+    const media = document.createElement('div');
+    media.className = 'k811-pillars-media';
+    card.append(media);
 
-  pillars.forEach((p, i) => {
-    const tab = document.createElement('button');
-    tab.type = 'button';
-    tab.className = 'k811-pillars-tab';
-    tab.setAttribute('role', 'tab');
-    // Build with textContent (not innerHTML) so authored text is never
-    // interpreted as HTML (avoids XSS).
-    const titleSpan = document.createElement('span');
-    titleSpan.className = 'k811-pillars-tab-title';
-    titleSpan.textContent = p.title;
-    tab.append(titleSpan);
-    if (p.desc) {
-      const descSpan = document.createElement('span');
-      descSpan.className = 'k811-pillars-tab-desc';
-      descSpan.textContent = p.desc;
-      tab.append(descSpan);
+    const body = document.createElement('div');
+    body.className = 'k811-pillars-body';
+    if (p.title) {
+      const h = document.createElement('h4');
+      h.className = 'k811-pillars-card-title';
+      h.textContent = p.title;
+      body.append(h);
     }
+    if (p.desc) {
+      const d = document.createElement('p');
+      d.className = 'k811-pillars-card-desc';
+      d.textContent = p.desc;
+      body.append(d);
+    }
+    card.append(body);
+    grid.append(card);
 
-    const stageItem = document.createElement('div');
-    stageItem.className = 'k811-pillars-stage-item';
-    stageItems.push(stageItem);
-    stage.append(stageItem);
-
-    const activate = () => {
-      tabs.querySelectorAll('.k811-pillars-tab').forEach((t) => t.classList.remove('is-active'));
-      stageItems.forEach((s) => s.classList.remove('is-active'));
-      tab.classList.add('is-active');
-      stageItem.classList.add('is-active');
-      // lazy-mount this pillar's lottie on first activation
-      if (!mounted[i] && p.lottieDesktop) {
-        mounted[i] = true;
-        mountLottie(stageItem, p.lottieDesktop);
-      }
-    };
-    tab.addEventListener('click', activate);
-    if (i === 0) activate();
-    tabs.append(tab);
+    const src = isMobile ? p.lottieMobile : p.lottieDesktop;
+    if (src) mountLottie(media, src);
   });
 
-  wrap.append(tabs, stage);
-  nodes.push(wrap);
+  nodes.push(grid);
   block.replaceChildren(...nodes);
   revealOnScroll(block);
 }
