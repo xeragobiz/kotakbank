@@ -18,11 +18,14 @@ export default function decorate(block) {
   const cells = rows.map((r) => r.querySelector(':scope > div') || r).filter(Boolean);
 
   const pictureCell = cells.find((c) => c.querySelector('picture'));
-  // the video cell's ENTIRE content is a single URL (EDS wraps it as
-  // <p><a>url</a></p>, so test the text, not the markup)
+  // the video/lottie cell's ENTIRE content is a single URL (EDS wraps it as
+  // <p><a>url</a></p>, so test the text, not the markup). Match absolute
+  // (https://…) AND root-relative (/blocks/…json, /content/…) single-token
+  // paths so a Lottie path authored in its own cell isn't mistaken for the
+  // text cell (which would drop the heading + description).
   const isUrlOnly = (c) => {
     const t = (c.textContent || '').trim();
-    return t.length > 0 && !/\s/.test(t) && /^https?:\/\/\S+$/.test(t);
+    return t.length > 0 && !/\s/.test(t) && /^(?:https?:\/\/|\/)\S+$/.test(t);
   };
   const videoCell = cells.find((c) => c !== pictureCell && isUrlOnly(c));
   // the text cell is the remaining non-empty cell (heading + description)
