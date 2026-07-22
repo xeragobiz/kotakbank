@@ -145,6 +145,15 @@
   margin: 0 auto;
 }
 
+/* Static logo fallback (security section): render square/contained like the
+   Lottie it replaces — override the generic 2:1 promo-photo crop above. */
+.k811-feature:not(.k811-feature-qr) .k811-feature-img-col img.k811-feature-logo {
+  aspect-ratio: 1 / 1;
+  max-width: 560px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
 /* ---- Desktop layout ----------------------------------------------- */
 @media (width >= 900px) {
   .k811-feature > div {
