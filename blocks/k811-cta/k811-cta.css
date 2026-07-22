@@ -52,6 +52,22 @@
 
 /* mobile: text-only banner (no phone illustration), matching the reference */
 @media (width < 900px) {
+  /* full-bleed edge-to-edge black band (no contained rounded box, no gutters) */
+  main > .section:has(> .k811-cta-wrapper) {
+    margin: 0;
+    padding: 0;
+  }
+
+  main > .section > .k811-cta-wrapper {
+    max-width: none;
+    padding: 0;
+  }
+
+  .k811-cta {
+    max-width: none;
+    border-radius: 0;
+  }
+
   .k811-cta .k811-cta-media {
     display: none;
   }
