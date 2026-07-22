@@ -1,0 +1,80 @@
+/* K811 Team — "The Essentials" member cards. Inherits Manrope. */
+
+.k811-team {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.k811-team-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 32px;
+}
+
+.k811-team-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.k811-team-card {
+  max-width: 320px;
+  width: 100%;
+}
+
+.k811-team-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+}
+
+.k811-team-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.k811-team-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.k811-team-linkedin {
+  width: 24px;
+  height: 24px;
+  background: #0a66c2;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+}
+
+.k811-team-linkedin::after {
+  content: "in";
+  position: absolute;
+  inset: 0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (width >= 900px) {
+  .k811-team {
+    padding: 56px 40px;
+  }
+
+  .k811-team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 760px;
+    margin: 0 auto;
+  }
+}

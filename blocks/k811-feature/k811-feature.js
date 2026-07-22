@@ -1,13 +1,15 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { initK811, revealOnScroll, mountLottie } from '../../scripts/k811/k811-common.js';
 
 // shared counter so consecutive feature promos alternate image side
 let featureIndex = 0;
 
 export default function decorate(block) {
-  block.classList.add('columns-feature-2-cols');
+  initK811(block);
+  block.classList.add('k811-feature-2-cols');
 
   // alternate image left/right down the page (0 = image left, 1 = image right)
-  if (featureIndex % 2 === 1) block.classList.add('columns-feature-alt');
+  if (featureIndex % 2 === 1) block.classList.add('k811-feature-alt');
   featureIndex += 1;
 
   // Collect the leaf content cell of every field row. Empty fields may not
@@ -36,7 +38,7 @@ export default function decorate(block) {
 
   // media column: thumbnail wrapped in the video link (play overlay via CSS)
   const media = document.createElement('div');
-  media.className = 'columns-feature-img-col';
+  media.className = 'k811-feature-img-col';
   const picture = pictureCell ? pictureCell.querySelector('picture') : null;
   if (picture) {
     // a stray URL must not remain as the img alt
@@ -55,7 +57,7 @@ export default function decorate(block) {
 
   // text column: the rich body (heading + description)
   const text = document.createElement('div');
-  text.className = 'columns-feature-text-col';
+  text.className = 'k811-feature-text-col';
   if (textCell) {
     while (textCell.firstChild) text.append(textCell.firstChild);
   }
@@ -75,21 +77,35 @@ export default function decorate(block) {
   const looksSquare = w && h && Math.abs(w - h) / Math.max(w, h) < 0.2;
   const hasDownloadCta = /download/i.test(text.textContent || '');
   if (looksSquare || (hasDownloadCta && block.querySelectorAll('h2').length > 1)) {
-    block.classList.add('columns-feature-qr');
+    block.classList.add('k811-feature-qr');
   }
 
-  // subtle scroll-reveal (fade + rise), mirroring the source AOS animation.
-  // reveal-ready gates the CSS hidden state so a JS failure can't hide content.
-  if (typeof IntersectionObserver !== 'undefined') {
-    block.classList.add('columns-feature-reveal-ready');
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('columns-feature-revealed');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
-    io.observe(block);
+  // Decorative Lottie animation. The source site shows a looping Lottie in the
+  // "nearest bank" and "credit cards get easy" sections. Two sources, in order:
+  //  1. An authored trailing plain <p> whose text is a Lottie JSON url.
+  //  2. Fallback: match the section by heading text to the bundled Lottie files
+  //     (the scraper strips <lottie-player>, so the url isn't in the content).
+  // Lazy-mounted into the media column so it never blocks LCP.
+  const headingText = (text.querySelector('h1, h2, h3') || {}).textContent || '';
+  const lottieP = [...text.querySelectorAll('p')].find((p) => {
+    const t = (p.textContent || '').trim();
+    return /^https?:\/\/\S+\.json$/i.test(t) && !p.querySelector('a');
+  });
+  let lottieSrc = '';
+  if (lottieP) {
+    lottieSrc = lottieP.textContent.trim();
+    lottieP.remove();
+  } else if (/nearest bank/i.test(headingText)) {
+    lottieSrc = '/blocks/k811-feature/lottie/nearest-bank.json';
+  } else if (/credit cards get easy/i.test(headingText)) {
+    lottieSrc = '/blocks/k811-feature/lottie/credit-cards.json';
   }
+  if (lottieSrc) {
+    block.classList.add('k811-feature-has-lottie');
+    mountLottie(media, lottieSrc);
+  }
+
+  // AOS-faithful reveal: pure opacity fade-in, 400ms ease-in, re-triggers on
+  // scroll into view (matches the source site's AOS config exactly).
+  revealOnScroll(block);
 }

@@ -35,8 +35,11 @@
     ]
   },
   "usage": {
-    "pagesUsing": ["/en/personal-banking/cards/credit-cards/kotak-cashback-plus-credit-card"],
-    "reuseCount": 1,
-    "lastUsed": "2026-07-14T00:00:00.000Z"
+    "pagesUsing": [
+      "/en/personal-banking/cards/credit-cards/kotak-cashback-plus-credit-card",
+      "/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-07-22T00:00:00.000Z"
   }
 }

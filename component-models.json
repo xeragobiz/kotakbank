@@ -1129,6 +1129,495 @@
     ]
   },
   {
+    "id": "k811-card-selector",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-card-variant",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Variant name",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Card image",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "panel",
+        "label": "Fees & eligibility (include T&C link)",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "applyCta",
+        "label": "Apply CTA"
+      }
+    ]
+  },
+  {
+    "id": "k811-cta",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image (upload from assets)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Background Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Heading"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaLink",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLinkText",
+        "label": "CTA Text"
+      }
+    ]
+  },
+  {
+    "id": "k811-faq",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-faq-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "question",
+        "label": "Question",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "answer",
+        "label": "Answer",
+        "value": "",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-feature",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Video Thumbnail",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Video Link (URL)"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_image",
+        "label": "Background Image (Desktop)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageAlt",
+        "label": "Background Image Alt Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_imageMobile",
+        "label": "Background Image (Mobile) — optional",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageMobileAlt",
+        "label": "Mobile Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Heading & Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "text_headingColor",
+        "label": "Heading Colour",
+        "valueType": "string",
+        "value": "orange",
+        "options": [
+          {
+            "name": "Orange",
+            "value": "orange"
+          },
+          {
+            "name": "Blue",
+            "value": "blue"
+          },
+          {
+            "name": "White",
+            "value": "white"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "text_textColor",
+        "label": "Text Colour",
+        "valueType": "string",
+        "value": "blue",
+        "options": [
+          {
+            "name": "Orange",
+            "value": "orange"
+          },
+          {
+            "name": "Blue",
+            "value": "blue"
+          },
+          {
+            "name": "White",
+            "value": "white"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "text_layout",
+        "label": "Layout",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Default (overlay banner)",
+            "value": ""
+          },
+          {
+            "name": "Detail (product-detail card)",
+            "value": "detail"
+          },
+          {
+            "name": "Metal (light, card art on right)",
+            "value": "metal"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "text_gradient",
+        "label": "Gradient",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Red",
+            "value": "gradient-red"
+          },
+          {
+            "name": "Dark",
+            "value": "gradient-dark"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "primaryCta",
+        "label": "Primary CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "primaryCtaText",
+        "label": "Primary CTA Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "secondaryCta",
+        "label": "Secondary CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondaryCtaText",
+        "label": "Secondary CTA Text"
+      }
+    ]
+  },
+  {
+    "id": "k811-offers",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Layout",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Grid (icon above text)",
+            "value": ""
+          },
+          {
+            "name": "List (icon beside text, red icons)",
+            "value": "list"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "benefit-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-pillars",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-pillar",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Pillar title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "lottieDesktop",
+        "label": "Lottie URL (desktop)",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "lottieMobile",
+        "label": "Lottie URL (mobile)",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-steps",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-step",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Step text",
+        "value": "",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-story",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Background image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image alt",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "align",
+        "label": "Text alignment",
+        "valueType": "string",
+        "value": "left",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k811-team",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-team-member",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Photo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Name",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkedin",
+        "label": "LinkedIn link"
+      }
+    ]
+  },
+  {
+    "id": "k811-video-hero",
+    "fields": [
+      {
+        "component": "text",
+        "name": "video",
+        "label": "Video URL(s) (.mp4) — desktop, then optional mobile",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "name": "poster",
+        "label": "Poster image",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "primaryCta",
+        "label": "Primary CTA"
+      }
+    ]
+  },
+  {
     "id": "rates-charges",
     "fields": [
       {

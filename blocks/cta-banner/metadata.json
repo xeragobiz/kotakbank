@@ -1,0 +1,36 @@
+{
+  "variantName": "cta-banner",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-07-22T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.kotak811.bank.in/",
+    "originPage": "Kotak811 homepage",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "accent",
+    "density": "compact",
+    "purpose": "cta",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "full-bleed gradient/color band + heading + optional single CTA",
+    "buttonCount": 1,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "full-bleed accent CTA bands with a single headline/action",
+      "toll-free / contact promo callout strips"
+    ],
+    "notSuitableFor": [
+      "sections needing imagery or multiple columns"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-22T00:00:00.000Z"
+  }
+}

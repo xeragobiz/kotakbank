@@ -1,0 +1,133 @@
+/*
+ * K811 Video Hero — full-bleed background video with overlaid copy.
+ * Scoped to .kotak811 pages; inherits Manrope + tokens from styles/kotak811.css.
+ */
+
+.k811-video-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 420px;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+}
+
+/* full-bleed even inside a constrained section */
+.kotak811 .section > .k811-video-hero-wrapper {
+  max-width: none;
+}
+
+.k811-video-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.k811-video-hero-media picture,
+.k811-video-hero-media img,
+.k811-video-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.k811-video-hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.k811-video-hero-content h1 {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #cfcfcf;
+  margin: 0 0 12px;
+}
+
+.k811-video-hero-content h2 {
+  font-size: 34px;
+  line-height: 1.1;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+.k811-video-hero-content h3 {
+  font-size: 22px;
+  font-weight: 400;
+  margin: 0 0 24px;
+  color: #fff;
+}
+
+.k811-video-hero-content p {
+  font-size: 16px;
+  margin: 0 0 24px;
+  color: #eaeaea;
+}
+
+.k811-video-hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.k811-video-hero-btn.k811-video-hero-btn-primary {
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 14px 32px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.k811-video-hero-btn.k811-video-hero-btn-primary:hover {
+  background: #d1101f;
+  color: #fff;
+}
+
+.k811-video-hero-btn-label {
+  font-size: 14px;
+  color: #cfcfcf;
+}
+
+.k811-video-hero-btn.k811-video-hero-btn-secondary {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+@media (width >= 900px) {
+  .k811-video-hero {
+    min-height: 560px;
+  }
+
+  .k811-video-hero-content {
+    padding: 80px 40px;
+  }
+
+  .k811-video-hero-content h2 {
+    font-size: 56px;
+  }
+
+  .k811-video-hero-content h3 {
+    font-size: 30px;
+  }
+
+  .k811-video-hero-actions {
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+}
