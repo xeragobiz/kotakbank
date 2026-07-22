@@ -1129,6 +1129,55 @@
     ]
   },
   {
+    "id": "k811-app-cta",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "App / QR image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image alt text"
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "value": "",
+        "label": "Heading + CTA",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-benefits-story-panel",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Photo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Photo alt",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "value": "",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "k811-card-variant",
     "fields": [
       {
@@ -1206,6 +1255,25 @@
         "name": "answer",
         "label": "Answer",
         "value": "",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "k811-feature-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
         "valueType": "string"
       }
     ]

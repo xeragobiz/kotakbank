@@ -1,4 +1,6 @@
-/* K811 FAQ — native <details> accordion. Inherits Manrope from .kotak811. */
+/* K811 FAQ — native <details> accordion. Inherits Manrope from .kotak811.
+ * Faithful to kotak811.bank.in: black section, white 34px title, gray subtitle,
+ * white bold questions on thin divider rows (no cards), red chevron. */
 
 .k811-faq {
   max-width: 860px;
@@ -6,39 +8,37 @@
   padding: 24px;
 }
 
-.k811-faq-title {
+.k811-faq .k811-faq-title {
   text-align: center;
   margin: 0 0 8px;
+  font-size: 34px;
+  font-weight: 700;
 }
 
-.k811-faq-title + .k811-faq-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #666;
+.k811-faq .k811-faq-title + .k811-faq-title,
+.kotak811 .section.dark .k811-faq .k811-faq-title + .k811-faq-title {
+  font-size: 18px;
+  font-weight: 400;
+  color: #aeafae;
   margin-bottom: 24px;
 }
 
 .k811-faq-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .k811-faq-item {
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
-  background: #fff;
-  overflow: hidden;
+  border-bottom: 1px solid #3a3a3a;
 }
 
 .k811-faq-q {
   list-style: none;
   cursor: pointer;
-  padding: 18px 52px 18px 20px;
+  padding: 20px 52px 20px 0;
   position: relative;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--k811-text, #222);
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .k811-faq-q::-webkit-details-marker {
@@ -48,7 +48,7 @@
 .k811-faq-q::after {
   content: "";
   position: absolute;
-  right: 22px;
+  right: 8px;
   top: 50%;
   width: 10px;
   height: 10px;
@@ -63,10 +63,9 @@
 }
 
 .k811-faq-a {
-  padding: 0 20px 18px;
-  font-size: 15px;
+  padding: 0 52px 20px 0;
+  font-size: 16px;
   line-height: 1.6;
-  color: #444;
 }
 
 .k811-faq-a p {
@@ -80,9 +79,5 @@
 @media (width >= 900px) {
   .k811-faq {
     padding: 48px 24px;
-  }
-
-  .k811-faq-q {
-    font-size: 18px;
   }
 }

@@ -146,6 +146,12 @@
     ]
   },
   {
+    "id": "k811-benefits-story",
+    "components": [
+      "k811-benefits-story-panel"
+    ]
+  },
+  {
     "id": "k811-card-selector",
     "components": [
       "k811-card-variant"
@@ -155,6 +161,12 @@
     "id": "k811-faq",
     "components": [
       "k811-faq-item"
+    ]
+  },
+  {
+    "id": "k811-feature-grid",
+    "components": [
+      "k811-feature-card"
     ]
   },
   {

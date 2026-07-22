@@ -113,6 +113,37 @@
   }
 }
 
+/* ---- "detailed features" long-form SEO copy (white section) ------------
+ * Matches the source: gray centered eyebrow title, black sub-headings, gray
+ * body paragraphs. Scoped so global pages are unaffected. Declared after the
+ * base .kotak811 h2/h3 rules so specificity ascends (stylelint-friendly). */
+.kotak811 .section.detailed {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.kotak811 .section.detailed .default-content-wrapper > h2:first-child {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 500;
+  color: #959595;
+  margin: 0 0 24px;
+}
+
+.kotak811 .section.detailed .default-content-wrapper h3 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #000;
+  margin: 24px 0 10px;
+}
+
+.kotak811 .section.detailed .default-content-wrapper p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #797979;
+  margin: 0;
+}
+
 /* ---- AOS-faithful fade-in reveal ---------------------------------------
  * Elements marked `data-k811-aos="fade-in"` start transparent and fade to
  * opaque when the shared IntersectionObserver adds `.k811-aos-in`.
