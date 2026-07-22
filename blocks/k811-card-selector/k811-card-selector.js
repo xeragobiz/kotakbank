@@ -169,9 +169,15 @@ export default function decorate(block) {
     mediaItem.className = 'k811-card-selector-card';
     if (v.picture) {
       const img = v.picture.matches?.('img') ? v.picture : v.picture.querySelector('img');
-      if (img && img.src) {
-        mediaItem.append(createOptimizedPicture(img.src, v.name, i === 0, [{ width: '750' }]));
-      } else {
+      // Use the raw attribute and reject broken placeholders (e.g. about:error,
+      // nullerror) that the authoring pipeline emits for a missing asset.
+      const rawSrc = img && (img.getAttribute('src') || '');
+      const validSrc = rawSrc && /^(https?:\/\/|\/|\.\/)/.test(rawSrc) && !/^about:/.test(rawSrc);
+      if (validSrc) {
+        mediaItem.append(createOptimizedPicture(rawSrc, v.name, i === 0, [{ width: '750' }]));
+      } else if (img) {
+        // keep the original <img>/<picture> so the alt text still conveys the
+        // variant, without a doubly-broken optimized <picture>.
         mediaItem.append(v.picture);
       }
     }
