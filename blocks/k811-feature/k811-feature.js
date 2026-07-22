@@ -83,14 +83,17 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(newRow);
 
-  // QR / app-download variant: the image is a small square (QR code) rather
-  // than a wide hero photo. Flag it so CSS keeps it compact and centered.
-  const qrImg = picture ? picture.querySelector('img') : null;
-  const w = qrImg ? Number(qrImg.getAttribute('width')) : 0;
-  const h = qrImg ? Number(qrImg.getAttribute('height')) : 0;
-  const looksSquare = w && h && Math.abs(w - h) / Math.max(w, h) < 0.2;
-  const hasDownloadCta = /download/i.test(text.textContent || '');
-  if (looksSquare || (hasDownloadCta && block.querySelectorAll('h2').length > 1)) {
+  // QR / app-download variant: a genuinely square QR image (e.g. 3000x3000)
+  // plus the download-app copy. The QR is exactly 1:1 — use a tight tolerance
+  // so near-square product-card renders (e.g. 2240x1960 debit card) are NOT
+  // misclassified as QR (which would force the centered column layout).
+  // The download-app promo has the distinctive copy "Download the app" +
+  // "Download your bank" (two headings). This signal is reliable in both the
+  // deployed and import environments (unlike the QR image's width/height, which
+  // the importer strips). Near-square product-card photos must NOT match.
+  const hasDownloadCopy = /download/i.test(text.textContent || '')
+    && block.querySelectorAll('h2').length > 1;
+  if (hasDownloadCopy) {
     block.classList.add('k811-feature-qr');
   }
 
