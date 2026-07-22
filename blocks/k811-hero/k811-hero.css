@@ -469,6 +469,18 @@ main > .section > .k811-hero-wrapper {
   margin-top: 20px;
 }
 
+/* mobile: centre the copy + CTA (matches the reference). Scoped to < 900px so
+   the desktop left-aligned overlay is unaffected. */
+@media (width < 900px) {
+  .k811-hero.metal .k811-hero-content {
+    text-align: center;
+  }
+
+  .k811-hero.metal .k811-hero-actions {
+    justify-content: center;
+  }
+}
+
 .k811-hero.metal .k811-hero-btn-primary {
   position: relative;
   isolation: isolate;
