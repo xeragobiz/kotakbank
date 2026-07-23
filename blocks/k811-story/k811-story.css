@@ -61,14 +61,18 @@
   max-width: 480px;
 }
 
+/* All About Us story panels are left-aligned. The right variant is retained
+   for the model but renders left, so any panel still authored "right" (e.g.
+   stale delivered content) matches the intended left-aligned design. */
 .k811-story-right {
-  text-align: right;
+  text-align: left;
 }
 
 .k811-story-right h2,
 .k811-story-right h3,
 .k811-story-right p {
-  margin-left: auto;
+  margin-right: auto;
+  margin-left: 0;
 }
 
 .k811-story-center {
