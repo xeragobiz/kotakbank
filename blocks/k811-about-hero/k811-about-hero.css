@@ -70,5 +70,7 @@
   .k811-about-hero .k811-about-hero-content :is(h1, h2, h3) {
     font-size: 60px;
     line-height: 70px;
+    max-width: 640px; /* break after the comma like the live banner */
+    margin-inline: auto;
   }
 }
