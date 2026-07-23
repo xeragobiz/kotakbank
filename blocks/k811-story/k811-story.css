@@ -1,26 +1,41 @@
-/* K811 Story — Inherits Manrope.
- * Mobile-first: a STACKED card — dark heading + copy on white at the top, the
- * full uncropped image below (no overlap). At >=900px it becomes the
- * full-bleed banner with the copy overlaid on the image (see media query). */
+/* K811 Story — full-bleed image with the copy overlaid INSIDE it. Inherits
+ * Manrope. Mobile: a tall portrait panel with the copy anchored at the TOP
+ * (in the image's empty space, above the subject) over a dark scrim for
+ * legibility. Desktop (>=900px): the wide banner with the copy centered. */
 
 .k811-story {
+  position: relative;
+  min-height: 520px;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   overflow: hidden;
-  background: #fff;
-  color: #222;
+  color: #fff;
 }
 
-/* image sits BELOW the text on mobile, shown in full (natural aspect ratio) */
 .k811-story-media {
-  order: 2;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .k811-story-media picture,
 .k811-story-media img {
   width: 100%;
-  height: auto;
+  height: 100%;
+
+  /* keep the subject low in frame so the top stays clear for the copy */
+  object-fit: cover;
+  object-position: center bottom;
   display: block;
+}
+
+/* dark scrim at the top so the overlaid copy stays legible over the image */
+.k811-story-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 0%) 45%);
+  pointer-events: none;
 }
 
 /* the section wrapper must not constrain the full-bleed panel */
@@ -35,7 +50,6 @@
 }
 
 .k811-story-content {
-  order: 1;
   position: relative;
   z-index: 1;
   width: 100%;
@@ -50,7 +64,7 @@
   line-height: 34px;
   font-weight: 700;
   margin: 0 0 12px;
-  color: #222;
+  color: #fff;
   max-width: 520px;
 }
 
@@ -58,7 +72,7 @@
   font-size: 14px;
   line-height: 1.6;
   margin: 0;
-  color: #555;
+  color: #fff;
   max-width: 480px;
 }
 
@@ -88,31 +102,22 @@
 }
 
 @media (width >= 900px) {
-  /* desktop: full-bleed banner with the copy overlaid on the image */
+  /* desktop: wide banner, copy centered, no scrim (wide crop has headroom) */
   .k811-story {
-    position: relative;
     min-height: 600px;
-    flex-direction: row;
     align-items: center;
-    background: none;
-    color: #fff;
-  }
-
-  .k811-story-media {
-    order: 0;
-    position: absolute;
-    inset: 0;
-    z-index: 0;
   }
 
   .k811-story-media picture,
   .k811-story-media img {
-    height: 100%;
-    object-fit: cover;
+    object-position: center;
+  }
+
+  .k811-story-media::after {
+    display: none;
   }
 
   .k811-story-content {
-    order: 0;
     padding: 64px 40px;
   }
 
@@ -120,11 +125,9 @@
   .k811-story-content h3 {
     font-size: 44px;
     line-height: 52px;
-    color: #fff;
   }
 
   .k811-story-content p {
     font-size: 14px;
-    color: #f0f0f0;
   }
 }
