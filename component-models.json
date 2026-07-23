@@ -2018,5 +2018,30 @@
         "label": "Reviewed On"
       }
     ]
+  },
+  {
+    "id": "testk811-feature",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Video Thumbnail",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Video Link (URL)"
+      }
+    ]
   }
 ]
