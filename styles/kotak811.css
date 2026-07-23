@@ -146,27 +146,70 @@
   margin: 0;
 }
 
-/* ---- Scroll-reveal (fade + upward translate, once) ---------------------
- * Elements marked `data-k811-aos="fade-in"` start transparent and pushed
- * down 40px, then fade + rise to their resting state when the shared
- * IntersectionObserver adds `.k811-aos-in` the first time they enter the
- * viewport (the observer unobserves after, so it animates only once).
- * The hidden state is gated on `.k811-aos-ready` (added by JS) so a JS failure
- * can never leave content permanently invisible. Honors reduced-motion.
+/* ---- Scroll-reveal motion (fade + rise + stagger + image scale) --------
+ * Sections marked `data-k811-aos="fade-in"` start transparent and pushed down
+ * 40px, then fade + rise when the shared IntersectionObserver adds
+ * `.k811-aos-in` the first time they enter the viewport (it unobserves after,
+ * so each section animates only once). On reveal:
+ *   - direct content children (`[data-k811-child]`) stagger in, each delayed
+ *     by `--k811-child-delay` (index * 0.15s, set by JS);
+ *   - images (`.k811-aos-img`) additionally scale from .95 -> 1.
+ * All motion is transform + opacity only (compositor-friendly). The hidden
+ * state is gated on `.k811-aos-ready` (added by JS) so a JS failure can never
+ * leave content permanently invisible, and the whole block is disabled under
+ * prefers-reduced-motion.
  */
 @media (prefers-reduced-motion: no-preference) {
+  /* Hidden state (no transition, so applying it never animates OUT — the
+     content snaps to hidden, then only the reveal animates IN). */
   .kotak811 .k811-aos-ready[data-k811-aos='fade-in'] {
     opacity: 0;
     transform: translateY(40px);
-    transition:
-      opacity var(--k811-fade-duration) var(--k811-fade-easing),
-      transform var(--k811-fade-duration) var(--k811-fade-easing);
     will-change: opacity, transform;
   }
 
+  /* Once a section has staggered children, they carry the rise, so the
+     container only needs to fade (its translate is neutralised). */
+  .kotak811 .k811-aos-ready[data-k811-aos='fade-in']:has([data-k811-child]) {
+    transform: none;
+  }
+
+  .kotak811 [data-k811-aos='fade-in'] [data-k811-child] {
+    opacity: 0;
+    transform: translateY(40px);
+    will-change: opacity, transform;
+  }
+
+  /* Images scale .95 -> 1 in step with their child's reveal. */
+  .kotak811 [data-k811-aos='fade-in'] .k811-aos-img {
+    transform: scale(0.95);
+    will-change: transform;
+  }
+
+  /* Reveal: the transition lives on the `.k811-aos-in` state, so motion only
+     plays IN (fade + rise + scale), never on the initial hide. Children and
+     images honour their per-child stagger delay. */
   .kotak811 [data-k811-aos='fade-in'].k811-aos-in {
     opacity: 1;
     transform: none;
+    transition:
+      opacity var(--k811-fade-duration) var(--k811-fade-easing),
+      transform var(--k811-fade-duration) var(--k811-fade-easing);
+  }
+
+  .kotak811 [data-k811-aos='fade-in'].k811-aos-in [data-k811-child] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--k811-fade-duration) var(--k811-fade-easing),
+      transform var(--k811-fade-duration) var(--k811-fade-easing);
+    transition-delay: var(--k811-child-delay, 0s);
+  }
+
+  .kotak811 [data-k811-aos='fade-in'].k811-aos-in .k811-aos-img {
+    transform: scale(1);
+    transition: transform var(--k811-fade-duration) var(--k811-fade-easing);
+    transition-delay: var(--k811-child-delay, 0s);
   }
 }
 
