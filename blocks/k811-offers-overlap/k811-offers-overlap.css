@@ -137,10 +137,11 @@
     display: none;
   }
 
-  /* one card visible with ~20% of the next peeking at the right edge */
+  /* narrower card: one card visible with a larger peek of the next at the
+     right edge (matches the reference) */
   .k811-offers-overlap > ul > li {
     flex: 0 0 auto;
-    width: 80%;
+    width: 62%;
     scroll-snap-align: start;
   }
 }
