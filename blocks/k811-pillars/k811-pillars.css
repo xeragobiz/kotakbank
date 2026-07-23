@@ -9,13 +9,16 @@
   padding: 24px;
 }
 
-.k811-pillars-title {
+.kotak811 .k811-pillars .k811-pillars-title {
   text-align: center;
-  font-size: 28px;
-  line-height: 34px;
+  font-size: 20px;
+  line-height: 28px;
   font-weight: 700;
   color: #222;
   margin: 0 0 32px;
+
+  /* keep the title on a single line on mobile */
+  white-space: nowrap;
 }
 
 /* Desktop shared animation stage — hidden on mobile. */
@@ -60,7 +63,7 @@
 
 .k811-pillars-tab-media {
   width: 100%;
-  max-width: 220px;
+  max-width: 280px;
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
@@ -94,7 +97,7 @@
     padding: 56px 40px;
   }
 
-  .k811-pillars-title {
+  .kotak811 .k811-pillars .k811-pillars-title {
     font-size: 44px;
     line-height: 52px;
     margin: 0 0 40px;
