@@ -386,13 +386,12 @@ function about() {
   const im = new Images();
   const parts = [];
 
-  // K811 Video Hero (no primaryCta/poster) — supply video + text only, plus
-  // empty poster & primaryCta rows so every field group aligns to a row.
-  parts.push(gridTable('K811 Video Hero', [
+  // K811 About Hero — full-bleed looping background video + centered heading on
+  // a light banner (video desktop + optional mobile URL, then the heading).
+  parts.push(gridTable('K811 About Hero', [
     [['<!-- field:video -->', '', `${CDN}/Kotak_Website_HD_No_Text_2_6e093e2bf6.mp4`, '', `${CDN}/Kotak_Website_mobile_2_Withou_text_3_2_615db81c7a.mp4`]],
-    [['<!-- field:poster -->', '', '']],
     [['<!-- field:text -->', '', '# Rebuilding your bank, byte by byte']],
-  ]) + '\n\n' + sectionMeta('dark'));
+  ]));
 
   // K811 Story x3 (image, imageAlt via alt on image, text, align)
   const stories = [
