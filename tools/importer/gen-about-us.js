@@ -16,10 +16,9 @@ const cell = (inner) => `<div>${inner}</div>`;
 const row1 = (inner) => `<div><div>${inner}</div></div>`;
 const sectionMeta = (style) => `<div class="section-metadata"><div><div>style</div><div>${style}</div></div></div>`;
 
-// ---- Section 1: video hero ------------------------------------------------
-const hero = `<div class="k811-video-hero">
-  ${cell(field('videoDesktop', `<p>${CDN}/Kotak_Website_HD_No_Text_2_6e093e2bf6.mp4</p>`))}
-  ${cell(field('videoMobile', `<p>${CDN}/Kotak_Website_mobile_2_Withou_text_3_2_615db81c7a.mp4</p>`))}
+// ---- Section 1: about hero (full-bleed looping video + centered heading) --
+const hero = `<div class="k811-about-hero">
+  ${cell(field('video', `<p>${CDN}/Kotak_Website_HD_No_Text_2_6e093e2bf6.mp4</p><p>${CDN}/Kotak_Website_mobile_2_Withou_text_3_2_615db81c7a.mp4</p>`))}
   ${cell(field('text', '<h1>Rebuilding your bank, byte by byte</h1>'))}
 </div>`;
 
@@ -61,7 +60,7 @@ const teamBlock = `<div class="k811-team">
 const logoBand = `<p>${img(`${CDN}/kotak_mahindra_logo_bdab62eafb.svg`, 'Kotak Mahindra Bank')}</p>`;
 
 const html = [
-  `<div>${hero}${sectionMeta('dark')}</div>`,
+  `<div>${hero}</div>`,
   `<div>${storyBlocks[0]}</div>`,
   `<div>${storyBlocks[1]}</div>`,
   `<div>${storyBlocks[2]}</div>`,

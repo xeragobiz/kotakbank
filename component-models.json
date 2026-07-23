@@ -1129,6 +1129,23 @@
     ]
   },
   {
+    "id": "k811-about-hero",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "video",
+        "label": "Video URL(s) (.mp4) — desktop, then optional mobile (one per line)",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Heading",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "k811-app-cta",
     "fields": [
       {
