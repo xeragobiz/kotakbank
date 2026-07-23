@@ -162,7 +162,7 @@
 @media (width >= 900px) {
   .k811-offers-overlap > ul {
     grid-template-columns: repeat(4, 1fr);
-    max-width: 360px;
+    max-width: 600px;
     margin: 0 auto;
   }
 
