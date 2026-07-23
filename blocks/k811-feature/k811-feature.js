@@ -48,11 +48,20 @@ export default function decorate(block) {
   // <img src="....json">. Detect that, drop the broken picture, and use the
   // path as the Lottie source instead.
   let lottieFromImage = '';
+  // An SVG authored in the image (Video Thumbnail) field is used as the logo
+  // artwork (e.g. the animated 811 "Next-gen security" mark). EDS renders it as
+  // an <img src="....svg"> — capture the source and drop the picture so we can
+  // mount it as the animated logo instead of a plain cropped photo.
+  let svgFromImage = '';
   if (picture) {
     const pImg = picture.querySelector('img');
     const pSrc = (pImg && (pImg.getAttribute('src') || '')).trim();
     if (/\.json(\?|$)/i.test(pSrc)) {
       lottieFromImage = pSrc;
+      picture.remove();
+      picture = null;
+    } else if (/\.svg(\?|$)/i.test(pSrc)) {
+      svgFromImage = pSrc;
       picture.remove();
       picture = null;
     }
@@ -121,17 +130,29 @@ export default function decorate(block) {
       : lottieP.textContent.trim();
     lottieP.remove();
   }
-  // the video field may also carry a .json Lottie path (JCR generation path)
+  // the video field may also carry a .svg logo or a .json Lottie path
+  const svgFromVideo = /\.svg(\?|$)/i.test(videoHref) ? videoHref : '';
   const lottieFromVideo = JSON_RE.test(videoHref) ? videoHref : '';
+
+  // An authored SVG (image or video field) is the logo artwork — render it as
+  // the animated logo (uses the same media-left layout as the Lottie feature).
+  const svgSrc = svgFromImage || svgFromVideo;
   const lottieSrc = lottieFromText || lottieFromVideo || lottieFromImage;
-  if (lottieSrc) {
+  if (svgSrc) {
     block.classList.add('k811-feature-has-lottie');
-    // The "Next-gen security" logo Lottie is a doubly-nested precomp that our
-    // bundled lottie-player can't render inside this block (blank output). The
-    // source shows it essentially static, so render the equivalent static SVG
-    // logo instead. Match both the local path (security*.json) and the authored
-    // CloudFront asset id (lf30_cbskvcfq…) used on the live/deployed content.
-    // Other feature Lotties (flat) still animate via mountLottie.
+    const img = document.createElement('img');
+    img.src = svgSrc;
+    img.alt = '';
+    img.loading = 'lazy';
+    img.className = 'k811-feature-logo';
+    media.append(img);
+  } else if (lottieSrc) {
+    block.classList.add('k811-feature-has-lottie');
+    // Legacy fallback for content that still points at the security Lottie:
+    // the doubly-nested precomp can't render in our bundled lottie-player
+    // (blank output), so use the bundled static animated SVG logo instead.
+    // Match the local path (security*.json) and the CloudFront asset id
+    // (lf30_cbskvcfq…). Other feature Lotties (flat) still animate via mountLottie.
     if (/security[^/]*\.json(\?|$)/i.test(lottieSrc) || /lf30_cbskvcfq/i.test(lottieSrc)) {
       const img = document.createElement('img');
       img.src = '/blocks/k811-feature/security-logo.svg';
