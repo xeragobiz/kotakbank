@@ -5,7 +5,10 @@
 
 .k811-story {
   position: relative;
-  min-height: 520px;
+
+  /* mobile: portrait art-directed image (see k811-story.js) shows nearly
+     full-frame at this height; desktop restores the wide banner below */
+  min-height: 560px;
   display: flex;
   align-items: flex-start;
   overflow: hidden;
