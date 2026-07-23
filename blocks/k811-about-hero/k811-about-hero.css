@@ -54,6 +54,7 @@
 /* the section wrapper must not constrain the full-bleed banner */
 .kotak811 .section > .k811-about-hero-wrapper {
   max-width: none;
+  padding: 0;
 }
 
 .kotak811 .section:has(> .k811-about-hero-wrapper) {
