@@ -6,6 +6,24 @@ import { initK811, revealOnScroll } from '../../scripts/k811/k811-common.js';
  * Content model: optional leading title row, then one row per member with
  * cells: photo (<picture>), name, LinkedIn link.
  */
+
+// Known LinkedIn handle -> display name, so the name still shows even when the
+// authored name cell is missing from the delivered content.
+const KNOWN_MEMBERS = {
+  armagarwal: 'Manish Agarwal',
+  jayukotak: 'Jay Kotak',
+};
+
+// Turn a LinkedIn profile URL into a readable name as a last resort, e.g.
+// "https://www.linkedin.com/in/armagarwal" -> known map, else Title Case slug.
+function nameFromLinkedIn(href) {
+  if (!href) return '';
+  const slug = (href.match(/\/in\/([^/?#]+)/) || [])[1];
+  if (!slug) return '';
+  if (KNOWN_MEMBERS[slug]) return KNOWN_MEMBERS[slug];
+  return slug.replace(/[-_.]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()).trim();
+}
+
 export default function decorate(block) {
   initK811(block);
   const rows = [...block.children];
@@ -33,8 +51,14 @@ export default function decorate(block) {
     const cells = [...row.children];
     const picture = row.querySelector('picture');
     const link = row.querySelector('a');
+    const rowImg = row.querySelector('img');
+    // Prefer an authored name cell; fall back to the image alt, then derive it
+    // from the LinkedIn URL, so the name shows even if the name cell/alt are
+    // missing from the delivered content.
     const name = cells.map((c) => c.textContent.trim())
-      .find((t) => t && !/^https?:/.test(t)) || '';
+      .find((t) => t && !/^https?:/.test(t))
+      || (rowImg && rowImg.getAttribute('alt') ? rowImg.getAttribute('alt').trim() : '')
+      || nameFromLinkedIn(link ? link.getAttribute('href') : '');
 
     const card = document.createElement('div');
     card.className = 'k811-team-card';
