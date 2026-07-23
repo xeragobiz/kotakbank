@@ -81,7 +81,14 @@ function bindSweep() {
  * @param {Element|Element[]} targets
  */
 export function revealOnScroll(targets) {
-  const list = (Array.isArray(targets) ? targets : [targets]).filter(Boolean);
+  // The fade unit is the whole section: resolve every target up to its
+  // enclosing `.section` so each section reveals as one block on scroll.
+  // Multiple blocks in the same section dedupe to a single registration.
+  const seen = new Set();
+  const list = (Array.isArray(targets) ? targets : [targets])
+    .filter(Boolean)
+    .map((el) => (el.closest && el.closest('.section')) || el)
+    .filter((el) => (seen.has(el) ? false : seen.add(el)));
   const io = getObserver();
   list.forEach((el) => {
     el.setAttribute('data-k811-aos', 'fade-in');
@@ -105,6 +112,9 @@ export function revealOnScroll(targets) {
 export function initK811(block) {
   loadDesignGuide();
   block.classList.add('k811-block');
+  // Fade the whole enclosing section in on scroll, so every k811 block's
+  // section reveals as a unit — even blocks that don't call revealOnScroll.
+  revealOnScroll(block);
 }
 
 /**
