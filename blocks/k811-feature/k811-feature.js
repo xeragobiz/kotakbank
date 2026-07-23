@@ -129,8 +129,10 @@ export default function decorate(block) {
     // The "Next-gen security" logo Lottie is a doubly-nested precomp that our
     // bundled lottie-player can't render inside this block (blank output). The
     // source shows it essentially static, so render the equivalent static SVG
-    // logo instead. Other feature Lotties (flat) still animate via mountLottie.
-    if (/security[^/]*\.json(\?|$)/i.test(lottieSrc)) {
+    // logo instead. Match both the local path (security*.json) and the authored
+    // CloudFront asset id (lf30_cbskvcfq…) used on the live/deployed content.
+    // Other feature Lotties (flat) still animate via mountLottie.
+    if (/security[^/]*\.json(\?|$)/i.test(lottieSrc) || /lf30_cbskvcfq/i.test(lottieSrc)) {
       const img = document.createElement('img');
       img.src = '/blocks/k811-feature/security-logo.svg';
       img.alt = '';
