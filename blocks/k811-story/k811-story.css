@@ -2,7 +2,7 @@
 
 .k811-story {
   position: relative;
-  min-height: 460px;
+  min-height: 560px;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -35,7 +35,7 @@
 .k811-story-content h2,
 .k811-story-content h3 {
   font-size: 28px;
-  line-height: 1.2;
+  line-height: 34px;
   font-weight: 700;
   margin: 0 0 12px;
   color: #fff;
@@ -43,10 +43,10 @@
 }
 
 .k811-story-content p {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6;
   margin: 0;
-  color: #f0f0f0;
+  color: #fff;
   max-width: 480px;
 }
 
@@ -82,10 +82,11 @@
 
   .k811-story-content h2,
   .k811-story-content h3 {
-    font-size: 40px;
+    font-size: 44px;
+    line-height: 52px;
   }
 
   .k811-story-content p {
-    font-size: 18px;
+    font-size: 14px;
   }
 }
