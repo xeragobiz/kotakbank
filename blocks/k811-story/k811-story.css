@@ -105,10 +105,11 @@
 }
 
 @media (width >= 900px) {
-  /* desktop: wide banner, copy centered, no scrim (wide crop has headroom) */
+  /* desktop: wide banner with the copy anchored TOP-LEFT in a narrow column,
+     so it sits in the empty space and never overlaps the subject on the right */
   .k811-story {
     min-height: 600px;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .k811-story-media picture,
@@ -121,16 +122,22 @@
   }
 
   .k811-story-content {
-    padding: 64px 40px;
+    padding: 72px 40px;
   }
 
   .k811-story-content h2,
   .k811-story-content h3 {
     font-size: 44px;
     line-height: 52px;
+
+    /* narrow column so "Innovators first, bankers next" wraps to two lines
+       on the left and clears the person */
+    max-width: 420px;
   }
 
   .k811-story-content p {
-    font-size: 14px;
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 340px;
   }
 }
