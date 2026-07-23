@@ -76,11 +76,15 @@
 @media (width >= 900px) {
   /* overlap upward: pull the CTA section up so its black box straddles the
      bottom of the feature section above it. position + z-index keep the box
-     floating above that feature. */
+     floating above that feature. Transparent background with no vertical
+     padding so the (navy) app-download section below shows through under the
+     box instead of a light strip — the box straddles both sections. */
   main > .section:has(> .k811-cta-wrapper) {
     position: relative;
     z-index: 2;
     margin-top: -120px;
+    padding: 0;
+    background: transparent;
   }
 
   .k811-cta .k811-cta-inner {
