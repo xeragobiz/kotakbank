@@ -1540,7 +1540,7 @@
         "component": "reference",
         "valueType": "string",
         "name": "image",
-        "label": "Background Image (upload from assets)",
+        "label": "Background Image — Desktop (upload from assets)",
         "multi": false
       },
       {
@@ -1548,6 +1548,19 @@
         "valueType": "string",
         "name": "imageAlt",
         "label": "Background Image Alt Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "imageMobile",
+        "label": "Background Image — Mobile (optional)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageMobileAlt",
+        "label": "Mobile Image Alt Text"
       },
       {
         "component": "richtext",

@@ -9,12 +9,14 @@ import { initK811, revealOnScroll } from '../../scripts/k811/k811-common.js';
  * and optional CTA confined to one side (left or right) over the image.
  *
  * Rows (in model order):
- *   1. background image (reference)
+ *   1. background image — desktop (reference)
  *   2. image alt text
- *   3. copy (richtext): heading + paragraph
- *   4. CTA link (optional)
- *   5. CTA text (optional)
- *   6. alignment token ("left" | "right") (optional plain text)
+ *   3. background image — mobile (reference, optional)
+ *   4. mobile image alt text (optional)
+ *   5. copy (richtext): heading + paragraph
+ *   6. CTA link (optional)
+ *   7. CTA text (optional)
+ *   8. alignment token ("left" | "right") (optional plain text)
  *
  * @param {Element} block the block element
  */
@@ -24,41 +26,61 @@ export default function decorate(block) {
   const rows = [...block.children];
   const cells = rows.map((r) => r.querySelector(':scope > div') || r).filter(Boolean);
 
-  const imageCell = cells.find((c) => c.querySelector('picture, img'));
-  const linkCell = cells.find((c) => c !== imageCell && c.querySelector('a'));
+  // desktop + optional mobile image render as separate picture-only cells in
+  // model order; the first is desktop, the second (if any) is the art-directed
+  // mobile source.
+  const imageCells = cells.filter((c) => c.querySelector('picture, img'));
+  const [desktopCell, mobileCell] = imageCells;
+  const linkCell = cells.find((c) => !imageCells.includes(c) && c.querySelector('a'));
 
-  // an alt-text cell is plain text that isn't the alignment token and holds no headings
+  // alt-text cells are plain text that isn't the alignment token and hold no
+  // headings (up to two: desktop + mobile), in order.
   const ALIGN = ['left', 'right'];
-  const altCell = cells.find((c) => c !== imageCell && c !== linkCell
+  const altCells = cells.filter((c) => !imageCells.includes(c) && c !== linkCell
     && !c.querySelector('h1, h2, h3, h4, h5, h6, p, a')
     && c.textContent.trim()
     && !ALIGN.includes(c.textContent.trim().toLowerCase()));
 
   let alignFromText = '';
   cells.forEach((c) => {
-    if (c === imageCell || c === linkCell || c === altCell) return;
+    if (imageCells.includes(c) || c === linkCell || altCells.includes(c)) return;
     const token = c.textContent.trim().toLowerCase();
     if (ALIGN.includes(token) && !c.querySelector('h1, h2, h3, h4, h5, h6')) {
       alignFromText = token;
     }
   });
 
-  const copyCell = cells.find((c) => c !== imageCell && c !== linkCell && c !== altCell
-    && c.querySelector('h1, h2, h3, h4, h5, h6, p'));
+  const copyCell = cells.find((c) => !imageCells.includes(c) && c !== linkCell
+    && !altCells.includes(c) && c.querySelector('h1, h2, h3, h4, h5, h6, p'));
 
-  const altText = altCell ? altCell.textContent.trim() : '';
+  const altText = altCells[0] ? altCells[0].textContent.trim() : '';
 
   // background image layer
   const media = document.createElement('div');
   media.className = 'k811-promo-band-media';
-  const srcImg = imageCell ? imageCell.querySelector('img') : null;
+  const srcImg = desktopCell ? desktopCell.querySelector('img') : null;
+  const mobileImg = mobileCell ? mobileCell.querySelector('img') : null;
   if (srcImg) {
-    media.append(createOptimizedPicture(
+    const picture = createOptimizedPicture(
       srcImg.src,
       altText || srcImg.getAttribute('alt') || '',
       false,
       [{ width: '1600' }],
-    ));
+    );
+    // art-directed mobile source: prepend an optimized WebP so the browser
+    // picks it below 900px (mirrors the k811-hero dual-image approach).
+    if (mobileImg) {
+      const src = new URL(mobileImg.src, window.location.href);
+      src.searchParams.set('width', '750');
+      src.searchParams.set('format', 'webply');
+      src.searchParams.set('optimize', 'medium');
+      const source = document.createElement('source');
+      source.setAttribute('type', 'image/webp');
+      source.setAttribute('media', '(max-width: 899px)');
+      source.setAttribute('srcset', src.toString());
+      picture.prepend(source);
+    }
+    media.append(picture);
   }
 
   // overlay copy
