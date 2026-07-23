@@ -20,11 +20,13 @@ main > .section > .k811-hero-wrapper {
   padding: 0;
 }
 
-/* mobile: remove the section margin so there's no top gap above the hero */
-@media (width < 900px) {
-  main > .section:has(> .k811-hero-wrapper) {
-    margin: 0;
-  }
+/* remove the section margin AND padding so the hero sits flush against the nav
+   with no black band above/below it. The chained .kotak811 outweighs the
+   design-guide rule (.kotak811 .section.metal) that adds 40px top/bottom
+   padding on the black background. */
+main.kotak811 > .section:has(> .k811-hero-wrapper) {
+  margin: 0;
+  padding: 0;
 }
 
 .k811-hero .k811-hero-image {
@@ -536,6 +538,12 @@ main > .section > .k811-hero-wrapper {
   .k811-hero.metal {
     display: grid;
     position: relative;
+
+    /* full-screen black stage below the nav (matches the reference): the fanned
+       cards sit on the right, the copy overlays the left. dvh keeps it correct
+       with browser chrome; svh is the safe fallback. */
+    min-height: 100svh;
+    min-height: 100dvh;
   }
 
   .k811-hero.metal .k811-hero-image {
@@ -543,11 +551,19 @@ main > .section > .k811-hero-wrapper {
     height: 100%;
   }
 
-  .k811-hero.metal .k811-hero-image picture,
+  .k811-hero.metal .k811-hero-image picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* fill the full-height stage; bias to the right so the fanned cards occupy
+     the right half and the black + copy occupy the left (per the reference). */
   .k811-hero.metal .k811-hero-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 78% 20%;
   }
 
   .k811-hero.metal .k811-hero-content {
