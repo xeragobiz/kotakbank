@@ -4,7 +4,9 @@
   position: relative;
   min-height: 560px;
   display: flex;
-  align-items: center;
+
+  /* mobile: text sits at the TOP of the image; desktop re-centers below */
+  align-items: flex-start;
   overflow: hidden;
   color: #fff;
 }
@@ -89,6 +91,7 @@
 @media (width >= 900px) {
   .k811-story {
     min-height: 600px;
+    align-items: center;
   }
 
   .k811-story-content {
