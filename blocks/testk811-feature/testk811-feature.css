@@ -1,0 +1,351 @@
+/* testk811-feature: alternating image / text promo rows
+   Source: kotak811.bank.in home page feature promos.
+   Decorated DOM (see testk811-feature.js):
+     .testk811-feature.block > div > .testk811-feature-img-col
+                                   + .testk811-feature-text-col
+   Layout: media column ~2/3, text column ~1/3, 30px gap, vertically
+   centered. Stacks on mobile. Alternates image side down the page.
+   Dark section instances (.section.dark) flip text to light. */
+
+.testk811-feature {
+  margin: 0 auto;
+}
+
+/* the single decorated row */
+.testk811-feature > div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* mobile: text first, image below (matches the reference) */
+.testk811-feature .testk811-feature-text-col {
+  order: 0;
+}
+
+.testk811-feature .testk811-feature-img-col {
+  order: 1;
+}
+
+.testk811-feature picture {
+  display: block;
+}
+
+.testk811-feature img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* wide promo photos crop to the source ~2:1 ratio; the QR/app image
+   (download section) keeps its natural square proportions */
+.testk811-feature:not(.testk811-feature-qr) .testk811-feature-img-col img {
+  aspect-ratio: 780 / 384;
+}
+
+/* text cell typography (source computed styles) */
+.testk811-feature h2 {
+  margin: 0 0 9px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xl); /* 36px desktop */
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-color);
+}
+
+.testk811-feature p {
+  margin: 0 0 4.5px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs); /* 14px desktop / 17px mobile */
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* CTA is a plain inline link (source), not a pill button. EDS may wrap
+   the link in a <p>; keep spacing tidy and reset any .button decoration. */
+.testk811-feature .testk811-feature-text-col p:last-child {
+  margin-top: 14px;
+}
+
+.testk811-feature a:any-link,
+.testk811-feature a.button:any-link {
+  display: inline;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 400;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.testk811-feature a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Dark section adaptation (.section.dark) ----------------------
+   The project has no global .section.dark background, so the feature
+   block paints its own dark band and flips text to light. Per the
+   reference this is a CONTAINED, rounded box with side margins — not a
+   full-bleed band. */
+.section.dark:has(.testk811-feature) {
+  background-color: var(--text-color); /* near-black brand dark */
+  margin: 24px auto;
+  padding: 40px 0;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+@media (width >= 900px) {
+  .section.dark:has(.testk811-feature) {
+    max-width: 1170px;
+    margin: 40px auto;
+    padding: 48px 0;
+  }
+}
+
+.section.dark .testk811-feature h2,
+.section.dark .testk811-feature p {
+  color: var(--background-color); /* light text on dark background */
+}
+
+.section.dark .testk811-feature a:any-link {
+  color: var(--k811-link, #d1101f); /* brand red inline link, per reference */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.section.dark .testk811-feature a:any-link:hover {
+  text-decoration: underline;
+}
+
+/* Product-card image in a dark feature (e.g. "credit cards get easy") is a
+   near-square hero render, not a wide photo — show it uncropped so the whole
+   card is visible, matching the reference. The QR/app-download variant keeps
+   its own small square rule. */
+.section.dark .testk811-feature:not(.testk811-feature-qr) .testk811-feature-img-col img {
+  aspect-ratio: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+/* Scroll-reveal is handled by the shared kotak811 design guide
+   (styles/kotak811.css: [data-k811-aos="fade-in"]) — a pure opacity fade
+   matching the source AOS config. No block-local reveal CSS needed. */
+
+/* ---- Decorative Lottie (nearest-bank / credit-cards sections) ----- */
+.testk811-feature .k811-lottie {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Static logo fallback (security section): render square/contained like the
+   Lottie it replaces — override the generic 2:1 promo-photo crop above. */
+.testk811-feature:not(.testk811-feature-qr) .testk811-feature-img-col img.testk811-feature-logo {
+  aspect-ratio: 1 / 1;
+  max-width: 560px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* ---- Desktop layout ----------------------------------------------- */
+@media (width >= 900px) {
+  .testk811-feature > div {
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+  }
+
+  /* media column ~2/3, text column ~1/3 (source col-md-8 / col-md-4) */
+  .testk811-feature .testk811-feature-img-col {
+    flex: 0 0 62%;
+    min-width: 0;
+  }
+
+  .testk811-feature .testk811-feature-text-col {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* alternate image side down the page (class set in JS on every other
+     instance): image moves to the right, text to the left. */
+  .testk811-feature.testk811-feature-alt .testk811-feature-img-col {
+    order: 1;
+  }
+
+  .testk811-feature.testk811-feature-alt .testk811-feature-text-col {
+    order: 0;
+  }
+
+  /* QR / app-download promo: centered column — QR on top, headings below,
+     on a light background (matches the source). Override the row layout. */
+  .testk811-feature.testk811-feature-qr > div {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .testk811-feature.testk811-feature-qr .testk811-feature-img-col {
+    order: 0;
+    flex: 0 0 auto;
+  }
+
+  .testk811-feature.testk811-feature-qr .testk811-feature-text-col {
+    order: 1;
+    flex: 0 0 auto;
+  }
+
+  .testk811-feature.testk811-feature-qr .testk811-feature-img-col img {
+    width: 180px;
+    border-radius: 12px;
+  }
+
+  /* Virtual-card feature (the LIGHT feature with a static image, no Lottie) is
+     full-screen and flush, matching the adjacent full-screen promo bands. Dark
+     feature sections (credit-cards, download-app) and the light Lottie security
+     feature are unaffected. */
+  .section.light.testk811-feature-container:not(:has(.testk811-feature-has-lottie), :has(.testk811-feature-qr)) {
+    margin: 0;
+    padding: 0;
+  }
+
+  .section.light.testk811-feature-container:not(:has(.testk811-feature-has-lottie), :has(.testk811-feature-qr)) .testk811-feature {
+    min-height: 100svh;
+    min-height: 100dvh;
+    max-width: var(--k811-content-max, 1120px);
+    padding: 0 24px;
+  }
+
+  .section.light.testk811-feature-container:not(:has(.testk811-feature-has-lottie), :has(.testk811-feature-qr)) .testk811-feature > div {
+    min-height: inherit;
+  }
+
+  /* reference layout: text on the LEFT, phone/card image on the RIGHT
+     (overrides the automatic alternation for this section only) */
+  .section.light.testk811-feature-container:not(:has(.testk811-feature-has-lottie), :has(.testk811-feature-qr)) .testk811-feature .testk811-feature-text-col {
+    order: 0;
+  }
+
+  .section.light.testk811-feature-container:not(:has(.testk811-feature-has-lottie), :has(.testk811-feature-qr)) .testk811-feature .testk811-feature-img-col {
+    order: 1;
+  }
+
+  /* show the FULL phone/card mockup (source image is ~near-square). Override
+     the wide 780/384 crop used by the generic feature photos so nothing is
+     clipped top/bottom, per the reference. */
+  .section.light.testk811-feature-container:not(:has(.testk811-feature-has-lottie), :has(.testk811-feature-qr)) .testk811-feature .testk811-feature-img-col img {
+    aspect-ratio: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 0;
+  }
+
+  /* Security feature (LIGHT + Lottie): animation on the LEFT, text on the RIGHT
+     (media-first), matching the source. Not full-screen; normal section flow. */
+  .section.light.testk811-feature-container:has(.testk811-feature-has-lottie) .testk811-feature .testk811-feature-img-col {
+    order: 0;
+  }
+
+  .section.light.testk811-feature-container:has(.testk811-feature-has-lottie) .testk811-feature .testk811-feature-text-col {
+    order: 1;
+  }
+}
+
+/* CTA on the light (virtual-card) feature is a solid blue pill button per the
+   reference, unlike the plain inline links on the dark feature sections. */
+.section.light.testk811-feature-container:not(:has(.testk811-feature-has-lottie), :has(.testk811-feature-qr)) .testk811-feature .testk811-feature-text-col a:any-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 10px 28px;
+  border-radius: 8px;
+  background: #3b63fb;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.section.light.testk811-feature-container:not(:has(.testk811-feature-has-lottie), :has(.testk811-feature-qr)) .testk811-feature .testk811-feature-text-col a:any-link:hover {
+  background: #2d4fe0;
+  text-decoration: none;
+}
+
+/* ---- App-download section: dark navy band with white text ----------
+   The QR download promo sits on a dark navy background (matches the
+   source). Applies at all widths; scoped to the section wrapping the QR
+   feature so no other feature/section is affected. */
+.section.testk811-feature-container:has(.testk811-feature-qr) {
+  background-color: #253844;
+  margin: 0;
+  padding: 56px 0 72px;
+}
+
+/* app-download shows only QR + headings — hide the CTA link (per reference) */
+/* stylelint-disable-next-line no-descending-specificity */
+.section.testk811-feature-container:has(.testk811-feature-qr) .testk811-feature-text-col a:any-link {
+  display: none;
+}
+
+/* overlap: the toll-free CTA band above extends ~half of its box down over
+   this section. Pull this section up and add matching top padding so the QR
+   content still clears the overlapping black box. */
+@media (width >= 900px) {
+  .section.testk811-feature-container:has(.testk811-feature-qr) {
+    margin-top: -160px;
+    padding-top: 220px;
+  }
+}
+
+.section.testk811-feature-container:has(.testk811-feature-qr) .testk811-feature h2,
+.section.testk811-feature-container:has(.testk811-feature-qr) .testk811-feature p {
+  color: #fff;
+}
+
+/* mobile: centered headings + a blue "Download App" button, no QR image
+   (matches the reference — the scannable QR is desktop-only) */
+@media (width < 900px) {
+  /* gap between the full-width toll-free CTA above and this navy band */
+  .section.testk811-feature-container:has(.testk811-feature-qr) {
+    margin-top: 24px;
+  }
+
+  .testk811-feature-qr > div {
+    align-items: center;
+    text-align: center;
+  }
+
+  .testk811-feature-qr .testk811-feature-text-col {
+    text-align: center;
+  }
+
+  /* hide the QR image on mobile */
+  .testk811-feature-qr .testk811-feature-img-col {
+    display: none;
+  }
+
+  /* show the download link as a solid blue pill button */
+  .section.testk811-feature-container:has(.testk811-feature-qr) .testk811-feature-text-col a:any-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    margin-top: 20px;
+    padding: 12px 40px;
+    border-radius: 10px;
+    background: #3b63fb;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .section.testk811-feature-container:has(.testk811-feature-qr) .testk811-feature-text-col a:any-link:hover {
+    background: #2d4fe0;
+  }
+}
