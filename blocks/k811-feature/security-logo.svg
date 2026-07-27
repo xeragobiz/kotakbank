@@ -1,48 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Kotak811 logo">
-<style>
-/* Assemble loop: each element slides up + fades in and its stroke draws on,
-   staggered; the logo holds fully assembled for most of the 5s cycle, then
-   resets and replays. Looping keeps it visible regardless of decode/scroll
-   timing. translate-only transforms are origin-independent (safe on the
-   matrix-positioned groups). */
-.k811sec-el { animation: k811sec-assemble 5s ease-in-out infinite; }
-.k811sec-p {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: k811sec-draw 5s ease-in-out infinite;
-}
-
-.k811sec-2 { animation-delay: .1s; }
-.k811sec-3 { animation-delay: .2s; }
-.k811sec-4 { animation-delay: .3s; }
-.k811sec-5 { animation-delay: .85s; }
-.k811sec-6 { animation-delay: .95s; }
-
-@keyframes k811sec-assemble {
-  0%   { opacity: 0; transform: translateY(48px); }
-  22%  { opacity: 1; transform: translateY(0); }
-  88%  { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(48px); }
-}
-
-@keyframes k811sec-draw {
-  0%   { stroke-dashoffset: 1; }
-  28%  { stroke-dashoffset: 0; }
-  90%  { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .k811sec-el { animation: none; opacity: 1; transform: none; }
-  .k811sec-p { animation: none; stroke-dashoffset: 0; }
-}
-</style>
-<g transform="matrix(1.6799999475479126,0,0,1.6799999475479126,-442.2658996582031,-367.199951171875)">
-<g class="k811sec-el k811sec-1"><g transform="matrix(1,0,0,1,586.5738525390625,291.51898193359375)"><g transform="matrix(1,0,-0.2867453992366791,1,54.86899948120117,248.4810028076172)"><path class="k811sec-p k811sec-p1" pathLength="1" fill="none" stroke="#2F424E" stroke-width="5.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" d="M53.229000091552734,246.8419952392578 C53.229000091552734,246.8419952392578 -53.229000091552734,246.8419952392578 -53.229000091552734,246.8419952392578 C-53.229000091552734,246.8419952392578 -53.229000091552734,-246.8419952392578 -53.229000091552734,-246.8419952392578 C-53.229000091552734,-246.8419952392578 53.229000091552734,-246.8419952392578 53.229000091552734,-246.8419952392578 C53.229000091552734,-246.8419952392578 53.229000091552734,246.8419952392578 53.229000091552734,246.8419952392578z"></path></g></g></g>
-<g class="k811sec-el k811sec-2"><g transform="matrix(1,0,0,1,721.5238647460938,291.51898193359375)"><g transform="matrix(1,0,-0.2867453992366791,1,54.86899948120117,248.4810028076172)"><path class="k811sec-p k811sec-p2" pathLength="1" fill="none" stroke="#2F424E" stroke-width="5.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" d="M53.229000091552734,246.8419952392578 C53.229000091552734,246.8419952392578 -53.229000091552734,246.8419952392578 -53.229000091552734,246.8419952392578 C-53.229000091552734,246.8419952392578 -53.229000091552734,-246.8419952392578 -53.229000091552734,-246.8419952392578 C-53.229000091552734,-246.8419952392578 53.229000091552734,-246.8419952392578 53.229000091552734,-246.8419952392578 C53.229000091552734,-246.8419952392578 53.229000091552734,246.8419952392578 53.229000091552734,246.8419952392578z"></path></g></g></g>
-<g class="k811sec-el k811sec-3"><g transform="matrix(0.787935733795166,0,0,0.787935733795166,266.4194641113281,278.7169494628906)"><g transform="matrix(1,0,0,1,165.48399353027344,165.48399353027344)"><path class="k811sec-p k811sec-p3" pathLength="1" fill="none" stroke="#2F424E" stroke-width="6.980264883592374" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" d="M-159.68899536132812,0 C-159.68899536132812,-88.19400024414062 -88.19400024414062,-159.68899536132812 0,-159.68899536132812 C88.19400024414062,-159.68899536132812 159.68899536132812,-88.19400024414062 159.68899536132812,0 C159.68899536132812,88.19300079345703 88.19400024414062,159.68899536132812 0,159.68899536132812 C-88.19400024414062,159.68899536132812 -159.68899536132812,88.19300079345703 -159.68899536132812,0z"></path></g></g></g>
-<g class="k811sec-el k811sec-4"><g transform="matrix(0.787935733795166,0,0,0.787935733795166,267.1427917480469,528.0701904296875)"><g transform="matrix(1,0,0,1,165.48399353027344,165.48399353027344)"><path class="k811sec-p k811sec-p4" pathLength="1" fill="none" stroke="#2F424E" stroke-width="6.980264883592374" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" d="M-159.68899536132812,0 C-159.68899536132812,-88.19400024414062 -88.19400024414062,-159.68899536132812 -0.0010000000474974513,-159.68899536132812 C88.19400024414062,-159.68899536132812 159.68899536132812,-88.19400024414062 159.68899536132812,0 C159.68899536132812,88.19300079345703 88.19400024414062,159.68899536132812 -0.0010000000474974513,159.68899536132812 C-88.19400024414062,159.68899536132812 -159.68899536132812,88.19300079345703 -159.68899536132812,0z"></path></g></g></g>
-<g class="k811sec-el k811sec-5"><g transform="matrix(0.028421970084309578,0,0,0.028421970084309578,397.4317932128906,656.7825317382812)"><g transform="matrix(1,0,0,1,59.025001525878906,59.02399826049805)"><path class="k811sec-p k811sec-p5" pathLength="1" fill="none" stroke="#2F424E" stroke-width="20" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="1" d="M-53.22999954223633,0 C-53.22999954223633,-29.398000717163086 -29.398000717163086,-53.229000091552734 -0.0010000000474974513,-53.229000091552734 C29.398000717163086,-53.229000091552734 53.22999954223633,-29.398000717163086 53.22999954223633,0 C53.22999954223633,29.39699935913086 29.398000717163086,53.229000091552734 -0.0010000000474974513,53.229000091552734 C-29.398000717163086,53.229000091552734 -53.22999954223633,29.39699935913086 -53.22999954223633,0z"></path></g></g></g>
-<g class="k811sec-el k811sec-6"><g transform="matrix(0.028421970084309578,0,0,0.028421970084309578,396.7085266113281,407.4293518066406)"><g transform="matrix(1,0,0,1,59.02399826049805,59.02399826049805)"><path class="k811sec-p k811sec-p6" pathLength="1" fill="none" stroke="#2F424E" stroke-width="20" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" d="M-53.229000091552734,0 C-53.229000091552734,-29.398000717163086 -29.398000717163086,-53.229000091552734 -0.0010000000474974513,-53.229000091552734 C29.39699935913086,-53.229000091552734 53.229000091552734,-29.398000717163086 53.229000091552734,0 C53.229000091552734,29.39699935913086 29.39699935913086,53.229000091552734 -0.0010000000474974513,53.229000091552734 C-29.398000717163086,53.229000091552734 -53.229000091552734,29.39699935913086 -53.229000091552734,0z"></path></g></g></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 240" role="img" aria-labelledby="k811t k811d">
+<title id="k811t">Kotak811 animated mark</title>
+<desc id="k811d">The 811 logo (two stacked circles and two slanted bars) morphs into a symmetric converged mark, holds, then returns.</desc>
+<!--
+  Two-state SMIL ping-pong on a 6s loop with balanced holds so BOTH states are
+  clearly visible:
+    A = 811 logo  (stacked circles left, slanted "11" bars right, dots hidden)
+    B = converged (side-by-side circles, vertical bars, dots visible)
+  keyTimes: hold A 0-40%, morph to B, hold B 50-90%, morph back to A.
+-->
+<g fill="none" stroke="#263943" stroke-width="2" stroke-linejoin="round">
+  <!-- big circle 1 (top of the 8 -> left of converged) -->
+  <circle r="50">
+    <animate attributeName="cx" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="55;55;70;70;55"/>
+    <animate attributeName="cy" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="70;70;120;120;70"/>
+  </circle>
+  <!-- big circle 2 (bottom of the 8 -> right of converged) -->
+  <circle r="50">
+    <animate attributeName="cx" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="55;55;160;160;55"/>
+    <animate attributeName="cy" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="170;170;120;120;170"/>
+  </circle>
+  <!-- centre dot 1 (hidden in 811, grows in converged) -->
+  <circle r="0.5">
+    <animate attributeName="cx" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="55;55;70;70;55"/>
+    <animate attributeName="cy" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="70;70;120;120;70"/>
+    <animate attributeName="r" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="0.5;0.5;15;15;0.5"/>
+  </circle>
+  <!-- centre dot 2 -->
+  <circle r="0.5">
+    <animate attributeName="cx" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="55;55;160;160;55"/>
+    <animate attributeName="cy" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="170;170;120;120;170"/>
+    <animate attributeName="r" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="0.5;0.5;15;15;0.5"/>
+  </circle>
+  <!-- bar 1 (slanted "1" -> vertical) -->
+  <polygon>
+    <animate attributeName="points" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="162,20 206,20 149,220 105,220;162,20 206,20 149,220 105,220;95,20 138,20 138,220 95,220;95,20 138,20 138,220 95,220;162,20 206,20 149,220 105,220"/>
+  </polygon>
+  <!-- bar 2 (slanted "1" -> vertical) -->
+  <polygon>
+    <animate attributeName="points" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keyTimes="0;0.4;0.5;0.9;1" keySplines=".3 0 .1 1;.3 0 .1 1;.3 0 .1 1;.3 0 .1 1"
+      values="219,20 263,20 206,220 162,220;219,20 263,20 206,220 162,220;95,20 138,20 138,220 95,220;95,20 138,20 138,220 95,220;219,20 263,20 206,220 162,220"/>
+  </polygon>
 </g>
 </svg>
