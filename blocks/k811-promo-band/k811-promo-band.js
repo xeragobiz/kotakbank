@@ -26,11 +26,15 @@ export default function decorate(block) {
   const rows = [...block.children];
   const cells = rows.map((r) => r.querySelector(':scope > div') || r).filter(Boolean);
 
-  // desktop + optional mobile image render as separate picture-only cells in
-  // model order; the first is desktop, the second (if any) is the art-directed
-  // mobile source.
+  // desktop + optional mobile image. With element grouping (bg_ prefix) both
+  // render inside a SINGLE cell as two <picture>s; without grouping they are
+  // separate picture-only cells. Collect every <picture> across all image
+  // cells in DOM order: the first is desktop, the second (if any) is the
+  // art-directed mobile source.
   const imageCells = cells.filter((c) => c.querySelector('picture, img'));
-  const [desktopCell, mobileCell] = imageCells;
+  const pictures = imageCells.flatMap((c) => [...c.querySelectorAll('picture')]);
+  const desktopImg = pictures[0] ? pictures[0].querySelector('img') : null;
+  const mobileImg = pictures[1] ? pictures[1].querySelector('img') : null;
   const linkCell = cells.find((c) => !imageCells.includes(c) && c.querySelector('a'));
 
   // alt-text cells are plain text that isn't the alignment token and hold no
@@ -58,12 +62,10 @@ export default function decorate(block) {
   // background image layer
   const media = document.createElement('div');
   media.className = 'k811-promo-band-media';
-  const srcImg = desktopCell ? desktopCell.querySelector('img') : null;
-  const mobileImg = mobileCell ? mobileCell.querySelector('img') : null;
-  if (srcImg) {
+  if (desktopImg) {
     const picture = createOptimizedPicture(
-      srcImg.src,
-      altText || srcImg.getAttribute('alt') || '',
+      desktopImg.src,
+      altText || desktopImg.getAttribute('alt') || '',
       false,
       [{ width: '1600' }],
     );
