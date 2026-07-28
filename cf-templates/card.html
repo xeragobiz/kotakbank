@@ -1,0 +1,14 @@
+<body>
+  <header></header>
+  <main>
+    <div>
+      <h2>{{properties.elements.cardname.value}}</h2>
+      <img src="{{{properties.elements.cardimage.value}}}" alt="{{properties.elements.cardname.value}}">
+      {{#properties.elements.joiningfee.value}}<p>{{properties.elements.joiningfee.value}} &nbsp; {{properties.elements.annualfee.value}}</p>{{/properties.elements.joiningfee.value}}
+      {{{properties.elements.features.value}}}
+      {{#properties.elements.applylink.value}}<p><a href="{{properties.elements.applylink.value}}">{{properties.elements.applytext.value}}</a></p>{{/properties.elements.applylink.value}}
+      {{#properties.elements.knowmorelink.value}}<p><a href="{{properties.elements.knowmorelink.value}}">{{properties.elements.knowmoretext.value}}</a></p>{{/properties.elements.knowmorelink.value}}
+    </div>
+  </main>
+  <footer></footer>
+</body>
