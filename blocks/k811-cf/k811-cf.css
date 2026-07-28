@@ -26,3 +26,12 @@ main .k811-cf .k811-cf-content h3 {
 main .k811-cf .k811-cf-content p {
   font-family: var(--body-font-family);
 }
+
+main .k811-cf .k811-cf-placeholder {
+  padding: 2rem;
+  border: 1px dashed var(--text-color, #6b7280);
+  border-radius: 12px;
+  color: var(--text-color, #6b7280);
+  font-family: var(--body-font-family);
+  text-align: center;
+}

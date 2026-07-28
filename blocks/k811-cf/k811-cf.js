@@ -14,8 +14,9 @@ import { initK811, revealOnScroll } from '../../scripts/k811/k811-common.js';
  *   1. reference — the Content Fragment (aem-content reference → <a href>, or a
  *                  cell whose text is the CF path)
  *
- * If the reference can't be loaded, the block removes itself rather than leaving
- * broken markup on the page.
+ * If no reference is set yet (e.g. a block just added in Universal Editor) a
+ * placeholder is shown while authoring; on the live site the empty block is
+ * cleared rather than leaving broken markup.
  */
 
 /**
@@ -50,18 +51,50 @@ export async function loadContentFragment(path) {
   return tpl.content;
 }
 
+// In Universal Editor the block carries data-aue-* instrumentation. A newly
+// added block has no reference yet, so we must NOT remove it (the author would
+// never be able to select and configure it) — we show a placeholder instead.
+const isAuthoring = (block) => !!block.closest('[data-aue-resource]')
+  || !!document.querySelector('[data-aue-resource]');
+
+// Clear the scroll-reveal hidden state so the block/section can't get stuck
+// invisible in the editor, where the IntersectionObserver may never fire.
+// initK811 arms the reveal on the NEXT frame, so we also clear it then.
+function forceVisible(block) {
+  const clear = () => {
+    block.classList.remove('k811-aos-ready');
+    const section = block.closest('.section');
+    if (section) {
+      section.classList.remove('k811-aos-ready');
+      section.classList.add('k811-aos-in');
+    }
+  };
+  clear();
+  requestAnimationFrame(clear);
+}
+
 export default async function decorate(block) {
   initK811(block);
+
+  const editing = isAuthoring(block);
 
   const link = block.querySelector('a');
   const path = link
     ? link.getAttribute('href')
     : (block.textContent || '').trim();
 
-  const content = await loadContentFragment(path);
+  const content = path ? await loadContentFragment(path) : null;
 
   if (!content || !content.childNodes.length) {
-    block.remove();
+    if (editing) {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'k811-cf-placeholder';
+      placeholder.textContent = 'Select a Content Fragment to display.';
+      block.replaceChildren(placeholder);
+      forceVisible(block);
+    } else {
+      block.replaceChildren();
+    }
     return;
   }
 
@@ -70,5 +103,8 @@ export default async function decorate(block) {
   inner.append(content);
 
   block.replaceChildren(inner);
-  revealOnScroll(block);
+
+  // Only arm the scroll reveal on the live site; in the editor keep it visible.
+  if (editing) forceVisible(block);
+  else revealOnScroll(block);
 }
