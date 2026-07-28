@@ -1226,6 +1226,30 @@
     ]
   },
   {
+    "id": "k811-cf-media",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image (DAM / Content Fragment reference)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "caption",
+        "label": "Caption"
+      }
+    ]
+  },
+  {
     "id": "k811-cta",
     "fields": [
       {
