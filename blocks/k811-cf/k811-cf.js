@@ -5,10 +5,15 @@ import { initK811, revealOnScroll } from '../../scripts/k811/k811-common.js';
  *
  * In the modern EDS model, a published Content Fragment is delivered as its own
  * self-contained semantic HTML page (via the json2html overlay). This block
- * takes a CF *reference* (a path chosen in Universal Editor, or a plain path in
- * the block cell) and inlines that CF's published HTML into the page — the same
- * fetch-and-inline approach the platform `fragment` block uses for page
- * fragments, but scoped and styled for kotak811 CF content.
+ * takes a CF *reference* (a DAM path chosen in Universal Editor, or a plain path
+ * in the block cell), translates the DAM path to its published public path
+ * (see CF_PATH_MAP / CONTENT-FRAGMENT-SETUP.md), and inlines that CF's published
+ * HTML into the page — the same fetch-and-inline approach the platform
+ * `fragment` block uses for page fragments, but scoped for kotak811 CF content.
+ *
+ * Prerequisite: the json2html overlay + path mapping must be configured on
+ * admin.hlx.page (Part A in CONTENT-FRAGMENT-SETUP.md); otherwise the mapped
+ * path 404s and nothing renders.
  *
  * Content contract (rows in model order):
  *   1. reference — the Content Fragment (aem-content reference → <a href>, or a
@@ -19,6 +24,30 @@ import { initK811, revealOnScroll } from '../../scripts/k811/k811-common.js';
  * cleared rather than leaving broken markup.
  */
 
+// Content Fragments are authored in the DAM but published to a servable HTML
+// path via the json2html overlay + path mapping (configured on admin.hlx.page).
+// An `aem-content` reference hands us the DAM path, so we translate it to the
+// mapped public path before fetching. Keep this in sync with the overlay's
+// path-mapping rule. Example rule: `/content/dam/kotakbank/cf/:/fragments/`.
+const CF_PATH_MAP = [
+  {
+    damPrefix: '/content/dam/kotakbank/cards-content-fragments/',
+    publicPrefix: '/fragments/',
+  },
+];
+
+/**
+ * Translate a CF DAM path to its published, servable public path.
+ * Non-DAM paths (already-public paths) are returned unchanged.
+ * @param {string} path
+ * @returns {string}
+ */
+export function toPublicPath(path) {
+  const match = CF_PATH_MAP.find((m) => path.startsWith(m.damPrefix));
+  if (match) return path.replace(match.damPrefix, match.publicPrefix);
+  return path;
+}
+
 /**
  * Fetch a Content Fragment's published HTML and return its body nodes.
  * Rebases relative media URLs against the CF path so images resolve.
@@ -27,7 +56,7 @@ import { initK811, revealOnScroll } from '../../scripts/k811/k811-common.js';
  */
 export async function loadContentFragment(path) {
   if (!path || !path.startsWith('/') || path.startsWith('//')) return null;
-  const clean = path.replace(/(\.plain)?\.html$/, '');
+  const clean = toPublicPath(path).replace(/(\.plain)?\.html$/, '');
   let resp;
   try {
     resp = await fetch(`${clean}.plain.html`);
