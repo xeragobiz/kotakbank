@@ -1250,6 +1250,16 @@
     ]
   },
   {
+    "id": "k811-cf",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "reference",
+        "label": "Content Fragment"
+      }
+    ]
+  },
+  {
     "id": "k811-cta",
     "fields": [
       {

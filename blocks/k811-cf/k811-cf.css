@@ -1,0 +1,28 @@
+main .k811-cf .k811-cf-content {
+  max-width: var(--max-content-width, 1200px);
+  margin-inline: auto;
+}
+
+main .k811-cf .k811-cf-content > *:first-child {
+  margin-top: 0;
+}
+
+main .k811-cf .k811-cf-content > *:last-child {
+  margin-bottom: 0;
+}
+
+main .k811-cf .k811-cf-content img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+main .k811-cf .k811-cf-content h2,
+main .k811-cf .k811-cf-content h3 {
+  font-family: var(--heading-font-family);
+}
+
+main .k811-cf .k811-cf-content p {
+  font-family: var(--body-font-family);
+}
