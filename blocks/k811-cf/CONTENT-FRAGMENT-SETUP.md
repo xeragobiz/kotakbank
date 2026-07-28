@@ -51,10 +51,37 @@ curl -s -o /dev/null -w "%{http_code}\n" \
   "https://main--kotakbank--xeragobiz.aem.page/fragments/kotak-air-card.plain.html"
 ```
 
-As of setup time this returns `404` — the overlay is **not yet configured**.
 This project historically avoided the overlay (see
 `blocks/cards-featured/CONTENT-FRAGMENT-SETUP.md`, which used a committed JSON
 export instead), so Part A must be done to use the `k811-cf` block.
+
+### Deploy status
+
+The ready-to-POST config files live in `.migration/overlay-config/`.
+
+| Step | Target | Status |
+|------|--------|--------|
+| 1. `public.json` | `admin.hlx.page/config/xeragobiz/sites/kotakbank/public.json` | ✅ POSTed, HTTP 200 |
+| 2. `content.json` | `admin.hlx.page/config/xeragobiz/sites/kotakbank/content.json` | ✅ POSTed, HTTP 200 (contentBusId assigned) |
+| 3. json2html config | `json2html.adobeaem.workers.dev/config/xeragobiz/kotakbank/main` | ⏳ needs a tokened POST (see below) |
+| 4. Publish CFs | AEM author (preview + live) | ⏳ pending |
+| 5. Verify | `/fragments/<name>.plain.html` → 200 | ⏳ pending |
+
+**Step 3 — run this yourself** (the json2html worker is a separate service from
+admin.hlx.page; its `Authorization` token is NOT auto-injected. The service is
+provisioned for this org — it appears in the admin console — so this is purely
+an auth step, not a provisioning gap). Do NOT paste the token anywhere shared:
+
+```
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: token <YOUR_ADMIN_API_TOKEN>" \
+  --data @.migration/overlay-config/json2html-config.json \
+  "https://json2html.adobeaem.workers.dev/config/xeragobiz/kotakbank/main"
+```
+
+After a 200 on Step 3, publish the Content Fragments (Step 4), then run the
+verify curl (Step 5). No block code change is needed once the overlay serves.
 
 ## Part B — code mapping (DONE in this repo)
 
