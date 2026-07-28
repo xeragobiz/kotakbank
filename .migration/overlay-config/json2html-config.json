@@ -1,7 +1,7 @@
 [
   {
     "path": "/fragments/",
-    "endpoint": "https://author-p165370-e1760075.adobeaemcloud.com/adobe/sites/cf/fragments/{{id}}",
+    "endpoint": "https://author-p165370-e1760075.adobeaemcloud.com/api/assets/kotakbank/cards-content-fragments/{{id}}.json",
     "regex": "/(?<=\\/fragments\\/)(.+)$/",
     "template": "/cf-templates/card.html",
     "relativeURLPrefix": "https://publish-p165370-e1760075.adobeaemcloud.com",
