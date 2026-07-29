@@ -113,6 +113,29 @@ to `cardimage._dynamicUrl`, rendering the `<img>` only when one is present. Once
 the endpoint returns one of these URL fields, images resolve with no further
 template change.
 
+### Finding — assets not yet published (ACTION NEEDED)
+
+The query now returns real image URLs for the `ImageRef` cards (`_publishUrl`,
+`_dynamicUrl`, `_authorUrl`), and DM delivery is active on the environment.
+However, probing those URLs shows the image **assets are not published**:
+
+- `_publishUrl` (publish tier) → **404** (asset not published)
+- `_dynamicUrl` (DM delivery/publish hosts) → **404**
+- `_authorUrl` (author) → **401** (exists but auth-gated, not public)
+
+So no public URL serves the images yet. **Publish the image assets** under
+`/content/dam/kbank-eds/cards/credit-cards/` (and the referencing CFs) from AEM
+author → publish (Quick Publish / Manage Publication). After publishing, expect
+`_publishUrl` to return `200 image/*`.
+
+**Image URL choice:** ship with `_publishUrl` first (reliable, no DM dependency),
+switch to `_dynamicUrl` (DM-optimized) later. The template already does this —
+`_publishUrl` primary, `_dynamicUrl` fallback. To flip to DM-optimized later,
+swap the order of the two `<img>` lines in `cf-templates/card.html`.
+
+Note: many fragments are still `DocumentRef` (no image) and are intentionally
+deferred — they will render text-only until their image fields are set.
+
 ## Part B — code mapping (DONE in this repo)
 
 `blocks/k811-cf/k811-cf.js` → `CF_PATH_MAP`:
