@@ -5,12 +5,12 @@
         {
           "_path": "/content/dam/kbank-eds/cards-content-fragments/biz-credit-card",
           "_id": "faca78ed-d3ea-431f-89d0-5a073963fb90",
-          "cardname": "Biz Credit Card",
+          "cardname": "PVR Kotak Platinum Credit Card",
           "highlight": null,
           "highlightsub": null,
           "badge": null,
-          "joiningfee": "Joining: ₹ 299",
-          "annualfee": "Annual Fee: ₹ 499",
+          "joiningfee": "Joining: INR 299",
+          "annualfee": "Annual Fee: INR 499",
           "features": {
             "html": "<ul>\n<li>Earn up to 4 Reward points on every Rs.100 spent.</li>\n<li>Comprehensive Insurance programme worth 50K.</li>\n<li>This is an invite-only credit card.</li>\n</ul>\n"
           },
@@ -24,8 +24,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/biz-credit-card.jpg"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -35,10 +34,10 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Cashback",
-          "joiningfee": "Joining Fee: ₹ 0",
-          "annualfee": "Annual Fee: ₹ 1000",
+          "joiningfee": "Joining Fee: INR 0",
+          "annualfee": "Annual Fee: INR 1000",
           "features": {
-            "html": "<ul>\n<li>Enjoy features like real-time transaction alerts, and free credit card replacement</li>\n<li>Feel safe and secure with free SMS alerts&nbsp;</li>\n<li>Enjoy features like real-time transaction alerts, and free credit card replacement</li>\n</ul>"
+            "html": "<ul>\n<li>Enjoy features like real-time transaction alerts, and free credit card replacement</li>\n<li>Feel safe and secure with free SMS alerts&nbsp;</li>\n</ul>"
           },
           "filtertags": {
             "html": "<p>Business</p>"
@@ -50,8 +49,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/corporate-gold-credit-card.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -61,8 +59,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Cashback",
-          "joiningfee": "Joining Fee: Nil",
-          "annualfee": "Annual Fee :Nil",
+          "joiningfee": "Joining Fee: NIL",
+          "annualfee": "Annual Fee :NIL",
           "features": {
             "html": "<ul>\n<li>Get 8 annual complimentary domestic Airport Lounge visits</li>\n<li>Earn monthly consolidated cashbacks for all transactions</li>\n<li>Waivers up to ₹3500 on Fuel and ₹500 on railways annually</li>\n</ul>"
           },
@@ -76,8 +74,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/corporate-platinum-credit-card.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -87,23 +84,22 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Cashback",
-          "joiningfee": "Joining Fee: Nil",
-          "annualfee": "Annual Fee :Nil",
+          "joiningfee": "Joining Fee: NIL",
+          "annualfee": "Annual Fee :NIL",
           "features": {
             "html": "<ul>\n<li>Get 8 annual complimentary domestic Airport Lounge visits and international Airport Lounge access via Priority Pass</li>\n<li>Earn monthly consolidated cashbacks for all transactions</li>\n<li>Waivers up to ₹3500 on Fuel and ₹500 on railways annually</li>\n</ul>"
           },
           "filtertags": {
             "html": "<p>Business</p>"
           },
-          "comparetext": "Compare",
+          "comparetext": null,
           "comparelink": null,
           "applytext": null,
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/corporate-wealth-signature-credit-card.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -124,12 +120,19 @@
           "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
-          "applylink": "/apply",
+          "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/icons/cards/indianoil.webp"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/product-credit-card-indianoil-fuel-promo-v1.png",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--dd1451f1-f51d-45cd-a3dc-3f02077251c4/product_credit_card_indianoil_fuel_promo_v1.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/product-credit-card-indianoil-fuel-promo-v1.png",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/product-credit-card-indianoil-fuel-promo-v1.png",
+            "_dmS7Url": null,
+            "width": 291,
+            "height": 176,
+            "_smartCrops": null
           }
         },
         {
@@ -150,12 +153,19 @@
           "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
-          "applylink": "/apply",
+          "applylink": null,
           "knowmoretext": "Know More",
-          "knowmorelink": "/kotak-air-plus-credit-card",
+          "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/icons/cards/kotak-air-card.png"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-air-card.png",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--718c1f6b-7fbe-46d6-b202-7343ac8e2af1/kotak_air_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-air-card.png",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-air-card.png",
+            "_dmS7Url": null,
+            "width": 1629,
+            "height": 734,
+            "_smartCrops": null
           }
         },
         {
@@ -165,8 +175,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Cashback",
-          "joiningfee": "Joining fee: ₹ 999",
-          "annualfee": "Annual Fee: ₹ 999",
+          "joiningfee": "Joining: INR 999",
+          "annualfee": "Annual Fee: INR 999",
           "features": {
             "html": "<ul>\n<li>Enjoy 5X reward points on business essential spends- Utility, Tax, GST, &amp; more</li>\n<li>Earn 5X reward points on SAAS related business spends on Nuclei Platform</li>\n<li>Earn 5X reward points on flights &amp; hotel booking on Kotak Unbox</li>\n<li>Get up to 2 reward points per ₹150 on spends across categories</li>\n<li>Enjoy up to 55 days of interest-free credit to manage cash flow efficiently</li>\n</ul>"
           },
@@ -181,7 +191,14 @@
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/icons/cards/kotak-biz-credit-card.webp"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-biz-edge-card.jpg",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--ab93133a-ebfb-4c3b-b05b-ab89a6a1f470/kotak_biz_edge_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-biz-edge-card.jpg",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-biz-edge-card.jpg",
+            "_dmS7Url": null,
+            "width": 358,
+            "height": 201,
+            "_smartCrops": null
           }
         },
         {
@@ -202,12 +219,19 @@
           "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
-          "applylink": "/apply",
+          "applylink": null,
           "knowmoretext": "Know More",
-          "knowmorelink": "/kotak-cashback-plus-credit-card",
+          "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/icons/cards/cashback-card.png"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/cashback-card.png",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--f5567044-3595-4540-ab13-8c590e4c54b1/cashback_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/cashback-card.png",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/cashback-card.png",
+            "_dmS7Url": null,
+            "width": 1128,
+            "height": 634,
+            "_smartCrops": null
           }
         },
         {
@@ -227,13 +251,12 @@
           },
           "comparetext": "Compare",
           "comparelink": null,
-          "applytext": null,
+          "applytext": "Apply Now",
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/kotak-811-credit-card.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -243,23 +266,22 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Travel",
-          "joiningfee": "Joining Fee: ₹ 0",
-          "annualfee": "Annual Fee: ₹ 0",
+          "joiningfee": "Joining Fee: INR 0",
+          "annualfee": "Annual Fee: INR 0",
           "features": {
             "html": "<ul>\n<li>Personalised card design</li>\n<li>Higher credit limit</li>\n</ul>\n"
           },
           "filtertags": {
             "html": "<p>Travel</p>"
           },
-          "comparetext": "Compare",
+          "comparetext": null,
           "comparelink": null,
           "applytext": null,
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/kotak-infinite-credit-card.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -280,12 +302,19 @@
           "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
-          "applylink": "/apply",
+          "applylink": null,
           "knowmoretext": "Know More",
-          "knowmorelink": "/kotak-league-credit-card",
+          "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/icons/cards/kotak-league-card.png"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-league-card.png",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--b2085cd0-f94b-4ac7-85b8-5a9451460ae0/kotak_league_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-league-card.png",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-league-card.png",
+            "_dmS7Url": null,
+            "width": 1440,
+            "height": 702,
+            "_smartCrops": null
           }
         },
         {
@@ -298,7 +327,7 @@
           "joiningfee": "Joining fee : Nil",
           "annualfee": "Annual fee : Nil",
           "features": {
-            "html": "<ul>\n<li><span style=\"color: rgb(25,28,32);\"><span style=\"color: rgb(25,28,32); font-family: monospace; font-size: 12.0px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0.0px; text-transform: none; widows: 2; word-spacing: 0.0px;\">Earn 10 Air Miles for every ₹100 spent on travel bookings through Kotak Unbox</span></span></li>\n<li><span style=\"color: rgb(25,28,32);\"><span style=\"color: rgb(25,28,32); font-family: monospace; font-size: 12.0px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0.0px; text-transform: none; widows: 2; word-spacing: 0.0px;\">Unlimited Lounge access globally for you and your add on card members</span></span></li>\n<li><span style=\"color: rgb(25,28,32);\"><span style=\"color: rgb(25,28,32); font-family: monospace; font-size: 12.0px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0.0px; text-transform: none; widows: 2; word-spacing: 0.0px;\">Zero Forex Mark-up on all international spends and Just 1% cash withdrawal fee with no interest till payment due date</span></span><br>\n</li>\n</ul>\n"
+            "html": "<ul>\n<li>Earn 10 Air Miles for every ₹100 spent on travel bookings through Kotak Unbox</li>\n<li>Unlimited Lounge access globally for you and your add on card members</li>\n<li>Zero Forex Mark-up on all international spends and Just 1% cash withdrawal fee with no interest till payment due date</li>\n</ul>\n"
           },
           "filtertags": {
             "html": "<p>Premium</p>\n"
@@ -310,8 +339,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/solitaire-credit-card.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -336,8 +364,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/royale-product-mobile.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -347,8 +374,8 @@
           "highlight": null,
           "highlightsub": null,
           "badge": "Best for Entertainment",
-          "joiningfee": "Joining fee: ₹ 500",
-          "annualfee": "Annual Fee: ₹ 999",
+          "joiningfee": "Joining: INR 500",
+          "annualfee": "Annual Fee: INR 999",
           "features": {
             "html": "<ul><li>Get 2 free PVR tickets* every month on spends of ₹&amp;nbsp;10,000 (each ticket up to ₹&amp;nbsp;400)</li><li>Get 15% Cashback on Food and Beverages at PVR</li><li>Get 5% Cashback on Movie tickets at PVR Box Office</li></ul><p></p>"
           },
@@ -363,7 +390,14 @@
           "knowmorelink": null,
           "cardimage": {
             "__typename": "ImageRef",
-            "_path": "/icons/cards/pvr-kotak-platinum-credit-card.webp"
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-pvr-platinum-card.jpg",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--3b50528d-64e0-455f-8793-8e76ab4566e3/kotak_pvr_platinum_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-pvr-platinum-card.jpg",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-pvr-platinum-card.jpg",
+            "_dmS7Url": null,
+            "width": 358,
+            "height": 201,
+            "_smartCrops": null
           }
         },
         {
@@ -376,20 +410,44 @@
           "joiningfee": "Joining fee: Nil",
           "annualfee": "Annual fee: Nil",
           "features": {
-            "html": "<ul>\n<li><span style=\"color: rgb(25,28,32);\"><span style=\"color: rgb(25,28,32); font-family: monospace; font-size: 12.0px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0.0px; text-transform: none; widows: 2; word-spacing: 0.0px;\">Enjoy a low interest rate of 1.99% per month</span></span></li>\n<li><span style=\"color: rgb(25,28,32);\"><span style=\"color: rgb(25,28,32); font-family: monospace; font-size: 12.0px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0.0px; text-transform: none; widows: 2; word-spacing: 0.0px;\">Turn your spends into rewards! Earn up to 7X points and redeem it easily on Kotak Unbox</span></span></li>\n<li><span style=\"color: rgb(25,28,32);\"><span style=\"color: rgb(25,28,32); font-family: monospace; font-size: 12.0px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0.0px; text-transform: none; widows: 2; word-spacing: 0.0px;\">Avail of a competitive forex mark-up of 1.99% on international transactions</span></span></li>\n</ul>\n"
+            "html": "<ul>\n<li>Enjoy a low interest rate of 1.99% per month</li>\n<li>Turn your spends into rewards! Earn up to 7X points and redeem it easily on Kotak Unbox</li>\n<li>Avail of a competitive forex mark-up of 1.99% on international transactions</li>\n</ul>\n"
           },
           "filtertags": {
             "html": "<p>Max Rewards</p>\n"
           },
-          "comparetext": "Compare",
+          "comparetext": "Compare this Card",
           "comparelink": null,
-          "applytext": null,
+          "applytext": "Apply Now",
           "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/solitaire-business-card.webp"
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kbank-eds/cards-content-fragments/test",
+          "_id": "e9e017cf-3e93-46b0-915b-6fc9150460a4",
+          "cardname": "test",
+          "highlight": "test",
+          "highlightsub": "test",
+          "badge": "test",
+          "joiningfee": null,
+          "annualfee": null,
+          "features": {
+            "html": "<p>test</p>\n<p>test</p>\n<p>test</p>\n<p>test</p>\n"
+          },
+          "filtertags": {
+            "html": null
+          },
+          "comparetext": null,
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": null,
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -399,8 +457,8 @@
           "highlight": "Discontinued for new applications",
           "highlightsub": null,
           "badge": "Best for Shopping",
-          "joiningfee": "Joining Fee: ₹ 0",
-          "annualfee": "Annual Fee: ₹ 199 ",
+          "joiningfee": "Joining Fee: INR 0",
+          "annualfee": "Annual Fee: INR 199 (waived at an annual spend of Rs 15,000/-)",
           "features": {
             "html": "<ul>\n<li>Earn 3 Reward Points against retail spends of Rs.100</li>\n<li><br>\nGet 4 PVR tickets or 10,000 Reward Points on annual spends of Rs.1 Lac</li>\n<li><br>\nEnjoy Annual Fee waiver on annual spends of Rs.15,000</li>\n</ul>\n"
           },
@@ -414,8 +472,7 @@
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/urbane-credit-card.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -425,8 +482,8 @@
           "highlight": "A handcrafted exclusive rewards program designed for transparency, elegance and simplicity ",
           "highlightsub": null,
           "badge": "Premium",
-          "joiningfee": "Joining: ₹ 3000",
-          "annualfee": "Annual: ₹ 3000",
+          "joiningfee": "Joining Fees: INR 3000",
+          "annualfee": "Annual Fee: INR 3000",
           "features": {
             "html": "<ul>\n<li>Earn vouchers that can be redeemed on premium brands on meeting spend milestones</li>\n<li>Special introductory offer – Spend Rs. 30,000 within the first 60 days of setting up the Card and receive a voucher worth Rs. 1,500</li>\n</ul>\n"
           },
@@ -436,12 +493,11 @@
           "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
-          "applylink": "/apply",
+          "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/white-credit-card.webp"
+            "__typename": "DocumentRef"
           }
         },
         {
@@ -451,10 +507,508 @@
           "highlight": "Get 10 Zen points for every ₹150 spent on shopping  with Kotak Zen Credit Card",
           "highlightsub": null,
           "badge": "Premium",
-          "joiningfee": "Joining Fee: ₹ 1500",
-          "annualfee": "Annual Fee:  1500",
+          "joiningfee": "Joining Fee: INR 1500",
+          "annualfee": "Annual Fee: INR 1500",
           "features": {
             "html": "<ul>\n<li>Earn 10 Zen Points for every 150 spent on shopping&nbsp;</li>\n<li>Earn 5 Zen points for every 150 on other spends</li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": "<p>Premium</p>\n"
+          },
+          "comparetext": "Compare this Card",
+          "comparelink": null,
+          "applytext": "Apply Now",
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/biz-credit-card",
+          "_id": "fb0c9a8f-d5d9-402a-8c4c-786d7bf2302a",
+          "cardname": "Biz Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": null,
+          "joiningfee": "Joining: INR 299",
+          "annualfee": "Annual Fee: INR 499",
+          "features": {
+            "html": "<ul>\n<li>Earn up to 4 Reward points on every Rs.100 spent.</li>\n<li>Comprehensive Insurance programme worth 50K.</li>\n<li>This is an invite-only credit card.</li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": "<p>Business</p>\n"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/corporate-gold-credit-card",
+          "_id": "ae67a2a7-2d42-4dec-8fee-bc71dc401ceb",
+          "cardname": "Corporate Gold Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": "Best for Cashback",
+          "joiningfee": "Joining Fee: INR 0",
+          "annualfee": "Annual Fee: INR 1000",
+          "features": {
+            "html": "<ul>\n<li>Enjoy features like real-time transaction alerts, and free credit card replacement</li>\n<li>Feel safe and secure with free SMS alerts&nbsp;</li>\n</ul>"
+          },
+          "filtertags": {
+            "html": "<p>Business</p>"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/corporate-platinum-credit-card",
+          "_id": "72ecb792-2d88-49f6-8beb-601a7cc978dc",
+          "cardname": "Corporate Platinum Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": "Best for Cashback",
+          "joiningfee": "Joining Fee: NIL",
+          "annualfee": "Annual Fee :NIL",
+          "features": {
+            "html": "<ul>\n<li>Get 8 annual complimentary domestic Airport Lounge visits</li>\n<li>Earn monthly consolidated cashbacks for all transactions</li>\n<li>Waivers up to ₹3500 on Fuel and ₹500 on railways annually</li>\n</ul>"
+          },
+          "filtertags": {
+            "html": "<p>Business</p>"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/corporate-wealth-signature-credit-card",
+          "_id": "3dbc33ae-55ea-4e1a-bb11-2fed730cdac2",
+          "cardname": "Corporate Wealth Signature Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": "Best for Cashback",
+          "joiningfee": "Joining Fee: NIL",
+          "annualfee": "Annual Fee :NIL",
+          "features": {
+            "html": "<ul>\n<li>Get 8 annual complimentary domestic Airport Lounge visits and international Airport Lounge access via Priority Pass</li>\n<li>Earn monthly consolidated cashbacks for all transactions</li>\n<li>Waivers up to ₹3500 on Fuel and ₹500 on railways annually</li>\n</ul>"
+          },
+          "filtertags": {
+            "html": "<p>Business</p>"
+          },
+          "comparetext": null,
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/indianoil-kotak",
+          "_id": "89c5d19d-bbc2-4c28-a235-b1573ceeb339",
+          "cardname": "IndianOil Kotak Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": "Best for Fuel",
+          "joiningfee": "Joining: ₹ Nil",
+          "annualfee": "Annual: ₹ Nil",
+          "features": {
+            "html": "<ul><li><span style=\"font-size: 12px; white-space: pre-wrap;\">6% fuel savings at IndianOil outlets</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">1% fuel surcharge waiver across India</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Lifetime free — no annual charges</span></li></ul>"
+          },
+          "filtertags": {
+            "html": "<p>Fuel</p>"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": "Apply Now",
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "ImageRef",
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/product-credit-card-indianoil-fuel-promo-v1.png",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--dd1451f1-f51d-45cd-a3dc-3f02077251c4/product_credit_card_indianoil_fuel_promo_v1.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/product-credit-card-indianoil-fuel-promo-v1.png",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/product-credit-card-indianoil-fuel-promo-v1.png",
+            "_dmS7Url": null,
+            "width": 291,
+            "height": 176,
+            "_smartCrops": null
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/kotak-air-card",
+          "_id": "33dd860d-eb16-4a43-ab9d-f063885adcd5",
+          "cardname": "Kotak Air+ Credit Card",
+          "highlight": "Free lounge access",
+          "highlightsub": "domestic & international airports, unlimited visits",
+          "badge": "Best for Travel",
+          "joiningfee": "Joining fee: ₹3,000",
+          "annualfee": "Annual fee: ₹3,000",
+          "features": {
+            "html": "<ul><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Complimentary domestic &amp; intl. lounge</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Air miles on every ₹150 spent</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Travel insurance up to ₹1 crore</span></li></ul>"
+          },
+          "filtertags": {
+            "html": "<p>Travel</p>"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": "Apply Now",
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "ImageRef",
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-air-card.png",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--718c1f6b-7fbe-46d6-b202-7343ac8e2af1/kotak_air_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-air-card.png",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-air-card.png",
+            "_dmS7Url": null,
+            "width": 1629,
+            "height": 734,
+            "_smartCrops": null
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/kotak-biz-edge-credit-card",
+          "_id": "7d1d53d0-a0b6-418b-9753-f912db9027df",
+          "cardname": "Kotak Biz Edge Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": "Best for Cashback",
+          "joiningfee": "Joining: INR 999",
+          "annualfee": "Annual Fee: INR 999",
+          "features": {
+            "html": "<ul>\n<li>Enjoy 5X reward points on business essential spends- Utility, Tax, GST, &amp; more</li>\n<li>Earn 5X reward points on SAAS related business spends on Nuclei Platform</li>\n<li>Earn 5X reward points on flights &amp; hotel booking on Kotak Unbox</li>\n<li>Get up to 2 reward points per ₹150 on spends across categories</li>\n<li>Enjoy up to 55 days of interest-free credit to manage cash flow efficiently</li>\n</ul>"
+          },
+          "filtertags": {
+            "html": "<p>Max Rewards</p>"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "ImageRef",
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-biz-edge-card.jpg",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--ab93133a-ebfb-4c3b-b05b-ab89a6a1f470/kotak_biz_edge_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-biz-edge-card.jpg",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-biz-edge-card.jpg",
+            "_dmS7Url": null,
+            "width": 358,
+            "height": 201,
+            "_smartCrops": null
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/kotak-cashback--credit-card",
+          "_id": "1ed12ff0-9a8f-402a-b819-5401d6d123d5",
+          "cardname": "Kotak Cashback+ Credit Card",
+          "highlight": "5% cashback",
+          "highlightsub": "on all online spends — uncapped",
+          "badge": "Best for Cashback",
+          "joiningfee": "Joining fee: ₹500",
+          "annualfee": "Annual fee: ₹500",
+          "features": {
+            "html": "<ul>\n<li><span style=\"font-size: 12.0px; white-space: pre-wrap;\">5% cashback on online spends</span></li>\n<li><span style=\"font-size: 12.0px; white-space: pre-wrap;\">1% cashback on all other purchases</span></li>\n<li><span style=\"font-size: 12.0px; white-space: pre-wrap;\">Fuel surcharge waiver up to ₹100/month</span></li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": "<p>Cashback</p>\n"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": "Apply Now",
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "ImageRef",
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/cashback-card.png",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--f5567044-3595-4540-ab13-8c590e4c54b1/cashback_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/cashback-card.png",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/cashback-card.png",
+            "_dmS7Url": null,
+            "width": 1128,
+            "height": 634,
+            "_smartCrops": null
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/kotak-classic-credit-card",
+          "_id": "af2dce5d-fbf8-45db-a759-44a5382085b1",
+          "cardname": "Kotak 811 Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": "Entry Level",
+          "joiningfee": "Joining: ₹500",
+          "annualfee": "Annual: ₹500",
+          "features": {
+            "html": "<ul><li>Earn 2 Reward Points per ₹100 spent online</li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Earn 2 Reward Points per ₹100 spent online</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Unlock 3 PVR Tickets worth ₹1,200 on ₹75,000 anniversary spends</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Annual Fee waived on spending ₹50,000 in previous anniversary year</span></li></ul>"
+          },
+          "filtertags": {
+            "html": "<p>Entertainment</p>"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": "Apply Now",
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/kotak-infinite-credit-card",
+          "_id": "c44cc5dd-cc57-476b-9d39-2d3956dbf501",
+          "cardname": "Kotak Infinite Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": "Best for Travel",
+          "joiningfee": "Joining Fee: INR 0",
+          "annualfee": "Annual Fee: INR 0",
+          "features": {
+            "html": "<ul>\n<li>Personalised card design</li>\n<li>Higher credit limit</li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": "<p>Travel</p>"
+          },
+          "comparetext": null,
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/kotak-league-card",
+          "_id": "e4b63e2f-4562-42f8-8e48-2e82f52099a8",
+          "cardname": "Kotak League Card",
+          "highlight": "4X reward points",
+          "highlightsub": "on dining, shopping & travel spends",
+          "badge": "Best for Shopping",
+          "joiningfee": "Joining fee: ₹999",
+          "annualfee": "Annual fee: ₹999",
+          "features": {
+            "html": "<ul><li><span style=\"font-size: 12px; white-space: pre-wrap;\">4X reward points on dining &amp; shopping</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Complimentary airport lounge access</span></li><li><span style=\"font-size: 12px; white-space: pre-wrap;\">Anniversary bonus of 5,000 reward points</span></li></ul>"
+          },
+          "filtertags": {
+            "html": "<p>Shopping</p>"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": "Apply Now",
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "ImageRef",
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-league-card.png",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--b2085cd0-f94b-4ac7-85b8-5a9451460ae0/kotak_league_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-league-card.png",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-league-card.png",
+            "_dmS7Url": null,
+            "width": 1440,
+            "height": 702,
+            "_smartCrops": null
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/kotak-solitaire-credit-card",
+          "_id": "7933cadf-45f9-4f5a-b43e-8d5d7d22fa69",
+          "cardname": "Kotak Solitaire credit card",
+          "highlight": "An invite-only card crafted exclusively for the select few",
+          "highlightsub": null,
+          "badge": "Premium",
+          "joiningfee": "Joining fee : Nil",
+          "annualfee": "Annual fee : Nil",
+          "features": {
+            "html": "<ul>\n<li>Earn 10 Air Miles for every ₹100 spent on travel bookings through Kotak Unbox</li>\n<li>Unlimited Lounge access globally for you and your add on card members</li>\n<li>Zero Forex Mark-up on all international spends and Just 1% cash withdrawal fee with no interest till payment due date</li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": "<p>Premium</p>\n"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/nri-royale-signature-credit-card",
+          "_id": "92ab2fcf-5958-449b-bee1-4ece87bba38d",
+          "cardname": "NRI Royale Signature Credit Card",
+          "highlight": "Indulge yourself as an NRI without limits with a credit card that makes every detail exceptional. ",
+          "highlightsub": null,
+          "badge": "Premium",
+          "joiningfee": "Joining fee : Nil",
+          "annualfee": "Annual fee : ₹ 1000",
+          "features": {
+            "html": "<ul>\n<li>2 rewards on spends outside India where 1 reward point = Re 1/-</li>\n<li>Freedom to purchase and pay in INR</li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": "<p>Premium</p>\n"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/pvr-kotak-platinum-credit-card",
+          "_id": "9b9d9d68-18b9-49ae-b662-e6ed450745bb",
+          "cardname": "PVR Kotak Platinum Credit Card",
+          "highlight": null,
+          "highlightsub": null,
+          "badge": "Best for Entertainment",
+          "joiningfee": "Joining: INR 500",
+          "annualfee": "Annual Fee: INR 999",
+          "features": {
+            "html": "<ul>\n<li>Get 2 free PVR tickets* every month on spends of ₹&amp;nbsp;10,000 (each ticket up to ₹&amp;nbsp;400)</li>\n<li>Get 15% Cashback on Food and Beverages at PVR</li>\n<li>Get 5% Cashback on Movie tickets at PVR Box Office</li>\n</ul>\n<p>&nbsp;</p>\n"
+          },
+          "filtertags": {
+            "html": "<p>Entertainment</p>\n"
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "ImageRef",
+            "_path": "/content/dam/kbank-eds/cards/credit-cards/kotak-pvr-platinum-card.jpg",
+            "_dynamicUrl": "/adobe/dynamicmedia/deliver/dm-aid--3b50528d-64e0-455f-8793-8e76ab4566e3/kotak_pvr_platinum_card.jpg",
+            "_authorUrl": "https://author-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-pvr-platinum-card.jpg",
+            "_publishUrl": "https://publish-p165370-e1760075.adobeaemcloud.com/content/dam/kbank-eds/cards/credit-cards/kotak-pvr-platinum-card.jpg",
+            "_dmS7Url": null,
+            "width": 358,
+            "height": 201,
+            "_smartCrops": null
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/solitaire-business-credit-card",
+          "_id": "25fb7472-3c77-425d-945f-edb6670c9616",
+          "cardname": "Solitaire Business Credit Card",
+          "highlight": "Built to grow your business",
+          "highlightsub": null,
+          "badge": "Best for Cashback",
+          "joiningfee": "Joining fee: Nil",
+          "annualfee": "Annual fee: Nil",
+          "features": {
+            "html": "<ul>\n<li>Enjoy a low interest rate of 1.99% per month</li>\n<li>Turn your spends into rewards! Earn up to 7X points and redeem it easily on Kotak Unbox</li>\n<li>Avail of a competitive forex mark-up of 1.99% on international transactions</li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": "<p>Max Rewards</p>\n"
+          },
+          "comparetext": "Compare this Card",
+          "comparelink": null,
+          "applytext": "Apply Now",
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/test",
+          "_id": "9f39471a-4f6b-4042-ac1f-1622ef000fd6",
+          "cardname": "test",
+          "highlight": "test",
+          "highlightsub": "test",
+          "badge": "test",
+          "joiningfee": "test 500",
+          "annualfee": "test 500",
+          "features": {
+            "html": "<p>test</p>\n"
+          },
+          "filtertags": {
+            "html": null
+          },
+          "comparetext": null,
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": null,
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/urbane-gold-credit-card",
+          "_id": "fcd8d153-34b5-4399-aad1-4614ded50096",
+          "cardname": "Urbane Gold Credit Card",
+          "highlight": "Discontinued for new applications",
+          "highlightsub": null,
+          "badge": "Best for Shopping",
+          "joiningfee": "Joining Fee: INR 0",
+          "annualfee": "Annual Fee: INR 199 (waived at an annual spend of Rs 15,000/-)",
+          "features": {
+            "html": "<ul>\n<li>Earn 3 Reward Points against retail spends of Rs.100</li>\n<li><br>\nGet 4 PVR tickets or 10,000 Reward Points on annual spends of Rs.1 Lac</li>\n<li><br>\nEnjoy Annual Fee waiver on annual spends of Rs.15,000</li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": null
+          },
+          "comparetext": "Compare",
+          "comparelink": null,
+          "applytext": null,
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/white-credit-card",
+          "_id": "6a1a8d44-8c44-4c53-b238-3d9ee40a418b",
+          "cardname": "White Credit Card",
+          "highlight": "A handcrafted exclusive rewards program designed for transparency, elegance and simplicity ",
+          "highlightsub": null,
+          "badge": "Premium",
+          "joiningfee": "Joining Fees: INR 3000",
+          "annualfee": "Annual Fee: INR 3000",
+          "features": {
+            "html": "<ul>\n<li>Earn vouchers that can be redeemed on premium brands on meeting spend milestones</li>\n<li>Special introductory offer – Spend Rs. 30,000 within the first 60 days of setting up the Card and receive a voucher worth Rs. 1,500</li>\n</ul>\n"
           },
           "filtertags": {
             "html": "<p>Premium</p>\n"
@@ -462,12 +1016,36 @@
           "comparetext": "Compare",
           "comparelink": null,
           "applytext": "Apply Now",
-          "applylink": "/apply",
+          "applylink": null,
           "knowmoretext": "Know More",
           "knowmorelink": null,
           "cardimage": {
-            "__typename": "ImageRef",
-            "_path": "/icons/cards/zen-credit-card.webp"
+            "__typename": "DocumentRef"
+          }
+        },
+        {
+          "_path": "/content/dam/kotakbank/cards-content-fragments/zen-credit-card",
+          "_id": "dbb1149f-5e24-49a6-8fb5-08375fdd53de",
+          "cardname": "Zen Credit Card",
+          "highlight": "Get 10 Zen points for every ₹150 spent on shopping  with Kotak Zen Credit Card",
+          "highlightsub": null,
+          "badge": "Premium",
+          "joiningfee": "Joining Fee: INR 1500",
+          "annualfee": "Annual Fee: INR 1500",
+          "features": {
+            "html": "<ul>\n<li>Earn 10 Zen Points for every 150 spent on shopping&nbsp;</li>\n<li>Earn 5 Zen points for every 150 on other spends</li>\n</ul>\n"
+          },
+          "filtertags": {
+            "html": "<p>Premium</p>\n"
+          },
+          "comparetext": "Compare this Card",
+          "comparelink": null,
+          "applytext": "Apply Now",
+          "applylink": null,
+          "knowmoretext": "Know More",
+          "knowmorelink": null,
+          "cardimage": {
+            "__typename": "DocumentRef"
           }
         }
       ]

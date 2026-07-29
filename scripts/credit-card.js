@@ -39,11 +39,31 @@ function feesLine(item) {
   return [item.joiningfee, item.annualfee].filter(Boolean).join('   ').trim();
 }
 
+// Publish host that serves the DAM/Dynamic Media assets for this environment.
+const PUBLISH_HOST = 'https://publish-p165370-e1760075.adobeaemcloud.com';
+
+/*
+ * Resolve a cardimage object to a browser-renderable image URL.
+ * Prefer the Dynamic Media delivery URL (`_dynamicUrl`) served inline by the
+ * publish host — it is optimized and, unlike the plain `_publishUrl` (which the
+ * publish tier serves as `content-disposition: attachment`, so browsers won't
+ * render it in <img>), it carries `content-disposition: inline`.
+ * `_dynamicUrl` is host-relative, so prefix the publish host. Fall back to an
+ * already-absolute URL if present. `DocumentRef` images have no URL → ''.
+ */
+function cardImageSrc(img) {
+  if (!img) return '';
+  if (img._dynamicUrl) {
+    return img._dynamicUrl.startsWith('http') ? img._dynamicUrl : `${PUBLISH_HOST}${img._dynamicUrl}`;
+  }
+  return img._publishUrl || '';
+}
+
 /* map a raw JSON item to the normalized shape the blocks render */
 function normalize(item) {
   return {
     path: item._path,
-    imageSrc: item.cardimage && item.cardimage._path ? item.cardimage._path : '',
+    imageSrc: cardImageSrc(item.cardimage),
     imageAlt: item.cardname || '',
     highlight: item.highlight || '',
     highlightSub: item.highlightsub || '',
