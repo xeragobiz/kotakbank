@@ -2,19 +2,25 @@
 /*
  * Credit Card data source helper.
  * Shared by cards-featured and cards-lifestyle to render a card either from
- * inline-authored cells OR from a referenced Credit Card content fragment,
- * resolved live from the AEM GraphQL persisted query (publish tier).
+ * inline-authored cells OR from a referenced Credit Card content fragment.
+ *
+ * Data source: the live AEM GraphQL persisted query on the publish tier, with
+ * the committed /data/credit-cards.json snapshot as a fallback. The live fetch
+ * currently CORS-fails from the browser because the publish GraphQL endpoint
+ * sends no Access-Control-Allow-Origin header; once CORS is configured on AEM
+ * for the delivery origin, the live source takes over automatically with no
+ * code change.
  *
  * A reference card item exposes an aem-content field whose value is the
  * fragment path (e.g. /content/dam/kotakbank/cards-content-fragments/...).
  * That path is matched against each item's `_path` in the response.
- *
- * The endpoint MUST be the publish host (the author host is auth-gated and not
- * reachable from a public page), the persisted query must be published, and the
- * publish GraphQL endpoint must send CORS headers for the delivery origin.
  */
 
-const DATA_URL = 'https://publish-p165370-e1760075.adobeaemcloud.com/graphql/execute.json/kbank-eds/cardfeaturemodelList';
+// Live AEM GraphQL persisted query (publish tier). Preferred source.
+const LIVE_URL = 'https://publish-p165370-e1760075.adobeaemcloud.com/graphql/execute.json/kbank-eds/cardfeaturemodelList';
+// Committed snapshot used as a fallback when the live fetch is unavailable
+// (e.g. the publish GraphQL endpoint has no CORS headers for our origin yet).
+const FALLBACK_URL = '/data/credit-cards.json';
 let cardsPromise;
 
 /* strip an html-field wrapper down to plain text (e.g. filtertags <p>Fuel</p>) */
@@ -96,16 +102,26 @@ function extractItems(json) {
   return list ? list.items : [];
 }
 
-/* fetch + index the live GraphQL data source once, keyed by fragment path */
+/* fetch a URL and return its normalized items array, or null on any failure */
+async function fetchItems(url) {
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    return extractItems(await resp.json());
+  } catch (e) {
+    // network/CORS failure — signal the caller to try the fallback
+    return null;
+  }
+}
+
+/* index the data source once, keyed by fragment path. Prefer the live GraphQL
+ * endpoint; fall back to the committed snapshot if it is unavailable. */
 async function loadCardIndex() {
   if (!cardsPromise) {
     cardsPromise = (async () => {
-      const resp = await fetch(DATA_URL);
-      if (!resp.ok) return new Map();
-      const json = await resp.json();
-      const items = extractItems(json);
+      const items = (await fetchItems(LIVE_URL)) || (await fetchItems(FALLBACK_URL)) || [];
       return new Map(items.map((it) => [it._path, normalize(it)]));
-    })().catch(() => new Map());
+    })();
   }
   return cardsPromise;
 }
