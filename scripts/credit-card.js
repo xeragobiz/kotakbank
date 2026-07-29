@@ -4,22 +4,25 @@
  * Shared by cards-featured and cards-lifestyle to render a card either from
  * inline-authored cells OR from a referenced Credit Card content fragment.
  *
- * Data source: the live AEM GraphQL persisted query on the publish tier, with
- * the committed /data/credit-cards.json snapshot as a fallback. The live fetch
- * currently CORS-fails from the browser because the publish GraphQL endpoint
- * sends no Access-Control-Allow-Origin header; once CORS is configured on AEM
- * for the delivery origin, the live source takes over automatically with no
- * code change.
+ * Data source: a SAME-ORIGIN path (`/api/cf/...`) served by a CDN edge worker
+ * (tools/edge-worker/) that proxies to the AEM publish GraphQL persisted query.
+ * The publish GraphQL endpoint sends no CORS headers, so a direct cross-origin
+ * fetch is blocked; the same-origin proxy avoids CORS entirely. The committed
+ * /data/credit-cards.json snapshot is used as a fallback until the worker is
+ * deployed — the live source then takes over automatically with no code change.
  *
  * A reference card item exposes an aem-content field whose value is the
  * fragment path (e.g. /content/dam/kotakbank/cards-content-fragments/...).
  * That path is matched against each item's `_path` in the response.
  */
 
-// Live AEM GraphQL persisted query (publish tier). Preferred source.
-const LIVE_URL = 'https://publish-p165370-e1760075.adobeaemcloud.com/graphql/execute.json/kbank-eds/cardfeaturemodelList';
-// Committed snapshot used as a fallback when the live fetch is unavailable
-// (e.g. the publish GraphQL endpoint has no CORS headers for our origin yet).
+// Live CF data via a SAME-ORIGIN path. A CDN edge worker (see
+// tools/edge-worker/cf-graphql-proxy.js) proxies this path to the AEM publish
+// GraphQL persisted query, so the browser makes a same-origin request and CORS
+// never applies. Until the worker is deployed this path 404s and the code falls
+// back to the committed snapshot below.
+const LIVE_URL = '/api/cf/cardfeaturemodelList';
+// Committed snapshot used as a fallback when the live source is unavailable.
 const FALLBACK_URL = '/data/credit-cards.json';
 let cardsPromise;
 
