@@ -2,12 +2,13 @@
   <header></header>
   <main>
     <div>
-      <h2>{{properties.elements.cardname.value}}</h2>
-      <img src="{{{properties.elements.cardimage.value}}}" alt="{{properties.elements.cardname.value}}">
-      {{#properties.elements.joiningfee.value}}<p>{{properties.elements.joiningfee.value}} &nbsp; {{properties.elements.annualfee.value}}</p>{{/properties.elements.joiningfee.value}}
-      {{{properties.elements.features.value}}}
-      {{#properties.elements.applylink.value}}<p><a href="{{properties.elements.applylink.value}}">{{properties.elements.applytext.value}}</a></p>{{/properties.elements.applylink.value}}
-      {{#properties.elements.knowmorelink.value}}<p><a href="{{properties.elements.knowmorelink.value}}">{{properties.elements.knowmoretext.value}}</a></p>{{/properties.elements.knowmorelink.value}}
+      <h2>{{cardname}}</h2>
+      {{#cardimage._publishUrl}}<img src="{{{cardimage._publishUrl}}}" alt="{{cardname}}">{{/cardimage._publishUrl}}
+      {{^cardimage._publishUrl}}{{#cardimage._dynamicUrl}}<img src="{{{cardimage._dynamicUrl}}}" alt="{{cardname}}">{{/cardimage._dynamicUrl}}{{/cardimage._publishUrl}}
+      {{#joiningfee}}<p>{{joiningfee}} &nbsp; {{annualfee}}</p>{{/joiningfee}}
+      {{{features.html}}}
+      {{#applylink}}<p><a href="{{applylink}}">{{applytext}}</a></p>{{/applylink}}
+      {{#knowmorelink}}<p><a href="{{knowmorelink}}">{{knowmoretext}}</a></p>{{/knowmorelink}}
     </div>
   </main>
   <footer></footer>

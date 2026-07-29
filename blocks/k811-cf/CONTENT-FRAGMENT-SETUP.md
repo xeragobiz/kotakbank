@@ -83,6 +83,36 @@ curl -X POST \
 After a 200 on Step 3, publish the Content Fragments (Step 4), then run the
 verify curl (Step 5). No block code change is needed once the overlay serves.
 
+### Simulator finding — CF image URL missing from the data (ACTION NEEDED)
+
+Testing the template in the JSON2HTML Simulator against `kotak-air-card`
+confirmed the template renders correctly (name, fees, features, links all fill
+in) — but the **image is broken** because the fragment's `cardimage` object only
+exposes `{ "__typename": "ImageRef", "_path": ... }`, where `_path` is the
+ImageRef's reference path, **not a deliverable image URL**. There is no image URL
+in the data to put in `<img src>`.
+
+This matches the same warning in
+`blocks/cards-featured/CONTENT-FRAGMENT-SETUP.md`.
+
+**Fix (AEM side, on the CF query/model):** update the query so `cardimage`
+selects a real URL field:
+
+```graphql
+cardimage {
+  ... on ImageRef {
+    _path
+    _publishUrl   # public web delivery (no DM)  ← preferred
+    _dynamicUrl   # DM-optimized delivery (requires Dynamic Media)
+  }
+}
+```
+
+`cf-templates/card.html` already prefers `cardimage._publishUrl` and falls back
+to `cardimage._dynamicUrl`, rendering the `<img>` only when one is present. Once
+the endpoint returns one of these URL fields, images resolve with no further
+template change.
+
 ## Part B — code mapping (DONE in this repo)
 
 `blocks/k811-cf/k811-cf.js` → `CF_PATH_MAP`:
