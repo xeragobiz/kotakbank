@@ -3,15 +3,18 @@
  * Credit Card data source helper.
  * Shared by cards-featured and cards-lifestyle to render a card either from
  * inline-authored cells OR from a referenced Credit Card content fragment,
- * resolved against a single JSON data source (GraphQL export committed at
- * /data/credit-cards.json).
+ * resolved live from the AEM GraphQL persisted query (publish tier).
  *
  * A reference card item exposes an aem-content field whose value is the
- * fragment path (e.g. /content/dam/kbank-eds/cards-content-fragments/...).
- * That path is matched against each item's `_path` in the JSON.
+ * fragment path (e.g. /content/dam/kotakbank/cards-content-fragments/...).
+ * That path is matched against each item's `_path` in the response.
+ *
+ * The endpoint MUST be the publish host (the author host is auth-gated and not
+ * reachable from a public page), the persisted query must be published, and the
+ * publish GraphQL endpoint must send CORS headers for the delivery origin.
  */
 
-const DATA_URL = '/data/credit-cards.json';
+const DATA_URL = 'https://publish-p165370-e1760075.adobeaemcloud.com/graphql/execute.json/kbank-eds/cardfeaturemodelList';
 let cardsPromise;
 
 /* strip an html-field wrapper down to plain text (e.g. filtertags <p>Fuel</p>) */
@@ -84,14 +87,23 @@ function normalize(item) {
   };
 }
 
-/* fetch + index the JSON data source once, keyed by fragment path */
+/* pull the items array out of a GraphQL response without assuming the query
+ * root key name (persisted queries expose it under their own list field) */
+function extractItems(json) {
+  const root = json && json.data;
+  if (!root) return [];
+  const list = Object.values(root).find((v) => v && Array.isArray(v.items));
+  return list ? list.items : [];
+}
+
+/* fetch + index the live GraphQL data source once, keyed by fragment path */
 async function loadCardIndex() {
   if (!cardsPromise) {
     cardsPromise = (async () => {
       const resp = await fetch(DATA_URL);
       if (!resp.ok) return new Map();
       const json = await resp.json();
-      const items = json?.data?.cardsFeaturedRefList?.items || [];
+      const items = extractItems(json);
       return new Map(items.map((it) => [it._path, normalize(it)]));
     })().catch(() => new Map());
   }
