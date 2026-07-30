@@ -54,28 +54,62 @@ function feesLine(item) {
 // Publish host that serves the DAM/Dynamic Media assets for this environment.
 const PUBLISH_HOST = 'https://publish-p165370-e1760075.adobeaemcloud.com';
 
+// Committed local card icons (same-origin, always load). Keyed by fragment
+// slug (last path segment of _path) since icon filenames don't always match
+// the fragment name. Used only when the CF image field is empty.
+const ICON_DIR = '/icons/cards';
+const ICON_BY_SLUG = {
+  'biz-credit-card': 'biz-credit-card.jpg',
+  'corporate-gold-credit-card': 'corporate-gold-credit-card.webp',
+  'corporate-platinum-credit-card': 'corporate-platinum-credit-card.webp',
+  'corporate-wealth-signature-credit-card': 'corporate-wealth-signature-credit-card.webp',
+  'indianoil-kotak': 'indianoil.webp',
+  'kotak-air-card': 'kotak-air-card.png',
+  'kotak-biz-edge-credit-card': 'kotak-biz-credit-card.webp',
+  'kotak-cashback--credit-card': 'cashback-card.png',
+  'kotak-classic-credit-card': 'kotak-811-credit-card.webp',
+  'kotak-infinite-credit-card': 'kotak-infinite-credit-card.webp',
+  'kotak-league-card': 'kotak-league-card.png',
+  'kotak-solitaire-credit-card': 'solitaire-credit-card.webp',
+  'nri-royale-signature-credit-card': 'royale-product-mobile.webp',
+  'pvr-kotak-platinum-credit-card': 'pvr-kotak-platinum-credit-card.webp',
+  'solitaire-business-credit-card': 'solitaire-business-card.webp',
+  'urbane-gold-credit-card': 'urbane-credit-card.webp',
+  'white-credit-card': 'white-credit-card.webp',
+  'zen-credit-card': 'zen-credit-card.webp',
+};
+
+/* committed local icon for a fragment, matched by its slug, or '' */
+function iconFallback(path) {
+  const slug = (path || '').split('/').filter(Boolean).pop();
+  const file = ICON_BY_SLUG[slug];
+  return file ? `${ICON_DIR}/${file}` : '';
+}
+
 /*
- * Resolve a cardimage object to a browser-renderable image URL.
+ * Resolve a card to a browser-renderable image URL.
  * Prefer the Dynamic Media delivery URL (`_dynamicUrl`) served inline by the
  * publish host — it is optimized and, unlike the plain `_publishUrl` (which the
  * publish tier serves as `content-disposition: attachment`, so browsers won't
  * render it in <img>), it carries `content-disposition: inline`.
- * `_dynamicUrl` is host-relative, so prefix the publish host. Fall back to an
- * already-absolute URL if present. `DocumentRef` images have no URL → ''.
+ * `_dynamicUrl` is host-relative, so prefix the publish host. If the CF image
+ * field is empty (null / DocumentRef / no URL), fall back to the committed
+ * local card icon so the card still shows an image.
  */
-function cardImageSrc(img) {
-  if (!img) return '';
-  if (img._dynamicUrl) {
+function cardImageSrc(item) {
+  const img = item.cardimage;
+  if (img && img._dynamicUrl) {
     return img._dynamicUrl.startsWith('http') ? img._dynamicUrl : `${PUBLISH_HOST}${img._dynamicUrl}`;
   }
-  return img._publishUrl || '';
+  if (img && img._publishUrl) return img._publishUrl;
+  return iconFallback(item._path);
 }
 
 /* map a raw JSON item to the normalized shape the blocks render */
 function normalize(item) {
   return {
     path: item._path,
-    imageSrc: cardImageSrc(item.cardimage),
+    imageSrc: cardImageSrc(item),
     imageAlt: item.cardname || '',
     highlight: item.highlight || '',
     highlightSub: item.highlightsub || '',
