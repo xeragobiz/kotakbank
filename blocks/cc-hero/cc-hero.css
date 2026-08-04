@@ -8,8 +8,6 @@
   --cc-orange: #f26722;
   --cc-blue: #00005a;
   --cc-white: #fff;
-  --cc-primary-blue: #0047ba;
-  --cc-primary-blue-hover: #003a9a;
 
   position: relative;
   display: grid;
@@ -160,14 +158,14 @@ main > .section > .cc-hero-wrapper {
 }
 
 .cc-hero .cc-hero-btn-primary {
-  background-color: var(--cc-primary-blue);
-  border: 1px solid var(--cc-primary-blue);
+  background-color: var(--cc-red);
+  border: 1px solid var(--cc-red);
   color: #fff;
 }
 
 .cc-hero .cc-hero-btn-primary:hover {
-  background-color: var(--cc-primary-blue-hover);
-  border-color: var(--cc-primary-blue-hover);
+  background-color: #d4102a;
+  border-color: #d4102a;
   color: #fff;
 }
 
@@ -210,17 +208,17 @@ main > .section > .cc-hero-wrapper {
   }
 
   /* on a red hero (red gradient, or the red-imaged detail card), the primary
-     CTA uses blue (desktop only) so it stands out against the red */
+     CTA switches to orange (desktop only) so it stands out against the red */
   .cc-hero.gradient-red .cc-hero-btn-primary,
   .cc-hero.detail .cc-hero-btn-primary {
-    background-color: var(--cc-primary-blue);
-    border-color: var(--cc-primary-blue);
+    background-color: #ed4223;
+    border-color: #ed4223;
   }
 
   .cc-hero.gradient-red .cc-hero-btn-primary:hover,
   .cc-hero.detail .cc-hero-btn-primary:hover {
-    background-color: var(--cc-primary-blue-hover);
-    border-color: var(--cc-primary-blue-hover);
+    background-color: #d4351a;
+    border-color: #d4351a;
   }
 }
 
