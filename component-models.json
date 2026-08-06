@@ -1632,6 +1632,98 @@
     ]
   },
   {
+    "id": "k811-promo-brand-test",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_image",
+        "label": "Image — Desktop (upload from assets)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageAlt",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_imageMobile",
+        "label": "Image — Mobile (optional)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageMobileAlt",
+        "label": "Mobile Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "copy",
+        "label": "Copy (heading + paragraph)"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaLink",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLinkText",
+        "label": "CTA Text"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "layout",
+        "label": "Layout",
+        "options": [
+          {
+            "name": "Content right — image left",
+            "value": "content-right"
+          },
+          {
+            "name": "Content left — image right",
+            "value": "content-left"
+          },
+          {
+            "name": "Content top — image bottom",
+            "value": "content-top"
+          },
+          {
+            "name": "Content bottom — image top",
+            "value": "content-bottom"
+          },
+          {
+            "name": "Overlay — middle",
+            "value": "overlay-middle"
+          },
+          {
+            "name": "Overlay — top",
+            "value": "overlay-top"
+          },
+          {
+            "name": "Overlay — bottom",
+            "value": "overlay-bottom"
+          },
+          {
+            "name": "Overlay — left",
+            "value": "overlay-left"
+          },
+          {
+            "name": "Overlay — right",
+            "value": "overlay-right"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "k811-step",
     "fields": [
       {

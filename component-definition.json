@@ -1022,6 +1022,21 @@
           }
         },
         {
+          "title": "K811 Promo Brand Test",
+          "id": "k811-promo-brand-test",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "K811 Promo Brand Test",
+                  "model": "k811-promo-brand-test"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "K811 Steps",
           "id": "k811-steps",
           "plugins": {

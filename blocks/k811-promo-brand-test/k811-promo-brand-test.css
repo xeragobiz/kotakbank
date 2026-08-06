@@ -1,0 +1,260 @@
+/* k811-promo-brand-test — promo band with selectable layouts.
+   Derived from k811-promo-band, but supports both SPLIT layouts (image beside
+   or above the copy) and OVERLAY layouts (copy positioned on top of the image).
+   Layout is chosen via the "Layout" dropdown and applied as a modifier class:
+
+     split:   -content-right | -content-left | -content-top | -content-bottom
+     overlay: -overlay-middle | -overlay-top | -overlay-bottom
+              -overlay-left  | -overlay-right
+
+   Mobile-first: split layouts stack (image then copy) below 900px; the layout
+   direction only takes effect from 900px up. */
+
+.k811-promo-brand-test {
+  position: relative;
+  overflow: hidden;
+}
+
+/* full-bleed: span the full page width, ignoring section max-width/padding.
+   Scoped under main > .section to outweigh the global section-div width rule. */
+main > .section > .k811-promo-brand-test-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+/* remove the section vertical margin AND padding so the band sits flush and
+   consecutive bands touch with no gap. */
+main > .section:has(> .k811-promo-brand-test-wrapper) {
+  margin: 0;
+  padding: 0;
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-media {
+  line-height: 0;
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* copy container */
+.k811-promo-brand-test .k811-promo-brand-test-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding: 32px 24px;
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-copy {
+  width: 100%;
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-content h2 {
+  margin: 0 0 12px;
+  font-family: var(--heading-font-family, manrope, sans-serif);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-content p {
+  margin: 0 0 16px;
+  font-family: var(--body-font-family, manrope, sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-actions {
+  margin: 20px 0 0;
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-btn:any-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 28px;
+  border-radius: 8px;
+  background: var(--k811-link, #d1101f);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-btn:any-link:hover {
+  filter: brightness(0.92);
+}
+
+/* ---- SPLIT layouts -----------------------------------------------------
+   Mobile: always stack image then copy. The block is a flex column and the
+   media/content order + row-vs-column direction is set per layout at >=900px. */
+.k811-promo-brand-test-content-right,
+.k811-promo-brand-test-content-left,
+.k811-promo-brand-test-content-top,
+.k811-promo-brand-test-content-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+/* mobile stacking order for the two "content first" layouts */
+.k811-promo-brand-test-content-top .k811-promo-brand-test-content,
+.k811-promo-brand-test-content-bottom .k811-promo-brand-test-content {
+  order: -1;
+}
+
+.k811-promo-brand-test-content-bottom .k811-promo-brand-test-content {
+  order: 0;
+}
+
+@media (width >= 900px) {
+  /* side-by-side: image left, content right */
+  .k811-promo-brand-test-content-right {
+    flex-direction: row;
+  }
+
+  .k811-promo-brand-test-content-right .k811-promo-brand-test-media,
+  .k811-promo-brand-test-content-right .k811-promo-brand-test-content {
+    flex: 1 1 50%;
+  }
+
+  /* side-by-side: image right, content left */
+  .k811-promo-brand-test-content-left {
+    flex-direction: row-reverse;
+  }
+
+  .k811-promo-brand-test-content-left .k811-promo-brand-test-media,
+  .k811-promo-brand-test-content-left .k811-promo-brand-test-content {
+    flex: 1 1 50%;
+  }
+
+  /* stacked: content top, image bottom */
+  .k811-promo-brand-test-content-top {
+    flex-direction: column;
+  }
+
+  .k811-promo-brand-test-content-top .k811-promo-brand-test-content {
+    order: -1;
+  }
+
+  /* stacked: image top, content bottom */
+  .k811-promo-brand-test-content-bottom {
+    flex-direction: column;
+  }
+
+  .k811-promo-brand-test-content-bottom .k811-promo-brand-test-content {
+    order: 0;
+  }
+
+  .k811-promo-brand-test-content h2 {
+    font-size: 44px;
+  }
+
+  /* split layouts: give the copy comfortable breathing room */
+  .k811-promo-brand-test-content-right .k811-promo-brand-test-content,
+  .k811-promo-brand-test-content-left .k811-promo-brand-test-content,
+  .k811-promo-brand-test-content-top .k811-promo-brand-test-content,
+  .k811-promo-brand-test-content-bottom .k811-promo-brand-test-content {
+    padding: 48px 40px;
+  }
+}
+
+/* ---- OVERLAY layouts ---------------------------------------------------
+   The image fills the band; the copy is absolutely positioned over it with an
+   auto scrim behind the text for legibility, and white text. */
+.k811-promo-brand-test-is-overlay {
+  display: flex;
+  min-height: 340px;
+}
+
+.k811-promo-brand-test-is-overlay .k811-promo-brand-test-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.k811-promo-brand-test-is-overlay .k811-promo-brand-test-content {
+  width: 100%;
+}
+
+/* auto scrim behind overlaid copy: a soft dark gradient keeps white text
+   legible over any image. */
+.k811-promo-brand-test-is-overlay .k811-promo-brand-test-copy {
+  padding: 28px 32px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%), rgb(0 0 0 / 45%) 60%, rgb(0 0 0 / 55%));
+}
+
+.k811-promo-brand-test-is-overlay .k811-promo-brand-test-content,
+.k811-promo-brand-test-is-overlay .k811-promo-brand-test-content :is(h1, h2, h3, h4, p) {
+  color: #fff;
+}
+
+/* vertical anchoring */
+.k811-promo-brand-test-overlay-top {
+  align-items: flex-start;
+}
+
+.k811-promo-brand-test-overlay-middle {
+  align-items: center;
+}
+
+.k811-promo-brand-test-overlay-bottom {
+  align-items: flex-end;
+}
+
+/* horizontal anchoring: constrain the copy width and push it to a side.
+   left/right also imply vertical centering. */
+.k811-promo-brand-test-overlay-left,
+.k811-promo-brand-test-overlay-right {
+  align-items: center;
+}
+
+.k811-promo-brand-test-overlay-left .k811-promo-brand-test-copy,
+.k811-promo-brand-test-overlay-right .k811-promo-brand-test-copy {
+  margin: 0;
+}
+
+@media (width >= 900px) {
+  .k811-promo-brand-test-is-overlay {
+    min-height: 480px;
+  }
+
+  .k811-promo-brand-test-overlay-left .k811-promo-brand-test-copy {
+    max-width: 46%;
+    margin-right: auto;
+  }
+
+  .k811-promo-brand-test-overlay-right .k811-promo-brand-test-copy {
+    max-width: 46%;
+    margin-left: auto;
+  }
+
+  /* middle/top/bottom keep centered, capped copy width */
+  .k811-promo-brand-test-overlay-top .k811-promo-brand-test-copy,
+  .k811-promo-brand-test-overlay-middle .k811-promo-brand-test-copy,
+  .k811-promo-brand-test-overlay-bottom .k811-promo-brand-test-copy {
+    max-width: 720px;
+    text-align: center;
+  }
+}
+
+/* ---- AOS-faithful reveal ------------------------------------------------ */
+.k811-promo-brand-test .k811-promo-brand-test-content.k811-aos-ready {
+  opacity: 0;
+  transition: opacity var(--k811-fade-duration, 400ms) var(--k811-fade-easing, ease-in);
+}
+
+.k811-promo-brand-test .k811-promo-brand-test-content.k811-aos-ready.k811-aos-in {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .k811-promo-brand-test .k811-promo-brand-test-content.k811-aos-ready {
+    opacity: 1;
+    transition: none;
+  }
+}
