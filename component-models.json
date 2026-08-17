@@ -6540,6 +6540,10 @@
     ]
   },
   {
+    "id": "language-switcher",
+    "fields": []
+  },
+  {
     "id": "rates-charges",
     "fields": [
       {

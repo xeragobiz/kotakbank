@@ -1,4 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
+import { resolveLocalized, DEFAULT_LOCALE, getLocale } from '../../scripts/locale.js';
 
 // media query match that indicates desktop width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -442,11 +443,20 @@ function buildMenu(section) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // Mirror the footer block's resolution: default to the bare "/nav" path,
-  // which the delivery host maps to the site's nav page (same as "/footer").
+  // Resolve the nav fragment. An explicit `nav` metadata wins; otherwise use
+  // the locale-scoped nav (e.g. /hi/nav) so each language can have its own
+  // navigation, falling back to the default-locale nav when a translated one
+  // hasn't been authored yet (the MSM "inherit from blueprint" behaviour).
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await fetchNav(navPath);
+  let fragment;
+  if (navMeta) {
+    fragment = await fetchNav(new URL(navMeta, window.location).pathname);
+  } else {
+    fragment = await fetchNav(resolveLocalized('nav'));
+    if (!fragment && getLocale() !== DEFAULT_LOCALE) {
+      fragment = await fetchNav(resolveLocalized('nav', DEFAULT_LOCALE));
+    }
+  }
 
   block.textContent = '';
   const nav = document.createElement('nav');

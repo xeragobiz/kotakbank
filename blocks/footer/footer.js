@@ -1,4 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
+import { resolveLocalized, DEFAULT_LOCALE, getLocale } from '../../scripts/locale.js';
 
 /**
  * Fetch and parse the footer fragment HTML for the given path.
@@ -320,9 +321,19 @@ function buildCopyright(section) {
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
+  // Resolve the footer fragment locale-aware (e.g. /hi/footer), falling back
+  // to the default-locale footer when a translated one is missing. An explicit
+  // `footer` metadata still wins.
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await fetchFooter(footerPath);
+  let fragment;
+  if (footerMeta) {
+    fragment = await fetchFooter(new URL(footerMeta, window.location).pathname);
+  } else {
+    fragment = await fetchFooter(resolveLocalized('footer'));
+    if (!fragment && getLocale() !== DEFAULT_LOCALE) {
+      fragment = await fetchFooter(resolveLocalized('footer', DEFAULT_LOCALE));
+    }
+  }
 
   block.textContent = '';
   if (!fragment) return;

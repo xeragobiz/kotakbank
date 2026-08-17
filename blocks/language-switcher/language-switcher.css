@@ -1,0 +1,32 @@
+/* language-switcher — compact inline list of locale links. */
+
+.language-switcher .language-switcher-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+}
+
+.language-switcher .language-switcher-item {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    color: var(--link-color, #035fe6);
+}
+
+.language-switcher a.language-switcher-item:hover {
+    text-decoration: underline;
+}
+
+/* the active locale is not a link — mute it and disable interaction */
+.language-switcher span.language-switcher-item[aria-current="true"] {
+    color: var(--text-color, #131313);
+    cursor: default;
+}
+
+@media (width >= 900px) {
+    .language-switcher .language-switcher-item {
+        font-size: 16px;
+    }
+}

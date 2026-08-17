@@ -10,6 +10,9 @@ import {
   loadSections,
   loadCSS,
 } from './aem.js';
+import {
+  getLocale, localizePath, LOCALES, DEFAULT_LOCALE,
+} from './locale.js';
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -127,7 +130,13 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  // Locale ("MSM"-style) support: derive the language from the first path
+  // segment (/hi/…) and reflect it on <html>, defaulting safely for
+  // root-level pages. See scripts/locale.js.
+  const locale = getLocale();
+  document.documentElement.lang = locale;
+  const { dir } = LOCALES[locale] || {};
+  if (dir && dir !== 'ltr') document.documentElement.dir = dir;
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
@@ -144,6 +153,31 @@ async function loadEager(doc) {
   } catch (e) {
     // do nothing
   }
+}
+
+/**
+ * Add <link rel="alternate" hreflang> tags for every known locale of the
+ * current page, plus x-default pointing at the default locale. This mirrors
+ * AEM MSM language-copy SEO relationships across the locale trees.
+ */
+function addHreflangAlternates() {
+  const { origin } = window.location;
+  const { head } = document;
+  Object.keys(LOCALES).forEach((locale) => {
+    const href = origin + localizePath(locale);
+    const link = document.createElement('link');
+    link.rel = 'alternate';
+    link.hreflang = locale;
+    link.href = href;
+    head.append(link);
+    if (locale === DEFAULT_LOCALE) {
+      const xDefault = document.createElement('link');
+      xDefault.rel = 'alternate';
+      xDefault.hreflang = 'x-default';
+      xDefault.href = href;
+      head.append(xDefault);
+    }
+  });
 }
 
 /**
@@ -164,6 +198,7 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+  addHreflangAlternates();
 
   // Universal Editor support: only load in the editor context to avoid
   // shipping editor-only code to public visitors.
