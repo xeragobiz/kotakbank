@@ -1,7 +1,14 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+// shared counter so consecutive feature promos alternate image side
+let featureIndex = 0;
+
 export default function decorate(block) {
   block.classList.add('columns-feature-2-cols');
+
+  // alternate image left/right down the page (0 = image left, 1 = image right)
+  if (featureIndex % 2 === 1) block.classList.add('columns-feature-alt');
+  featureIndex += 1;
 
   // Collect the leaf content cell of every field row. Empty fields may not
   // produce rows, so identify each cell by its content rather than position.
@@ -59,4 +66,30 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(newRow);
+
+  // QR / app-download variant: the image is a small square (QR code) rather
+  // than a wide hero photo. Flag it so CSS keeps it compact and centered.
+  const qrImg = picture ? picture.querySelector('img') : null;
+  const w = qrImg ? Number(qrImg.getAttribute('width')) : 0;
+  const h = qrImg ? Number(qrImg.getAttribute('height')) : 0;
+  const looksSquare = w && h && Math.abs(w - h) / Math.max(w, h) < 0.2;
+  const hasDownloadCta = /download/i.test(text.textContent || '');
+  if (looksSquare || (hasDownloadCta && block.querySelectorAll('h2').length > 1)) {
+    block.classList.add('columns-feature-qr');
+  }
+
+  // subtle scroll-reveal (fade + rise), mirroring the source AOS animation.
+  // reveal-ready gates the CSS hidden state so a JS failure can't hide content.
+  if (typeof IntersectionObserver !== 'undefined') {
+    block.classList.add('columns-feature-reveal-ready');
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('columns-feature-revealed');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+    io.observe(block);
+  }
 }

@@ -1,0 +1,71 @@
+/*
+ * sub-nav — horizontal sub-navigation bar of links to sibling pages.
+ * Grey bottom rule; the active link is red with a short red underline.
+ * Horizontally scrollable on small screens so all items stay reachable.
+ */
+
+.sub-nav {
+  --sub-nav-red: #fa1432;
+  --sub-nav-grey: #4a4a4a;
+  --sub-nav-rule: #e0e0e0;
+}
+
+.sub-nav .sub-nav-bar {
+  border-bottom: 1px solid var(--sub-nav-rule);
+}
+
+.sub-nav .sub-nav-list {
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sub-nav .sub-nav-list::-webkit-scrollbar {
+  display: none;
+}
+
+.sub-nav .sub-nav-item {
+  flex: 0 0 auto;
+}
+
+.sub-nav .sub-nav-link:any-link {
+  position: relative;
+  display: inline-block;
+  padding: 16px 2px;
+  color: var(--sub-nav-grey);
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.sub-nav .sub-nav-link:hover {
+  color: var(--sub-nav-red);
+}
+
+.sub-nav .sub-nav-link-active:any-link {
+  color: var(--sub-nav-red);
+  font-weight: 700;
+}
+
+/* short red underline under the active item, sitting on the grey rule */
+.sub-nav .sub-nav-link-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--sub-nav-red);
+}
+
+@media (width >= 900px) {
+  .sub-nav .sub-nav-list {
+    gap: 40px;
+  }
+}

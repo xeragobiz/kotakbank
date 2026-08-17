@@ -1,0 +1,19 @@
+{
+  "paths": {
+    "mappings": [
+      "/content/dam/kotakbank/cards-content-fragments/:/fragments/"
+    ],
+    "includes": [
+      "/content/dam/kotakbank/cards-content-fragments/"
+    ]
+  },
+  "xwalk": {
+    "content-fragment-overlay": {
+      "/content/dam/kotakbank/cards-content-fragments/**": {
+        "includes": [
+          "/conf/kotakbank/settings/dam/cfm/models/cards-featured-ref"
+        ]
+      }
+    }
+  }
+}

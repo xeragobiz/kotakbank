@@ -108,20 +108,38 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
 .cards-lifestyle .cards-lifestyle-tab {
   flex: 0 0 auto;
   padding: 8px 18px;
-  border: 1px solid var(--cc-card-border);
+  border: 1px solid var(--cc-red, #e51a24);
   border-radius: 999px;
-  background: var(--cc-chip-bg);
-  color: var(--cc-ink);
+  background: #fff;
+  color: var(--cc-red, #e51a24);
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
 }
 
-.cards-lifestyle .cards-lifestyle-tab[aria-selected="true"] {
-  background: var(--cc-navy);
-  border-color: var(--cc-navy);
+.cards-lifestyle .cards-lifestyle-tab[aria-selected="true"]:not(.cards-lifestyle-tab-more) {
+  background: var(--cc-red, #e51a24);
+  border-color: var(--cc-red, #e51a24);
   color: #fff;
+}
+
+/* the "⋯" more toggle is mobile-only; hidden on desktop where all tabs fit */
+.cards-lifestyle .cards-lifestyle-tab-more {
+  display: none;
+}
+
+@media (width < 900px) {
+  .cards-lifestyle .cards-lifestyle-tab-more {
+    display: inline-flex;
+    align-items: center;
+    letter-spacing: 1px;
+  }
+
+  /* collapsed: hide the overflow tabs (beyond the first 3) */
+  .cards-lifestyle .cards-lifestyle-tabs-collapsed .cards-lifestyle-tab-overflow {
+    display: none;
+  }
 }
 
 /* grid */
@@ -148,7 +166,25 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
 }
 
 .cards-lifestyle .cards-lifestyle-item-image {
+  position: relative;
   line-height: 0;
+}
+
+/* "Recommended" pill over the top-left of the card image — white pill with
+   red text so it stands out against the red card artwork */
+.cards-lifestyle .cards-lifestyle-item-recommended {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--cc-red, #e51a24);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
 }
 
 .cards-lifestyle .cards-lifestyle-item-image img {
@@ -168,9 +204,9 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
 /* title (left) + badge (right) in one row */
 .cards-lifestyle .cards-lifestyle-item-head {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 6px;
 }
 
@@ -179,7 +215,7 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
   padding: 4px 10px;
   border-radius: 999px;
   background: #e7faf2;
-  color: #00bc7d; /* default: cashback green */
+  color: #067a52; /* default: cashback green (AA contrast on the light bg) */
   font-size: 11px;
   font-weight: 700;
   white-space: nowrap;
@@ -198,15 +234,22 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
 
 .cards-lifestyle .cards-lifestyle-item-badge[data-badge="best for fuel"] {
   background: #fbe9e2;
-  color: #ca3500;
+  color: #b32f00;
 }
 
 .cards-lifestyle .cards-lifestyle-item-badge[data-badge="entry level"] {
   background: #eef0f2;
-  color: #6a7282;
+  color: #5b6270;
+}
+
+/* social-proof badge (curated cards) — red-tinted pill */
+.cards-lifestyle .cards-lifestyle-item-badge-proof {
+  background: #fdeeee;
+  color: #c40f1d;
 }
 
 .cards-lifestyle .cards-lifestyle-item-title {
+  flex: 1 1 100%;
   margin: 0;
   color: var(--cc-ink);
   font-family: var(--body-font-family);
@@ -305,25 +348,65 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
   text-decoration: underline;
 }
 
-.cards-lifestyle .cards-lifestyle-compare:any-link {
+.cards-lifestyle button.cards-lifestyle-compare {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 7px 16px;
   border: 1px solid var(--cc-card-border);
   border-radius: 6px;
+  background: transparent;
   color: #6b7280;
   font-size: var(--body-font-size-xs);
   font-weight: 600;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.cards-lifestyle .cards-lifestyle-compare:any-link::before {
+.cards-lifestyle button.cards-lifestyle-compare::before {
   content: "";
   width: 14px;
   height: 14px;
   background: center / contain no-repeat
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M8 12l3 3 5-6'/%3E%3C/svg%3E");
+}
+
+/* reference cards: Know More (outline) + Apply Now (filled) side by side,
+   each taking half the row */
+.cards-lifestyle .cards-lifestyle-item-footer-split {
+  gap: 12px;
+}
+
+.cards-lifestyle .cards-lifestyle-item-footer-split > * {
+  flex: 1 1 0;
+}
+
+/* both footer buttons share the same size so they sit perfectly equal */
+.cards-lifestyle .cards-lifestyle-item-footer-split .cards-lifestyle-apply:any-link,
+.cards-lifestyle .cards-lifestyle-item-footer-split .cards-lifestyle-knowmore-btn:any-link {
+  width: auto;
+  min-height: 44px;
+  padding: 6px 16px;
+  text-align: center;
+}
+
+.cards-lifestyle a.cards-lifestyle-knowmore-btn:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--cc-red, #e51a24);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cc-red, #e51a24);
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.cards-lifestyle a.cards-lifestyle-knowmore-btn:any-link:hover {
+  background: #fff5f6;
+  color: var(--cc-red, #e51a24);
 }
 
 @media (width >= 600px) {
@@ -342,7 +425,7 @@ main > .section:has(+ .section > .cards-lifestyle-wrapper) {
   }
 
   .cards-lifestyle .cards-lifestyle-list {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
 }

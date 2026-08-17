@@ -1,14 +1,14 @@
 {
   "sites": {
     "kbank-eds": {
-      "previewOrg": "surendranr",
-      "previewSite": "kbank-eds",
+      "previewOrg": "xeragobiz",
+      "previewSite": "kotakbank",
       "contentHostUrl": "author-p165370-e1760075.adobeaemcloud.com",
       "baseUrl": "https://www.kotak.bank.in/",
-      "aemSitePath": "/content/kbank-eds",
-      "aemAssetsFolderPath": "/content/dam/kbank-eds",
-      "aemSiteName": "kbank-eds",
-      "aemSiteTitle": "kbank-eds"
+      "aemSitePath": "/content/kotakbank",
+      "aemAssetsFolderPath": "/content/dam/kotakbank",
+      "aemSiteName": "kotakbank",
+      "aemSiteTitle": "kotakbank"
     }
   },
   "type": "xwalk"

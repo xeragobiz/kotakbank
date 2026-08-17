@@ -63,6 +63,10 @@ export default function decorate(block) {
   viewport.className = 'testimonials-viewport';
   const track = document.createElement('ul');
   track.className = 'testimonials-track';
+  // the track scrolls horizontally — make it keyboard-focusable and labelled
+  track.tabIndex = 0;
+  track.setAttribute('role', 'group');
+  track.setAttribute('aria-label', 'Customer reviews');
 
   items.forEach((it) => {
     const li = document.createElement('li');

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://main--kbank-eds--surendranr.aem.live/sitemap.xml
+Sitemap: https://main--kotakbank--xeragobiz.aem.live/sitemap.xml

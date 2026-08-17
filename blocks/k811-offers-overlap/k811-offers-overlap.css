@@ -1,0 +1,171 @@
+/*
+ * k811-offers-overlap — homepage offers panel that overlaps the metal hero.
+ *
+ * Reference (kotak811.bank.in home): a single centered light panel holding four
+ * benefit columns separated by thin vertical dividers. The panel straddles the
+ * black hero above and the white band below — its top half sits over the black
+ * hero, its bottom half over white.
+ *
+ * This block is fully self-contained (it does NOT import the shared k811-offers
+ * card styling, whose separate #f9f9f9 rounded tiles are a different treatment).
+ * The decorate() step (shared k811-offers.js) produces:
+ *   .k811-offers-overlap > ul > li > .k811-offers-card-image + .k811-offers-card-body
+ * and we style that structure here as the reference panel.
+ */
+
+/* ---- Section: transparent so the black hero shows through the overlap ----
+   The whole section is lifted over the hero; z-index keeps the panel above the
+   hero background. No background of its own — the hero (black) shows behind the
+   overlapping top of the panel, white/body shows behind the rest. */
+.kotak811 .section:has(> .k811-offers-overlap-wrapper) {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  margin: 0;
+  padding: 0 16px 32px;
+}
+
+.k811-offers-overlap-wrapper {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ---- The panel (ul): one light rounded card holding all four columns ---- */
+.k811-offers-overlap {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
+.k811-offers-overlap > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* individual card: light-grey rounded card, no shadow (matches the reference) */
+.k811-offers-overlap > ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #f9f9f9;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: left;
+}
+
+.k811-offers-overlap .k811-offers-card-body {
+  margin: 0;
+}
+
+/* product image (not an icon): sits flush-left above the text */
+.k811-offers-overlap .k811-offers-card-image {
+  line-height: 0;
+  margin-bottom: 30px;
+}
+
+.k811-offers-overlap .k811-offers-card-image p {
+  margin: 0;
+  line-height: 0;
+}
+
+.k811-offers-overlap .k811-offers-card-image img {
+  width: auto;
+  height: 94px;
+  object-fit: contain;
+}
+
+.k811-offers-overlap .k811-offers-card-body h2,
+.k811-offers-overlap .k811-offers-card-body h3,
+.k811-offers-overlap .k811-offers-card-body h4 {
+  margin: 0 0 10px;
+  color: #222;
+  font-family: var(--body-font-family);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.k811-offers-overlap .k811-offers-card-body p {
+  margin: 0;
+  color: #222;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ---- Mobile: horizontal side-swipeable carousel (one card + peek of next),
+   overlapping the black hero as in the reference ---- */
+@media (width < 600px) {
+  /* lift the carousel so the card tops straddle the black hero above; z-index
+     (set on the base section rule) keeps the cards above the hero. Extra top
+     padding leaves room for the overlapping card tops. */
+  .kotak811 .section:has(> .k811-offers-overlap-wrapper) {
+    margin-top: -56px;
+    padding: 0 0 32px;
+  }
+
+  /* drop the global section side padding (main > .section > div { padding: 0 24px })
+     so the scroll track spans the full viewport width; the ul's own 16px padding
+     provides the card gutter and lets the last card scroll flush to the edge */
+  main > .section > .k811-offers-overlap-wrapper {
+    max-width: none;
+    padding: 0;
+  }
+
+  .k811-offers-overlap > ul {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 16px;
+
+    /* first card aligns to the gutter; trailing space lets the last card snap
+       fully into view */
+    padding: 0 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .k811-offers-overlap > ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* narrower card: one card visible with a larger peek of the next at the
+     right edge (matches the reference) */
+  .k811-offers-overlap > ul > li {
+    flex: 0 0 auto;
+    width: 72%;
+    scroll-snap-align: start;
+  }
+}
+
+/* ---- Tablet: two columns, begin the overlap ---- */
+@media (width >= 600px) {
+  .k811-offers-overlap > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kotak811 .section:has(> .k811-offers-overlap-wrapper) {
+    margin-top: -70px;
+  }
+}
+
+/* ---- Desktop: four separate cards in one row, straddling the hero.
+   Full content width with a 40px gap (matches the reference). ---- */
+@media (width >= 900px) {
+  .k811-offers-overlap > ul {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+
+  /* lift the cards so ~half of each overlaps the black hero above */
+  .kotak811 .section:has(> .k811-offers-overlap-wrapper) {
+    margin-top: -120px;
+  }
+}

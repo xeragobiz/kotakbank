@@ -1,0 +1,15 @@
+<body>
+  <header></header>
+  <main>
+    <div>
+      <h2>{{cardname}}</h2>
+      {{#cardimage._publishUrl}}<img src="{{{cardimage._publishUrl}}}" alt="{{cardname}}">{{/cardimage._publishUrl}}
+      {{^cardimage._publishUrl}}{{#cardimage._dynamicUrl}}<img src="{{{cardimage._dynamicUrl}}}" alt="{{cardname}}">{{/cardimage._dynamicUrl}}{{/cardimage._publishUrl}}
+      {{#joiningfee}}<p>{{joiningfee}} &nbsp; {{annualfee}}</p>{{/joiningfee}}
+      {{{features.html}}}
+      {{#applylink}}<p><a href="{{applylink}}">{{applytext}}</a></p>{{/applylink}}
+      {{#knowmorelink}}<p><a href="{{knowmorelink}}">{{knowmoretext}}</a></p>{{/knowmorelink}}
+    </div>
+  </main>
+  <footer></footer>
+</body>

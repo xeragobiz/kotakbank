@@ -1,0 +1,114 @@
+/* K811 FAQ — native <details> accordion. Inherits Manrope from .kotak811.
+ * Faithful to kotak811.bank.in: black section, white 34px title, gray subtitle,
+ * white bold questions on thin divider rows (no cards), red chevron. */
+
+.k811-faq {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.k811-faq .k811-faq-title {
+  text-align: center;
+  margin: 0 0 8px;
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.k811-faq .k811-faq-title + .k811-faq-title,
+.kotak811 .section.dark .k811-faq .k811-faq-title + .k811-faq-title {
+  font-size: 18px;
+  font-weight: 400;
+  color: #aeafae;
+  margin-bottom: 24px;
+}
+
+/* "Ask Kotak811" is authored as section default content (an h2), with the
+   "Frequently Asked Questions" subtitle as a following paragraph. Center them
+   over the FAQ list, matching the live page. */
+.kotak811 .section.k811-faq-container .default-content-wrapper {
+  text-align: center;
+}
+
+/* title (first heading) — large white */
+.kotak811 .section.k811-faq-container .default-content-wrapper :is(h1, h2) {
+  font-size: 40px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+/* subtitle (h3) — smaller gray, matching the live "Frequently Asked Questions" */
+.kotak811 .section.k811-faq-container .default-content-wrapper h3 {
+  font-size: 22px;
+  font-weight: 400;
+  color: #aeafae;
+  margin: 0 0 24px;
+}
+
+.k811-faq-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.k811-faq-item {
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.k811-faq-q {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 52px 20px 0;
+  position: relative;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.k811-faq-q::-webkit-details-marker {
+  display: none;
+}
+
+/* Toggle icon: a white "+" that becomes "−" when open, matching the live page. */
+.k811-faq-q::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
+}
+
+.k811-faq-item[open] .k811-faq-q::after {
+  content: "\2212"; /* minus sign */
+}
+
+.k811-faq-a {
+  padding: 0 52px 20px 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.k811-faq-a p {
+  margin: 0 0 12px;
+}
+
+.k811-faq-a p:last-child {
+  margin-bottom: 0;
+}
+
+/* subtitle paragraph under the "Ask Kotak811" title */
+.kotak811 .section.k811-faq-container .default-content-wrapper p {
+  font-size: 22px;
+  font-weight: 400;
+  color: #aeafae;
+  margin: 0 0 24px;
+}
+
+@media (width >= 900px) {
+  .k811-faq {
+    padding: 48px 24px;
+  }
+}

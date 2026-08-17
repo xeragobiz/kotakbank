@@ -1,0 +1,143 @@
+/* K811 Pillars — "We always serve by the rules." Faithful to
+ * kotak811.bank.in/about-us. Desktop: a shared animation stage above a row of
+ * four left-aligned text tabs. Mobile: stacked cards, each with its own
+ * always-on animation. Inherits Manrope from .kotak811. */
+
+.k811-pillars {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.kotak811 .k811-pillars .k811-pillars-title {
+  text-align: center;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 32px;
+
+  /* keep the title on a single line on mobile */
+  white-space: nowrap;
+}
+
+/* Desktop shared animation stage — hidden on mobile. */
+.k811-pillars-stage {
+  display: none;
+}
+
+/* mobile-first: cards scroll horizontally in a single snapping row, each with
+   its own animation on top. The negative margin + padding lets cards bleed to
+   the section edges while keeping the first/last card inset. */
+.k811-pillars-tabs {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -24px;
+  padding: 0 24px 8px;
+  scrollbar-width: none;
+}
+
+.k811-pillars-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.k811-pillars-tab {
+  flex: 0 0 78%;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: default;
+}
+
+.k811-pillars-tab-media {
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.k811-pillars-tab-media .k811-lottie {
+  width: 100%;
+  height: 100%;
+}
+
+.k811-pillars-card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+  color: #222;
+}
+
+.k811-pillars-card-desc {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #222;
+}
+
+/* desktop (>=900px): shared stage on top, four left-aligned text tabs below */
+@media (width >= 900px) {
+  .k811-pillars {
+    padding: 56px 40px;
+  }
+
+  .kotak811 .k811-pillars .k811-pillars-title {
+    font-size: 44px;
+    line-height: 52px;
+    margin: 0 0 40px;
+  }
+
+  .k811-pillars-stage {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1120 / 386;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .k811-pillars-stage .k811-lottie {
+    width: 100%;
+    height: 100%;
+  }
+
+  .k811-pillars-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    align-items: start;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+
+  .k811-pillars-tab {
+    flex: 0 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  /* the per-card animation belongs to mobile only */
+  .k811-pillars-tab-media {
+    display: none;
+  }
+}

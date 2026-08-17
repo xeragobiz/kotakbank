@@ -1,0 +1,45 @@
+{
+  "variantName": "cards-benefits",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-14T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.kotak.bank.in/en/personal-banking/cards/credit-cards/kotak-cashback-plus-credit-card.html",
+    "originPage": "Kotak Cashback+ Credit Card product page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "feature",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "icon + heading + description",
+    "buttonCount": 0,
+    "imageCount": 1,
+    "itemCount": 3,
+    "columns": 3
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "product feature/benefit grids",
+      "3-up icon + heading + short description highlights",
+      "'why choose' / key-benefits sections without per-item CTAs"
+    ],
+    "notSuitableFor": [
+      "card grids with cover photos (use cards / cards-product)",
+      "product tiles with apply/compare CTAs (use cards-featured)",
+      "'apply in N steps' flows with a container CTA (use cc-steps)",
+      "filterable card grids (use cards-lifestyle)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en/personal-banking/cards/credit-cards/kotak-cashback-plus-credit-card",
+      "/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-07-22T00:00:00.000Z"
+  }
+}

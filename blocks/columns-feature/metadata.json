@@ -1,0 +1,38 @@
+{
+  "variantName": "columns-feature",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-07-22T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.kotak811.bank.in/",
+    "originPage": "Kotak811 homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "feature",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image/media cell + text cell (heading + description + optional CTA), alternating sides",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "alternating side-by-side image + heading + text + CTA promo rows",
+      "app-download / feature callouts pairing media with text",
+      "light and dark (via section-metadata) two-column feature sections"
+    ],
+    "notSuitableFor": [
+      "repeating card grids of many similar items",
+      "full-bleed banners"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 4,
+    "lastUsed": "2026-07-22T00:00:00.000Z"
+  }
+}

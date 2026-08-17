@@ -1,0 +1,63 @@
+{
+  "definitions": [
+    {
+      "title": "K811 Feature Grid",
+      "id": "k811-feature-grid",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "K811 Feature Grid",
+              "filter": "k811-feature-grid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "K811 Feature Card",
+      "id": "k811-feature-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "K811 Feature Card",
+              "model": "k811-feature-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "k811-feature-card",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Icon",
+          "multi": false
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "value": "",
+          "label": "Text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "k811-feature-grid",
+      "components": [
+        "k811-feature-card"
+      ]
+    }
+  ]
+}

@@ -43,21 +43,60 @@ export default function decorate(block) {
   const rows = [...block.children];
   const cells = rows.map((r) => r.querySelector(':scope > div') || r);
 
-  // the image group is one cell that may hold one or two <picture>s
-  // (desktop first, optional mobile second — they share the bg_ group).
-  const imageCell = cells.find((c) => c.querySelector('picture'));
-  const pictures = imageCell ? [...imageCell.querySelectorAll('picture')] : [];
-  const linkCells = cells.filter((c) => c !== imageCell && c.querySelector('a'));
-  // alt text = a short text-only cell (no links, no headings)
-  const altCell = cells.find((c) => c !== imageCell
+  // the background images may share a single cell (desktop first, optional
+  // mobile second) or arrive in separate cells (one per authored field group —
+  // bg_image and bg_imageMobile render as distinct rows). Treat every
+  // picture-only cell as an image cell and collect their <picture>s in order
+  // (desktop first, mobile second) so the layout is identical either way.
+  const isPictureOnly = (c) => c.querySelector('picture')
     && !c.querySelector('a, h1, h2, h3, h4, h5, h6, ul, ol')
+    && !c.textContent.trim();
+  const imageCells = cells.filter(isPictureOnly);
+  const pictures = imageCells.flatMap((c) => [...c.querySelectorAll('picture')]);
+  const linkCells = cells.filter((c) => !imageCells.includes(c) && c.querySelector('a'));
+  // alt text = a short text-only cell (no links, no headings, no image)
+  const altCell = cells.find((c) => !imageCells.includes(c)
+    && !c.querySelector('a, h1, h2, h3, h4, h5, h6, ul, ol, picture')
     && c.textContent.trim()
     && c.textContent.trim().length < 120
     && !c.querySelector('p:nth-of-type(2)'));
-  // copy = the cell holding the heading/paragraphs
-  const copyCell = cells.find((c) => c !== imageCell && c !== altCell
+  // copy = the cell holding the heading/paragraphs (never an image-only cell)
+  const copyCell = cells.find((c) => !imageCells.includes(c) && c !== altCell
     && !c.querySelector('a')
     && c.querySelector('h1, h2, h3, h4, h5, h6, p'));
+
+  // heading/text colour selects share the copy cell's field group, so they
+  // render as trailing plain <p>s whose text is a colour token. Pull them out
+  // (in model order: heading colour first, text colour second) and remove
+  // those paragraphs so they don't show as body copy.
+  const COLORS = ['orange', 'blue', 'white'];
+  const colorValues = [];
+  // the "detail" variant (product-detail hero) can show a "Recommended" ribbon;
+  // authored as a leading plain <p> with that exact text, pulled out like colours.
+  let badgeText = '';
+  // the Layout and Gradient selects share the copy field group, so their values
+  // ("detail", "gradient-red", ...) also render as trailing plain <p>s — pull
+  // them out and apply them as variant classes.
+  const LAYOUTS = ['detail', 'metal'];
+  const GRADIENTS = ['gradient-red', 'gradient-dark'];
+  if (copyCell) {
+    [...copyCell.querySelectorAll('p')].forEach((p) => {
+      const token = p.textContent.trim().toLowerCase();
+      if (p.querySelector('a, strong, em, picture')) return;
+      if (COLORS.includes(token)) {
+        colorValues.push(token);
+        p.remove();
+      } else if (token === 'recommended') {
+        badgeText = p.textContent.trim();
+        p.remove();
+      } else if (LAYOUTS.includes(token) || GRADIENTS.includes(token)) {
+        block.classList.add(token);
+        p.remove();
+      }
+    });
+  }
+  const headingColor = colorValues[0] || '';
+  const textColor = colorValues[1] || '';
 
   const altText = altCell ? altCell.textContent.trim() : '';
 
@@ -90,9 +129,16 @@ export default function decorate(block) {
     }
     const img = optimized.querySelector('img');
     img.setAttribute('fetchpriority', 'high');
-    // explicit dimensions reserve space and avoid layout shift (CLS)
-    img.setAttribute('width', '1440');
-    img.setAttribute('height', '400');
+    // Reserve space at the image's REAL aspect ratio to avoid layout shift
+    // (CLS). On desktop the hero shows the full image (object-fit: contain,
+    // height: auto), so a wrong ratio here would reserve the wrong height and
+    // reflow when the image loads. Carry over the authored dimensions.
+    const w = desktopImg.getAttribute('width') || desktopImg.naturalWidth;
+    const h = desktopImg.getAttribute('height') || desktopImg.naturalHeight;
+    if (w && h) {
+      img.setAttribute('width', w);
+      img.setAttribute('height', h);
+    }
     media.append(optimized);
 
     // Make the LCP image discoverable to the preload scanner: this hero is
@@ -107,6 +153,15 @@ export default function decorate(block) {
   // content overlay
   const content = document.createElement('div');
   content.className = 'cc-hero-content';
+  if (headingColor) content.classList.add(`cc-hero-heading-${headingColor}`);
+  if (textColor) content.classList.add(`cc-hero-text-${textColor}`);
+  // "Recommended" ribbon (detail variant) sits above the copy
+  if (badgeText) {
+    const badge = document.createElement('span');
+    badge.className = 'cc-hero-badge';
+    badge.textContent = badgeText;
+    content.append(badge);
+  }
   if (copyCell) {
     while (copyCell.firstChild) content.append(copyCell.firstChild);
   }
@@ -142,4 +197,52 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(media, content);
+
+  // Mobile back button at the top of the hero (the breadcrumb is hidden on
+  // mobile). Built here — not in the breadcrumb block — so it doesn't depend
+  // on section load order. Three sources:
+  //  - detail variant: label + link from the page breadcrumb's parent crumb
+  //    (falls back to browser-back when that isn't a usable link)
+  //  - apply page (page has an apply-form): fixed "Credit Cards" + browser-back
+  //  - index/cards listing page: fixed "Back to Home" linking to /home
+  const isApplyPage = !!document.querySelector('.apply-form');
+  // the credit-cards index document is served at the site root ("/") as well
+  // as "/index"; match both (but not "/home", which is the separate homepage).
+  const { pathname } = window.location;
+  const isIndexPage = pathname === '/' || /\/index(\.html)?$/.test(pathname);
+  const wantsBack = block.classList.contains('detail') || isApplyPage || isIndexPage;
+  if (wantsBack && !block.querySelector('.cc-hero-back')) {
+    let href = '#';
+    let text = 'Credit Cards';
+    let useHistory = true;
+    if (block.classList.contains('detail')) {
+      const crumbLinks = document.querySelectorAll(
+        '.breadcrumb a.breadcrumb-link, .breadcrumb-wrapper a[href], .breadcrumb a[href]',
+      );
+      const parent = crumbLinks[crumbLinks.length - 1];
+      const parentHref = parent ? parent.getAttribute('href') : '';
+      const parentLabel = parent ? parent.textContent.trim() : '';
+      if (parentHref && parentHref !== '#') {
+        href = parentHref;
+        useHistory = false;
+      }
+      if (parentLabel && parentLabel !== '#') text = parentLabel;
+    } else if (isIndexPage) {
+      href = '/home';
+      text = 'Back to Home';
+      useHistory = false;
+    }
+    const back = document.createElement('a');
+    back.className = 'cc-hero-back';
+    back.href = href;
+    back.innerHTML = `<span class="cc-hero-back-icon" aria-hidden="true"></span><span>${text}</span>`;
+    if (useHistory) {
+      back.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.history.back();
+      });
+    }
+    block.classList.add('cc-hero-has-back');
+    block.prepend(back);
+  }
 }

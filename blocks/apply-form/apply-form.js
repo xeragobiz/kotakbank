@@ -8,10 +8,15 @@
  *
  * Authorable chrome (optional, in this order): heading, sub-heading,
  * submit-button text, success message. A block cell may also override the
- * endpoint by starting with "endpoint:" (e.g. endpoint: https://api…/apply).
+ * endpoint by starting with "endpoint:" (e.g. endpoint: https://…/bff/contact).
+ *
+ * Submits to a cloud BFF (Adobe App Builder) action, which injects the
+ * web3forms access_key server-side and forwards the fields. The browser never
+ * sees the secret. The action responds with web3forms' JSON: { success, message }.
  */
 
-// TODO: replace with the real submission endpoint once available.
+// Authored per-page via an "endpoint:" cell (the BFF contact action URL).
+// Fallback keeps the form testable if no endpoint is authored.
 const DEFAULT_ENDPOINT = 'https://httpbin.org/post';
 
 const FIELDS = [
@@ -20,6 +25,7 @@ const FIELDS = [
     label: 'Full Name',
     type: 'text',
     required: true,
+    placeholder: 'Enter full name',
     autocomplete: 'name',
     validate: (v) => (/^[A-Za-z][A-Za-z\s.'-]*$/.test(v.trim())
       ? '' : 'Please enter letters only.'),
@@ -31,6 +37,7 @@ const FIELDS = [
     required: true,
     inputmode: 'numeric',
     maxlength: 10,
+    placeholder: '10-digit mobile number',
     autocomplete: 'tel',
     validate: (v) => (/^\d{10}$/.test(v.trim())
       ? '' : 'Enter a valid 10-digit mobile number.'),
@@ -40,59 +47,43 @@ const FIELDS = [
     label: 'Email Address',
     type: 'email',
     required: true,
+    placeholder: 'name@example.com',
     autocomplete: 'email',
     validate: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
       ? '' : 'Enter a valid email address.'),
   },
   {
-    name: 'dob',
-    label: 'Date of Birth',
-    type: 'date',
+    name: 'message',
+    label: 'Message',
+    type: 'textarea',
     required: true,
-    validate: (v) => {
-      if (!v) return 'Please select your date of birth.';
-      const dob = new Date(v);
-      if (Number.isNaN(dob.getTime())) return 'Please select a valid date.';
-      const now = new Date();
-      let age = now.getFullYear() - dob.getFullYear();
-      const m = now.getMonth() - dob.getMonth();
-      if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) age -= 1;
-      return age >= 18 ? '' : 'You must be at least 18 years old.';
-    },
-  },
-  {
-    name: 'pan',
-    label: 'PAN Number',
-    type: 'text',
-    required: true,
-    maxlength: 10,
-    uppercase: true,
-    autocomplete: 'off',
-    validate: (v) => (/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(v.trim().toUpperCase())
-      ? '' : 'Enter a valid PAN (e.g. ABCDE1234F).'),
-  },
-  {
-    name: 'aadhaar',
-    label: 'Aadhaar Number ',
-    type: 'text',
-    required: false,
-    inputmode: 'numeric',
-    maxlength: 12,
-    autocomplete: 'off',
-    validate: (v) => (!v.trim() || /^\d{12}$/.test(v.trim())
-      ? '' : 'Aadhaar must be 12 digits.'),
+    placeholder: 'Tell us how we can help you',
+    validate: (v) => (v.trim() ? '' : 'Please enter a message.'),
   },
 ];
 
-/* pull authored chrome text from block cells, in order, ignoring empties */
+/* pull authored chrome text from block cells, in order, ignoring empties.
+   The submit endpoint is identified by content (a URL, or an "endpoint:"
+   prefix) rather than position, so it works as its own authored field and
+   is robust to any earlier field being left empty. */
 function readChrome(block) {
-  const cells = [...block.children]
-    .map((r) => (r.querySelector(':scope > div') || r).textContent.trim())
-    .filter(Boolean);
+  // Read each <p> (or bare cell) separately: the Action URL shares a field
+  // group with the success message, so they render as two paragraphs inside
+  // one cell — reading whole-cell text would merge them.
+  const texts = [];
+  [...block.children].forEach((row) => {
+    const cell = row.querySelector(':scope > div') || row;
+    const paras = cell.querySelectorAll(':scope > p');
+    const parts = paras.length
+      ? [...paras].map((p) => p.textContent.trim())
+      : [cell.textContent.trim()];
+    parts.forEach((t) => { if (t) texts.push(t); });
+  });
   let endpoint = DEFAULT_ENDPOINT;
   const rest = [];
-  cells.forEach((t) => {
+  texts.forEach((t) => {
     if (/^endpoint\s*:/i.test(t)) endpoint = t.replace(/^endpoint\s*:/i, '').trim();
+    else if (/^https?:\/\//i.test(t)) endpoint = t;
     else rest.push(t);
   });
   const [heading, subtitle, submitText, successMsg] = rest;
@@ -123,11 +114,16 @@ function buildField(field) {
     label.append(req);
   }
 
-  const input = document.createElement('input');
+  const input = document.createElement(field.type === 'textarea' ? 'textarea' : 'input');
   input.id = id;
   input.name = field.name;
-  input.type = field.type;
+  if (field.type !== 'textarea') input.type = field.type;
   input.className = 'apply-form-input';
+  if (field.type === 'textarea') {
+    input.classList.add('apply-form-textarea');
+    input.rows = 4;
+  }
+  if (field.placeholder) input.placeholder = field.placeholder;
   if (field.required) input.required = true;
   if (field.inputmode) input.inputMode = field.inputmode;
   if (field.maxlength) input.maxLength = field.maxlength;
@@ -243,10 +239,14 @@ export default function decorate(block) {
     try {
       const resp = await fetch(chrome.endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
+      // the BFF forwards web3forms' JSON: { success: boolean, message: string }
+      const result = await resp.json().catch(() => ({}));
+      if (!resp.ok || result.success === false) {
+        throw new Error(result.message || `Request failed (${resp.status})`);
+      }
       form.reset();
       root.replaceChildren(head, (() => {
         const done = document.createElement('div');

@@ -1,0 +1,178 @@
+/*
+ * K811 Video Hero — full-bleed background video with overlaid copy.
+ * Scoped to .kotak811 pages; inherits Manrope + tokens from styles/kotak811.css.
+ */
+
+/* Vertical stack matching the source: text block on solid black, then the
+   video band below it (not a full-bleed video behind the copy). */
+.k811-video-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+}
+
+/* full-bleed even inside a constrained section */
+.kotak811 .section > .k811-video-hero-wrapper {
+  max-width: none;
+}
+
+/* Let the card media bleed to the very bottom edge of the hero section (no
+   black padding strip below it), so the cards animate up from the bottom edge
+   exactly like the live page. Extra .metal/.dark qualifier keeps this ahead of
+   the section's own `padding: 40px 0` regardless of stylesheet order. */
+.kotak811 .section.metal:has(> .k811-video-hero-wrapper),
+.kotak811 .section.dark:has(> .k811-video-hero-wrapper),
+.kotak811 .section:has(> .k811-video-hero-wrapper) {
+  padding-bottom: 0;
+}
+
+/* video band, below the copy, in normal flow. The band owns one fixed height
+   (from the source clip's ~1920x598 ratio); the poster and the lazily-attached
+   video are OVERLAID inside it (both absolutely positioned, object-fit: cover)
+   so there is a single seamless band — no stacked double-height + empty gap.
+   A top mask-fade dissolves the image's hard rectangular top edge into the
+   black section above it, so the hero reads as ONE continuous section rather
+   than a text band with a separate photo band pasted below. */
+.k811-video-hero-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1920 / 598;
+  line-height: 0;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 18%);
+}
+
+/* Mobile/tablet (<900px) uses the art-directed portrait clip (~750x660). The
+   desktop 1920/598 band would crop it to a thin strip and cut off the cards, so
+   match the mobile clip's ratio here (mirrors the live mobile hero band). */
+@media (width < 900px) {
+  .k811-video-hero-media {
+    aspect-ratio: 750 / 660;
+  }
+}
+
+.k811-video-hero-media picture,
+.k811-video-hero-media img,
+.k811-video-hero-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.k811-video-hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 56px 24px 40px;
+  text-align: center;
+}
+
+.kotak811 .k811-video-hero .k811-video-hero-content h1,
+.kotak811 .section.metal .k811-video-hero .k811-video-hero-content h1 {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #9e9e9e;
+  margin: 0 0 24px;
+}
+
+/* h2 + subhead use the live metallic gradient text fill */
+.k811-video-hero .k811-video-hero-content h2,
+.k811-video-hero .k811-video-hero-content h3 {
+  background-image: linear-gradient(0deg, #737373, #fff, #fff);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari needs the prefix for text clip */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.k811-video-hero .k811-video-hero-content h2 {
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.k811-video-hero .k811-video-hero-content h3 {
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+  margin: 0 0 32px;
+}
+
+.k811-video-hero-content p {
+  font-size: 16px;
+  margin: 0 0 24px;
+  color: #eaeaea;
+}
+
+.k811-video-hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+.k811-video-hero-btn.k811-video-hero-btn-primary {
+  display: inline-block;
+  background: #fff;
+  color: #222;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 25px 15px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.k811-video-hero-btn.k811-video-hero-btn-primary:hover {
+  background: #d1101f;
+  color: #fff;
+}
+
+.k811-video-hero-content .k811-video-hero-actions + p,
+.k811-video-hero-btn-label {
+  font-size: 13px;
+  color: #9e9e9e;
+}
+
+.k811-video-hero-btn.k811-video-hero-btn-secondary {
+  color: #9e9e9e;
+  text-decoration: underline;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+@media (width >= 900px) {
+  .k811-video-hero-content {
+    padding: 96px 40px 48px;
+  }
+
+  .k811-video-hero .k811-video-hero-content h1 {
+    font-size: 17px;
+    margin: 0 0 30px;
+  }
+
+  .k811-video-hero .k811-video-hero-content h2 {
+    font-size: 54px;
+  }
+
+  .k811-video-hero .k811-video-hero-content h3 {
+    font-size: 29px;
+    margin: 0 0 40px;
+  }
+
+  .k811-video-hero-actions {
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+}

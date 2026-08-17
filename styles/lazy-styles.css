@@ -1,6 +1,6 @@
 /* add global styles that can be loaded post LCP here */
 
-/* Back to Top — floating control, mobile only, revealed after scrolling */
+/* Back to Top — floating control, revealed after scrolling */
 .back-to-top {
   display: none;
   position: fixed;
@@ -30,12 +30,10 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23131313' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M8 13l4-4 4 4'/%3E%3C/svg%3E");
 }
 
-/* shown on mobile only, and only once scrolled */
-@media (width < 900px) {
-  .back-to-top.back-to-top-visible {
-    display: inline-flex;
-    opacity: 1;
-  }
+/* shown on all screens, once scrolled */
+.back-to-top.back-to-top-visible {
+  display: inline-flex;
+  opacity: 1;
 }
 
 /* docked variant — right-aligned inside the Help Links section (not floating) */
@@ -51,4 +49,164 @@
   box-shadow: none;
   color: #131313;
   opacity: 1;
+}
+
+/* ---- Compare modal (shared, opened from card Compare buttons) ---- */
+.compare-modal[hidden] {
+  display: none;
+}
+
+.compare-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compare-modal .compare-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 50%);
+}
+
+.compare-modal .compare-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: #fff;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 25%);
+}
+
+.compare-modal .compare-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.compare-modal .compare-modal-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.compare-modal .compare-modal-close {
+  border: 0;
+  background: none;
+  font-size: 26px;
+  line-height: 1;
+  color: #666;
+  cursor: pointer;
+}
+
+.compare-modal .compare-modal-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.compare-modal .compare-modal-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px dashed #cfcfcf;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.compare-modal .compare-modal-slot-filled {
+  border-style: solid;
+  border-color: #e0e0e0;
+}
+
+.compare-modal .compare-modal-slot img {
+  width: 100%;
+  max-width: 90px;
+  height: auto;
+}
+
+.compare-modal .compare-modal-slot-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.compare-modal .compare-modal-slot-empty {
+  color: #9a9a9a;
+  font-size: 13px;
+}
+
+.compare-modal .compare-modal-slot-remove {
+  border: 0;
+  background: none;
+  color: #e51a24;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.compare-modal .compare-modal-hint {
+  margin: 0 0 12px;
+  color: #6b6b6b;
+  font-size: 13px;
+}
+
+.compare-modal .compare-modal-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.compare-modal .compare-modal-pool-item {
+  padding: 8px 14px;
+  border: 1px solid #d3d3d3;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.compare-modal .compare-modal-pool-item:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.compare-modal .compare-modal-pool-item:hover:not(:disabled) {
+  border-color: #e51a24;
+  color: #e51a24;
+}
+
+.compare-modal .compare-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.compare-modal .compare-modal-submit {
+  min-height: 44px;
+  padding: 0 32px;
+  border: 0;
+  border-radius: 6px;
+  background: #e51a24;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.compare-modal .compare-modal-submit:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

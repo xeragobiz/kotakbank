@@ -22,10 +22,11 @@ main > .section > .cards-featured-wrapper {
   padding: 0;
 }
 
-/* close the gap to the preceding section (e.g. cc-steps): drop this section's
-   top margin and the previous section's bottom margin */
+/* close the gap to the adjacent sections: drop this section's top and bottom
+   margins and the previous section's bottom margin */
 main > .section:has(> .cards-featured-wrapper) {
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 main > .section:has(+ .section > .cards-featured-wrapper) {
@@ -44,7 +45,7 @@ main > .section:has(+ .section > .cards-featured-wrapper) {
 
 .cards-featured .cards-featured-eyebrow {
   margin: 0 0 6px;
-  color: var(--cc-red);
+  color: var(--cc-red-text, #d1101f);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -144,7 +145,7 @@ main > .section:has(+ .section > .cards-featured-wrapper) {
 }
 
 .cards-featured .cards-featured-item-highlight-main {
-  color: var(--cc-red);
+  color: var(--cc-red-text, #d1101f);
   font-size: var(--body-font-size-s);
   font-weight: 800;
 }
@@ -231,6 +232,7 @@ main > .section:has(+ .section > .cards-featured-wrapper) {
   padding-top: 12px;
 }
 
+
 .cards-featured .cards-featured-compare:any-link {
   display: inline-flex;
   align-items: center;
@@ -251,6 +253,29 @@ main > .section:has(+ .section > .cards-featured-wrapper) {
 
 .cards-featured .cards-featured-compare:any-link:hover {
   text-decoration: underline;
+}
+
+/* reference cards render "Know More" as an outline button equal to Apply Now */
+.cards-featured .cards-featured-knowmore:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 22px;
+  border: 1px solid var(--cc-red);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cc-red);
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.cards-featured .cards-featured-knowmore:any-link:hover {
+  background: #fff5f6;
+  color: var(--cc-red);
 }
 
 /* mobile: show just "Compare" (hide the " this Card" suffix) */
@@ -277,6 +302,12 @@ main > .section:has(+ .section > .cards-featured-wrapper) {
 .cards-featured .cards-featured-apply:any-link:hover {
   background: #d4102a;
   color: #fff;
+}
+
+/* reference cards: Know More + Apply Now share the row equally */
+.cards-featured .cards-featured-item-actions:has(.cards-featured-knowmore) .cards-featured-knowmore:any-link,
+.cards-featured .cards-featured-item-actions:has(.cards-featured-knowmore) .cards-featured-apply:any-link {
+  flex: 1 1 0;
 }
 
 /* footer explore button */

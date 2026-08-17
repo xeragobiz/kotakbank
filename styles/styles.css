@@ -19,6 +19,10 @@
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
 
+  /* darker brand red for small text on light backgrounds (WCAG AA 4.5:1);
+     the brand red (#fa1432) stays on buttons/graphical elements */
+  --cc-red-text: #d1101f;
+
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
   --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;

@@ -1,0 +1,209 @@
+/* K811 Card Selector — "Choose Your Metal". Inherits Manrope from .kotak811.
+ * Faithful to kotak811.bank.in: dark section, circular metal swatches, an
+ * active-variant name heading, a layered card deck on the right, a white
+ * Apply pill and bulleted fees. */
+
+.k811-card-selector {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* "CHOOSE YOUR METAL" — gray, centered eyebrow heading. The title is authored
+   as section default content (sibling h2), not inside the block, so target the
+   section's default-content-wrapper heading to match the live page. */
+.k811-card-selector .k811-card-selector-title,
+.kotak811 .section.dark .k811-card-selector .k811-card-selector-title,
+.kotak811 .section.k811-card-selector-container .default-content-wrapper :is(h1, h2, h3) {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: #959595;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 auto 40px;
+}
+
+.k811-card-selector-stage {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+/* left column ---------------------------------------------------------- */
+.k811-card-selector-info {
+  order: 2;
+}
+
+.k811-card-selector-name {
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.k811-card-selector-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.k811-card-selector-swatch {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 3px solid #000;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+  background-size: cover;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.k811-card-selector-swatch:hover {
+  transform: scale(1.08);
+}
+
+.k811-card-selector-swatch.is-active {
+  border-color: #fff;
+}
+
+/* fees panel ----------------------------------------------------------- */
+.k811-card-selector-panel-item {
+  display: none;
+}
+
+.k811-card-selector-panel-item.is-active {
+  display: block;
+}
+
+.k811-card-selector-panel-item h3 {
+  margin: 0 0 16px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.k811-card-selector-panel-item p {
+  margin: 0 0 12px;
+  font-size: 19px;
+  line-height: 1.4;
+  color: #fff;
+}
+
+/* fees bullets — match the source's dashed/dot list */
+.k811-card-selector-panel-item ul {
+  margin: 0 0 4px;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.k811-card-selector-panel-item li {
+  margin: 0 0 12px;
+  font-size: 19px;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.k811-card-selector-panel-item li del {
+  color: #8a8a8a;
+}
+
+.k811-card-selector-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+/* Apply now — white pill button with dark text (matches the live page).
+   :any-link raises specificity above the global `a:any-link` link color. */
+.k811-card-selector-apply:any-link {
+  display: inline-block;
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.k811-card-selector-apply:any-link:hover {
+  background: #d1101f;
+  color: #fff;
+}
+
+/* T&C — small gray underlined text shown above Apply (authored in the panel) */
+.k811-card-selector-tnc:any-link {
+  display: inline-block;
+  margin: 0 0 8px;
+  color: #9a9a9a;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+/* right column: fanned card deck --------------------------------------- */
+.k811-card-selector-media {
+  order: 1;
+  position: relative;
+  min-height: 300px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Every card is anchored to the same bottom-center point; JS sets its
+   translate/scale/brightness/z-index per depth. The active card is in front at
+   full brightness; deeper cards fan upward, smaller and darkened. */
+.k811-card-selector-card {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  transform-origin: center bottom;
+  transform: translate(-50%, -10%);
+  transition: transform 0.4s linear, filter 0.4s linear;
+  will-change: transform, filter;
+}
+
+.k811-card-selector-card img,
+.k811-card-selector-card picture {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* tablet + up: info left, card deck right (matches live from ~600px) */
+@media (width >= 600px) {
+  .k811-card-selector-stage {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .k811-card-selector-info {
+    order: 1;
+  }
+
+  .k811-card-selector-media {
+    order: 2;
+    min-height: 300px;
+  }
+}
+
+@media (width >= 900px) {
+  .k811-card-selector {
+    padding: 64px 40px;
+  }
+
+  .k811-card-selector-stage {
+    gap: 56px;
+  }
+
+  .k811-card-selector-media {
+    min-height: 340px;
+  }
+}

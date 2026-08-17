@@ -1,0 +1,221 @@
+/*
+ * Kotak811 design guide — scoped design system for the migrated kotak811.bank.in
+ * pages (home, infinity-metal debit card, about-us).
+ *
+ * Everything here is scoped under `.kotak811` (added to <main> by the k811-*
+ * blocks' shared init) so it NEVER affects the project's global design system
+ * or any existing pages/blocks.
+ *
+ * Faithful to the source:
+ *   - Font: Manrope (self-hosted, variable, latin + latin-ext subsets)
+ *   - Motion: each section reveals once as it enters the viewport with a fade
+ *     + upward translate (opacity 0->1, translateY 40->0) over 0.8s.
+ */
+
+/* ---- Manrope (self-hosted variable font) -------------------------------- */
+@font-face {
+  font-family: manrope;
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../fonts/manrope-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: manrope;
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../fonts/manrope-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---- Design tokens (scoped) --------------------------------------------- */
+.kotak811 {
+  --k811-font: manrope, sans-serif;
+
+  /* Override the global font tokens within the kotak811 scope so every heading
+     and body element that reads var(--heading-font-family)/var(--body-font-family)
+     picks up Manrope — matches the source site. Scoped to .kotak811, so global
+     pages keep Roboto. */
+  --heading-font-family: manrope, sans-serif;
+  --body-font-family: manrope, sans-serif;
+  --k811-text: #222;
+  --k811-bg: #fff;
+  --k811-dark-bg: #000;
+  --k811-dark-text: #fff;
+  --k811-card-bg: #f9f9f9;
+  --k811-card-radius: 20px;
+  --k811-link: #d1101f;               /* brand red for inline text links */
+  --k811-section-pad-y: 48px;
+  --k811-content-max: 1120px;
+  --k811-fade-duration: 800ms;
+  --k811-fade-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  font-family: var(--k811-font);
+  color: var(--k811-text);
+}
+
+/* ---- Section background variants (scoped) ------------------------------
+ * Matches the source: dark metal sections (#000 / #1d1d1d), a red brand band,
+ * and the metal hero. Global styles.css only defines .light, so these are
+ * added here — scoped to .kotak811 so no global page is affected.
+ */
+.kotak811 .section.dark,
+.kotak811 .section.metal {
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 40px 0;
+}
+
+.kotak811 .section.dark :is(h1, h2, h3, h4, p),
+.kotak811 .section.metal :is(h1, h2, h3, h4, p) {
+  color: #fff;
+}
+
+.kotak811 .section.accent {
+  background-color: #4b0082;
+  color: #fff;
+  margin: 0;
+  padding: 40px 0;
+}
+
+.kotak811 .section.brand-red {
+  background-color: #f10000;
+  color: #fff;
+  margin: 0;
+  padding: 40px 0;
+}
+
+.kotak811 h1,
+.kotak811 h2,
+.kotak811 h3,
+.kotak811 h4 {
+  font-family: var(--k811-font);
+  font-weight: 700;
+}
+
+/* Feature heading tier from source: 44px / 52px / 700 (desktop) */
+.kotak811 h2 {
+  font-size: 30px;
+  line-height: 1.18;
+}
+
+@media (width >= 900px) {
+  .kotak811 h2 {
+    font-size: 44px;
+    line-height: 52px;
+  }
+}
+
+/* ---- "detailed features" long-form SEO copy (white section) ------------
+ * Matches the source: gray centered eyebrow title, black sub-headings, gray
+ * body paragraphs. Scoped so global pages are unaffected. Declared after the
+ * base .kotak811 h2/h3 rules so specificity ascends (stylelint-friendly). */
+.kotak811 .section.detailed {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.kotak811 .section.detailed .default-content-wrapper > h2:first-child {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: #959595;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 40px;
+}
+
+.kotak811 .section.detailed .default-content-wrapper h3 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #000;
+  margin: 24px 0 10px;
+}
+
+.kotak811 .section.detailed .default-content-wrapper p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #797979;
+  margin: 0;
+}
+
+/* ---- Scroll-reveal motion (fade + rise + stagger + image scale) --------
+ * Sections marked `data-k811-aos="fade-in"` start transparent and pushed down
+ * 40px, then fade + rise when the shared IntersectionObserver adds
+ * `.k811-aos-in` the first time they enter the viewport (it unobserves after,
+ * so each section animates only once). On reveal:
+ *   - direct content children (`[data-k811-child]`) stagger in, each delayed
+ *     by `--k811-child-delay` (index * 0.15s, set by JS);
+ *   - images (`.k811-aos-img`) additionally scale from .95 -> 1.
+ * All motion is transform + opacity only (compositor-friendly). The hidden
+ * state is gated on `.k811-aos-ready` (added by JS) so a JS failure can never
+ * leave content permanently invisible, and the whole block is disabled under
+ * prefers-reduced-motion.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hidden state (no transition, so applying it never animates OUT — the
+     content snaps to hidden, then only the reveal animates IN). */
+  .kotak811 .k811-aos-ready[data-k811-aos='fade-in'] {
+    opacity: 0;
+    transform: translateY(40px);
+    will-change: opacity, transform;
+  }
+
+  /* Once a section has staggered children, they carry the rise, so the
+     container only needs to fade (its translate is neutralised). */
+  .kotak811 .k811-aos-ready[data-k811-aos='fade-in']:has([data-k811-child]) {
+    transform: none;
+  }
+
+  .kotak811 [data-k811-aos='fade-in'] [data-k811-child] {
+    opacity: 0;
+    transform: translateY(40px);
+    will-change: opacity, transform;
+  }
+
+  /* Images scale .95 -> 1 in step with their child's reveal. */
+  .kotak811 [data-k811-aos='fade-in'] .k811-aos-img {
+    transform: scale(0.95);
+    will-change: transform;
+  }
+
+  /* Reveal: the transition lives on the `.k811-aos-in` state, so motion only
+     plays IN (fade + rise + scale), never on the initial hide. Children and
+     images honour their per-child stagger delay. */
+  .kotak811 [data-k811-aos='fade-in'].k811-aos-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--k811-fade-duration) var(--k811-fade-easing),
+      transform var(--k811-fade-duration) var(--k811-fade-easing);
+  }
+
+  .kotak811 [data-k811-aos='fade-in'].k811-aos-in [data-k811-child] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--k811-fade-duration) var(--k811-fade-easing),
+      transform var(--k811-fade-duration) var(--k811-fade-easing);
+    transition-delay: var(--k811-child-delay, 0s);
+  }
+
+  .kotak811 [data-k811-aos='fade-in'].k811-aos-in .k811-aos-img {
+    transform: scale(1);
+    transition: transform var(--k811-fade-duration) var(--k811-fade-easing);
+    transition-delay: var(--k811-child-delay, 0s);
+  }
+}
+
+/* ---- Lottie decorative players ------------------------------------------ */
+.kotak811 .k811-lottie {
+  display: block;
+  width: 100%;
+  height: auto;
+}

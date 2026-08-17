@@ -1,0 +1,45 @@
+{
+  "definitions": [
+    {
+      "title": "Sticky CTA",
+      "id": "sticky-cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Sticky CTA",
+              "model": "sticky-cta"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "sticky-cta",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "message",
+          "value": "",
+          "label": "Message",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "cta",
+          "label": "CTA Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "ctaText",
+          "label": "CTA Text"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

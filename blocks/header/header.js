@@ -40,16 +40,18 @@ function closeAllMenus(menu) {
  * @param {Element} section the first fragment section
  * @returns {Element} brand element
  */
-const HOME_URL = '/';
+const HOME_URL = '/home';
 
 function buildBrand(section) {
   const brand = document.createElement('div');
   brand.className = 'nav-brand';
   if (!section) return brand;
-  // prefer a logo link the author set (<a><img></a>); otherwise wrap the bare
-  // logo image in a link to the Kotak home page.
+  // the logo always links to the home page. Prefer an author-set logo link
+  // (<a><img></a>) but point it at HOME_URL; otherwise wrap the bare logo image.
   const logoLink = section.querySelector('a img')?.closest('a');
   if (logoLink) {
+    logoLink.href = HOME_URL;
+    logoLink.setAttribute('aria-label', 'Kotak Mahindra Bank home');
     brand.append(logoLink);
   } else {
     const pic = section.querySelector('picture, img');
@@ -69,60 +71,264 @@ function buildBrand(section) {
  * @param {Element} section the first fragment section
  * @returns {Element} tools element
  */
+/**
+ * Open the site search as a popup overlay on the current page. The search
+ * block's markup is pulled from the search page so its authored content
+ * (recent seed, most-searched links) is preserved, then decorated in place.
+ * @param {string} searchPath the search page path (no .html)
+ * @returns {Promise<void>}
+ */
+async function openSearchPopup(searchPath) {
+  if (document.querySelector('.search-popup')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'search-popup';
+  const backdrop = document.createElement('div');
+  backdrop.className = 'search-popup-backdrop';
+  const panel = document.createElement('div');
+  panel.className = 'search-popup-panel';
+  overlay.append(backdrop, panel);
+
+  // load the search block's CSS once (it isn't on the page otherwise)
+  if (!document.querySelector('link[data-search-css]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/blocks/search/search.css';
+    link.setAttribute('data-search-css', '');
+    document.head.append(link);
+  }
+
+  // pull the authored search block from the search page; fall back to a
+  // minimal block if it can't be fetched
+  let blockEl = null;
+  try {
+    const resp = await fetch(`${searchPath}.plain.html`);
+    if (resp.ok) {
+      const doc = new DOMParser().parseFromString(await resp.text(), 'text/html');
+      blockEl = doc.querySelector('.search');
+    }
+  } catch (e) { /* ignore — use fallback below */ }
+  if (!blockEl) {
+    blockEl = document.createElement('div');
+    blockEl.className = 'search';
+    blockEl.innerHTML = '<div><div><a href="/query-index.json">/query-index.json</a></div></div>';
+  }
+  panel.append(blockEl);
+  document.body.append(overlay);
+  document.body.style.overflow = 'hidden';
+
+  const controller = new AbortController();
+  const { signal } = controller;
+  const close = () => {
+    overlay.remove();
+    document.body.style.overflow = '';
+    controller.abort();
+  };
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') close();
+  }, { signal });
+  backdrop.addEventListener('click', close, { signal });
+  // the search block's red × closes the whole popup
+  blockEl.addEventListener('click', (e) => {
+    if (e.target.closest('.search-close')) close();
+  }, { signal });
+
+  const { default: decorateSearch } = await import('../search/search.js');
+  await decorateSearch(blockEl);
+  const input = blockEl.querySelector('.search-input');
+  if (input) input.focus();
+}
+
+// AI Search backend (public HTTPS endpoint). Kept as a constant so it can be
+// swapped without touching the popup logic.
+const AI_SEARCH_ENDPOINT = 'https://aemsearch.xerago.com/api/kotak/search';
+
+/* pull the AI answer text out of the API response, tolerating field naming */
+function readAiAnswer(data) {
+  if (typeof data === 'string') return data;
+  return data.answer || data.result || data.response || data.text
+    || data.message || data.output || '';
+}
+
+/* normalize the AI response "sources" into [{ title, url }], tolerating shapes */
+function readAiSources(data) {
+  const list = data.sources || data.results || data.citations
+    || data.links || data.documents || [];
+  return (Array.isArray(list) ? list : [])
+    .map((s) => {
+      if (typeof s === 'string') return { title: s, url: s };
+      const url = s.url || s.path || s.link || s.href || '';
+      const title = s.title || s.name || s.heading || s.label || url;
+      return { title, url };
+    })
+    .filter((s) => s.url || s.title);
+}
+
+/**
+ * Open the AI Search popup: a text prompt that POSTs to the AI endpoint and
+ * renders the generated answer plus its source links.
+ */
+function openAiSearchPopup() {
+  if (document.querySelector('.ai-search-popup')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'search-popup ai-search-popup';
+  const backdrop = document.createElement('div');
+  backdrop.className = 'search-popup-backdrop';
+  const panel = document.createElement('div');
+  panel.className = 'search-popup-panel';
+  overlay.append(backdrop, panel);
+
+  panel.innerHTML = `
+    <div class="ai-search">
+      <div class="ai-search-box">
+        <div class="ai-search-field">
+          <span class="ai-search-icon" aria-hidden="true"></span>
+          <input type="search" class="ai-search-input" placeholder="Ask anything..." aria-label="Ask anything">
+        </div>
+        <button type="button" class="search-close ai-search-close" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#e51a24" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="ai-search-results" role="status" aria-live="polite"></div>
+    </div>`;
+  document.body.append(overlay);
+  document.body.style.overflow = 'hidden';
+
+  const controller = new AbortController();
+  const { signal } = controller;
+  const close = () => {
+    overlay.remove();
+    document.body.style.overflow = '';
+    controller.abort();
+  };
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') close();
+  }, { signal });
+  backdrop.addEventListener('click', close, { signal });
+  panel.querySelector('.ai-search-close').addEventListener('click', close, { signal });
+
+  const input = panel.querySelector('.ai-search-input');
+  const results = panel.querySelector('.ai-search-results');
+
+  const runQuery = async () => {
+    const text = input.value.trim();
+    if (text.length < 2) return;
+    results.className = 'ai-search-results ai-search-loading';
+    results.textContent = 'Searching…';
+    try {
+      const resp = await fetch(AI_SEARCH_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: text }),
+      });
+      if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
+      const data = await resp.json().catch(() => ({}));
+      const answer = readAiAnswer(data);
+      const sources = readAiSources(data);
+
+      results.className = 'ai-search-results';
+      results.textContent = '';
+      if (answer) {
+        const ans = document.createElement('div');
+        ans.className = 'ai-search-answer';
+        ans.textContent = answer;
+        results.append(ans);
+      }
+      if (sources.length) {
+        const h = document.createElement('h3');
+        h.className = 'ai-search-sources-heading';
+        h.textContent = 'Sources';
+        const ul = document.createElement('ul');
+        ul.className = 'ai-search-sources';
+        sources.forEach((s) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = s.url || '#';
+          a.textContent = s.title || s.url;
+          li.append(a);
+          ul.append(li);
+        });
+        results.append(h, ul);
+      }
+      if (!answer && !sources.length) {
+        results.textContent = 'No results found.';
+      }
+    } catch (err) {
+      results.className = 'ai-search-results ai-search-error';
+      results.textContent = 'Something went wrong. Please try again.';
+    }
+  };
+
+  input.addEventListener('keyup', (e) => {
+    if (e.code === 'Enter') runQuery();
+  });
+  input.focus();
+}
+
+/* AI Search control — sits before the standard search icon in the header */
+function buildAiSearchControl() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'nav-ai-search';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'nav-ai-search-toggle';
+  btn.setAttribute('aria-label', 'AI Search');
+  // animated sparkle icon (two four-pointed stars) that spin together, plus a
+  // layer of little particle stars emanating from the button's bottom-right
+  // corner (see CSS). Six particles with staggered delays.
+  const particles = Array.from({ length: 6 }, (_, i) => `<span class="nav-ai-particle nav-ai-particle-${i + 1}"></span>`).join('');
+  btn.innerHTML = `
+    <span class="nav-ai-search-icon" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="nav-ai-star-main" d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z" fill="currentColor"/>
+        <path class="nav-ai-star-spark" d="M18 15L18.75 17.25L21 18L18.75 18.75L18 21L17.25 18.75L15 18L17.25 17.25L18 15Z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="nav-ai-search-label">AI</span>
+    <span class="nav-ai-particles" aria-hidden="true">${particles}</span>`;
+
+  btn.addEventListener('click', () => {
+    const open = document.querySelector('.ai-search-popup');
+    if (open) {
+      open.remove();
+      document.body.style.overflow = '';
+    } else {
+      openAiSearchPopup();
+    }
+  });
+
+  wrapper.append(btn);
+  return wrapper;
+}
+
 function buildSearchControl(searchHref) {
-  const searchPath = (searchHref || '/en/search').replace(/\.html$/, '');
+  // treat a placeholder anchor (#) or empty value as "no real target" so the
+  // control still points at the site search page
+  const hasRealHref = searchHref && searchHref !== '#';
+  const searchPath = (hasRealHref ? searchHref : '/search').replace(/\.html$/, '');
   const wrapper = document.createElement('div');
   wrapper.className = 'nav-search';
 
-  const toggle = document.createElement('button');
-  toggle.type = 'button';
-  toggle.className = 'nav-search-toggle';
-  toggle.setAttribute('aria-label', 'Search');
-  toggle.setAttribute('aria-expanded', 'false');
+  const link = document.createElement('a');
+  link.href = searchPath;
+  link.className = 'nav-search-toggle';
+  link.setAttribute('aria-label', 'Search');
 
-  const form = document.createElement('form');
-  form.className = 'nav-search-form';
-  form.action = searchPath;
-  form.setAttribute('role', 'search');
-  const input = document.createElement('input');
-  input.type = 'search';
-  input.name = 'q';
-  input.className = 'nav-search-input';
-  input.placeholder = 'I am looking for...';
-  input.setAttribute('aria-label', 'Search');
-
-  // submit (magnifier) + close (X) buttons — only visible in the mobile overlay
-  const submit = document.createElement('button');
-  submit.type = 'submit';
-  submit.className = 'nav-search-submit';
-  submit.setAttribute('aria-label', 'Submit search');
-  const close = document.createElement('button');
-  close.type = 'button';
-  close.className = 'nav-search-close';
-  close.setAttribute('aria-label', 'Close search');
-  form.append(input, submit, close);
-
-  // full-screen dimmer behind the mobile search bar
-  const backdrop = document.createElement('div');
-  backdrop.className = 'nav-search-backdrop';
-
-  const closeSearch = () => {
-    wrapper.classList.remove('nav-search-open');
-    toggle.setAttribute('aria-expanded', 'false');
-  };
-
-  toggle.addEventListener('click', () => {
-    const open = wrapper.classList.toggle('nav-search-open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (open) input.focus();
-  });
-  close.addEventListener('click', closeSearch);
-  backdrop.addEventListener('click', closeSearch);
-  form.addEventListener('submit', (e) => {
-    if (!input.value.trim()) e.preventDefault();
+  // clicking the icon toggles the search popup (open, or close if already open)
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const open = document.querySelector('.search-popup');
+    if (open) {
+      open.remove();
+      document.body.style.overflow = '';
+    } else {
+      openSearchPopup(searchPath);
+    }
   });
 
-  wrapper.append(toggle, form, backdrop);
+  wrapper.append(link);
   return wrapper;
 }
 
@@ -154,6 +360,8 @@ function buildTools(section) {
   if (!hasSearch && /search/i.test(rawText)) hasSearch = true;
   if (!hasLogin && /login/i.test(rawText)) hasLogin = true;
 
+  // AI Search always appears (site-wide), just before the standard search icon
+  tools.append(buildAiSearchControl());
   if (hasSearch) tools.append(buildSearchControl(searchHref));
   if (hasLogin) {
     const a = loginLink || document.createElement('a');

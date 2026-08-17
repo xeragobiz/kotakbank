@@ -1,0 +1,11 @@
+{
+  "source": {
+    "url": "https://author-p165370-e1760075.adobeaemcloud.com/bin/franklin.delivery/xeragobiz/kotakbank/main",
+    "type": "markup",
+    "suffix": ".html"
+  },
+  "overlay": {
+    "url": "https://json2html.adobeaem.workers.dev/xeragobiz/kotakbank/main",
+    "type": "markup"
+  }
+}

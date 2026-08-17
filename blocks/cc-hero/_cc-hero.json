@@ -54,6 +54,54 @@
           "valueType": "string"
         },
         {
+          "component": "select",
+          "name": "text_headingColor",
+          "label": "Heading Colour",
+          "valueType": "string",
+          "value": "orange",
+          "options": [
+            { "name": "Orange", "value": "orange" },
+            { "name": "Blue", "value": "blue" },
+            { "name": "White", "value": "white" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "text_textColor",
+          "label": "Text Colour",
+          "valueType": "string",
+          "value": "blue",
+          "options": [
+            { "name": "Orange", "value": "orange" },
+            { "name": "Blue", "value": "blue" },
+            { "name": "White", "value": "white" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "text_layout",
+          "label": "Layout",
+          "valueType": "string",
+          "value": "",
+          "options": [
+            { "name": "Default (overlay banner)", "value": "" },
+            { "name": "Detail (product-detail card)", "value": "detail" },
+            { "name": "Metal (light, card art on right)", "value": "metal" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "text_gradient",
+          "label": "Gradient",
+          "valueType": "string",
+          "value": "",
+          "options": [
+            { "name": "None", "value": "" },
+            { "name": "Red", "value": "gradient-red" },
+            { "name": "Dark", "value": "gradient-dark" }
+          ]
+        },
+        {
           "component": "aem-content",
           "name": "primaryCta",
           "label": "Primary CTA Link"

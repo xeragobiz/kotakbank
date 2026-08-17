@@ -1,6 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { loadCreditCard, cardReferencePath, isCardReference } from '../../scripts/credit-card.js';
+import openCompareModal from '../../scripts/compare-modal.js';
 
 /**
  * Cards Lifestyle — "A Credit Card for every need".
@@ -19,11 +20,23 @@ function renderCard(data) {
   const li = document.createElement('li');
   li.className = 'cards-lifestyle-item';
   if (data.tags) li.dataset.tags = data.tags.toLowerCase();
+  // identity used by the compare popup
+  li.dataset.cardName = data.name || '';
+  li.dataset.cardPath = data.path || '';
+  li.dataset.cardImage = data.imageSrc || '';
 
   const imgWrap = document.createElement('div');
   imgWrap.className = 'cards-lifestyle-item-image';
   if (data.imageSrc) {
     imgWrap.append(createOptimizedPicture(data.imageSrc, data.imageAlt, false, [{ width: '400' }]));
+  }
+  // "Recommended" ribbon on the image for the curated (cashback/fuel) cards
+  const cardTagList = (data.tags || '').toLowerCase().split(',').map((t) => t.trim());
+  if (cardTagList.includes('cashback') || cardTagList.includes('fuel')) {
+    const badge = document.createElement('span');
+    badge.className = 'cards-lifestyle-item-recommended';
+    badge.textContent = 'Recommended';
+    imgWrap.append(badge);
   }
   li.append(imgWrap);
 
@@ -47,6 +60,13 @@ function renderCard(data) {
       b.textContent = data.badge;
       head.append(b);
     }
+    // social-proof badge on the curated (cashback/fuel) cards
+    if (cardTagList.includes('cashback') || cardTagList.includes('fuel')) {
+      const proof = document.createElement('span');
+      proof.className = 'cards-lifestyle-item-badge cards-lifestyle-item-badge-proof';
+      proof.textContent = '300 people purchased last 30 days';
+      head.append(proof);
+    }
     body.append(head);
   }
   let feesParts = [];
@@ -65,6 +85,29 @@ function renderCard(data) {
     data.featuresList.classList.add('cards-lifestyle-item-features');
     body.append(data.featuresList);
   }
+  // reference cards: Know More + Apply Now side by side, no Compare button.
+  if (data.isReference) {
+    const foot = document.createElement('div');
+    foot.className = 'cards-lifestyle-item-footer cards-lifestyle-item-footer-split';
+    if (data.knowMoreText) {
+      const km = document.createElement('a');
+      km.href = data.knowMoreHref || '#';
+      km.className = 'cards-lifestyle-knowmore cards-lifestyle-knowmore-btn';
+      km.textContent = data.knowMoreText;
+      foot.append(km);
+    }
+    if (data.applyText) {
+      const a = document.createElement('a');
+      a.href = data.applyHref || '#';
+      a.className = 'cards-lifestyle-apply';
+      a.textContent = data.applyText;
+      foot.append(a);
+    }
+    body.append(foot);
+    li.append(body);
+    return li;
+  }
+
   if (data.applyText) {
     const actions = document.createElement('div');
     actions.className = 'cards-lifestyle-item-actions';
@@ -76,25 +119,22 @@ function renderCard(data) {
     body.append(actions);
   }
   // footer: Know More on the left, Compare button on the right
-  if (data.knowMoreText || data.compareText) {
-    const foot = document.createElement('div');
-    foot.className = 'cards-lifestyle-item-footer';
-    if (data.knowMoreText) {
-      const km = document.createElement('a');
-      km.href = data.knowMoreHref || '#';
-      km.className = 'cards-lifestyle-knowmore';
-      km.textContent = data.knowMoreText;
-      foot.append(km);
-    }
-    if (data.compareText) {
-      const cmp = document.createElement('a');
-      cmp.href = data.compareHref || '#';
-      cmp.className = 'cards-lifestyle-compare';
-      cmp.textContent = data.compareText;
-      foot.append(cmp);
-    }
-    body.append(foot);
+  const foot = document.createElement('div');
+  foot.className = 'cards-lifestyle-item-footer';
+  if (data.knowMoreText) {
+    const km = document.createElement('a');
+    km.href = data.knowMoreHref || '#';
+    km.className = 'cards-lifestyle-knowmore';
+    km.textContent = data.knowMoreText;
+    foot.append(km);
   }
+  // Compare opens the comparison popup with this card pre-added (all cards)
+  const cmp = document.createElement('button');
+  cmp.type = 'button';
+  cmp.className = 'cards-lifestyle-compare';
+  cmp.textContent = data.compareText || 'Compare';
+  foot.append(cmp);
+  body.append(foot);
 
   li.append(body);
   return li;
@@ -177,6 +217,10 @@ export default async function decorate(block) {
   const row1 = parseRow(filtersRaw);
   const filtersLabel = row1.label;
   const filters = row1.values.length ? row1.values : ['All'];
+  // ensure a curated "Recommended" tab exists (shows only Cashback + Fuel cards)
+  if (!filters.some((f) => f.toLowerCase() === 'recommended')) {
+    filters.splice(1, 0, 'Recommended');
+  }
   const cat = parseCategories(categoriesRaw);
   const categoriesLabel = cat.label;
   // chips shown for a given (lowercased) row-1 filter. With an explicit map,
@@ -238,6 +282,30 @@ export default async function decorate(block) {
   const { row: tabsRow, group: tabs } = buildRow(filtersLabel, filters, 'cards-lifestyle-filter-primary', true);
   panel.append(tabsRow);
 
+  // mobile overflow: show only the first 3 tabs plus a "⋯" toggle that reveals
+  // the rest inline. Collapsed by default; the CSS hides the extra tabs when
+  // the group carries the -collapsed class.
+  const VISIBLE_TABS = 3;
+  const allTabs = [...tabs.querySelectorAll('.cards-lifestyle-tab')];
+  let moreBtn = null;
+  if (allTabs.length > VISIBLE_TABS) {
+    tabs.classList.add('cards-lifestyle-tabs-collapsed');
+    allTabs.forEach((t, i) => {
+      if (i >= VISIBLE_TABS) t.classList.add('cards-lifestyle-tab-overflow');
+    });
+    moreBtn = document.createElement('button');
+    moreBtn.type = 'button';
+    moreBtn.className = 'cards-lifestyle-tab cards-lifestyle-tab-more';
+    moreBtn.setAttribute('aria-label', 'Show more filters');
+    moreBtn.setAttribute('aria-expanded', 'false');
+    moreBtn.textContent = '···';
+    moreBtn.addEventListener('click', () => {
+      const collapsed = tabs.classList.toggle('cards-lifestyle-tabs-collapsed');
+      moreBtn.setAttribute('aria-expanded', String(!collapsed));
+    });
+    tabs.append(moreBtn);
+  }
+
   // secondary row: rebuilt whenever the primary selection changes, showing
   // only the chips mapped to the active row-1 tab.
   let categoryGroup = null;
@@ -278,6 +346,7 @@ export default async function decorate(block) {
     if (isCardReference(row)) {
       const refPath = cardReferencePath(row);
       data = refPath ? await loadCreditCard(refPath) : null;
+      if (data) data.isReference = true;
     } else {
       data = inlineCardData(row);
     }
@@ -290,15 +359,45 @@ export default async function decorate(block) {
   cards.forEach((li) => list.append(li));
   wrapper.append(list);
 
+  // wire Compare buttons: open the popup pre-adding the clicked card, with the
+  // full set of cards in this block as the pool to add more from.
+  const cardPool = cards
+    .filter((li) => li.dataset.cardPath)
+    .map((li) => ({
+      name: li.dataset.cardName,
+      path: li.dataset.cardPath,
+      image: li.dataset.cardImage,
+    }));
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cards-lifestyle-compare');
+    if (!btn) return;
+    const li = btn.closest('.cards-lifestyle-item');
+    const card = {
+      name: li.dataset.cardName,
+      path: li.dataset.cardPath,
+      image: li.dataset.cardImage,
+    };
+    openCompareModal(card, cardPool);
+  });
+
   // filtering: a card must match BOTH the active primary tab and (if set) the
-  // active secondary category. "all" (primary default) matches everything.
-  let activeFilter = (filters[0] || 'All').toLowerCase();
+  // active secondary category. Default the page to the curated "Recommended"
+  // tab when it exists; otherwise fall back to the first tab.
+  const hasRecommended = filters.some((f) => f.toLowerCase() === 'recommended');
+  let activeFilter = (hasRecommended ? 'recommended' : (filters[0] || 'All')).toLowerCase();
   let activeCategory = '';
   const cardTags = (li) => (li.dataset.tags || '').split(',').map((t) => t.trim()).filter(Boolean);
+  // "Recommended" is a curated tab: show only Cashback and Fuel cards.
+  const RECOMMENDED_TAGS = ['cashback', 'fuel'];
   const applyFilters = () => {
     list.querySelectorAll(':scope > li').forEach((li) => {
       const tags = cardTags(li);
-      const okPrimary = activeFilter === 'all' || tags.includes(activeFilter);
+      let okPrimary;
+      if (activeFilter === 'recommended') {
+        okPrimary = RECOMMENDED_TAGS.some((t) => tags.includes(t));
+      } else {
+        okPrimary = activeFilter === 'all' || tags.includes(activeFilter);
+      }
       const okCategory = !activeCategory || tags.includes(activeCategory);
       li.hidden = !(okPrimary && okCategory);
     });
@@ -306,8 +405,10 @@ export default async function decorate(block) {
 
   tabs.addEventListener('click', (e) => {
     const btn = e.target.closest('.cards-lifestyle-tab');
-    if (!btn) return;
-    tabs.querySelectorAll('.cards-lifestyle-tab').forEach((b) => b.setAttribute('aria-selected', 'false'));
+    // the "⋯" more toggle only expands the row — it isn't a filter, so don't
+    // select it or change the active filter here (its own handler expands).
+    if (!btn || btn.classList.contains('cards-lifestyle-tab-more')) return;
+    tabs.querySelectorAll('.cards-lifestyle-tab:not(.cards-lifestyle-tab-more)').forEach((b) => b.setAttribute('aria-selected', 'false'));
     btn.setAttribute('aria-selected', 'true');
     activeFilter = btn.dataset.filter;
     // row 1 change resets row 2 selection and rebuilds its chips
@@ -329,8 +430,14 @@ export default async function decorate(block) {
     });
   }
 
-  // initialize row 2 chips for the default row-1 tab
+  // reflect the default active filter on the matching tab (Recommended by
+  // default) and apply it so the page opens on the curated set.
+  tabs.querySelectorAll('.cards-lifestyle-tab').forEach((b) => {
+    b.setAttribute('aria-selected', b.dataset.filter === activeFilter ? 'true' : 'false');
+  });
+  // initialize row 2 chips for the default row-1 tab, then filter the grid
   renderCategoryChips(activeFilter);
+  applyFilters();
 
   block.textContent = '';
   block.append(wrapper);

@@ -97,12 +97,16 @@ function buildLinkColumns(section) {
     // collapse on mobile: tap the title to reveal its links (both the grid
     // columns and the wide full-width rows behave as accordions on mobile)
     if (list && list.tagName === 'UL') {
-      col.setAttribute('aria-expanded', 'false');
+      // aria-expanded belongs on the interactive title (role=button); the col
+      // carries a data attribute the CSS uses to drive the accordion visuals.
+      col.dataset.expanded = 'false';
       title.setAttribute('role', 'button');
       title.setAttribute('tabindex', '0');
+      title.setAttribute('aria-expanded', 'false');
       const toggle = () => {
-        const open = col.getAttribute('aria-expanded') === 'true';
-        col.setAttribute('aria-expanded', open ? 'false' : 'true');
+        const open = col.dataset.expanded === 'true';
+        col.dataset.expanded = open ? 'false' : 'true';
+        title.setAttribute('aria-expanded', open ? 'false' : 'true');
       };
       title.addEventListener('click', toggle);
       title.addEventListener('keydown', (e) => {

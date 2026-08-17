@@ -27,6 +27,18 @@
           }
         }
       }
+    },
+    {
+      "title": "Quick Link",
+      "id": "carousel-hero-quicklink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": { "name": "Quick Link", "model": "carousel-hero-quicklink" }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -50,9 +62,18 @@
           ]
         }
       ]
+    },
+    {
+      "id": "carousel-hero-quicklink",
+      "fields": [
+        { "component": "reference", "valueType": "string", "name": "icon", "label": "Icon", "multi": false },
+        { "component": "text", "valueType": "string", "name": "iconAlt", "label": "Icon Alt Text" },
+        { "component": "aem-content", "name": "link", "label": "Link" },
+        { "component": "text", "valueType": "string", "name": "linkText", "label": "Label" }
+      ]
     }
   ],
   "filters": [
-    { "id": "carousel-hero", "components": ["carousel-hero-slide"] }
+    { "id": "carousel-hero", "components": ["carousel-hero-slide", "carousel-hero-quicklink"] }
   ]
 }

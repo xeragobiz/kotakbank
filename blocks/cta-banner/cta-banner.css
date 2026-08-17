@@ -1,140 +1,74 @@
-/* CTA Banner — "Ready to take the next step?".
-   Full-bleed orange→red gradient band with a faint infinity motif and a
-   white Apply button. Centered on all breakpoints. */
+/* CTA Banner — "Call our new toll-free number 1800 4100...".
+   A contained rounded black box: heading on the left, promo graphic on the
+   right. Stacks and centers on mobile. Values matched from the source band. */
 
 .cta-banner {
-  --cc-orange: #f26722;
-  --cc-red: #fa1432;
-
-  position: relative;
   overflow: hidden;
-  background: linear-gradient(90deg, var(--cc-orange), var(--cc-red));
-}
-
-/* full-bleed: span the full page width, ignoring section max-width/padding.
-   Scoped under main > .section to outweigh the global section-div width rule. */
-main > .section > .cta-banner-wrapper {
-  max-width: none;
-  padding: 0;
-}
-
-/* close the gap to the adjacent sections */
-main > .section:has(> .cta-banner-wrapper) {
-  margin-top: 0;
-}
-
-main > .section:has(+ .section > .cta-banner-wrapper) {
-  margin-bottom: 0;
-}
-
-/* optional background image (fills the band; gradient is the fallback) */
-.cta-banner .cta-banner-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  line-height: 0;
-}
-
-.cta-banner .cta-banner-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* darken the image slightly so white text/button stay legible */
-.cta-banner.cta-banner-has-image::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: rgb(0 0 0 / 25%);
-}
-
-/* faint infinity/brand motif in the corner */
-.cta-banner::after {
-  content: "";
-  position: absolute;
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 260px;
-  height: 160px;
-  background: center / contain no-repeat
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' fill='none' stroke='%23ffffff' stroke-opacity='0.15' stroke-width='9'%3E%3Cpath d='M30 30a15 15 0 1 1 0 0.1zM70 30a15 15 0 1 0 0 0.1z'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-/* drop the gradient motif when a background image is used */
-.cta-banner.cta-banner-has-image::after {
-  display: none;
+  max-width: 1120px;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: #000;
 }
 
 .cta-banner .cta-banner-inner {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  max-width: 1170px;
-  margin: 0 auto;
-  padding: 28px 24px;
+  gap: 24px;
+  padding: 40px 24px;
   text-align: center;
+}
+
+.cta-banner .cta-banner-text {
+  flex: 1 1 auto;
 }
 
 .cta-banner .cta-banner-title {
   margin: 0;
   color: #fff;
-  font-family: var(--body-font-family);
-  font-size: var(--heading-font-size-s);
+  font-family: var(--heading-font-family);
+  font-size: 28px;
   font-weight: 700;
+  line-height: 1.18;
 }
 
-.cta-banner .cta-banner-btn:any-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch; /* wider button on mobile */
-  width: 100%;
-  max-width: 420px;
-  box-sizing: border-box;
-  min-height: 40px;
-  padding: 10px 32px;
-  border-radius: 6px;
-  background: #fff;
-  color: var(--cc-red);
-  font-size: var(--body-font-size-xs);
-  font-weight: 700;
-  text-decoration: none;
+.cta-banner .cta-banner-media {
+  flex: 0 0 auto;
+  line-height: 0;
 }
 
-.cta-banner .cta-banner-btn:any-link:hover {
-  background: #fff0f1;
-  color: var(--cc-red);
-}
-
-/* mobile: use the authored image, cropped to the right so the Kotak infinity
-   symbol sits behind the overlaid title + button */
-@media (width < 900px) {
-  .cta-banner.cta-banner-has-image .cta-banner-media img {
-    object-position: right center;
-  }
+.cta-banner .cta-banner-media img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 @media (width >= 900px) {
   .cta-banner .cta-banner-inner {
-    padding: 32px 40px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 64px 72px;
+    text-align: left;
+  }
+
+  .cta-banner .cta-banner-text {
+    flex: 1 1 50%;
   }
 
   .cta-banner .cta-banner-title {
-    font-size: var(--heading-font-size-m);
+    font-size: 44px;
+    line-height: 52px;
   }
 
-  /* compact button on desktop */
-  .cta-banner .cta-banner-btn:any-link {
-    display: inline-flex;
-    align-self: center;
-    width: auto;
-    max-width: none;
+  .cta-banner .cta-banner-media {
+    flex: 0 0 auto;
+    max-width: 42%;
+  }
+
+  .cta-banner .cta-banner-media img {
+    max-height: 240px;
   }
 }

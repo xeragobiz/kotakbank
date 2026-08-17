@@ -17,6 +17,7 @@
       "cards-product",
       "cards-story",
       "cards-quicklink",
+      "cards-benefits",
       "carousel-icons",
       "columns",
       "columns-feature",
@@ -34,13 +35,30 @@
       "faq-accordion",
       "help-links",
       "breadcrumb",
-      "apply-form"
+      "apply-form",
+      "sub-nav",
+      "api-demo",
+      "resume-application",
+      "search",
+      "sticky-cta",
+      "testk811-feature",
+      "k811-cf-media",
+      "k811-cf",
+      "k811-promo-brand-test",
+      "form",
+      "embed-adaptive-form"
     ]
   },
   {
     "id": "breadcrumb",
     "components": [
       "breadcrumb-item"
+    ]
+  },
+  {
+    "id": "cards-benefits",
+    "components": [
+      "benefit-card"
     ]
   },
   {
@@ -84,7 +102,8 @@
   {
     "id": "carousel-hero",
     "components": [
-      "carousel-hero-slide"
+      "carousel-hero-slide",
+      "carousel-hero-quicklink"
     ]
   },
   {
@@ -127,9 +146,93 @@
     ]
   },
   {
+    "id": "form",
+    "components": [
+      "captcha",
+      "checkbox",
+      "checkbox-group",
+      "date-input",
+      "drop-down",
+      "email",
+      "file-input",
+      "form-accordion",
+      "form-button",
+      "form-fragment",
+      "form-image",
+      "form-modal",
+      "form-reset-button",
+      "form-submit-button",
+      "number-input",
+      "panel",
+      "password",
+      "plain-text",
+      "radio-group",
+      "rating",
+      "telephone-input",
+      "text-input",
+      "tnc",
+      "wizard",
+      "range"
+    ]
+  },
+  {
     "id": "help-links",
     "components": [
       "help-links-item"
+    ]
+  },
+  {
+    "id": "k811-benefits-story",
+    "components": [
+      "k811-benefits-story-panel"
+    ]
+  },
+  {
+    "id": "k811-card-selector",
+    "components": [
+      "k811-card-variant"
+    ]
+  },
+  {
+    "id": "k811-faq",
+    "components": [
+      "k811-faq-item"
+    ]
+  },
+  {
+    "id": "k811-feature-grid",
+    "components": [
+      "k811-feature-card"
+    ]
+  },
+  {
+    "id": "k811-offers-overlap",
+    "components": [
+      "k811-offer-overlap-card"
+    ]
+  },
+  {
+    "id": "k811-offers",
+    "components": [
+      "k811-offer-card"
+    ]
+  },
+  {
+    "id": "k811-pillars",
+    "components": [
+      "k811-pillar"
+    ]
+  },
+  {
+    "id": "k811-steps",
+    "components": [
+      "k811-step"
+    ]
+  },
+  {
+    "id": "k811-team",
+    "components": [
+      "k811-team-member"
     ]
   },
   {
@@ -143,6 +246,12 @@
     "components": [
       "savings-calculator-category",
       "savings-calculator-ref"
+    ]
+  },
+  {
+    "id": "sub-nav",
+    "components": [
+      "sub-nav-item"
     ]
   },
   {

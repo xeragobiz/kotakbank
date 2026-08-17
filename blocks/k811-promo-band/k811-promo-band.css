@@ -1,0 +1,200 @@
+/* k811-promo-band — full-bleed lifestyle photo with overlaid copy.
+   Source: kotak811.bank.in "nearest bank" / "811 Current Account" bands.
+   The photo covers the full page width; a heading + paragraph + optional CTA
+   are confined to one side (left or right) and overlaid on the image.
+   Left variant = white copy over the darker left of the photo;
+   right variant = dark copy over the lighter right of the photo. */
+
+.k811-promo-band {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 340px;
+}
+
+/* full-bleed: span the full page width, ignoring section max-width/padding.
+   Scoped under main > .section to outweigh the global section-div width rule. */
+main > .section > .k811-promo-band-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+/* remove the section vertical margin AND padding so the band sits flush and
+   consecutive promo bands touch with no gap (the section style, e.g. .light,
+   otherwise adds 40px top/bottom padding). */
+main > .section:has(> .k811-promo-band-wrapper) {
+  margin: 0;
+  padding: 0;
+}
+
+.k811-promo-band .k811-promo-band-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  line-height: 0;
+}
+
+.k811-promo-band .k811-promo-band-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.k811-promo-band .k811-promo-band-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.k811-promo-band .k811-promo-band-content h2 {
+  margin: 0 0 12px;
+  font-family: var(--heading-font-family, manrope, sans-serif);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.k811-promo-band .k811-promo-band-content p {
+  margin: 0 0 16px;
+  font-family: var(--body-font-family, manrope, sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.k811-promo-band .k811-promo-band-actions {
+  margin: 20px 0 0;
+}
+
+.k811-promo-band .k811-promo-band-btn:any-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 28px;
+  border-radius: 8px;
+  background: var(--k811-link, #d1101f);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.k811-promo-band .k811-promo-band-btn:any-link:hover {
+  filter: brightness(0.92);
+}
+
+/* right variant ("811 Current Account"): blue CTA at all breakpoints
+   (matches the reference site, where this band's button is blue not red).
+   Both block classes are chained to outweigh the base red button rule. */
+.k811-promo-band.k811-promo-band-right .k811-promo-band-btn:any-link {
+  background: #3b63fb;
+}
+
+.k811-promo-band.k811-promo-band-right .k811-promo-band-btn:any-link:hover {
+  background: #2d4fe0;
+  filter: none;
+}
+
+/* left variant: white copy over the darker left side of the photo */
+.k811-promo-band-left .k811-promo-band-content {
+  color: #fff;
+  text-align: left;
+}
+
+.k811-promo-band-left .k811-promo-band-content :is(h1, h2, h3, h4, p) {
+  color: #fff;
+}
+
+/* right variant: dark copy over the lighter right side of the photo */
+.k811-promo-band-right .k811-promo-band-content {
+  color: var(--k811-text, #222);
+  text-align: left;
+}
+
+/* AOS-faithful reveal */
+.k811-promo-band .k811-promo-band-content.k811-aos-ready {
+  opacity: 0;
+  transition: opacity var(--k811-fade-duration, 400ms) var(--k811-fade-easing, ease-in);
+}
+
+.k811-promo-band .k811-promo-band-content.k811-aos-ready.k811-aos-in {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .k811-promo-band .k811-promo-band-content.k811-aos-ready {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* ---- Mobile ------------------------------------------------------------
+   Both variants overlay the copy INSIDE the image, in the empty area at the
+   top with the subject below (matching the reference):
+   - LEFT ("nearest bank"): white text over the grey ceiling. No CTA.
+   - RIGHT ("811 Current Account"): dark text over the light top area, plus a
+     blue centered CTA. */
+@media (width < 900px) {
+  /* both variants: taller band, copy anchored to the top, image top-anchored so
+     the empty top of the photo shows behind the copy and the subject sits below */
+  .k811-promo-band {
+    align-items: flex-start;
+    min-height: 540px;
+  }
+
+  /* the "811 Current Account" photo has the subject lower in frame, so give it a
+     taller band to keep the copy + CTA clear of her head (per the reference) */
+  .k811-promo-band-right {
+    min-height: 640px;
+  }
+
+  .k811-promo-band .k811-promo-band-media img {
+    object-position: 50% 0%;
+  }
+
+  .k811-promo-band .k811-promo-band-content {
+    padding-top: 40px;
+  }
+
+  /* RIGHT variant: dark text (light photo top) + blue centered CTA */
+  .k811-promo-band-right .k811-promo-band-content {
+    color: var(--k811-text, #222);
+  }
+
+  .k811-promo-band-right .k811-promo-band-actions {
+    text-align: center;
+  }
+}
+
+@media (width >= 900px) {
+  /* full-screen band: the photo fills the viewport below the nav, matching the
+     live site where each promo section occupies a full screen. dvh keeps it
+     correct with mobile/desktop browser chrome; svh is the safe fallback. */
+  .k811-promo-band {
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+
+  .k811-promo-band .k811-promo-band-content {
+    padding: 48px 40px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 40px;
+  }
+
+  .k811-promo-band .k811-promo-band-content h2 {
+    font-size: 44px;
+  }
+
+  /* confine copy to the left 5 columns */
+  .k811-promo-band-left .k811-promo-band-content > * {
+    grid-column: 1 / span 5;
+  }
+
+  /* confine copy to the right 5 columns */
+  .k811-promo-band-right .k811-promo-band-content > * {
+    grid-column: 8 / span 5;
+  }
+}

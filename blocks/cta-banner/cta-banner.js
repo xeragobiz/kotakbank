@@ -1,10 +1,10 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 /**
- * CTA Banner — "Ready to take the next step?".
- * Full-width band (gradient by default, or an optional background image) with a
- * heading and a single Apply button.
- * Rows (in model order): background image, heading, cta link, cta text.
+ * CTA Banner — rounded dark "call us" band.
+ * A contained black box with a heading on the left and a promo graphic on the
+ * right (stacks on mobile).
+ * Rows (in model order): image, title. Either may be omitted.
  * @param {Element} block the block element
  */
 export default function decorate(block) {
@@ -13,49 +13,31 @@ export default function decorate(block) {
 
   const cells = rows.map(cellOf).filter(Boolean);
   const imageCell = cells.find((c) => c.querySelector('picture, img'));
-  const linkCell = cells.find((c) => c.querySelector('a'));
-  // text cells in order (excluding image/link): [imageAlt?, heading, ctaText?]
-  const textCells = cells.filter((c) => c !== imageCell && c !== linkCell
-    && c.textContent.trim());
-  const bgImg = imageCell ? imageCell.querySelector('img') : null;
-  // when an image is present the first text cell is its alt; the heading is the
-  // next text cell (falls back to the first when no image/alt is authored)
-  const texts = textCells.map((c) => c.textContent.trim());
-  const bgAlt = bgImg && texts.length > 1 ? texts.shift() : '';
-  const heading = texts.shift() || '';
-  const link = linkCell ? linkCell.querySelector('a') : null;
-  const ctaHref = link ? link.getAttribute('href') : '';
-  const ctaText = (link && link.textContent.trim()) || texts.shift() || '';
-
-  // optional background image layer (gradient shows as fallback if none)
-  let media = null;
-  if (bgImg) {
-    media = document.createElement('div');
-    media.className = 'cta-banner-media';
-    media.append(createOptimizedPicture(bgImg.src, bgAlt || bgImg.getAttribute('alt') || '', false, [{ width: '1600' }]));
-  }
+  const img = imageCell ? imageCell.querySelector('img') : null;
+  // the title is the first text-bearing cell that isn't the image cell
+  const titleCell = cells.find((c) => c !== imageCell && c.textContent.trim());
+  const title = titleCell ? titleCell.textContent.trim() : '';
 
   const inner = document.createElement('div');
   inner.className = 'cta-banner-inner';
 
-  if (heading) {
+  if (title) {
+    const text = document.createElement('div');
+    text.className = 'cta-banner-text';
     const h = document.createElement('h2');
     h.className = 'cta-banner-title';
-    h.textContent = heading;
-    inner.append(h);
+    h.textContent = title;
+    text.append(h);
+    inner.append(text);
   }
-  if (ctaHref && ctaText) {
-    const a = document.createElement('a');
-    a.href = ctaHref;
-    a.className = 'cta-banner-btn';
-    a.textContent = ctaText;
-    inner.append(a);
+
+  if (img) {
+    const media = document.createElement('div');
+    media.className = 'cta-banner-media';
+    media.append(createOptimizedPicture(img.src, img.getAttribute('alt') || '', false, [{ width: '750' }]));
+    inner.append(media);
   }
 
   block.textContent = '';
-  if (media) {
-    block.classList.add('cta-banner-has-image');
-    block.append(media);
-  }
   block.append(inner);
 }

@@ -1,0 +1,131 @@
+/* K811 Steps — "How To Apply". Inherits Manrope from .kotak811.
+ * Faithful to kotak811.bank.in: light-gray section, gray title, white rounded
+ * step cards with a black number badge overlapping the top-left, and a black
+ * Apply pill below. */
+
+.k811-steps {
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 24px;
+  text-align: center;
+}
+
+/* "HOW TO APPLY" — centered gray uppercase eyebrow. Authored as section
+   default content (sibling h2), so target the container heading too. */
+.k811-steps .k811-steps-title,
+.kotak811 .section.k811-steps-container .default-content-wrapper :is(h1, h2, h3) {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: #959595;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 auto 48px;
+}
+
+.k811-steps-list {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  display: grid;
+  gap: 40px 24px;
+  counter-reset: k811-step;
+}
+
+.k811-steps-item {
+  counter-increment: k811-step;
+  position: relative;
+  margin-top: 35px;
+  padding: 90px 32px 48px;
+  background: #fff;
+  border-radius: 20px;
+  text-align: left;
+}
+
+.k811-steps-item::before {
+  content: counter(k811-step);
+  position: absolute;
+  top: -35px;
+  left: 24px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  font-size: 35px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.k811-steps-body {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #1a1a1a;
+}
+
+.k811-steps-body p {
+  margin: 0;
+}
+
+.k811-steps-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+/* "Existing customer? Click here" — one line, below the Apply button */
+.k811-steps-actions-note {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.k811-steps-btn.k811-steps-btn-primary {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 25px 15px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.k811-steps-btn.k811-steps-btn-primary:hover {
+  background: #d1101f;
+}
+
+.k811-steps-actions-label {
+  font-size: 13px;
+  color: #000;
+}
+
+.k811-steps-btn.k811-steps-btn-secondary {
+  color: #000;
+  font-weight: 400;
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+/* tablet: 2-up (matches live 600-900px) */
+@media (width >= 600px) {
+  .k811-steps-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .k811-steps {
+    padding: 56px 40px;
+  }
+
+  .k811-steps-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}

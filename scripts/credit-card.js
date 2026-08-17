@@ -2,16 +2,28 @@
 /*
  * Credit Card data source helper.
  * Shared by cards-featured and cards-lifestyle to render a card either from
- * inline-authored cells OR from a referenced Credit Card content fragment,
- * resolved against a single JSON data source (GraphQL export committed at
- * /data/credit-cards.json).
+ * inline-authored cells OR from a referenced Credit Card content fragment.
+ *
+ * Data source: a SAME-ORIGIN path (`/api/cf/...`) served by a CDN edge worker
+ * (tools/edge-worker/) that proxies to the AEM publish GraphQL persisted query.
+ * The publish GraphQL endpoint sends no CORS headers, so a direct cross-origin
+ * fetch is blocked; the same-origin proxy avoids CORS entirely. The committed
+ * /data/credit-cards.json snapshot is used as a fallback until the worker is
+ * deployed — the live source then takes over automatically with no code change.
  *
  * A reference card item exposes an aem-content field whose value is the
- * fragment path (e.g. /content/dam/kbank-eds/cards-content-fragments/...).
- * That path is matched against each item's `_path` in the JSON.
+ * fragment path (e.g. /content/dam/kotakbank/cards-content-fragments/...).
+ * That path is matched against each item's `_path` in the response.
  */
 
-const DATA_URL = '/data/credit-cards.json';
+// Live CF data via a SAME-ORIGIN path. A CDN edge worker (see
+// tools/edge-worker/cf-graphql-proxy.js) proxies this path to the AEM publish
+// GraphQL persisted query, so the browser makes a same-origin request and CORS
+// never applies. Until the worker is deployed this path 404s and the code falls
+// back to the committed snapshot below.
+const LIVE_URL = '/api/cf/cardfeaturemodelList';
+// Committed snapshot used as a fallback when the live source is unavailable.
+const FALLBACK_URL = '/data/credit-cards.json';
 let cardsPromise;
 
 /* strip an html-field wrapper down to plain text (e.g. filtertags <p>Fuel</p>) */
@@ -39,11 +51,65 @@ function feesLine(item) {
   return [item.joiningfee, item.annualfee].filter(Boolean).join('   ').trim();
 }
 
+// Publish host that serves the DAM/Dynamic Media assets for this environment.
+const PUBLISH_HOST = 'https://publish-p165370-e1760075.adobeaemcloud.com';
+
+// Committed local card icons (same-origin, always load). Keyed by fragment
+// slug (last path segment of _path) since icon filenames don't always match
+// the fragment name. Used only when the CF image field is empty.
+const ICON_DIR = '/icons/cards';
+const ICON_BY_SLUG = {
+  'biz-credit-card': 'biz-credit-card.jpg',
+  'corporate-gold-credit-card': 'corporate-gold-credit-card.webp',
+  'corporate-platinum-credit-card': 'corporate-platinum-credit-card.webp',
+  'corporate-wealth-signature-credit-card': 'corporate-wealth-signature-credit-card.webp',
+  'indianoil-kotak': 'indianoil.webp',
+  'kotak-air-card': 'kotak-air-card.png',
+  'kotak-biz-edge-credit-card': 'kotak-biz-credit-card.webp',
+  'kotak-cashback--credit-card': 'cashback-card.png',
+  'kotak-classic-credit-card': 'kotak-811-credit-card.webp',
+  'kotak-infinite-credit-card': 'kotak-infinite-credit-card.webp',
+  'kotak-league-card': 'kotak-league-card.png',
+  'kotak-solitaire-credit-card': 'solitaire-credit-card.webp',
+  'nri-royale-signature-credit-card': 'royale-product-mobile.webp',
+  'pvr-kotak-platinum-credit-card': 'pvr-kotak-platinum-credit-card.webp',
+  'solitaire-business-credit-card': 'solitaire-business-card.webp',
+  'urbane-gold-credit-card': 'urbane-credit-card.webp',
+  'white-credit-card': 'white-credit-card.webp',
+  'zen-credit-card': 'zen-credit-card.webp',
+};
+
+/* committed local icon for a fragment, matched by its slug, or '' */
+function iconFallback(path) {
+  const slug = (path || '').split('/').filter(Boolean).pop();
+  const file = ICON_BY_SLUG[slug];
+  return file ? `${ICON_DIR}/${file}` : '';
+}
+
+/*
+ * Resolve a card to a browser-renderable image URL.
+ * Prefer the Dynamic Media delivery URL (`_dynamicUrl`) served inline by the
+ * publish host — it is optimized and, unlike the plain `_publishUrl` (which the
+ * publish tier serves as `content-disposition: attachment`, so browsers won't
+ * render it in <img>), it carries `content-disposition: inline`.
+ * `_dynamicUrl` is host-relative, so prefix the publish host. If the CF image
+ * field is empty (null / DocumentRef / no URL), fall back to the committed
+ * local card icon so the card still shows an image.
+ */
+function cardImageSrc(item) {
+  const img = item.cardimage;
+  if (img && img._dynamicUrl) {
+    return img._dynamicUrl.startsWith('http') ? img._dynamicUrl : `${PUBLISH_HOST}${img._dynamicUrl}`;
+  }
+  if (img && img._publishUrl) return img._publishUrl;
+  return iconFallback(item._path);
+}
+
 /* map a raw JSON item to the normalized shape the blocks render */
 function normalize(item) {
   return {
     path: item._path,
-    imageSrc: item.cardimage && item.cardimage._path ? item.cardimage._path : '',
+    imageSrc: cardImageSrc(item),
     imageAlt: item.cardname || '',
     highlight: item.highlight || '',
     highlightSub: item.highlightsub || '',
@@ -64,16 +130,35 @@ function normalize(item) {
   };
 }
 
-/* fetch + index the JSON data source once, keyed by fragment path */
+/* pull the items array out of a GraphQL response without assuming the query
+ * root key name (persisted queries expose it under their own list field) */
+function extractItems(json) {
+  const root = json && json.data;
+  if (!root) return [];
+  const list = Object.values(root).find((v) => v && Array.isArray(v.items));
+  return list ? list.items : [];
+}
+
+/* fetch a URL and return its normalized items array, or null on any failure */
+async function fetchItems(url) {
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    return extractItems(await resp.json());
+  } catch (e) {
+    // network/CORS failure — signal the caller to try the fallback
+    return null;
+  }
+}
+
+/* index the data source once, keyed by fragment path. Prefer the live GraphQL
+ * endpoint; fall back to the committed snapshot if it is unavailable. */
 async function loadCardIndex() {
   if (!cardsPromise) {
     cardsPromise = (async () => {
-      const resp = await fetch(DATA_URL);
-      if (!resp.ok) return new Map();
-      const json = await resp.json();
-      const items = json?.data?.cardsFeaturedRefList?.items || [];
+      const items = (await fetchItems(LIVE_URL)) || (await fetchItems(FALLBACK_URL)) || [];
       return new Map(items.map((it) => [it._path, normalize(it)]));
-    })().catch(() => new Map());
+    })();
   }
   return cardsPromise;
 }

@@ -1,0 +1,28 @@
+.k811-cf-media .k811-cf-media-figure {
+  margin: 0;
+}
+
+.k811-cf-media .k811-cf-media-figure picture {
+  display: block;
+}
+
+.k811-cf-media .k811-cf-media-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+.k811-cf-media .k811-cf-media-caption {
+  margin-top: 12px;
+  color: #556;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+}
+
+@media (width >= 900px) {
+  .k811-cf-media .k811-cf-media-caption {
+    font-size: 15px;
+  }
+}

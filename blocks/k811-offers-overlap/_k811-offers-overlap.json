@@ -1,0 +1,63 @@
+{
+  "definitions": [
+    {
+      "title": "K811 Offers Overlap",
+      "id": "k811-offers-overlap",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "K811 Offers Overlap",
+              "filter": "k811-offers-overlap"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "K811 Offer Overlap Card",
+      "id": "k811-offer-overlap-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "K811 Offer Overlap Card",
+              "model": "k811-offer-overlap-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "k811-offer-overlap-card",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Icon",
+          "multi": false
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "value": "",
+          "label": "Text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "k811-offers-overlap",
+      "components": [
+        "k811-offer-overlap-card"
+      ]
+    }
+  ]
+}

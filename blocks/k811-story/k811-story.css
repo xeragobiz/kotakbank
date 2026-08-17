@@ -1,0 +1,143 @@
+/* K811 Story — full-bleed image with the copy overlaid INSIDE it. Inherits
+ * Manrope. Mobile: a tall portrait panel with the copy anchored at the TOP
+ * (in the image's empty space, above the subject) over a dark scrim for
+ * legibility. Desktop (>=900px): the wide banner with the copy centered. */
+
+.k811-story {
+  position: relative;
+
+  /* mobile: portrait art-directed image (see k811-story.js) shows nearly
+     full-frame at this height; desktop restores the wide banner below */
+  min-height: 560px;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+  color: #fff;
+}
+
+.k811-story-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.k811-story-media picture,
+.k811-story-media img {
+  width: 100%;
+  height: 100%;
+
+  /* keep the subject low in frame so the top stays clear for the copy */
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+}
+
+/* dark scrim at the top so the overlaid copy stays legible over the image */
+.k811-story-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 0%) 45%);
+  pointer-events: none;
+}
+
+/* the section wrapper must not constrain the full-bleed panel */
+.kotak811 .section > .k811-story-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+.kotak811 .section:has(> .k811-story-wrapper) {
+  padding: 0;
+  margin: 0;
+}
+
+.k811-story-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--k811-content-max, 1120px);
+  margin: 0 auto;
+  padding: 32px 24px 32px 32px;
+}
+
+.k811-story-content h2,
+.k811-story-content h3 {
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #fff;
+  max-width: 520px;
+}
+
+.k811-story-content p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  color: #fff;
+  max-width: 480px;
+}
+
+/* All About Us story panels are left-aligned. The right variant is retained
+   for the model but renders left, so any panel still authored "right" (e.g.
+   stale delivered content) matches the intended left-aligned design. */
+.k811-story-right {
+  text-align: left;
+}
+
+.k811-story-right h2,
+.k811-story-right h3,
+.k811-story-right p {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.k811-story-center {
+  text-align: center;
+}
+
+.k811-story-center h2,
+.k811-story-center h3,
+.k811-story-center p {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (width >= 900px) {
+  /* desktop: wide banner with the copy anchored TOP-LEFT in a narrow column,
+     so it sits in the empty space and never overlaps the subject on the right */
+  .k811-story {
+    min-height: 600px;
+    align-items: flex-start;
+  }
+
+  .k811-story-media picture,
+  .k811-story-media img {
+    object-position: center;
+  }
+
+  .k811-story-media::after {
+    display: none;
+  }
+
+  .k811-story-content {
+    padding: 72px 40px;
+  }
+
+  .k811-story-content h2,
+  .k811-story-content h3 {
+    font-size: 44px;
+    line-height: 52px;
+
+    /* narrow column so "Innovators first, bankers next" wraps to two lines
+       on the left and clears the person */
+    max-width: 420px;
+  }
+
+  .k811-story-content p {
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 340px;
+  }
+}
