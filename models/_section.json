@@ -79,7 +79,10 @@
         "testk811-feature",
         "k811-cf-media",
         "k811-cf",
-        "k811-promo-brand-test"
+        "k811-promo-brand-test",
+        "form",
+        "embed-adaptive-form"
+        
       ]
     }
   ]
