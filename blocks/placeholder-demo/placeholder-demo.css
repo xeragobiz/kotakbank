@@ -1,0 +1,38 @@
+.placeholder-demo {
+    display: flex;
+    padding: 16px 20px;
+    border: 1px dashed #c8c8c8;
+    border-radius: 8px;
+    background: #f7f7f7;
+}
+
+.placeholder-demo .placeholder-demo-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.placeholder-demo .placeholder-demo-label {
+    font-size: 0.875rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.placeholder-demo .placeholder-demo-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.placeholder-demo .placeholder-demo-missing {
+    color: #b00020;
+    font-weight: 500;
+}
+
+@media (width >= 900px) {
+    .placeholder-demo .placeholder-demo-value {
+        font-size: 1.5rem;
+    }
+}

@@ -6540,6 +6540,25 @@
     ]
   },
   {
+    "id": "placeholder-demo",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "key",
+        "label": "Placeholder Key",
+        "description": "The Key from the placeholders sheet to display (e.g. sitename, currency, careNumber)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Caption",
+        "description": "Optional label shown before the value"
+      }
+    ]
+  },
+  {
     "id": "rates-charges",
     "fields": [
       {
