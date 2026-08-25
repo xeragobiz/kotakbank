@@ -1,5 +1,19 @@
 sitemaps:
-  default:
-    source: /query-index.json
-    destination: /sitemap.xml
+  kotak:
     lastmod: lastModified
+    default: en
+    languages:
+      en:
+        source: /en/query-index.json
+        destination: /sitemap-en.xml
+        hreflang: en
+        alternate: /en/{path}
+      hi:
+        source: /hi/query-index.json
+        destination: /sitemap-hi.xml
+        hreflang: hi
+        alternate: /hi/{path}
+
+index:
+  - /sitemap-en.xml
+  - /sitemap-hi.xml
