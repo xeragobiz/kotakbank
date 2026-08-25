@@ -9,6 +9,11 @@
       "aemAssetsFolderPath": "/content/dam/kotakbank",
       "aemSiteName": "kotakbank",
       "aemSiteTitle": "kotakbank"
+    },
+    "kotakbank": {
+      "previewOrg": "xeragobiz",
+      "previewSite": "kotakbank",
+      "contentHostUrl": "author-p165370-e1760075.adobeaemcloud.com"
     }
   },
   "type": "xwalk"
