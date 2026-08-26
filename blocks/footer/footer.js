@@ -1,4 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
+import { getLangPrefix } from '../../scripts/scripts.js';
 
 /**
  * Fetch and parse the footer fragment HTML for the given path.
@@ -321,7 +322,9 @@ function buildCopyright(section) {
  */
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+  const footerPath = footerMeta
+    ? new URL(footerMeta, window.location).pathname
+    : `${getLangPrefix()}/footer`;
   const fragment = await fetchFooter(footerPath);
 
   block.textContent = '';

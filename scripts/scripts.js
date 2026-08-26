@@ -122,15 +122,27 @@ export function decorateMain(main) {
   decorateButtons(main);
 }
 
+/** Supported language path prefixes for the multilingual site. */
+const SUPPORTED_LANGS = ['en', 'hi'];
+
+/**
+ * Returns the language path prefix for the current URL, e.g. '/en' or '/hi'.
+ * Returns '' for the default (root) language tree so callers can build paths
+ * as `${getLangPrefix()}/footer` and get '/footer' at root, '/en/footer' under /en/.
+ * @returns {string} the language prefix ('/en', '/hi') or '' when none applies
+ */
+export function getLangPrefix() {
+  const [, prefix] = window.location.pathname.split('/');
+  return SUPPORTED_LANGS.includes(prefix) ? `/${prefix}` : '';
+}
+
 /**
  * Derives the document language from the URL path prefix.
  * Falls back to 'en' for the default (root) language tree.
  * @returns {string} the BCP 47 language code (e.g. 'en', 'hi')
  */
 function getDocumentLang() {
-  const supported = ['en', 'hi'];
-  const [, prefix] = window.location.pathname.split('/');
-  return supported.includes(prefix) ? prefix : 'en';
+  return getLangPrefix().slice(1) || 'en';
 }
 
 /**
