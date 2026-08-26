@@ -1,4 +1,4 @@
-# 13 · Configuration Service (query, sitemap, fstab, robots)
+# 14 · Configuration Service (query, sitemap, fstab, robots)
 
 How this project manages **content/config settings** — query indexing, sitemaps, content source, robots, sidekick — through the **AEM Configuration Service** instead of repo YAML files. This is the *repoless* model: config lives in the service, not in Git.
 
