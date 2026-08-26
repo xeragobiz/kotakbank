@@ -13,7 +13,11 @@
     "kotakbank": {
       "previewOrg": "xeragobiz",
       "previewSite": "kotakbank",
-      "contentHostUrl": "author-p165370-e1760075.adobeaemcloud.com"
+      "contentHostUrl": "author-p165370-e1760075.adobeaemcloud.com",
+      "aemSitePath": "/content/kotakbank",
+      "aemAssetsFolderPath": "/content/dam/kotakbank",
+      "aemSiteName": "kotakbank",
+      "aemSiteTitle": "Kotak Bank"
     }
   },
   "type": "xwalk"

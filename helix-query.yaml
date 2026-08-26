@@ -6,6 +6,13 @@ indices:
       - '/en/**'
     exclude:
       - '/**.json'
+      - '/en/nav'
+      - '/en/footer'
+      - '/en/fragments/**'
+      - '/en/search'
+      - '/en/apply'
+      - '/en/track-application'
+      - '/en/compareapi-integration'
     target: /en/query-index.json
     properties:
       title:
@@ -29,6 +36,13 @@ indices:
       - '/hi/**'
     exclude:
       - '/**.json'
+      - '/hi/nav'
+      - '/hi/footer'
+      - '/hi/fragments/**'
+      - '/hi/search'
+      - '/hi/apply'
+      - '/hi/track-application'
+      - '/hi/compareapi-integration'
     target: /hi/query-index.json
     properties:
       title:
