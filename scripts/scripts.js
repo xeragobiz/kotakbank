@@ -123,12 +123,37 @@ export function decorateMain(main) {
 }
 
 /**
+ * Appends the global site name to the page title as " | <SiteName>".
+ * Reads the SiteName value from the site-wide placeholders sheet
+ * (/placeholders.json) so the suffix is author-managed, not hardcoded.
+ * No-ops (leaves the title unchanged) if the sheet or key is unavailable,
+ * and is idempotent so the suffix is never appended twice.
+ */
+async function appendSiteNameToTitle() {
+  try {
+    const resp = await fetch('/placeholders.json');
+    if (!resp.ok) return;
+    const json = await resp.json();
+    const row = (json.data || []).find((r) => r.Key === 'SiteName');
+    const siteName = row && row.Value && row.Value.trim();
+    if (!siteName) return;
+    const suffix = ` | ${siteName}`;
+    if (!document.title.endsWith(suffix)) {
+      document.title += suffix;
+    }
+  } catch (e) {
+    // leave the title unchanged if placeholders can't be loaded
+  }
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  appendSiteNameToTitle();
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
