@@ -123,11 +123,22 @@ export function decorateMain(main) {
 }
 
 /**
+ * Derives the document language from the URL path prefix.
+ * Falls back to 'en' for the default (root) language tree.
+ * @returns {string} the BCP 47 language code (e.g. 'en', 'hi')
+ */
+function getDocumentLang() {
+  const supported = ['en', 'hi'];
+  const [, prefix] = window.location.pathname.split('/');
+  return supported.includes(prefix) ? prefix : 'en';
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  document.documentElement.lang = getDocumentLang();
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
