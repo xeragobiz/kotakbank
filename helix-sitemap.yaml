@@ -1,5 +1,6 @@
 sitemaps:
   kotak:
+    origin: https://main--kotakbank-dev--xeragobiz.aem.live
     lastmod: YYYY-MM-DD
     default: en
     languages:

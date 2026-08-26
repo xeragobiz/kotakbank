@@ -1,4 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
+import { getLangPrefix } from '../../scripts/scripts.js';
 
 // media query match that indicates desktop width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -442,10 +443,12 @@ function buildMenu(section) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // Mirror the footer block's resolution: default to the bare "/nav" path,
-  // which the delivery host maps to the site's nav page (same as "/footer").
+  // Mirror the footer block's resolution: default to the language-prefixed
+  // nav path (e.g. "/en/nav"), falling back to "/nav" at the root language tree.
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const navPath = navMeta
+    ? new URL(navMeta, window.location).pathname
+    : `${getLangPrefix()}/nav`;
   const fragment = await fetchNav(navPath);
 
   block.textContent = '';
