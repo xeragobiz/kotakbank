@@ -1,4 +1,4 @@
-/* Generated from blocks/cc-hero/cc-hero.scss — do not edit. Run `npm run build:css`. */
+/* Generated from styles/scss/block/cc-hero.scss — do not edit. Run `npm run build:css`. */
 
 .cc-hero {
     --cc-red: #fa1432;
@@ -531,6 +531,12 @@ main > .section > .cc-hero-wrapper {
 }
 
 .cc-hero #abc {
+    background-color: #7c3aed;
+    width: 100px;
+    height: 100px;
+}
+
+.cc-hero #xyz {
     background-color: #7c3aed;
     width: 100px;
     height: 100px;

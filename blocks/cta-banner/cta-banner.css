@@ -1,4 +1,4 @@
-/* Generated from blocks/cta-banner/cta-banner.scss — do not edit. Run `npm run build:css`. */
+/* Generated from styles/scss/block/cta-banner.scss — do not edit. Run `npm run build:css`. */
 
 .cta-banner {
     overflow: hidden;
@@ -69,4 +69,10 @@
     .cta-banner .cta-banner-media img {
         max-height: 240px;
     }
+}
+
+#xyz {
+    background-color: #7c3aed;
+    width: 100px;
+    height: 100px;
 }

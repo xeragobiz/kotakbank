@@ -1,6 +1,6 @@
 /* eslint-env node */
 /**
- * Compiles each block SCSS file (non-partial) to a sibling CSS file.
+ * Compiles `styles/scss/block/{name}.scss` to `blocks/{name}/{name}.css`.
  * Shared tokens live in `styles/scss/` and are loaded via Sass load path.
  *
  *   npm run build:css
@@ -10,13 +10,19 @@
  */
 import { watch } from 'node:fs';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
-import { dirname, join, relative } from 'node:path';
+import {
+  basename,
+  dirname,
+  join,
+  relative,
+} from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as sass from 'sass';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const blocksDir = join(root, 'blocks');
 const scssDir = join(root, 'styles', 'scss');
+const blockScssDir = join(scssDir, 'block');
 const args = process.argv.slice(2);
 const checkOnly = args.includes('--check');
 const watchMode = args.includes('--watch');
@@ -35,7 +41,13 @@ const banner = (src) => `/* Generated from ${src} — do not edit. Run \`npm run
  * @returns {Promise<string[]>}
  */
 async function findScss(dir) {
-  const entries = await readdir(dir, { withFileTypes: true });
+  let entries;
+  try {
+    entries = await readdir(dir, { withFileTypes: true });
+  } catch (err) {
+    if (err.code === 'ENOENT') return [];
+    throw err;
+  }
   const nested = await Promise.all(entries.map(async (entry) => {
     const path = join(dir, entry.name);
     if (entry.isDirectory()) return findScss(path);
@@ -45,6 +57,16 @@ async function findScss(dir) {
     return [];
   }));
   return nested.flat();
+}
+
+/**
+ * `styles/scss/block/cc-hero.scss` → `blocks/cc-hero/cc-hero.css`
+ * @param {string} scssPath
+ * @returns {string}
+ */
+function cssPathFor(scssPath) {
+  const name = basename(scssPath, '.scss');
+  return join(blocksDir, name, `${name}.css`);
 }
 
 /**
@@ -96,12 +118,12 @@ function compileOne(scssPath) {
  * @returns {Promise<{ written: string[], stale: string[] }>}
  */
 async function build() {
-  const sources = await findScss(blocksDir);
+  const sources = await findScss(blockScssDir);
   const written = [];
   const stale = [];
 
   await Promise.all(sources.map(async (scssPath) => {
-    const cssPath = scssPath.replace(/\.scss$/i, '.css');
+    const cssPath = cssPathFor(scssPath);
     const css = compileOne(scssPath);
     let existing = '';
     try {
@@ -137,7 +159,7 @@ if (checkOnly) {
 }
 
 if (watchMode) {
-  console.log('Watching block SCSS and styles/scss ...');
+  console.log('Watching styles/scss ...');
   let timer;
   const rebuild = () => {
     clearTimeout(timer);
@@ -147,6 +169,5 @@ if (watchMode) {
       }).catch((err) => console.error(err.message || err));
     }, 150);
   };
-  watch(blocksDir, { recursive: true }, rebuild);
   watch(scssDir, { recursive: true }, rebuild);
 }
