@@ -21,12 +21,6 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "test",
-          "label": "Test"
         }
       ]
     }
