@@ -1,0 +1,89 @@
+@use "sass:map";
+@use "config";
+
+/// Named palettes. Add a map here to introduce another brand; then set
+/// `$brand` in `_config.scss` (or `--brand=`) and run `npm run build:css`.
+$palettes: (
+  kotak811: (
+    primary: #fa1432,
+    primary-text: #d1101f,
+    primary-hover: #c40e1a,
+    primary-panel: #e51a24,
+    navy: #00005a,
+    violet: #7c3aed,
+    violet-hover: #6d28d9,
+    orange: #f26722,
+    accent: #4b0082,
+    brand-band: #f10000,
+    text: #222,
+    text-muted: #797979,
+    bg: #fff,
+    dark-bg: #000,
+    dark-text: #fff,
+    card-bg: #f9f9f9,
+    link: #d1101f,
+    link-alt: #3b63fb,
+    link-alt-hover: #2d4fe0,
+  ),
+  kotak: (
+    primary: #ed1c24,
+    primary-text: #c4161d,
+    primary-hover: #b01018,
+    primary-panel: #c4161d,
+    navy: #003366,
+    violet: #003366,
+    violet-hover: #00264d,
+    orange: #f26722,
+    accent: #003366,
+    brand-band: #ed1c24,
+    text: #131313,
+    text-muted: #505050,
+    bg: #fff,
+    dark-bg: #000,
+    dark-text: #fff,
+    card-bg: #f8f8f8,
+    link: #ed1c24,
+    link-alt: #003366,
+    link-alt-hover: #00264d,
+  ),
+);
+
+@function color($name) {
+  $palette: map.get($palettes, config.$brand);
+
+  @if $palette == null {
+    @error "Unknown brand `#{config.$brand}`. Known brands: #{map.keys($palettes)}.";
+  }
+
+  $value: map.get($palette, $name);
+
+  @if $value == null {
+    @error "Unknown color `#{$name}` on brand `#{config.$brand}`. Keys: #{map.keys($palette)}.";
+  }
+
+  @return $value;
+}
+
+/// CSS custom properties on the current selector so nested rules can use
+/// `var(--brand-primary)` while still resolving from the compile-time palette.
+@mixin css-vars {
+  --brand-primary: #{color(primary)};
+  --brand-primary-text: #{color(primary-text)};
+  --brand-primary-hover: #{color(primary-hover)};
+  --brand-primary-panel: #{color(primary-panel)};
+  --brand-navy: #{color(navy)};
+  --brand-violet: #{color(violet)};
+  --brand-violet-hover: #{color(violet-hover)};
+  --brand-orange: #{color(orange)};
+  --brand-accent: #{color(accent)};
+  --brand-band: #{color(brand-band)};
+  --brand-text: #{color(text)};
+  --brand-text-muted: #{color(text-muted)};
+  --brand-bg: #{color(bg)};
+  --brand-dark-bg: #{color(dark-bg)};
+  --brand-dark-text: #{color(dark-text)};
+  --brand-card-bg: #{color(card-bg)};
+  --brand-link: #{color(link)};
+  --brand-link-alt: #{color(link-alt)};
+  --brand-link-alt-hover: #{color(link-alt-hover)};
+}

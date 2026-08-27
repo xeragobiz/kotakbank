@@ -1,0 +1,3 @@
+// Compile-time brand. Switch this (or pass --brand= to `npm run build:css`)
+// and recompile — every block SCSS that calls brand.color() picks up the palette.
+$brand: kotak811;

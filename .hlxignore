@@ -1,5 +1,6 @@
 .*
 *.md
+*.scss
 karma.config.js
 LICENSE
 package.json

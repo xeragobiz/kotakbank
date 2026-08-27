@@ -48,4 +48,14 @@ module.exports = {
     }],
     'xwalk/no-orphan-collapsible-fields': 'off', // Disable until enhancement is done for Forms properties
   },
+  overrides: [
+    {
+      files: ['tools/build-scss.mjs', '.husky/pre-commit.mjs'],
+      env: { node: true },
+      rules: {
+        'no-console': 'off',
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      },
+    },
+  ],
 };
