@@ -170,6 +170,52 @@ async function appendSiteNameToTitle() {
 }
 
 /**
+ * Injects per-page WebPage JSON-LD structured data into the document head.
+ * Reads values that EDS already server-renders from page metadata — name
+ * from og:title (falling back to document.title), description from the
+ * description meta, and url from the canonical link (falling back to the
+ * current location) — so the schema stays per-page and author-driven with
+ * no hardcoding. Idempotent: it will not add a second WebPage block.
+ */
+function addWebPageJsonLd() {
+  try {
+    if (document.querySelector('script[type="application/ld+json"][data-schema="webpage"]')) return;
+    const meta = (sel) => document.querySelector(sel)?.getAttribute('content')?.trim();
+    const name = meta('meta[property="og:title"]') || document.title;
+    const description = meta('meta[name="description"]') || '';
+    const url = document.querySelector('link[rel="canonical"]')?.href
+      || meta('meta[property="og:url"]')
+      || window.location.href;
+    if (!name) return;
+
+    const data = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name,
+      url,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Kotak Mahindra Bank',
+        url: window.location.origin,
+        logo: {
+          '@type': 'ImageObject',
+          contentUrl: 'https://www.kotak.bank.in/content/dam/Kotak/kotak-logo.png',
+        },
+      },
+    };
+    if (description) data.description = description;
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.dataset.schema = 'webpage';
+    script.textContent = JSON.stringify(data);
+    document.head.append(script);
+  } catch (e) {
+    // structured data is non-critical; never let it break page load
+  }
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
@@ -212,6 +258,9 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // emit per-page WebPage structured data (non-critical, so lazy phase)
+  addWebPageJsonLd();
 
   // Universal Editor support: only load in the editor context to avoid
   // shipping editor-only code to public visitors.
