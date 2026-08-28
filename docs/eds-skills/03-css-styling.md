@@ -8,7 +8,8 @@ Write scoped, responsive, token-driven block CSS.
 
 ## When NOT to use
 - To style sections globally → use Section Metadata ([04](04-sections-and-metadata.md)), not block CSS.
-- To add SCSS/Tailwind — not used here; plain CSS3 + custom properties only.
+- To add Tailwind or CSS-in-JS — not used here.
+- Optional block SCSS is allowed (`styles/scss/block/{name}.scss` → `blocks/{name}/{name}.css`). See the handbook: [15 · SCSS Compiler](../handbook/15-scss-compiler.md).
 
 ## Inputs
 - The block's DOM (post-decorate) and class names.

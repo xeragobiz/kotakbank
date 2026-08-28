@@ -1,8 +1,8 @@
 # Coding Standards — kotakbank (AEM Edge Delivery Services)
 
-Authoritative coding standards for this repository. Where a requested topic belongs to the *traditional* AEMaaCS stack (Java, HTL, SCSS, Dialogs, OSGi, DI, annotations), it is marked **N/A here** and mapped to its EDS equivalent — never introduce those artifacts (see `AGENTS.md` and `.cursor/rules/`).
+Authoritative coding standards for this repository. Where a requested topic belongs to the *traditional* AEMaaCS stack (Java, HTL, Dialogs, OSGi, DI, annotations), it is marked **N/A here** and mapped to its EDS equivalent — never introduce those artifacts (see `AGENTS.md` and `.cursor/rules/`). Optional **block SCSS** is a local compile step only — see [§5](#5-scss).
 
-> **Stack reality:** This is an **AEM Edge Delivery Services** project — vanilla **JavaScript (ES6+), CSS3, JSON**, authored via Universal Editor, served via AEM Code Sync. No Java, Maven, OSGi, Sling, HTL, SCSS, or Dispatcher.
+> **Stack reality:** This is an **AEM Edge Delivery Services** project — vanilla **JavaScript (ES6+), CSS3, JSON**, authored via Universal Editor, served via AEM Code Sync. Optional block SCSS compiles to CSS locally (`npm run build:css`). No Java, Maven, OSGi, Sling, HTL, or Dispatcher.
 
 ## Contents
 1. [Java](#1-java) · 2. [HTL](#2-htl) · 3. [JavaScript](#3-javascript) · 4. [CSS](#4-css) · 5. [SCSS](#5-scss) · 6. [Dialogs](#6-dialogs) · 7. [Naming conventions](#7-naming-conventions) · 8. [Package / repository structure](#8-package--repository-structure) · 9. [Logging](#9-logging) · 10. [Exception handling](#10-exception-handling) · 11. [Dependency injection](#11-dependency-injection) · 12. [OSGi configuration](#12-osgi-configuration) · 13. [Annotations](#13-annotations) · 14. [Performance](#14-performance) · 15. [Accessibility](#15-accessibility) · 16. [Security](#16-security) · 17. [Code review checklist](#17-code-review-checklist)
@@ -96,9 +96,30 @@ First-class. **CSS3, Stylelint standard config, 4-space indent.**
 ---
 
 ## 5. SCSS
-**N/A here — no Sass/SCSS.** No `.scss`, no compiler, no build step. Do not add a preprocessor.
+**Optional, compile-time only.** Block styles **may** be authored as `styles/scss/block/{name}.scss` and compiled to `blocks/{name}/{name}.css` (what EDS serves). Shared tokens: `styles/scss/_config.scss`, `_brand.scss`, `_breakpoints.scss`. Full pipeline: `docs/handbook/15-scss-compiler.md`.
 
-**EDS equivalent:** plain CSS3 with **custom properties** for variables/theming (design tokens live in `styles/kotak811.css`), native nesting only where supported by the Stylelint config, and per-block code-splitting instead of partial imports. Everything SCSS gives you (variables, theming, scoping) is covered by custom properties + block-scoped files.
+**Rules**
+- Source path is `styles/scss/block/{name}.scss` — **not** next to the CSS in `blocks/`. Basename must match the block folder.
+- `@use "brand";` then `background: brand.color(primary);` (kotak811 → `#fa1432`). Switch palettes in `_config.scss` (`$brand: kotak811` or `kotak`) or `npm run build:css -- --brand=kotak`.
+- 2-space indent in `.scss`; generated CSS is 4-space. Unix LF.
+- Run `npm run build:css` after SCSS changes; **commit the generated `.css`**. Do not hand-edit generated CSS.
+- `sass` is a **devDependency**. `*.scss` is in `.hlxignore`. Stylelint lints the compiled CSS.
+- Blocks without an SCSS file stay hand-written CSS.
+
+**Anti-patterns:** editing generated `blocks/{name}/{name}.css` · committing SCSS without CSS · putting `.scss` under `blocks/` · hardcoded `#fa1432` instead of `brand.color(primary)` · adding `sass` as a runtime/browser dependency.
+
+```scss
+@use "brand";
+@use "breakpoints" as bp;
+
+.cta-banner {
+  background: brand.color(dark-bg);
+
+  @include bp.desktop {
+    max-width: 1120px;
+  }
+}
+```
 
 ---
 
@@ -129,6 +150,7 @@ No Java packages. Repository layout (see `AGENTS.md` for the full tree):
 blocks/{name}/{name}.js|.css|_{name}.json   # one folder per block (shared + k811-*)
 scripts/                                     # aem.js (core, do not edit), scripts.js, delayed.js, k811/, shared modules
 styles/                                      # styles.css (global+LCP), lazy-styles.css, fonts.css, kotak811.css
+styles/scss/                                 # _brand.scss, _config.scss, block/{name}.scss (compiled, not served)
 models/                                      # _component-*.json default-content models
 icons/ fonts/                                # optimized assets only
 content/                                     # authored HTML snapshots — DO NOT hand-edit
@@ -228,7 +250,7 @@ Reviewers confirm **all** of the following (subset of the `AGENTS.md` Definition
 
 **Correctness & structure**
 - [ ] Feature branch (not `main`); focused, clearly-messaged commits.
-- [ ] No Java/HTL/SCSS/Dialogs/OSGi/Dispatcher/Cloud-Manager artifacts introduced.
+- [ ] No Java/HTL/Dialogs/OSGi/Dispatcher/Cloud-Manager artifacts introduced. SCSS only under `styles/scss/`; generated CSS committed.
 - [ ] `scripts/aem.js` untouched; no hand-edited files under `content/`.
 - [ ] Block decorates by classifying cells by content; idempotent; defensive on missing/extra/reordered cells; instrumentation preserved (`moveInstrumentation()`).
 

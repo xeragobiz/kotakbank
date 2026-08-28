@@ -4,7 +4,7 @@
 
 ## 1. Theory
 
-EDS CSS is **plain CSS3** — Grid, Flexbox, custom properties, media queries. No Sass, no Tailwind, no CSS-in-JS, no framework. The discipline comes from *conventions*, not tooling:
+EDS CSS is **plain CSS3 at runtime** — Grid, Flexbox, custom properties, media queries. No Tailwind, no CSS-in-JS, no framework. Block styles **may** be authored as SCSS and compiled locally (`styles/scss/block/{name}.scss` → `blocks/{name}/{name}.css`); the CDN still only serves CSS. See handbook [15 · SCSS Compiler](../handbook/15-scss-compiler.md). The discipline for the shipped CSS comes from *conventions*:
 
 - **Three stylesheet layers** by loading phase:
   1. `styles/styles.css` — global + **LCP-critical** rules, loaded **eagerly**.
@@ -49,7 +49,7 @@ main.kotak811 {
 
 **Why forbid `-container`/`-wrapper` selectors?** The platform generates `.<block>-wrapper` and `.section` wrappers itself; targeting them couples your CSS to platform-generated scaffolding and causes confusion between *your* block root and the *platform's* wrapper. Style `.k811-hero`, not `.k811-hero-wrapper`.
 
-**Why custom properties over Sass variables?** They're runtime, cascade-aware, themeable per section, and need no build step — a perfect fit for a no-build platform.
+**Why custom properties over Sass variables at runtime?** They're cascade-aware and themeable per section with no extra request. Compile-time Sass (`brand.color()`) is only for SCSS-backed blocks — it bakes hex into the committed CSS. See handbook chapter 15.
 
 ## 4. Examples
 

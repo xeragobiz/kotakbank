@@ -17,6 +17,8 @@
   **Why:** tokens (`--k811-link`, `--k811-content-max`) keep the design system consistent and make rebrands a one-file change; scattered hexes drift.
 - **Recommendation:** keep LCP-critical CSS in `styles/styles.css`, the rest in `lazy-styles.css`.
   **Why:** the eager stylesheet is render-blocking for LCP; every non-critical rule there delays first paint.
+- **Recommendation:** for new or migrated block styles, prefer optional SCSS at `styles/scss/block/{name}.scss` compiled with `npm run build:css` — see [15](15-scss-compiler.md).
+  **Why:** brand palettes and mixins live in one place; EDS still only serves the committed `blocks/{name}/{name}.css`. Do not hand-edit generated CSS.
 - **Recommendation:** animate transform/opacity only, gated on `prefers-reduced-motion`.
   **Why:** transform/opacity are compositor-only (no layout/paint) so they're jank-free; animating width/top/left forces layout and causes CLS. Reduced-motion is a WCAG requirement and a vestibular-safety issue.
 

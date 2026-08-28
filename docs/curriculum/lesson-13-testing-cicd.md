@@ -8,19 +8,20 @@ EDS has **no heavyweight test framework wired into CI** — and that's deliberat
 
 1. **Linting** (mandatory, CI-enforced) — ESLint (Airbnb base + `plugin:xwalk` + `plugin:json`) and Stylelint (standard). Style is not negotiable; the machine checks it.
 2. **JSON-sync gate** — CI regenerates the aggregate `component-*.json` and fails if they differ from what's committed (Lesson 08).
-3. **Browser/visual testing** — Playwright against `http://localhost:3000`: `snapshot` (DOM/a11y tree, cheap) and `evaluate` (computed styles) for routine checks; `screenshot` only for genuine pixel QA (expensive).
-4. **Unit tests** — reserved for *pure utilities/logic* where they add durable value. DOM-transform blocks are usually validated by browser checks, not unit tests.
-5. **PageSpeed Insights** — run against the feature preview URL, targeting 100.
-6. **Human PR review** — a person checks the mandatory preview-URL link.
+3. **CSS-sync gate** — CI runs `npm run build:css -- --check` so committed `blocks/{name}/{name}.css` matches `styles/scss/block/{name}.scss` (handbook [15](../handbook/15-scss-compiler.md)).
+4. **Browser/visual testing** — Playwright against `http://localhost:3000`: `snapshot` (DOM/a11y tree, cheap) and `evaluate` (computed styles) for routine checks; `screenshot` only for genuine pixel QA (expensive).
+5. **Unit tests** — reserved for *pure utilities/logic* where they add durable value. DOM-transform blocks are usually validated by browser checks, not unit tests.
+6. **PageSpeed Insights** — run against the feature preview URL, targeting 100.
+7. **Human PR review** — a person checks the mandatory preview-URL link.
 
 ## 2. Architecture — the pipeline
 
 ```
-local:  edit → npm run lint (JS+CSS) → build:json (Husky pre-commit) → Playwright check
+local:  edit → npm run lint (JS+CSS) → build:json + build:css (Husky pre-commit) → Playwright check
    │
 git push (feature branch)
    ▼
-GitHub Actions (main.yaml):  npm ci → npm run lint → build:json → git diff --exit-code (aggregates)
+GitHub Actions (main.yaml):  npm ci → npm run lint → build:css --check → build:json → git diff --exit-code (aggregates)
    │                                                    │ fails if stale
    ▼
 AEM Code Sync:  publishes branch → https://<branch>--<repo>--<owner>.aem.page/
