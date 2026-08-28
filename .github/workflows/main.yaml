@@ -12,6 +12,8 @@ jobs:
         node-version: 20
     - run: npm ci
     - run: npm run lint
+    - name: Verify compiled block CSS is up to date
+      run: npm run build:css -- --check
     - name: Verify component JSON is up to date
       run: |
         npm run build:json

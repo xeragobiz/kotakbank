@@ -1,0 +1,40 @@
+// Mobile-first breakpoints — match AGENTS.md (600 / 900 / 1200).
+$tablet: 600px;
+$desktop: 900px;
+$wide: 1200px;
+
+@mixin up($min) {
+  @media (width >= $min) {
+    @content;
+  }
+}
+
+@mixin down($max) {
+  @media (width < $max) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include up($tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @include up($desktop) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @include up($wide) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

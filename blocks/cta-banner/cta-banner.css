@@ -1,74 +1,78 @@
-/* CTA Banner — "Call our new toll-free number 1800 4100...".
-   A contained rounded black box: heading on the left, promo graphic on the
-   right. Stacks and centers on mobile. Values matched from the source band. */
+/* Generated from styles/scss/block/cta-banner.scss — do not edit. Run `npm run build:css`. */
 
 .cta-banner {
-  overflow: hidden;
-  max-width: 1120px;
-  margin: 0 auto;
-  border-radius: 20px;
-  background: #000;
+    overflow: hidden;
+    max-width: 1120px;
+    margin: 0 auto;
+    border-radius: 20px;
+    background: #000;
 }
 
 .cta-banner .cta-banner-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  padding: 40px 24px;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 40px 24px;
+    text-align: center;
 }
 
 .cta-banner .cta-banner-text {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .cta-banner .cta-banner-title {
-  margin: 0;
-  color: #fff;
-  font-family: var(--heading-font-family);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.18;
+    margin: 0;
+    color: #fff;
+    font-family: var(--heading-font-family);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.18;
 }
 
 .cta-banner .cta-banner-media {
-  flex: 0 0 auto;
-  line-height: 0;
+    flex: 0 0 auto;
+    line-height: 0;
 }
 
 .cta-banner .cta-banner-media img {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  height: auto;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 @media (width >= 900px) {
-  .cta-banner .cta-banner-inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-    padding: 64px 72px;
-    text-align: left;
-  }
+    .cta-banner .cta-banner-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        padding: 64px 72px;
+        text-align: left;
+    }
 
-  .cta-banner .cta-banner-text {
-    flex: 1 1 50%;
-  }
+    .cta-banner .cta-banner-text {
+        flex: 1 1 50%;
+    }
 
-  .cta-banner .cta-banner-title {
-    font-size: 44px;
-    line-height: 52px;
-  }
+    .cta-banner .cta-banner-title {
+        font-size: 44px;
+        line-height: 52px;
+    }
 
-  .cta-banner .cta-banner-media {
-    flex: 0 0 auto;
-    max-width: 42%;
-  }
+    .cta-banner .cta-banner-media {
+        flex: 0 0 auto;
+        max-width: 42%;
+    }
 
-  .cta-banner .cta-banner-media img {
-    max-height: 240px;
-  }
+    .cta-banner .cta-banner-media img {
+        max-height: 240px;
+    }
+}
+
+#xyz {
+    background-color: #7c3aed;
+    width: 100px;
+    height: 100px;
 }

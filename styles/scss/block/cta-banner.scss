@@ -1,0 +1,83 @@
+@use "brand";
+@use "breakpoints" as bp;
+
+// CTA Banner — contained rounded band: heading left, promo graphic right.
+// Stacks and centers on mobile.
+
+.cta-banner {
+  overflow: hidden;
+  max-width: 1120px;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: brand.color(dark-bg);
+}
+
+.cta-banner .cta-banner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.cta-banner .cta-banner-text {
+  flex: 1 1 auto;
+}
+
+.cta-banner .cta-banner-title {
+  margin: 0;
+  color: brand.color(dark-text);
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.cta-banner .cta-banner-media {
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.cta-banner .cta-banner-media img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+@include bp.desktop {
+  .cta-banner .cta-banner-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 64px 72px;
+    text-align: left;
+  }
+
+  .cta-banner .cta-banner-text {
+    flex: 1 1 50%;
+  }
+
+  .cta-banner .cta-banner-title {
+    font-size: 44px;
+    line-height: 52px;
+  }
+
+  .cta-banner .cta-banner-media {
+    flex: 0 0 auto;
+    max-width: 42%;
+  }
+
+  .cta-banner .cta-banner-media img {
+    max-height: 240px;
+  }
+}
+
+
+#xyz {
+  background-color: brand.color(violet);
+  width: 100px;
+  height: 100px;
+}

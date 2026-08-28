@@ -18,3 +18,10 @@ if (modifledPartials.length > 0) {
   console.log(output);
   await run('git add component-models.json component-definition.json component-filters.json');
 }
+
+const modifiedScss = modifiedFiles.filter((file) => file.endsWith('.scss'));
+if (modifiedScss.length > 0) {
+  const output = await run('npm run build:css --silent');
+  console.log(output);
+  await run('git add -- ":(glob)blocks/**/*.css"');
+}

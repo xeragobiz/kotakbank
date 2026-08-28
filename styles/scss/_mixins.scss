@@ -1,0 +1,7 @@
+/// Wrap block styles so every selector stays scoped to `.{name}`.
+/// Nested `&-foo` becomes `.{name}-foo` (BEM-style element classes).
+@mixin block($name) {
+  .#{$name} {
+    @content;
+  }
+}
