@@ -28,6 +28,27 @@
           "name": "weightage",
           "label": "Weightage",
           "description": "Numeric ranking used to order pages in listings/search (indexed in query-index.json). Higher = more important."
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "robots",
+          "label": "Robots",
+          "description": "Controls search-engine indexing and sitemap inclusion. Set to 'noindex' to hide this page from sitemap.xml and search results.",
+          "options": [
+            {
+              "name": "Index, Follow (default)",
+              "value": "index, follow"
+            },
+            {
+              "name": "No Index (hide from sitemap & search)",
+              "value": "noindex"
+            },
+            {
+              "name": "No Index, No Follow",
+              "value": "noindex, nofollow"
+            }
+          ]
         }
       ]
     }
