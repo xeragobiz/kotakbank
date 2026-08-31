@@ -1,3 +1,147 @@
 {
-  "extends": ["stylelint-config-standard"]
+  "extends": [
+    "stylelint-config-standard"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "blocks/**/*.css"
+      ],
+      "rules": {
+        "color-no-hex": [
+          true,
+          {
+            "message": "Use a design token, e.g. var(--text-primary-default-base), not a raw hex color (see docs/design-system/TOKENS.md)"
+          }
+        ],
+        "declaration-property-unit-disallowed-list": [
+          {
+            "font-size": [
+              "px"
+            ],
+            "margin": [
+              "px"
+            ],
+            "margin-top": [
+              "px"
+            ],
+            "margin-right": [
+              "px"
+            ],
+            "margin-bottom": [
+              "px"
+            ],
+            "margin-left": [
+              "px"
+            ],
+            "margin-inline": [
+              "px"
+            ],
+            "margin-block": [
+              "px"
+            ],
+            "padding": [
+              "px"
+            ],
+            "padding-top": [
+              "px"
+            ],
+            "padding-right": [
+              "px"
+            ],
+            "padding-bottom": [
+              "px"
+            ],
+            "padding-left": [
+              "px"
+            ],
+            "padding-inline": [
+              "px"
+            ],
+            "padding-block": [
+              "px"
+            ],
+            "gap": [
+              "px"
+            ],
+            "row-gap": [
+              "px"
+            ],
+            "column-gap": [
+              "px"
+            ],
+            "border-radius": [
+              "px"
+            ]
+          },
+          {
+            "message": "Use a design token, e.g. var(--spacing-spacing-16) / var(--cr-8) / var(--body-font-size-b2), not a raw px value (see docs/design-system/TOKENS.md)"
+          }
+        ]
+      },
+      "ignoreFiles": [
+        "blocks/api-demo/api-demo.css",
+        "blocks/apply-form/apply-form.css",
+        "blocks/back-link/back-link.css",
+        "blocks/breadcrumb/breadcrumb.css",
+        "blocks/cards-benefits/cards-benefits.css",
+        "blocks/cards-featured/cards-featured.css",
+        "blocks/cards-lifestyle/cards-lifestyle.css",
+        "blocks/cards-product/cards-product.css",
+        "blocks/cards-quicklink/cards-quicklink.css",
+        "blocks/cards-story/cards-story.css",
+        "blocks/cards/cards.css",
+        "blocks/carousel-hero/carousel-hero.css",
+        "blocks/carousel-icons/carousel-icons.css",
+        "blocks/cc-hero/cc-hero.css",
+        "blocks/cc-steps/cc-steps.css",
+        "blocks/columns-feature/columns-feature.css",
+        "blocks/columns/columns.css",
+        "blocks/cta-banner/cta-banner.css",
+        "blocks/eligibility-checker/eligibility-checker.css",
+        "blocks/faq-accordion/faq-accordion.css",
+        "blocks/footer/footer.css",
+        "blocks/form/components/accordion/accordion.css",
+        "blocks/form/components/modal/modal.css",
+        "blocks/form/components/password/password.css",
+        "blocks/form/components/range/range.css",
+        "blocks/form/components/rating/rating.css",
+        "blocks/form/components/tnc/tnc.css",
+        "blocks/form/components/wizard/wizard.css",
+        "blocks/form/form.css",
+        "blocks/header/header.css",
+        "blocks/help-links/help-links.css",
+        "blocks/hero/hero.css",
+        "blocks/k811-about-hero/k811-about-hero.css",
+        "blocks/k811-app-cta/k811-app-cta.css",
+        "blocks/k811-benefits-story/k811-benefits-story.css",
+        "blocks/k811-card-selector/k811-card-selector.css",
+        "blocks/k811-cf-media/k811-cf-media.css",
+        "blocks/k811-cf/k811-cf.css",
+        "blocks/k811-cta/k811-cta.css",
+        "blocks/k811-faq/k811-faq.css",
+        "blocks/k811-feature-grid/k811-feature-grid.css",
+        "blocks/k811-feature/k811-feature.css",
+        "blocks/k811-hero/k811-hero.css",
+        "blocks/k811-offers-overlap/k811-offers-overlap.css",
+        "blocks/k811-offers/k811-offers.css",
+        "blocks/k811-pillars/k811-pillars.css",
+        "blocks/k811-promo-band/k811-promo-band.css",
+        "blocks/k811-promo-brand-test/k811-promo-brand-test.css",
+        "blocks/k811-steps/k811-steps.css",
+        "blocks/k811-story/k811-story.css",
+        "blocks/k811-team/k811-team.css",
+        "blocks/k811-video-hero/k811-video-hero.css",
+        "blocks/placeholder-demo/placeholder-demo.css",
+        "blocks/rates-charges/rates-charges.css",
+        "blocks/resume-application/resume-application.css",
+        "blocks/savings-calculator/savings-calculator.css",
+        "blocks/search/search.css",
+        "blocks/sticky-cta/sticky-cta.css",
+        "blocks/sub-nav/sub-nav.css",
+        "blocks/testimonials/testimonials.css",
+        "blocks/testk811-feature/testk811-feature.css"
+      ]
+    }
+  ]
 }

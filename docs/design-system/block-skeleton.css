@@ -1,0 +1,90 @@
+/*
+ * Reference skeleton for a NEW block, built entirely on the global design system.
+ * Copy this into blocks/{name}/{name}.css and rename `.example` to `.{name}`.
+ *
+ * Rules it demonstrates (all enforced by .stylelintrc.json for new blocks):
+ *   - Colors, spacing, radius, and type come from tokens (styles/variables.css) --
+ *     never raw hex or raw px.
+ *   - Responsive type uses the self-scaling role tokens (no media query needed;
+ *     match the numeric suffix across size / line-height / letter-spacing).
+ *   - Layout uses the .grid utilities (styles/grid.css); mobile-first breakpoints
+ *     are the design-spec tiers 476 / 835 / 1025.
+ *   - Every selector is scoped to the block; no -container / -wrapper selectors.
+ *   - Motion is transform/opacity only and respects prefers-reduced-motion.
+ *
+ * See docs/design-system/TOKENS.md and docs/design-system/GRID.md.
+ */
+
+.example {
+    color: var(--text-primary-default-base);
+    background-color: var(--background-1-default-base);
+    padding-block: var(--spacing-spacing-32);
+}
+
+.example h2 {
+    margin: 0 0 var(--spacing-spacing-16);
+    font-family: var(--font-family-heading);
+
+    /* self-scaling: h5 = 20px mobile / 24px tablet-laptop / 28px desktop */
+    font-size: var(--headline-font-size-h5);
+    line-height: var(--headline-line-height-lh-5);
+    letter-spacing: var(--headline-letter-spacing-ls-5);
+}
+
+.example p {
+    margin: 0;
+    color: var(--text-secondary-default-base);
+    font-size: var(--body-font-size-b2);
+    line-height: var(--body-line-height-lh-2);
+}
+
+/* A responsive card row: 1-up mobile, 2-up tablet, 4-up desktop.
+   Author the .grid + span classes in the block's decorate(); the CSS just
+   styles the cards. */
+.example .example-card {
+    padding: var(--spacing-spacing-24);
+    border: 1px solid var(--stroke-2-default);
+    border-radius: var(--cr-12);
+    background-color: var(--background-2-default-base);
+}
+
+.example .example-cta {
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--spacing-spacing-16);
+    padding: var(--spacing-spacing-12) var(--spacing-spacing-24);
+    border-radius: var(--cr-8);
+    background-color: var(--button-primary-default-bg-base);
+    color: var(--button-primary-default-text-base);
+    font-size: var(--button-font-size-bt-2);
+    line-height: var(--button-line-height-lh-2);
+}
+
+.example .example-cta:hover {
+    background-color: var(--button-primary-default-bg-hover);
+    color: var(--button-primary-default-text-hover);
+}
+
+/* Tablet portrait and up (design-spec tier). */
+@media (width >= 476px) {
+    .example {
+        padding-block: var(--spacing-spacing-48);
+    }
+}
+
+/* Tablet landscape / laptop and up. */
+@media (width >= 835px) {
+    .example {
+        padding-block: var(--spacing-spacing-64);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .example .example-card {
+        transition: transform 0.2s ease;
+    }
+
+    .example .example-card:hover {
+        transform: translateY(-4px);
+    }
+}

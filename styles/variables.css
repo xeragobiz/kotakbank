@@ -1,11 +1,19 @@
 /*
- * Design tokens generated from styles/variables.scss (Figma export).
- * Do not edit by hand -- regenerate with .claude/tmp/scss-to-css.js
+ * Design tokens from the Design Language System (Figma export).
  *
- * NOTE: the typography @media breakpoints below were retuned from the
- * boilerplate defaults (600/900/1200) to the design-spec device tiers
- * (476/835/1025) so that responsive type reflows in lockstep with the
- * grid system defined in grid.css.
+ * SOURCE OF TRUTH: this file is HAND-MAINTAINED. The original DLS export was
+ * generated from a variables.scss via a scss-to-css step, but neither the SCSS
+ * source nor the generator lives in this repo, so edits are made here directly.
+ * When updating tokens, edit this file and keep names byte-for-byte identical to
+ * the DLS (doubled group names like --spacing-spacing-16 are intentional).
+ *
+ * See docs/design-system/TOKENS.md for the token catalogue and usage rules, and
+ * docs/design-system/GRID.md for the grid system in styles/grid.css.
+ *
+ * BREAKPOINTS: the typography @media steps below were unified to the design-spec
+ * device tiers (476/835/1025) to match grid.css, so responsive type and the grid
+ * reflow at the same widths. (This intentionally diverges from the DLS's original
+ * 600/900/1200 typography tiers; unified tiers are the project standard.)
  */
 
 :root {

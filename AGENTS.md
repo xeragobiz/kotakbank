@@ -125,11 +125,30 @@ Because the task that generated this file asked for sections that belong to the 
 
 ### CSS
 - Stylelint **standard** config. 4-space indent for CSS (`.editorconfig`).
-- **Mobile-first.** Base styles then `min-width` media queries at **600px / 900px / 1200px** for tablet/desktop.
+- **Mobile-first.** Base styles then `min-width` media queries. **New (non-k811) blocks use the design-spec tiers 476px / 835px / 1025px** (the grid + tokens reflow there). Legacy shared blocks and k811-* blocks predate this and still use 600/900/1200 — leave them until individually migrated.
 - **Scope every selector to the block:** `.k811-hero .cta` ✅, `.cta` ❌.
 - **Never** use `.{blockname}-container` or `.{blockname}-wrapper` selectors — those class names belong to sections and cause confusion.
 - Use modern CSS (Grid, Flexbox, custom properties). k811-* blocks inherit tokens from the scoped `styles/kotak811.css` design guide (applied only under `main.kotak811`).
 - Animations should be **transform/opacity only** (compositor-friendly) and must respect `prefers-reduced-motion`.
+
+### Design System Usage (mandatory for new blocks)
+
+The global design system is the single source of truth. New blocks **must** build
+on it — do not invent parallel values or class names for concepts it already names.
+Full catalogue: [`docs/design-system/TOKENS.md`](docs/design-system/TOKENS.md) and
+[`docs/design-system/GRID.md`](docs/design-system/GRID.md). Reference skeleton:
+[`docs/design-system/block-skeleton.css`](docs/design-system/block-skeleton.css).
+
+- **Tokens, not raw values.** Use the semantic tokens from `styles/variables.css`:
+  - Color → `var(--text-primary-default-base)`, `var(--background-1-default-base)`, `var(--button-primary-default-bg-base)`, `var(--stroke-2-default)`, … (prefer semantic aliases over raw `--neutral-nc-*` primitives).
+  - Spacing → `var(--spacing-spacing-16)`; radius → `var(--cr-8)`; letter-spacing → `var(--ls-*)`.
+  - Type → the responsive families `var(--body-font-size-b2)` / `--headline-font-size-h*` / `--display-*` (they auto-reflow; match the numeric suffix across size/line-height/letter-spacing, e.g. `b2` + `lh-2` + `ls-2`).
+  - Font family → `var(--font-family-base)` / `var(--font-family-heading)`.
+  - **On-dark surfaces:** use the `inverse` token variants — there is no dark-mode block.
+- **Layout via the grid utilities.** Use `.grid` + `.grid-col-*` / `.grid-col-t-*` / `.grid-col-d-*` from `styles/grid.css`; do not hand-roll column math. Spans are relative to the current breakpoint's column count (4 / 8 / 12) — see GRID.md.
+- **Enforced in CI.** `.stylelintrc.json` fails the build if a `blocks/**/*.css` file uses a raw hex color or raw `px` for `font-size`/margin/padding/`gap`/`border-radius`. Existing blocks are grandfathered via `ignoreFiles`; **as you migrate a legacy block to tokens, remove it from that list.** For a rare justified exception, use `/* stylelint-disable-next-line declaration-property-unit-disallowed-list */` with a comment explaining why.
+- **Scope boundary.** The `.kotak811` scoped guide (`styles/kotak811.css`, Manrope) governs the migrated k811 pages; the **global tokens govern everything else.** Don't mix the two systems in one block.
+- **`styles/variables.css` is hand-maintained** (the DLS SCSS source/generator are not in this repo). Edit it directly, keeping token names byte-for-byte identical to the DLS — see TOKENS.md.
 
 ### HTML
 - Semantic HTML5, correct heading hierarchy, ARIA where needed, alt text on all images.

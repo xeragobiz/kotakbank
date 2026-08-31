@@ -39,9 +39,12 @@
      the brand red (#fa1432) stays on buttons/graphical elements */
   --cc-red-text: #d1101f;
 
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  /* fonts -- tokenized brand faces (currently Roboto; swap the two token
+     values here to rebrand the whole site without touching any block). */
+  --font-family-base: roboto, roboto-fallback, sans-serif;
+  --font-family-heading: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --body-font-family: var(--font-family-base);
+  --heading-font-family: var(--font-family-heading);
 
   /* body sizes -> responsive body tokens (auto-reflow at 476/835/1025) */
   --body-font-size-m: var(--body-font-size-b2);
@@ -318,18 +321,26 @@ main > .section {
 }
 
 main > .section > div {
-  max-width: 1200px;
+  max-width: var(--grid-max-width-desktop);
   margin: auto;
-  padding: 0 24px;
+  padding: 0 var(--grid-margin-mobile);
 }
 
 main > .section:first-of-type {
   margin-top: 0;
 }
 
-@media (width >= 900px) {
+/* Section side padding follows the grid's design-spec margins (476/835/1025)
+   so section content and .grid blocks align at the same breakpoints. */
+@media (width >= 476px) {
   main > .section > div {
-    padding: 0 32px;
+    padding: 0 var(--grid-margin-tablet-p);
+  }
+}
+
+@media (width >= 835px) {
+  main > .section > div {
+    padding: 0 var(--grid-margin-tablet-l);
   }
 }
 
