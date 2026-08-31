@@ -17,7 +17,7 @@ const zlib = require('zlib');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const MW = path.join(ROOT, 'migration-work');
-const ALL_PAGES = ['kotak811-home', 'kotak811-infinity-metal-debit-card', 'kotak811-about-us'];
+const ALL_PAGES = ['kotak811-home', 'kotak811-infinity-metal-debit-card', 'kotak811-about-us', 'cc-landing-page'];
 
 // Optional CLI page filter: `node build-pages-package.js kotak811-home` builds
 // a package containing (and replacing) only the named page(s). With no args it
