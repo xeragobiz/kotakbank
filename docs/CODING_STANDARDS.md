@@ -96,17 +96,19 @@ First-class. **CSS3, Stylelint standard config, 4-space indent.**
 ---
 
 ## 5. SCSS
-**Optional, compile-time only.** Block styles **may** be authored as `styles/scss/block/{name}.scss` and compiled to `blocks/{name}/{name}.css` (what EDS serves). Shared tokens: `styles/scss/_config.scss`, `_brand.scss`, `_breakpoints.scss`. Full pipeline: `docs/handbook/15-scss-compiler.md`.
+**Optional, compile-time only.** Author SCSS; EDS serves CSS. Block: `styles/scss/block/{name}.scss` → `blocks/{name}/{name}.css`. Global: `styles/scss/{name}.scss` → `styles/{name}.css`. Shared tokens: `styles/scss/_config.scss`, `_brand.scss`, `_breakpoints.scss`. Full pipeline: `docs/handbook/15-scss-compiler.md`.
 
 **Rules**
-- Source path is `styles/scss/block/{name}.scss` — **not** next to the CSS in `blocks/`. Basename must match the block folder.
+- Block source is `styles/scss/block/{name}.scss` — **not** next to the CSS in `blocks/`. Basename must match the block folder.
+- Global source is `styles/scss/{name}.scss` (sibling of `_brand.scss`, not under `block/`). Basename must match the served file (`lazy-styles.scss` → `styles/lazy-styles.css`).
+- `styles/styles.css` stays hand-written (eager LCP sheet in `head.html`).
 - `@use "brand";` then `background: brand.color(primary);` (kotak811 → `#fa1432`). Switch palettes in `_config.scss` (`$brand: kotak811` or `kotak`) or `npm run build:css -- --brand=kotak`.
 - 2-space indent in `.scss`; generated CSS is 4-space. Unix LF.
 - Run `npm run build:css` after SCSS changes; **commit the generated `.css`**. Do not hand-edit generated CSS.
 - `sass` is a **devDependency**. `*.scss` is in `.hlxignore`. Stylelint lints the compiled CSS.
 - Blocks without an SCSS file stay hand-written CSS.
 
-**Anti-patterns:** editing generated `blocks/{name}/{name}.css` · committing SCSS without CSS · putting `.scss` under `blocks/` · hardcoded `#fa1432` instead of `brand.color(primary)` · adding `sass` as a runtime/browser dependency.
+**Anti-patterns:** editing generated CSS · committing SCSS without CSS · putting `.scss` under `blocks/` · hardcoded `#fa1432` instead of `brand.color(primary)` · adding `sass` as a runtime/browser dependency.
 
 ```scss
 @use "brand";
@@ -149,8 +151,8 @@ No Java packages. Repository layout (see `AGENTS.md` for the full tree):
 ```
 blocks/{name}/{name}.js|.css|_{name}.json   # one folder per block (shared + k811-*)
 scripts/                                     # aem.js (core, do not edit), scripts.js, delayed.js, k811/, shared modules
-styles/                                      # styles.css (global+LCP), lazy-styles.css, fonts.css, kotak811.css
-styles/scss/                                 # _brand.scss, _config.scss, block/{name}.scss (compiled, not served)
+styles/                                      # styles.css (global+LCP, hand-written); other sheets compiled from SCSS
+styles/scss/                                 # _brand.scss, _config.scss, {name}.scss → styles/, block/{name}.scss → blocks/
 models/                                      # _component-*.json default-content models
 icons/ fonts/                                # optimized assets only
 content/                                     # authored HTML snapshots — DO NOT hand-edit

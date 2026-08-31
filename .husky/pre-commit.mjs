@@ -23,5 +23,5 @@ const modifiedScss = modifiedFiles.filter((file) => file.endsWith('.scss'));
 if (modifiedScss.length > 0) {
   const output = await run('npm run build:css --silent');
   console.log(output);
-  await run('git add -- ":(glob)blocks/**/*.css"');
+  await run('git add -- ":(glob)blocks/**/*.css" ":(glob)styles/*.css"');
 }

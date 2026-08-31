@@ -21,7 +21,7 @@ The complete engineering handbook for building on **AEM Edge Delivery Services (
 | 12 | [Environments & Promotion](12-environments-and-promotion.md) | Dev/UAT/Stage/Prod on EDS · branch = environment · Azure Git → GitHub mirror · Universal Editor content per tier · env config matrix · promotion & rollback |
 | 13 | [Global Values & Placeholders](13-global-values-placeholders.md) | Placeholders sheet · Key/Value global values · consuming in blocks · localisation (/en, /hi) · SEO caveat (JS DOM vs server-rendered metadata) · sheet models |
 | 14 | [Configuration Service](14-config-service.md) | Repoless config · query/sitemap/fstab/robots via config service (tools.aem.live) not repo YAML · POST-not-PUT API · regenerate after change · en/hi config reference · gotchas |
-| 15 | [SCSS Compiler](15-scss-compiler.md) | Optional block SCSS · `styles/scss/block/{name}.scss` → `blocks/{name}/{name}.css` · brand palettes · `npm run build:css` · CI `--check` |
+| 15 | [SCSS Compiler](15-scss-compiler.md) | Optional SCSS · block → `blocks/{name}/{name}.css` · global → `styles/{name}.css` · brand palettes · `npm run build:css` · CI `--check` |
 | 16 | [Adding ESLint Rules](16-adding-eslint-rules.md) | `.eslintrc.js` · Airbnb + xwalk · adding a rule · smoke test · editor squiggles · CI |
 
 ## How to read this handbook

@@ -1,0 +1,186 @@
+@use "brand";
+@use "breakpoints" as bp;
+
+/*
+ * Kotak811 design guide — scoped design system for the migrated kotak811.bank.in
+ * pages (home, infinity-metal debit card, about-us).
+ *
+ * Everything here is scoped under `.kotak811` (added to <main> by the k811-*
+ * blocks' shared init) so it NEVER affects the project's global design system
+ * or any existing pages/blocks.
+ *
+ * Faithful to the source:
+ *   - Font: Manrope (self-hosted, variable, latin + latin-ext subsets)
+ *   - Motion: each section reveals once as it enters the viewport with a fade
+ *     + upward translate (opacity 0->1, translateY 40->0) over 0.8s.
+ */
+
+@font-face {
+  font-family: manrope;
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../fonts/manrope-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: manrope;
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../fonts/manrope-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+.kotak811 {
+  --k811-font: manrope, sans-serif;
+  // Override global font tokens in this scope so headings/body pick up Manrope.
+  --heading-font-family: manrope, sans-serif;
+  --body-font-family: manrope, sans-serif;
+  --k811-text: #{brand.color(text)};
+  --k811-bg: #{brand.color(bg)};
+  --k811-dark-bg: #{brand.color(dark-bg)};
+  --k811-dark-text: #{brand.color(dark-text)};
+  --k811-card-bg: #{brand.color(card-bg)};
+  --k811-card-radius: 20px;
+  --k811-link: #{brand.color(link)};
+  --k811-section-pad-y: 48px;
+  --k811-content-max: 1120px;
+  --k811-fade-duration: 800ms;
+  --k811-fade-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  font-family: var(--k811-font);
+  color: var(--k811-text);
+}
+
+.kotak811 .section.dark,
+.kotak811 .section.metal {
+  background-color: brand.color(dark-bg);
+  color: brand.color(dark-text);
+  margin: 0;
+  padding: 40px 0;
+}
+
+.kotak811 .section.dark :is(h1, h2, h3, h4, p),
+.kotak811 .section.metal :is(h1, h2, h3, h4, p) {
+  color: brand.color(dark-text);
+}
+
+.kotak811 .section.accent {
+  background-color: brand.color(accent);
+  color: brand.color(dark-text);
+  margin: 0;
+  padding: 40px 0;
+}
+
+.kotak811 .section.brand-red {
+  background-color: brand.color(brand-band);
+  color: brand.color(dark-text);
+  margin: 0;
+  padding: 40px 0;
+}
+
+.kotak811 h1,
+.kotak811 h2,
+.kotak811 h3,
+.kotak811 h4 {
+  font-family: var(--k811-font);
+  font-weight: 700;
+}
+
+.kotak811 h2 {
+  font-size: 30px;
+  line-height: 1.18;
+}
+
+@include bp.desktop {
+  .kotak811 h2 {
+    font-size: 44px;
+    line-height: 52px;
+  }
+}
+
+.kotak811 .section.detailed {
+  background-color: brand.color(bg);
+  padding: 40px 0;
+}
+
+.kotak811 .section.detailed .default-content-wrapper > h2:first-child {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: #959595;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 40px;
+}
+
+.kotak811 .section.detailed .default-content-wrapper h3 {
+  font-size: 24px;
+  font-weight: 500;
+  color: brand.color(dark-bg);
+  margin: 24px 0 10px;
+}
+
+.kotak811 .section.detailed .default-content-wrapper p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: brand.color(text-muted);
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .kotak811 .k811-aos-ready[data-k811-aos='fade-in'] {
+    opacity: 0;
+    transform: translateY(40px);
+    will-change: opacity, transform;
+  }
+
+  .kotak811 .k811-aos-ready[data-k811-aos='fade-in']:has([data-k811-child]) {
+    transform: none;
+  }
+
+  .kotak811 [data-k811-aos='fade-in'] [data-k811-child] {
+    opacity: 0;
+    transform: translateY(40px);
+    will-change: opacity, transform;
+  }
+
+  .kotak811 [data-k811-aos='fade-in'] .k811-aos-img {
+    transform: scale(0.95);
+    will-change: transform;
+  }
+
+  .kotak811 [data-k811-aos='fade-in'].k811-aos-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--k811-fade-duration) var(--k811-fade-easing),
+      transform var(--k811-fade-duration) var(--k811-fade-easing);
+  }
+
+  .kotak811 [data-k811-aos='fade-in'].k811-aos-in [data-k811-child] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--k811-fade-duration) var(--k811-fade-easing),
+      transform var(--k811-fade-duration) var(--k811-fade-easing);
+    transition-delay: var(--k811-child-delay, 0s);
+  }
+
+  .kotak811 [data-k811-aos='fade-in'].k811-aos-in .k811-aos-img {
+    transform: scale(1);
+    transition: transform var(--k811-fade-duration) var(--k811-fade-easing);
+    transition-delay: var(--k811-child-delay, 0s);
+  }
+}
+
+.kotak811 .k811-lottie {
+  display: block;
+  width: 100%;
+  height: auto;
+}

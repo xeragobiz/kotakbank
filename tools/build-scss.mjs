@@ -1,7 +1,12 @@
 /* eslint-env node */
 /**
- * Compiles `styles/scss/block/{name}.scss` to `blocks/{name}/{name}.css`.
+ * Compiles SCSS to the CSS Edge Delivery Services actually serves.
+ *
+ *   styles/scss/block/{name}.scss  →  blocks/{name}/{name}.css
+ *   styles/scss/{name}.scss        →  styles/{name}.css
+ *
  * Shared tokens live in `styles/scss/` and are loaded via Sass load path.
+ * `styles/styles.css` stays hand-written (LCP-critical, loaded from head.html).
  *
  *   npm run build:css
  *   npm run build:css -- --check
@@ -21,7 +26,8 @@ import * as sass from 'sass';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const blocksDir = join(root, 'blocks');
-const scssDir = join(root, 'styles', 'scss');
+const stylesDir = join(root, 'styles');
+const scssDir = join(stylesDir, 'scss');
 const blockScssDir = join(scssDir, 'block');
 const args = process.argv.slice(2);
 const checkOnly = args.includes('--check');
@@ -60,12 +66,36 @@ async function findScss(dir) {
 }
 
 /**
+ * Non-partial `.scss` files sitting directly in `styles/scss/` (not `block/`).
+ * @returns {Promise<string[]>}
+ */
+async function findGlobalScss() {
+  let entries;
+  try {
+    entries = await readdir(scssDir, { withFileTypes: true });
+  } catch (err) {
+    if (err.code === 'ENOENT') return [];
+    throw err;
+  }
+  return entries
+    .filter((entry) => {
+      const { name } = entry;
+      return entry.isFile() && name.endsWith('.scss') && !name.startsWith('_');
+    })
+    .map((entry) => join(scssDir, entry.name));
+}
+
+/**
  * `styles/scss/block/cc-hero.scss` → `blocks/cc-hero/cc-hero.css`
+ * `styles/scss/lazy-styles.scss`   → `styles/lazy-styles.css`
  * @param {string} scssPath
  * @returns {string}
  */
 function cssPathFor(scssPath) {
   const name = basename(scssPath, '.scss');
+  if (dirname(scssPath) === scssDir) {
+    return join(stylesDir, `${name}.css`);
+  }
   return join(blocksDir, name, `${name}.css`);
 }
 
@@ -82,7 +112,9 @@ function formatCss(css) {
     '$1\n$2$3',
   );
   const betweenRules = afterCustomProps.replace(/}\n( +)([.#:[*a-zA-Z])/g, '}\n\n$1$2');
-  return betweenRules.replace(/}\n(?!\n)([.#:@*[a-zA-Z])/g, '}\n\n$1');
+  const spaced = betweenRules.replace(/}\n(?!\n)([.#:@*[a-zA-Z])/g, '}\n\n$1');
+  // Dart Sass unquotes identifier-like attribute values; Stylelint requires quotes.
+  return spaced.replace(/\[([\w-]+)=([^\s"'\]]+)\]/g, '[$1="$2"]');
 }
 
 /**
@@ -118,7 +150,7 @@ function compileOne(scssPath) {
  * @returns {Promise<{ written: string[], stale: string[] }>}
  */
 async function build() {
-  const sources = await findScss(blockScssDir);
+  const sources = [...await findScss(blockScssDir), ...await findGlobalScss()];
   const written = [];
   const stale = [];
 
@@ -146,16 +178,16 @@ const { written, stale } = await build();
 
 if (checkOnly) {
   if (stale.length) {
-    console.error('Compiled block CSS is out of date. Run `npm run build:css` and commit:');
+    console.error('Compiled CSS is out of date. Run `npm run build:css` and commit:');
     stale.forEach((file) => console.error(`  ${file}`));
     process.exit(1);
   }
-  console.log('Block SCSS is in sync with committed CSS.');
+  console.log('SCSS is in sync with committed CSS.');
 } else if (written.length) {
   console.log(`Wrote ${written.length} CSS file(s):`);
   written.forEach((file) => console.log(`  ${file}`));
 } else {
-  console.log('Block CSS already up to date.');
+  console.log('CSS already up to date.');
 }
 
 if (watchMode) {

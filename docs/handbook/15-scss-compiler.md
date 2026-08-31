@@ -1,8 +1,8 @@
-# 15 · SCSS Compiler (block styles & brand palettes)
+# 15 · SCSS Compiler (block styles, global sheets & brand palettes)
 
-How this project authors **optional block SCSS**, compiles it to the CSS Edge Delivery Services actually serves, and switches **brand colors at compile time**. Grounded in `tools/build-scss.mjs`, `styles/scss/`, and the `npm run build:css` pipeline.
+How this project authors **optional SCSS**, compiles it to the CSS Edge Delivery Services actually serves, and switches **brand colors at compile time**. Grounded in `tools/build-scss.mjs`, `styles/scss/`, and the `npm run build:css` pipeline.
 
-> **EDS still serves CSS, not Sass.** There is no Sass runtime on `*.aem.page` / `*.aem.live`. Authors write `.scss`; the compiler writes `blocks/{name}/{name}.css`; AEM Code Sync publishes that CSS. `*.scss` is listed in `.hlxignore` so the CDN never serves it.
+> **EDS still serves CSS, not Sass.** There is no Sass runtime on `*.aem.page` / `*.aem.live`. Authors write `.scss`; the compiler writes the `.css` files `loadCSS()` / `loadBlock()` already request; AEM Code Sync publishes that CSS. `*.scss` is listed in `.hlxignore` so the CDN never serves it.
 
 See also [03](03-markup-css-javascript.md) (CSS rules that still apply to the compiled output) and [04](04-loading-and-performance.md) (block CSS is code-split by `loadBlock`).
 
@@ -17,14 +17,16 @@ styles/scss/_config.scss          $brand: kotak811
 styles/scss/_brand.scss           palettes + brand.color()
 styles/scss/_breakpoints.scss     600 / 900 / 1200 mixins
 styles/scss/_mixins.scss          optional @include mixins.block()
-styles/scss/block/{name}.scss     block source  ──►  npm run build:css
-                                                      │
-                                                      ▼
-                              blocks/{name}/{name}.css   (committed, served)
+styles/scss/block/{name}.scss     block source  ──►  blocks/{name}/{name}.css
+styles/scss/{name}.scss           global source ──►  styles/{name}.css
+                              (lazy-styles, fonts, kotak811, eligibility-modal)
+styles/styles.css                 LCP-critical — stays hand-written CSS
 ```
 
 - **Recommendation:** author SCSS-backed blocks at `styles/scss/block/{name}.scss`. The filename **must** match the block folder (`cc-hero.scss` → `blocks/cc-hero/cc-hero.css`).
   **Why:** `cssPathFor()` in `tools/build-scss.mjs` maps by basename only. A mismatch silently writes CSS to the wrong block (or fails to update the one you meant).
+- **Recommendation:** author optional **global** sheets at `styles/scss/{name}.scss` (a sibling of `_brand.scss`, not inside `block/`). Output is `styles/{name}.css` — the URL `scripts.js` / `k811-common.js` already load.
+  **Why:** EDS still requests `/styles/lazy-styles.css` (etc.). Moving the source does not change the served path. Do **not** put a `styles.css.scss` here: the eager LCP sheet stays hand-written CSS.
 - **Recommendation:** never hand-edit a `.css` file that has a matching SCSS source. The generated file starts with `/* Generated from … — do not edit. Run \`npm run build:css\`. */`.
   **Why:** the next compile overwrites it. Hand edits look like they stuck until CI `--check` or the next `build:css` wipes them.
 - **Recommendation:** leave blocks **without** an SCSS file as hand-written CSS. Do not mass-migrate.
@@ -38,7 +40,7 @@ Run from the **repository root** (the folder that contains `package.json`):
 
 | Command | What it does |
 |---|---|
-| `npm run build:css` | Compile every non-partial `styles/scss/block/*.scss` → `blocks/{name}/{name}.css` |
+| `npm run build:css` | Compile `styles/scss/block/*.scss` → `blocks/{name}/{name}.css` and top-level `styles/scss/*.scss` → `styles/{name}.css` |
 | `npm run watch:css` | Rebuild when anything under `styles/scss/` changes |
 | `npm run build:css -- --check` | Compile in memory and **fail** if committed CSS is stale (CI) |
 | `npm run build:css -- --brand=kotak` | Override `$brand` for this run without editing `_config.scss` |
@@ -123,11 +125,11 @@ Matches the project’s mobile-first 600 / 900 / 1200 grid:
 
 Dart Sass (`sass` 1.93.x, **devDependency** — never shipped to the browser).
 
-1. **Discover** non-partial `*.scss` under `styles/scss/block/` (recursive; `_*.scss` skipped).
+1. **Discover** non-partial `*.scss` under `styles/scss/block/` (recursive) **and** top-level `styles/scss/*.scss` (`_*.scss` skipped in both).
 2. **Compile** each file with `loadPaths: [styles/scss]`, `style: expanded`, no source map, no `@charset`.
 3. **Format** for this repo: 2-space Sass indent → 4-space CSS; blank lines between rules / after custom properties so Stylelint standard passes.
 4. **Banner** the output with the source path.
-5. **Write** `blocks/{name}/{name}.css` only when the content changed.
+5. **Write** `blocks/{name}/{name}.css` or `styles/{name}.css` only when the content changed.
 
 `--check` compiles the same way but does not write; it exits `1` if any target CSS would change. That is the CI freshness gate (same pattern as `build:json` + `git diff`).
 
@@ -150,13 +152,25 @@ Blocks already on this path: `cc-hero`, `cta-banner`.
 
 ---
 
+## Add SCSS to a global stylesheet (checklist)
+
+1. Create `styles/scss/{name}.scss` next to `_brand.scss` (not under `block/`). Basename must match the served file (`lazy-styles.scss` → `styles/lazy-styles.css`).
+2. `@use "brand";` / `@use "breakpoints" as bp;` as needed. Font `url()` paths stay relative to the **output** (`styles/{name}.css`), e.g. `url('../fonts/…')`.
+3. Sass rewrites modern `rgb(r g b / a%)` to legacy `rgba()` unless you interpolate a string: `#{'rgb(0 0 0 / 15%)'}`.
+4. From the repo root: `npm run build:css`. Confirm `styles/{name}.css` updated; `npm run lint`.
+5. Commit **both** the `.scss` and the generated `.css`.
+
+Sheets already on this path: `lazy-styles`, `fonts`, `kotak811`, `eligibility-modal`. **`styles/styles.css` stays hand-written** — it is the eager LCP sheet in `head.html`.
+
+---
+
 ## Git hooks, CI, and what is served
 
 | Gate | Behavior |
 |---|---|
-| **Husky pre-commit** | If any staged file ends in `.scss`, runs `npm run build:css` and `git add`s `blocks/**/*.css`. |
+| **Husky pre-commit** | If any staged file ends in `.scss`, runs `npm run build:css` and `git add`s `blocks/**/*.css` and `styles/*.css`. |
 | **GitHub Actions** (`main.yaml`) | After `npm run lint`, runs `npm run build:css -- --check`. Stale CSS fails the build. |
-| **`.hlxignore`** | `*.scss` — Code Sync does not publish Sass. EDS loads `blocks/{name}/{name}.css` via `loadBlock()` as before. |
+| **`.hlxignore`** | `*.scss` — Code Sync does not publish Sass. EDS loads `blocks/{name}/{name}.css` via `loadBlock()` and `/styles/*.css` via `loadCSS()` as before. |
 
 - **Recommendation:** commit the compiled CSS on the same change as the SCSS.
   **Why:** preview/live have no `npm run build:css`. If only `.scss` is committed, production keeps the old CSS (or none).
@@ -165,7 +179,7 @@ Blocks already on this path: `cc-hero`, `cta-banner`.
 
 ## What this is not
 
-- Not a bundler, not a Tailwind pipeline, not a replacement for `styles/styles.css` / `lazy-styles.css` / `kotak811.css`.
+- Not a bundler, not a Tailwind pipeline, not a replacement for `styles/styles.css` (the eager LCP sheet stays hand-written CSS).
 - Not runtime theming. `brand.color()` is baked into hex at compile time. For runtime tokens, keep using CSS custom properties (`var(--k811-link)` on `main.kotak811`, or `@include brand.css-vars` then `var(--brand-primary)`).
 - Not an excuse to skip scoping, mobile-first breakpoints, or `prefers-reduced-motion`. Those rules apply to the CSS that ships.
 
@@ -173,7 +187,7 @@ Blocks already on this path: `cc-hero`, `cta-banner`.
 
 ## Validation checklist — SCSS compiler
 
-- [ ] Source is `styles/scss/block/{name}.scss`; output is `blocks/{name}/{name}.css`.
+- [ ] Source is `styles/scss/block/{name}.scss` → `blocks/{name}/{name}.css`, or `styles/scss/{name}.scss` → `styles/{name}.css`.
 - [ ] Colors come from `brand.color(…)` / `--brand-*`, not one-off hexes (unless they are truly unique, e.g. a gradient stop).
 - [ ] Selectors scoped to the block; no new `.{name}-wrapper` / `.{name}-container` rules.
 - [ ] `npm run build:css` run; generated CSS committed; `npm run lint` passes.
