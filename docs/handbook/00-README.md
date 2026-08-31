@@ -4,7 +4,7 @@ The complete engineering handbook for building on **AEM Edge Delivery Services (
 
 > **Stack:** EDS (xwalk / Universal Editor). Vanilla **JavaScript (ES6+), CSS3, JSON**. No Java/HTL/OSGi/Dispatcher/Cloud-Manager — presentation logic is JS `decorate()`, config is YAML/HTML, delivery is the Edge CDN via AEM Code Sync.
 
-## Chapters (28 topics, 15 chapters)
+## Chapters (29 topics, 16 chapters)
 | # | Chapter | Topics covered |
 |---|---|---|
 | 01 | [Architecture & Runtime](01-architecture-and-runtime.md) | Architecture · three-phase runtime |
@@ -22,6 +22,7 @@ The complete engineering handbook for building on **AEM Edge Delivery Services (
 | 13 | [Global Values & Placeholders](13-global-values-placeholders.md) | Placeholders sheet · Key/Value global values · consuming in blocks · localisation (/en, /hi) · SEO caveat (JS DOM vs server-rendered metadata) · sheet models |
 | 14 | [Configuration Service](14-config-service.md) | Repoless config · query/sitemap/fstab/robots via config service (tools.aem.live) not repo YAML · POST-not-PUT API · regenerate after change · en/hi config reference · gotchas |
 | 15 | [SCSS Compiler](15-scss-compiler.md) | Optional block SCSS · `styles/scss/block/{name}.scss` → `blocks/{name}/{name}.css` · brand palettes · `npm run build:css` · CI `--check` |
+| 16 | [Adding ESLint Rules](16-adding-eslint-rules.md) | `.eslintrc.js` · Airbnb + xwalk · adding a rule · smoke test · editor squiggles · CI |
 
 ## How to read this handbook
 Each chapter states a recommendation, then a **Why:** line. When two chapters seem to conflict, the reasoning tells you which constraint dominates in your case. The validation checklist ([09](09-antipatterns-mistakes-validation.md)) is the executable summary — walk it before every PR.

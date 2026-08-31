@@ -6,7 +6,7 @@
 
 EDS has **no heavyweight test framework wired into CI** — and that's deliberate. Quality is enforced by a lean, layered gate:
 
-1. **Linting** (mandatory, CI-enforced) — ESLint (Airbnb base + `plugin:xwalk` + `plugin:json`) and Stylelint (standard). Style is not negotiable; the machine checks it.
+1. **Linting** (mandatory, CI-enforced) — ESLint (Airbnb base + `plugin:xwalk` + `plugin:json`) and Stylelint (standard). Style is not negotiable; the machine checks it. Adding a rule: handbook [16](../handbook/16-adding-eslint-rules.md).
 2. **JSON-sync gate** — CI regenerates the aggregate `component-*.json` and fails if they differ from what's committed (Lesson 08).
 3. **CSS-sync gate** — CI runs `npm run build:css -- --check` so committed `blocks/{name}/{name}.css` matches `styles/scss/block/{name}.scss` (handbook [15](../handbook/15-scss-compiler.md)).
 4. **Browser/visual testing** — Playwright against `http://localhost:3000`: `snapshot` (DOM/a11y tree, cheap) and `evaluate` (computed styles) for routine checks; `screenshot` only for genuine pixel QA (expensive).

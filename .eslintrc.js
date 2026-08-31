@@ -18,6 +18,23 @@ module.exports = {
     'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
     'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
+
+    // Basic correctness — listed explicitly so they stay on if Airbnb is trimmed.
+    // no-eval / no-implied-eval / no-new-func match the strict CSP in head.html.
+    eqeqeq: ['error', 'always', { null: 'ignore' }],
+    'no-var': 'error',
+    'prefer-const': 'error',
+    'no-eval': 'error',
+    'no-implied-eval': 'error',
+    'no-new-func': 'error',
+    'no-debugger': 'error',
+    'no-alert': 'error',
+    'prefer-template': 'error',
+    'no-unused-vars': ['error', {
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_',
+      ignoreRestSiblings: true,
+    }],
     'xwalk/max-cells': ['error', {
       '*': 4, // default limit for all models
       form: 15,
@@ -50,7 +67,11 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['tools/build-scss.mjs', '.husky/pre-commit.mjs'],
+      files: [
+        'tools/**/*.mjs',
+        '.husky/**/*.mjs',
+        'test/**/*.mjs',
+      ],
       env: { node: true },
       rules: {
         'no-console': 'off',

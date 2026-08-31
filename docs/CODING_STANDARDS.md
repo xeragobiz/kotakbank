@@ -28,7 +28,7 @@ Authoritative coding standards for this repository. Where a requested topic belo
 ---
 
 ## 3. JavaScript
-First-class. **ES6+ modules, Airbnb base ESLint.** No TypeScript, no bundler, no transpiling — code ships as authored.
+First-class. **ES6+ modules, Airbnb base ESLint.** No TypeScript, no bundler, no transpiling — code ships as authored. How to add rules: `docs/handbook/16-adding-eslint-rules.md`.
 
 **Rules**
 - **Always include the `.js` extension in imports:** `import { x } from '../../scripts/aem.js';`.

@@ -24,7 +24,7 @@
 
 ## JavaScript
 - **Recommendation:** ES6+ modules, `.js` extensions on imports, Unix LF, 2-space indent, JSDoc on exports/`decorate`.
-  **Why:** the repo's ESLint (Airbnb + import + xwalk) enforces these; consistency makes 50 blocks readable as one codebase, and `.js` extensions are required because there's no bundler resolving them.
+  **Why:** the repo's ESLint (Airbnb + import + xwalk) enforces these; consistency makes 50 blocks readable as one codebase, and `.js` extensions are required because there's no bundler resolving them. To add or change a rule, follow [16](16-adding-eslint-rules.md).
 - **Recommendation:** no new runtime dependencies without strong justification.
   **Why:** every KB ships to every visitor's browser uncompressed-of-build-step; a "small" date lib can dwarf the whole page's JS. Prefer platform helpers and the ~2KB shared IntersectionObserver over libraries.
 - **Recommendation:** never modify `scripts/aem.js`; put shared logic in `scripts/` modules.
