@@ -20,6 +20,13 @@
         "name": "keywords",
         "multi": true,
         "label": "Keywords"
+      },
+      {
+        "component": "number",
+        "valueType": "number",
+        "name": "weightage",
+        "label": "Weightage",
+        "description": "Numeric ranking used to order pages in listings/search (indexed in query-index.json). Higher = more important."
       }
     ]
   },
