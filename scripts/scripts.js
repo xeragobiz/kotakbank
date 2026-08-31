@@ -9,6 +9,7 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  getMetadata,
 } from './aem.js';
 
 /**
@@ -170,6 +171,67 @@ async function appendSiteNameToTitle() {
 }
 
 /**
+ * Builds and injects an application/ld+json structured-data script into the
+ * document head, driven entirely by page metadata so authors control the
+ * values from the UE page properties / the site `metadata` spreadsheet
+ * without any per-page code change.
+ *
+ * The schema TYPE and its values are read from metadata rows (all optional):
+ *   - `schema-type`   -> @type (defaults to 'WebPage')
+ *   - `schema-name`   -> name (falls back to og:title, then document.title)
+ *   - `description` / `og:description` -> description
+ *   - `og:image` / `schema-image`      -> image
+ *   - `schema-author`                  -> author (Person)
+ *   - `schema-date`                    -> datePublished
+ * Empty values are dropped so the emitted schema always validates cleanly.
+ * No-ops if a `schema-type` of `none` is set (lets authors opt a page out),
+ * and is idempotent so the script is never injected twice.
+ * @param {Document} doc The document to read metadata from and inject into
+ */
+function buildStructuredData(doc = document) {
+  try {
+    const type = (getMetadata('schema-type', doc) || 'WebPage').trim();
+    // authors can opt a page out entirely with `schema-type: none`
+    if (type.toLowerCase() === 'none') return;
+    // idempotency guard: never inject the generated script twice
+    if (doc.head.querySelector('script[type="application/ld+json"][data-generated="true"]')) return;
+
+    const canonical = doc.querySelector('link[rel="canonical"]');
+    const url = (canonical && canonical.href) || window.location.href;
+
+    const ld = {
+      '@context': 'https://schema.org',
+      '@type': type,
+      name: getMetadata('schema-name', doc)
+        || getMetadata('og:title', doc)
+        || doc.title,
+      description: getMetadata('description', doc) || getMetadata('og:description', doc),
+      image: getMetadata('schema-image', doc) || getMetadata('og:image', doc),
+      url,
+    };
+
+    const author = getMetadata('schema-author', doc);
+    if (author) ld.author = { '@type': 'Person', name: author };
+
+    const datePublished = getMetadata('schema-date', doc);
+    if (datePublished) ld.datePublished = datePublished;
+
+    // drop empty keys so the schema validates cleanly
+    Object.keys(ld).forEach((key) => {
+      if (ld[key] === undefined || ld[key] === null || ld[key] === '') delete ld[key];
+    });
+
+    const script = doc.createElement('script');
+    script.type = 'application/ld+json';
+    script.dataset.generated = 'true';
+    script.textContent = JSON.stringify(ld);
+    doc.head.append(script);
+  } catch (e) {
+    // never let structured-data generation break page loading
+  }
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
@@ -212,6 +274,9 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // inject metadata-driven application/ld+json structured data (off the LCP path)
+  buildStructuredData(doc);
 
   // Universal Editor support: only load in the editor context to avoid
   // shipping editor-only code to public visitors.
