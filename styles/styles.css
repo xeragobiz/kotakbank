@@ -10,14 +10,30 @@
  * governing permissions and limitations under the License.
  */
 
+/* Global design system.
+ * variables.css -> design tokens (colors, spacing, typography, radius) from Figma.
+ * grid.css      -> responsive 4/8/12-column layout system.
+ * Both are eager (on the critical path) so every block/section inherits the
+ * tokens immediately, protecting LCP. New blocks should reference the semantic
+ * tokens directly (e.g. var(--text-primary-default-base), var(--body-font-size-b2));
+ * the legacy aliases below exist only so the pre-existing boilerplate blocks keep
+ * working, and can be retired as those blocks are migrated to the new tokens. */
+@import url("./variables.css");
+@import url("./grid.css");
+
 :root {
+  /* ---- legacy boilerplate aliases -> new semantic tokens ----
+     Keep these names alive for the shared blocks (header/footer/hero/cards/...).
+     They now resolve through the token layer, so a token change updates every
+     block at once. Retune the mappings as blocks are migrated. */
+
   /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --background-color: var(--background-1-default-base);
+  --light-color: var(--background-2-default-base);
+  --dark-color: var(--neutral-nc-30);
+  --text-color: var(--text-primary-default-base);
+  --link-color: var(--action-blue-blue-70);
+  --link-hover-color: var(--action-blue-blue-80);
 
   /* darker brand red for small text on light backgrounds (WCAG AA 4.5:1);
      the brand red (#fa1432) stays on buttons/graphical elements */
@@ -27,18 +43,18 @@
   --body-font-family: roboto, roboto-fallback, sans-serif;
   --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  /* body sizes -> responsive body tokens (auto-reflow at 476/835/1025) */
+  --body-font-size-m: var(--body-font-size-b2);
+  --body-font-size-s: var(--body-font-size-b1);
+  --body-font-size-xs: var(--body-font-size-b1);
 
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  /* heading sizes -> responsive display/headline tokens */
+  --heading-font-size-xxl: var(--display-semibold-font-size-ds-1);
+  --heading-font-size-xl: var(--headline-font-size-h7);
+  --heading-font-size-l: var(--headline-font-size-h6);
+  --heading-font-size-m: var(--headline-font-size-h5);
+  --heading-font-size-s: var(--headline-font-size-h4);
+  --heading-font-size-xs: var(--headline-font-size-h3);
 
   /* nav height */
   --nav-height: 64px;
@@ -57,22 +73,9 @@
   src: local('Arial');
 }
 
-@media (width >= 900px) {
-  :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
-  }
-}
+/* Responsive heading/body sizes are now driven by the design tokens in
+ * variables.css (they reflow automatically at 476/835/1025), so no manual
+ * breakpoint overrides are needed here. */
 
 body {
   display: none;
